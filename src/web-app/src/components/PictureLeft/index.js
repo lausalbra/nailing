@@ -1,9 +1,7 @@
 export function PictureLeft({ text, image }) {
     return (
-        <div className="">
-            <p >{text}</p>
-            <picture className="float-left">
-                <img src={image} alt="img" className="max-w-full" />
-            </picture>
+        <div className="flex text-justify items-center ">
+            <img src={image} alt="img" className="max-w-full float-left" />
+            <p className="ml-5">{text}</p>
         </div>)
 }

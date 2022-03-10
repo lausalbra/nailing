@@ -1,6 +1,7 @@
-export function Picture() {
+export function Picture({ image }) {
+    const t = `block h-full bg-cover ${image} bg-no-repeat bg-center clear-both`
     return (
-        <picture className="flex h-full bg-cover bg-pintauñas-big bg-no-repeat bg-center">
+        <picture className={t}>
         </picture>
 
     )

@@ -5,7 +5,7 @@ export function Header() {
 
             <Link className="hover:text-red-400" to="/marca">La Marca</Link>
             <Link className="hover:text-red-400" to="/servicios">Servicios</Link>
-            <Link className="h-16 w-auto" to="/"></Link>
+            <Link className="block w-64 h-20" to="/"></Link>
             <Link className="hover:text-red-400" to="/contacto">Contacto</Link>
             <Link className="hover:text-red-400" to="/cita">Pide Cita</Link>
 

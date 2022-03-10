@@ -1,0 +1,3 @@
+export const data = {
+    'introduccion': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut purus scelerisque, pharetra ex sed, suscipit justo. Sed in scelerisque magna. Quisque facilisis risus sem. Aenean pharetra faucibus nisi, a cursus libero sollicitudin nec. Donec sit amet sodales sapien. Vestibulum a malesuada lacus. Nunc vel turpis vitae nunc efficitur semper sed vel mi. Donec tempus erat enim, sed efficitur dui dictum non. Morbi congue augue in orci faucibus, eget semper arcu blandit. Duis orci nunc, fringilla ut augue et, interdum feugiat urna. Mauris sed justo tristique dolor sagittis finibus ac eu sapien. Suspendisse elementum dictum sapien vel dictum.'
+}
