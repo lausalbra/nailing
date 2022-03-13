@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.nailing.APP.Centro;
+package com.nailing.app.centro;
 
 import java.util.Objects;
 import javax.persistence.Column;
