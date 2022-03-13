@@ -1,4 +1,4 @@
-package com.nailing.APP.base;
+package com.nailing.app.base;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
