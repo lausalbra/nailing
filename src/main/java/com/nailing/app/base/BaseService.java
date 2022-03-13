@@ -1,7 +1,11 @@
 package com.nailing.app.base;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.nailing.app.centro.Centro;
 
 @Service("baseService")
 public class BaseService {
@@ -14,13 +18,25 @@ public class BaseService {
 		return baseRepository.save(base);
 	}
 	
-//	encontrar por Id de la base
-	public Base findById(int id) {
+//	encontrar base por su ID
+	public Base findById(Long id) {
 		return baseRepository.findById(id);
 	}
 	
-//	encontrar las bases que usa un centro
-//	public findByCentro(int id) {
-//		
-//	}
+//	todas las bases
+	public List<Base> findAll(){
+		return baseRepository.findAll();
+	}
+	
+//	encontrar los centros que usan una base
+	public List<Centro> findCentrosById(Long id) {
+		return baseRepository.findCentroById(id);
+	}
+	
+//	borrar una base
+	public void removeBase(Long id) {
+		Base base = findById(id);
+		if(base!=null)
+			baseRepository.delete(base);
+	}
 }
