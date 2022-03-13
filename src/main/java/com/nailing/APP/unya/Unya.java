@@ -34,5 +34,38 @@ public class Unya {
     
     @Column(name = "coste")
     private Double coste;
+
+    public Long getId() {
+        return id;
+    }
+
+    public Dedo getDedo() {
+        return dedo;
+    }
+
+    public Double getTiempo() {
+        return tiempo;
+    }
+
+    public Double getCoste() {
+        return coste;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setDedo(Dedo dedo) {
+        this.dedo = dedo;
+    }
+
+    public void setTiempo(Double tiempo) {
+        this.tiempo = tiempo;
+    }
+
+    public void setCoste(Double coste) {
+        this.coste = coste;
+    }
+    
     
 }
