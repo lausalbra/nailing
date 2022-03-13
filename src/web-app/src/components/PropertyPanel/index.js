@@ -5,7 +5,7 @@ class PropertyPanel extends Component {
     constructor(props)
     {
         super(props);
-        this.state = { name : props.name };
+        this.state = { name : props.name, buttons: props.buttons };
     }
  
     getClick()
@@ -33,20 +33,15 @@ class PropertyPanel extends Component {
                         </svg>
                     </div>
                 </header>
-                <div class="tab-content max-h-0 transition-all">
-                    <div class="pl-8 pr-8 pb-5 text-grey-darkest">
-                        <ul class="pl-4">
-                            <li class="pb-2">
-                                consectetur adipiscing elit
-                            </li>
-                            <li class="pb-2">
-                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-                            </li>
-                            <li class="pb-2">
-                                Viverra orci sagittis eu volutpat odio facilisis mauris
-                            </li>
-                        </ul>
-                    </div>
+                <div class="tab-content flex">
+                    {this.state.buttons.split(",").map((element,i) => {
+                        console.log(element);
+                        return(
+                            <>
+                            <button class="flex border-2 w-full">{element}</button>
+                            </>
+                        )
+                    })}
                 </div>
             </div>
         </div>);
