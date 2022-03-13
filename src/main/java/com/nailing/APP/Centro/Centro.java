@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
@@ -28,13 +30,19 @@ public class Centro {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @Column(name = "nombre", nullable = false, length = 1000)
+    @Column(name = "nombre")
+    @Size(max=1000)
+    @NotBlank
     private String nombre;
     
-    @Column(name = "ubicacion", nullable = false, length = 1000)
+    @Column(name = "ubicacion")
+    @Size(max=1000)
+    @NotBlank
     private String ubicacion;
     
-    @Column(name = "imagen", nullable = true, length = 1000)
+    @Column(name = "imagen")
+    @Size(max=1000)
+    @NotBlank
     private String imagen;
 
     public Centro() {
