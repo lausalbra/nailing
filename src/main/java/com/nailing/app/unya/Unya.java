@@ -27,9 +27,6 @@ public class Unya {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @Column(name = "dedo")
-    private Dedo dedo;
-    
     @Column(name = "tiempo")
     @NotNull
     private Double tiempo;
@@ -42,10 +39,6 @@ public class Unya {
         return id;
     }
 
-    public Dedo getDedo() {
-        return dedo;
-    }
-
     public Double getTiempo() {
         return tiempo;
     }
@@ -56,10 +49,6 @@ public class Unya {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public void setDedo(Dedo dedo) {
-        this.dedo = dedo;
     }
 
     public void setTiempo(Double tiempo) {
