@@ -1,6 +1,7 @@
 package com.nailing.app.base;
 
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -16,6 +18,7 @@ import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 import com.nailing.app.centro.Centro;
+import com.nailing.app.unya.Unya;
 
 @Entity
 @Table(name = "base")
@@ -25,34 +28,42 @@ public class Base {
 	@GeneratedValue
 	@Column(name = "id")
 	private Long id;
+
 	@Column(name = "nombre")
 	@Size(max = 50)
 	@NotBlank
 	private String nombre;
+
 	@Positive
 	@NotNull
 	@Column(name = "tiempo")
 	private Double tiempo;
+
 	@PositiveOrZero
 	@NotNull
 	@Column(name = "coste")
 	private Double coste;
+
 	@ManyToOne
-	@JoinColumn(name="centro_id")
+	@JoinColumn(name = "centro_id")
 	private Centro centro;
+
+	@OneToMany(mappedBy = "base")
+	private Set<Unya> unyas;
 
 	public Base() {
 		super();
 	}
 
 	public Base(Long id, @Size(max = 50) @NotBlank String nombre, @Positive @NotNull Double tiempo,
-			@PositiveOrZero @NotNull Double coste, Centro centros) {
+			@PositiveOrZero @NotNull Double coste, Centro centro, Set<Unya> unyas) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.tiempo = tiempo;
 		this.coste = coste;
-		this.centro = centros;
+		this.centro = centro;
+		this.unyas = unyas;
 	}
 
 	public Long getId() {
@@ -95,9 +106,17 @@ public class Base {
 		this.centro = centros;
 	}
 
+	public Set<Unya> getUnyas() {
+		return unyas;
+	}
+
+	public void setUnyas(Set<Unya> unyas) {
+		this.unyas = unyas;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(centro, coste, id, nombre, tiempo);
+		return Objects.hash(centro, coste, id, nombre, tiempo, unyas);
 	}
 
 	@Override
@@ -109,8 +128,9 @@ public class Base {
 		if (getClass() != obj.getClass())
 			return false;
 		Base other = (Base) obj;
-		return Objects.equals(centro, other.centro) && Objects.equals(coste, other.coste) && id == other.id
-				&& Objects.equals(nombre, other.nombre) && Objects.equals(tiempo, other.tiempo);
+		return Objects.equals(centro, other.centro) && Objects.equals(coste, other.coste)
+				&& Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre)
+				&& Objects.equals(tiempo, other.tiempo) && Objects.equals(unyas, other.unyas);
 	}
 
 	@Override

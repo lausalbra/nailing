@@ -10,8 +10,13 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.nailing.app.base.Base;
 
 /**
  *
@@ -34,6 +39,10 @@ public class Unya {
     
     @Column(name = "coste")
     private Double coste;
+    
+    @ManyToOne
+    @JoinColumn(name="base_id")
+    private Base base;
 
     public Long getId() {
         return id;

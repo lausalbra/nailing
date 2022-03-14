@@ -45,7 +45,7 @@ public class BaseController {
 	}
 	
 //	borrar una base por su ID
-	@DeleteMapping("/deleteBase/{id}")
+	@DeleteMapping("/delete/{id}")
 	public void deleteBase(@PathVariable Long id) {
 		baseService.removeBase(id);
 	}
