@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nailing.app.centro.Centro;
-
 @Service("baseService")
 public class BaseService {
 
@@ -28,12 +26,7 @@ public class BaseService {
 		return baseRepository.findAll();
 	}
 	
-//	encontrar los centros que usan una base
-	public List<Centro> findCentrosById(Long id) {
-		return baseRepository.findCentroById(id);
-	}
-	
-//	borrar una base
+//	borrar una base por su ID
 	public void removeBase(Long id) {
 		Base base = findById(id);
 		if(base!=null)

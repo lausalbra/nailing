@@ -1,13 +1,13 @@
 package com.nailing.app.base;
 
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -18,13 +18,13 @@ import javax.validation.constraints.Size;
 import com.nailing.app.centro.Centro;
 
 @Entity
-@Table(name = "contacts")
+@Table(name = "base")
 public class Base {
 
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
-	private int id;
+	private Long id;
 	@Column(name = "nombre")
 	@Size(max = 50)
 	@NotBlank
@@ -37,28 +37,29 @@ public class Base {
 	@NotNull
 	@Column(name = "coste")
 	private Double coste;
-	@ManyToMany(mappedBy = "bases")
-	private Set<Centro> centros;
+	@ManyToOne
+	@JoinColumn(name="centro_id")
+	private Centro centro;
 
 	public Base() {
 		super();
 	}
 
-	public Base(int id, @Size(max = 50) @NotBlank String nombre, @Positive @NotNull Double tiempo,
-			@PositiveOrZero @NotNull Double coste, Set<Centro> centros) {
+	public Base(Long id, @Size(max = 50) @NotBlank String nombre, @Positive @NotNull Double tiempo,
+			@PositiveOrZero @NotNull Double coste, Centro centros) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.tiempo = tiempo;
 		this.coste = coste;
-		this.centros = centros;
+		this.centro = centros;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -86,17 +87,17 @@ public class Base {
 		this.coste = coste;
 	}
 
-	public Set<Centro> getCentros() {
-		return centros;
+	public Centro getCentros() {
+		return centro;
 	}
 
-	public void setCentros(Set<Centro> centros) {
-		this.centros = centros;
+	public void setCentros(Centro centros) {
+		this.centro = centros;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(centros, coste, id, nombre, tiempo);
+		return Objects.hash(centro, coste, id, nombre, tiempo);
 	}
 
 	@Override
@@ -108,7 +109,7 @@ public class Base {
 		if (getClass() != obj.getClass())
 			return false;
 		Base other = (Base) obj;
-		return Objects.equals(centros, other.centros) && Objects.equals(coste, other.coste) && id == other.id
+		return Objects.equals(centro, other.centro) && Objects.equals(coste, other.coste) && id == other.id
 				&& Objects.equals(nombre, other.nombre) && Objects.equals(tiempo, other.tiempo);
 	}
 
