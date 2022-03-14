@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
@@ -30,10 +31,12 @@ public class Unya {
     private Dedo dedo;
     
     @Column(name = "tiempo")
+    @NotNull
     private Double tiempo;
     
-    @Column(name = "coste")
-    private Double coste;
+    @Column(name = "coste_total")
+    @NotNull
+    private Double costeTotal;
 
     public Long getId() {
         return id;
@@ -47,8 +50,8 @@ public class Unya {
         return tiempo;
     }
 
-    public Double getCoste() {
-        return coste;
+    public Double getCosteTotal() {
+        return costeTotal;
     }
 
     public void setId(Long id) {
@@ -63,8 +66,8 @@ public class Unya {
         this.tiempo = tiempo;
     }
 
-    public void setCoste(Double coste) {
-        this.coste = coste;
+    public void setCosteTotal(Double costeTotal) {
+        this.costeTotal = costeTotal;
     }
     
     
