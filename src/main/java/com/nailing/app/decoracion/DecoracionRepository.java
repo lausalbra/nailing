@@ -14,7 +14,4 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface DecoracionRepository extends CrudRepository<Decoracion, Long>{
     
-    @Query("SELECT * FROM decoracion")
-    public Collection<Decoracion> findAll();
-    
 }

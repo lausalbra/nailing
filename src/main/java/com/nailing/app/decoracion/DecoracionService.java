@@ -33,7 +33,7 @@ public class DecoracionService {
         }
     }
     
-    public Collection<Decoracion> findAll(){
+    public Iterable<Decoracion> findAll(){
         return decoracionRepository.findAll();
     }
 }

@@ -4,12 +4,15 @@
  */
 package com.nailing.app.unya;
 
+import com.nailing.app.decoracion.Decoracion;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -34,6 +37,10 @@ public class Unya {
     
     @Column(name = "coste")
     private Double coste;
+    
+    @ManyToOne
+    @JoinColumn(name = "decoracion_id")
+    private Decoracion decoracion;
 
     public Long getId() {
         return id;
@@ -51,6 +58,10 @@ public class Unya {
         return coste;
     }
 
+    public Decoracion getDecoracion() {
+        return decoracion;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -66,6 +77,12 @@ public class Unya {
     public void setCoste(Double coste) {
         this.coste = coste;
     }
+
+    public void setDecoracion(Decoracion decoracion) {
+        this.decoracion = decoracion;
+    }
+    
+    
     
     
 }

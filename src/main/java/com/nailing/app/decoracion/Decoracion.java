@@ -4,15 +4,18 @@
  */
 package com.nailing.app.decoracion;
 
+import com.nailing.app.unya.Unya;
+import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -35,11 +38,14 @@ public class Decoracion {
     
     @Column(name = "tiempo")
     @Positive
-    private Double tiempo;
+    private Integer tiempo;
     
     @Column(name = "coste")
     @Positive
     private Double coste;
+    
+    @OneToMany(mappedBy = "decoracion")
+    private Set<Unya> unyas;
 
     public Long getId() {
         return id;
@@ -49,7 +55,7 @@ public class Decoracion {
         return nombre;
     }
 
-    public Double getTiempo() {
+    public Integer getTiempo() {
         return tiempo;
     }
 
@@ -57,6 +63,10 @@ public class Decoracion {
         return coste;
     }
 
+    public Set<Unya> getUnyas() {
+        return unyas;
+    }
+    
     public void setId(Long id) {
         this.id = id;
     }
@@ -65,17 +75,71 @@ public class Decoracion {
         this.nombre = nombre;
     }
 
-    public void setTiempo(Double tiempo) {
+    public void setTiempo(Integer tiempo) {
         this.tiempo = tiempo;
     }
 
     public void setCoste(Double coste) {
         this.coste = coste;
     }
-    
-    
-    
-    
 
+    public void setUnyas(Set<Unya> unyas) {
+        this.unyas = unyas;
+    }
     
+    public Decoracion(){
+        super();
+    }
+
+    public Decoracion(Long id, String nombre, Integer tiempo, Double coste, Set<Unya> unyas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.tiempo = tiempo;
+        this.coste = coste;
+        this.unyas = unyas;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.nombre);
+        hash = 97 * hash + Objects.hashCode(this.tiempo);
+        hash = 97 * hash + Objects.hashCode(this.coste);
+        hash = 97 * hash + Objects.hashCode(this.unyas);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Decoracion other = (Decoracion) obj;
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.tiempo, other.tiempo)) {
+            return false;
+        }
+        if (!Objects.equals(this.coste, other.coste)) {
+            return false;
+        }
+        return Objects.equals(this.unyas, other.unyas);
+    }
+
+    @Override
+    public String toString() {
+        return "Decoracion{" + "id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + ", unyas=" + unyas + '}';
+    }
+
 }
