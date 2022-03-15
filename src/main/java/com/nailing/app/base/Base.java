@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -48,9 +47,6 @@ public class Base {
 	@JoinColumn(name = "centro_id")
 	private Centro centro;
 
-	@OneToMany(mappedBy = "base")
-	private Set<Unya> unyas;
-
 	public Base() {
 		super();
 	}
@@ -63,7 +59,6 @@ public class Base {
 		this.tiempo = tiempo;
 		this.coste = coste;
 		this.centro = centro;
-		this.unyas = unyas;
 	}
 
 	public Long getId() {
@@ -98,25 +93,17 @@ public class Base {
 		this.coste = coste;
 	}
 
-	public Centro getCentros() {
+	public Centro getCentro() {
 		return centro;
 	}
 
-	public void setCentros(Centro centros) {
+	public void setCentro(Centro centros) {
 		this.centro = centros;
 	}
-
-	public Set<Unya> getUnyas() {
-		return unyas;
-	}
-
-	public void setUnyas(Set<Unya> unyas) {
-		this.unyas = unyas;
-	}
-
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(centro, coste, id, nombre, tiempo, unyas);
+		return Objects.hash(centro, coste, id, nombre, tiempo);
 	}
 
 	@Override
@@ -130,7 +117,7 @@ public class Base {
 		Base other = (Base) obj;
 		return Objects.equals(centro, other.centro) && Objects.equals(coste, other.coste)
 				&& Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre)
-				&& Objects.equals(tiempo, other.tiempo) && Objects.equals(unyas, other.unyas);
+				&& Objects.equals(tiempo, other.tiempo);
 	}
 
 	@Override

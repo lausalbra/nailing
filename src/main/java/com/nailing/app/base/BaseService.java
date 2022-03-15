@@ -10,6 +10,8 @@ public class BaseService {
 
 	@Autowired
 	private BaseRepository baseRepository;
+	@Autowired
+	private BaseConverter baseConverter;
 	
 //	guardar/editar
 	public Base addBase(Base base) {
