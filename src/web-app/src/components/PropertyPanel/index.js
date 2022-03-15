@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom'
 import "./PropertyPanel.css";
 
 class PropertyPanel extends Component {
@@ -7,18 +8,34 @@ class PropertyPanel extends Component {
         super(props);
         this.state = { name : props.name, buttons: props.buttons };
     }
- 
-    getClick()
-    {
-        if (this.state.color === '#4cb96b')
-            this.setState({ color : '#aaa' });
-        else
-            this.setState({ color : '#4cb96b' });
+
+    handleClick(e, self){
+        var opcion = e.target.textContent;
+        console.log(opcion);
+        var checkbox = e.target.parentElement.parentElement.firstChild;
+        checkbox.checked = false;
+        var name = "Base" //Esto se recbirá de la llamada
+        var containerDiv = checkbox.parentElement.parentElement.parentElement;
+        let nextSibling = containerDiv.nextElementSibling;
+
+        while(nextSibling) {
+            var toDelete = nextSibling;
+            nextSibling = nextSibling.nextElementSibling;
+            toDelete.remove();
+        }
+        var mainPanel = containerDiv.parentElement;
+        let newPropertyPanelContainer = document.createElement("div");
+        newPropertyPanelContainer.id = name + "Container";
+        newPropertyPanelContainer.className = "propertyContainer";
+        mainPanel.append(newPropertyPanelContainer);
+        ReactDOM.render(<><PropertyPanel name={name} buttons="Gel,Acrigel"/></>, newPropertyPanelContainer);
+        console.log(self.state);
     }
  
     render()
     {
-        return (        
+        const self = this;
+        return(
         <div class="border-b overflow-hidden tab">
             <div class="border-l-2 border-transparent relative">
                 <input class="w-full absolute z-10 cursor-pointer opacity-0 h-5 top-6" type="checkbox" id="chck1"></input>
@@ -38,13 +55,13 @@ class PropertyPanel extends Component {
                         console.log(element);
                         return(
                             <>
-                            <button class="flex border-2 w-full">{element}</button>
+                            <button onClick={(e) => this.handleClick(e, self)} class="flex border-2 w-full">{element}</button>
                             </>
                         )
                     })}
                 </div>
             </div>
-        </div>);
+        </div>)
     }
 } 
 

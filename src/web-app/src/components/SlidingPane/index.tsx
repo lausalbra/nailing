@@ -123,7 +123,7 @@ export function ReactSlidingPane({
           </div>
         </div>
       )}
-      <div className="slide-pane__content">{children}</div>
+      <div id="slide-pane-content" className="slide-pane__content">{children}</div>
     </Modal>
   );
 }
