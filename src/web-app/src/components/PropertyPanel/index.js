@@ -56,7 +56,7 @@ class PropertyPanel extends Component {
                         var img = element.replace(" ", "-");
                         return(
                             <>
-                            <button onClick={(e) => this.handleClick(e, self)} class={"bg-" + img + " h-20 bg-cover font-bold justify-center rounded-full p-2 m-3 border-2 w-1/5"}>{element}</button>
+                            <div class="justify-center w-1/5" ><button onClick={(e) => this.handleClick(e, self)} class={"bg-" + img + " bg-Esculpida h-20 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center">{element}</p></div>
                             </>
                         )
                     })}
