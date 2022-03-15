@@ -36,7 +36,7 @@ public class Base {
 	@Positive
 	@NotNull
 	@Column(name = "tiempo")
-	private Double tiempo;
+	private Integer tiempo;
 
 	@PositiveOrZero
 	@NotNull
@@ -51,7 +51,7 @@ public class Base {
 		super();
 	}
 
-	public Base(Long id, @Size(max = 50) @NotBlank String nombre, @Positive @NotNull Double tiempo,
+	public Base(Long id, @Size(max = 50) @NotBlank String nombre, @Positive @NotNull Integer tiempo,
 			@PositiveOrZero @NotNull Double coste, Centro centro, Set<Unya> unyas) {
 		super();
 		this.id = id;
@@ -77,11 +77,11 @@ public class Base {
 		this.nombre = nombre;
 	}
 
-	public Double getTiempo() {
+	public Integer getTiempo() {
 		return tiempo;
 	}
 
-	public void setTiempo(Double tiempo) {
+	public void setTiempo(Integer tiempo) {
 		this.tiempo = tiempo;
 	}
 

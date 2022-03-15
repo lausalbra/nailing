@@ -6,7 +6,7 @@ public class BaseModel {
 
 	private Long id;
 	private String nombre;
-	private Double tiempo;
+	private Integer tiempo;
 	private Double coste;
 	private Long centroId;
 
@@ -14,7 +14,7 @@ public class BaseModel {
 		super();
 	}
 
-	public BaseModel(Long id, String nombre, Double tiempo, Double coste, Long centroId) {
+	public BaseModel(Long id, String nombre, Integer tiempo, Double coste, Long centroId) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -39,11 +39,11 @@ public class BaseModel {
 		this.nombre = nombre;
 	}
 
-	public Double getTiempo() {
+	public Integer getTiempo() {
 		return tiempo;
 	}
 
-	public void setTiempo(Double tiempo) {
+	public void setTiempo(Integer tiempo) {
 		this.tiempo = tiempo;
 	}
 
