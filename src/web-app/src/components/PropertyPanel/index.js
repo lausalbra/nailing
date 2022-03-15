@@ -29,7 +29,7 @@ class PropertyPanel extends Component {
         newPropertyPanelContainer.className = "propertyContainer";
         mainPanel.append(newPropertyPanelContainer);
         ReactDOM.render(<><PropertyPanel name={name} buttons="Gel,Acrigel"/></>, newPropertyPanelContainer);
-        console.log(self.state);
+        newPropertyPanelContainer.firstChild.firstChild.firstChild.checked = true;
     }
  
     render()
@@ -50,12 +50,13 @@ class PropertyPanel extends Component {
                         </svg>
                     </div>
                 </header>
-                <div class="tab-content flex">
+                <div class="tab-content flex justify-center flex-wrap">
                     {this.state.buttons.split(",").map((element,i) => {
                         console.log(element);
+                        var img = element.replace(" ", "-");
                         return(
                             <>
-                            <button onClick={(e) => this.handleClick(e, self)} class="flex border-2 w-full">{element}</button>
+                            <button onClick={(e) => this.handleClick(e, self)} class={"bg-" + img + " h-20 bg-cover font-bold justify-center rounded-full p-2 m-3 border-2 w-1/5"}>{element}</button>
                             </>
                         )
                     })}
