@@ -1,14 +1,22 @@
 import React from "react";
-export function CenterButton({id, name}) {
-    const useState = React.useState;
-    const [selected, setSelected] = useState(false);
+class CenterButton extends React.Component {
 
-    return (
-        <div>
+    constructor({name}) {
+        super()
+        this.name = name
+        this.selected = false
+    }
+    
+    render() {
+        return (
             <button
                 className={"border-2 " +
-                    (selected === true ? 'border-red-300' : 'border-white')
-                }>{name}</button>
-        </div>
-    )
+                    (this.selected === true ? 'border-red-300' : 'border-white')
+                }>{this.name}
+            </button>
+        )
+    }
 }
+
+export {CenterButton}
+

@@ -1,19 +1,22 @@
+import React from "react";
+import ReactDOM from "react-dom";
 import {CenterButton} from '../Center'
 export function CenterSelect() {
 
     function updateSelector(index) {
-        console.log("test")
-        for (let b in botones) {
-            b.id === index ?
-                b.setSelected(!b.selected) :
-                b.setSelected(false)
+        console.log("updateSelector")
+        for (let b of botones) {
+            let nextState = b.id === index ? !b.selected : false
+            console.log(nextState)
         }
     }
 
-    let centros = [[0, "Centro 1"], [1, "Centro 2"], [2, "Centro 3"], [3, "Centro 4"]]
-    let botones = centros.map((el) =>
-    <CenterButton id={el[0]} name={el[1]} onClick={updateSelector(el[0])}/>)
-    
+    const centros = [[0, "Centro 1"], [1, "Centro 2"], [2, "Centro 3"], [3, "Centro 4"]]
+    let botones = centros.map((cent) => <CenterButton key={cent[0]} name={cent[1]}/>)
+    console.log(botones)
+    for (let b of botones) {
+        b.addEventListener('onClick', updateSelector(b.id))
+    }
 
     return (
         <>
