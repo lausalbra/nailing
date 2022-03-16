@@ -4,12 +4,14 @@
  */
 package com.nailing.app.unya;
 
+import com.nailing.app.disenyo.Disenyo;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -35,6 +37,14 @@ public class Unya {
     @Column(name = "coste")
     private Double coste;
 
+    @ManyToOne
+    @Column(name = "disenyo_id")
+    private Disenyo disenyo;
+
+    public Disenyo getDisenyo(){
+        return disenyo;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -67,5 +77,7 @@ public class Unya {
         this.coste = coste;
     }
     
-    
+     public void setDisenyo(Disenyo disenyo){
+        this.disenyo = disenyo;
+    }
 }
