@@ -87,6 +87,18 @@ public class Acabado {
         this.unyas = unyas;
     }
 
+    public Acabado(Long id, String nombre, Integer tiempo, Double coste, Set<Unya> unyas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.tiempo = tiempo;
+        this.coste = coste;
+        this.unyas = unyas;
+    }
+
+    public Acabado() {
+        super();
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
