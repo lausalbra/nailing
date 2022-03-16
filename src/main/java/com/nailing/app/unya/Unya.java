@@ -4,6 +4,7 @@
  */
 package com.nailing.app.unya;
 
+import com.nailing.app.disenyo.Disenyo;
 import com.nailing.app.tipo.Tipo;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,6 +42,14 @@ public class Unya {
     @Column(name = "tipo_id")
     private Tipo tipo;
 
+    @ManyToOne
+    @Column(name = "disenyo_id")
+    private Disenyo disenyo;
+
+    public Disenyo getDisenyo(){
+        return disenyo;
+    }
+
     public Tipo getTipo(){
         return tipo;
     }
@@ -77,6 +86,10 @@ public class Unya {
         this.coste = coste;
     }
     
+     public void setDisenyo(Disenyo disenyo){
+        this.disenyo = disenyo;
+    }
+  
     public void setTipo(Tipo tipo){
         this.tipo = tipo;
     }
