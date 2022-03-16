@@ -8,6 +8,6 @@ export function Header() {
             <Link className="block w-64 h-20" to="/"></Link>
             <Link className="hover:text-red-400" to="/contacto">Contacto</Link>
             <Link className="hover:text-red-400" to="/cita">Pide Cita</Link>
-
+            <Link className="hover:text-red-400" to="/Feedback">Feedback</Link>
         </nav>)
 }
