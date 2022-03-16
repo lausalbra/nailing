@@ -3,6 +3,8 @@ import { Header } from './components/Header'
 import { Landing } from './views/Landing'
 import { ResCita } from './views/ResCita'
 import { Route } from 'wouter'
+import { Usuario } from './views/Usuario';
+import { Centro } from './views/Centro';
 function App() {
   return (
     <div>
@@ -11,6 +13,8 @@ function App() {
         {/* Las rutas entran en orden de matching por lo que la menos especifica va al final*/}
         <main className='w-4/5 mx-auto'>
           <Route path='/' component={Landing} />
+          <Route path='/usuario' component={Usuario} />
+          <Route path='/centro' component={Centro} />
           <Route path='/cita' component={ResCita} />
         </main>
       </div>
