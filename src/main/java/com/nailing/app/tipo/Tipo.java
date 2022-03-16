@@ -87,6 +87,10 @@ public class Tipo {
     @Override
     public int hashCode() {
         int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.nombre);
+        hash = 97 * hash + Objects.hashCode(this.tiempo);
+        hash = 97 * hash + Objects.hashCode(this.coste);
         return hash;
     }
 
