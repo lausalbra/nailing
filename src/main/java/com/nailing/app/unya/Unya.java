@@ -48,9 +48,11 @@ public class Unya {
     @JoinColumn(name = "decoracion_id")
     private Decoracion decoracion;
 
+    @ManyToOne
     @JoinColumn(name = "acabado_id")
     private Acabado acabado;
 
+    @ManyToOne
     @JoinColumn(name="base_id")
     private Base base;
 
@@ -126,12 +128,12 @@ public class Unya {
         this.tipo = tipo;
     }
 
-	public Base getBase() {
-		return base;
-	}
+    public Base getBase() {
+	return base;
+    }
 
-	public void setBase(Base base) {
-		this.base = base;
-	}
+    public void setBase(Base base) {
+	this.base = base;
+    }
     
 }
