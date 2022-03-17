@@ -10,14 +10,14 @@ function App() {
 
     <div>
       <Header />
-      <div className=" bg-white-100 min-h-screen grid grid-rows-[500px_300px_500px_300px]">
+      <div className=" bg-slate-100 min-h-screen ">
         {/* Las rutas entran en orden de matching por lo que la menos especifica va al final*/}
-        <main className='w-4/5 mx-auto'>
+        <div className='w-4/5 bg-white mx-auto min-h-screen overflow-y-hidden shadow-2xl shadow-pink-300 '>
           <Route path='/login' component={Login} />
           <Route path='/' component={Landing} />
           <Route path='/usuario' component={Usuario} />
           <Route path='/centro' component={Centro} />
-        </main>
+        </div>
       </div>
     </div>
   );

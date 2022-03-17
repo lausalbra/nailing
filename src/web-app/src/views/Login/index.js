@@ -4,7 +4,7 @@ export function Login() {
     return (
 
         <>
-            <Card component={<LoginForm />}>
+            <Card title="Iniciar Sesión" component={<LoginForm />}>
             </Card>
         </>
     )
