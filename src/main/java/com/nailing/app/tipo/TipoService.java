@@ -1,0 +1,40 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.nailing.app.tipo;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ *
+ * @author CANDELA
+ */
+@Service("tipoService")
+public class TipoService {
+    
+    @Autowired
+    private TipoRepository tiporepository;
+    
+    public Tipo addTipo(Tipo tipo){
+        return tiporepository.save(tipo);
+    }
+    
+    public Tipo findById(Long id){
+        return tiporepository.findById(id).get();
+    }
+    
+    public Iterable<Tipo> findAll(){
+        return tiporepository.findAll();
+    }
+    
+    public void removeTipo(Long id){
+        Tipo tipo = findById(id);
+        if(tipo != null){
+            tiporepository.delete(tipo);
+        }
+    }
+    
+}
