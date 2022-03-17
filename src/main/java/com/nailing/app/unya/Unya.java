@@ -4,6 +4,7 @@
  */
 package com.nailing.app.unya;
 
+import com.nailing.app.decoracion.Decoracion;
 import com.nailing.app.acabado.Acabado;
 import com.nailing.app.disenyo.Disenyo;
 import com.nailing.app.tipo.Tipo;
@@ -44,6 +45,9 @@ public class Unya {
     private Double coste;
     
     @ManyToOne
+    @JoinColumn(name = "decoracion_id")
+    private Decoracion decoracion;
+
     @JoinColumn(name = "acabado_id")
     private Acabado acabado;
 
@@ -86,6 +90,10 @@ public class Unya {
         return acabado;
     }
 
+    public Decoracion getDecoracion() {
+        return decoracion;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -102,6 +110,10 @@ public class Unya {
         this.coste = coste;
     }
 
+    public void setDecoracion(Decoracion decoracion) {
+        this.decoracion = decoracion;
+    }
+    
     public void setAcabado(Acabado acabado) {
         this.acabado = acabado;
     }
