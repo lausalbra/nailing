@@ -5,16 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nailing.app.centro.CentroRepository;
+
 @Service("baseService")
 public class BaseService {
 
 	@Autowired
 	private BaseRepository baseRepository;
-	@Autowired
-	private BaseConverter baseConverter;
 	
 //	guardar/editar
 	public Base addBase(Base base) {
+		
 		return baseRepository.save(base);
 	}
 	

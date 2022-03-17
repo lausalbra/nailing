@@ -29,7 +29,7 @@ public class BaseController {
 //	}
 	
 //	añadir una nueva base (No hace falta indicar el ID)
-	@PostMapping("/add")
+	@PostMapping()
 	public ResponseEntity<Base> addBase(@RequestBody Base base){
 		Base result = baseService.addBase(base);
 		if(result != null)
@@ -38,21 +38,23 @@ public class BaseController {
 	}
 	
 //	mostrar todas las bases existentes en la base de datos
-	@GetMapping(value= {"","/","list"})
+	@GetMapping()
 	public ResponseEntity<List<Base>> listBases(){
 		List<Base> bases = baseService.findAll();
 		return new ResponseEntity<List<Base>>(bases, HttpStatus.OK);
 	}
 	
 //	borrar una base por su ID
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public void deleteBase(@PathVariable Long id) {
 		baseService.removeBase(id);
 	}
 	
 //	encontrar una base por su ID
-	@GetMapping("/show/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Base> showBase(@PathVariable Long id){
 		return new ResponseEntity<Base>(baseService.findById(id), HttpStatus.OK);
 	}
+	
+	
 }
