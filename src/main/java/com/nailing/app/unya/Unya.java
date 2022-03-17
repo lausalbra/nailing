@@ -5,6 +5,9 @@
 package com.nailing.app.unya;
 
 import com.nailing.app.decoracion.Decoracion;
+import com.nailing.app.acabado.Acabado;
+import com.nailing.app.disenyo.Disenyo;
+import com.nailing.app.tipo.Tipo;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -14,7 +17,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.nailing.app.base.Base;
 
 /**
  *
@@ -42,6 +48,28 @@ public class Unya {
     @JoinColumn(name = "decoracion_id")
     private Decoracion decoracion;
 
+    @JoinColumn(name = "acabado_id")
+    private Acabado acabado;
+
+    @JoinColumn(name="base_id")
+    private Base base;
+
+    @ManyToOne
+    @JoinColumn(name = "tipo_id")
+    private Tipo tipo;
+
+    @ManyToOne
+    @JoinColumn(name = "disenyo_id")
+    private Disenyo disenyo;
+
+    public Disenyo getDisenyo(){
+        return disenyo;
+    }
+
+    public Tipo getTipo(){
+        return tipo;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -56,6 +84,10 @@ public class Unya {
 
     public Double getCoste() {
         return coste;
+    }
+    
+    public Acabado getAcabado() {
+        return acabado;
     }
 
     public Decoracion getDecoracion() {
@@ -82,7 +114,24 @@ public class Unya {
         this.decoracion = decoracion;
     }
     
+    public void setAcabado(Acabado acabado) {
+        this.acabado = acabado;
+    }
     
-    
+     public void setDisenyo(Disenyo disenyo){
+        this.disenyo = disenyo;
+    }
+  
+    public void setTipo(Tipo tipo){
+        this.tipo = tipo;
+    }
+
+	public Base getBase() {
+		return base;
+	}
+
+	public void setBase(Base base) {
+		this.base = base;
+	}
     
 }
