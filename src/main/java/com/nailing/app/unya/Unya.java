@@ -4,6 +4,7 @@
  */
 package com.nailing.app.unya;
 
+import com.nailing.app.acabado.Acabado;
 import com.nailing.app.disenyo.Disenyo;
 import com.nailing.app.tipo.Tipo;
 import javax.persistence.Column;
@@ -43,6 +44,9 @@ public class Unya {
     private Double coste;
     
     @ManyToOne
+    @JoinColumn(name = "acabado_id")
+    private Acabado acabado;
+
     @JoinColumn(name="base_id")
     private Base base;
 
@@ -77,6 +81,10 @@ public class Unya {
     public Double getCoste() {
         return coste;
     }
+    
+    public Acabado getAcabado() {
+        return acabado;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -92,6 +100,10 @@ public class Unya {
 
     public void setCoste(Double coste) {
         this.coste = coste;
+    }
+
+    public void setAcabado(Acabado acabado) {
+        this.acabado = acabado;
     }
     
      public void setDisenyo(Disenyo disenyo){
