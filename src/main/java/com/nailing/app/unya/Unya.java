@@ -12,9 +12,13 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.nailing.app.base.Base;
 
 /**
  *
@@ -39,11 +43,15 @@ public class Unya {
     private Double coste;
     
     @ManyToOne
-    @Column(name = "tipo_id")
+    @JoinColumn(name="base_id")
+    private Base base;
+
+    @ManyToOne
+    @JoinColumn(name = "tipo_id")
     private Tipo tipo;
 
     @ManyToOne
-    @Column(name = "disenyo_id")
+    @JoinColumn(name = "disenyo_id")
     private Disenyo disenyo;
 
     public Disenyo getDisenyo(){
@@ -93,5 +101,13 @@ public class Unya {
     public void setTipo(Tipo tipo){
         this.tipo = tipo;
     }
+
+	public Base getBase() {
+		return base;
+	}
+
+	public void setBase(Base base) {
+		this.base = base;
+	}
     
 }
