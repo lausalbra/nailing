@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom'
 import "./PropertyPanel.css";
+import $ from 'jquery'; 
 
 class PropertyPanel extends Component {
     constructor(props)
@@ -10,26 +11,39 @@ class PropertyPanel extends Component {
     }
 
     handleClick(e, self){
-        var opcion = e.target.textContent;
-        console.log(opcion);
+        //Obtiene el boton pulsado
+        var id = e.target.id;
+        var option = this.state.buttons.find(b => b.id === id)
+        //Se debe guardar la opción en el contexto
+        //Cerramos la caja
         var checkbox = e.target.parentElement.parentElement.firstChild;
         checkbox.checked = false;
-        var name = "Base" //Esto se recbirá de la llamada
+        //Si se ha pulsado una caja anterior se eliminan las cajas posteriores
         var containerDiv = checkbox.parentElement.parentElement.parentElement;
         let nextSibling = containerDiv.nextElementSibling;
-
         while(nextSibling) {
             var toDelete = nextSibling;
             nextSibling = nextSibling.nextElementSibling;
             toDelete.remove();
         }
+        //Se obtiene el panel principal para colocar la nueva caja
         var mainPanel = containerDiv.parentElement;
-        let newPropertyPanelContainer = document.createElement("div");
-        newPropertyPanelContainer.id = name + "Container";
-        newPropertyPanelContainer.className = "propertyContainer";
-        mainPanel.append(newPropertyPanelContainer);
-        ReactDOM.render(<><PropertyPanel name={name} buttons="Gel,Acrigel"/></>, newPropertyPanelContainer);
-        newPropertyPanelContainer.firstChild.firstChild.firstChild.checked = true;
+        var url = "/centro/" + mainPanel.parentElement.id.toString() + "/" + option.next + "/" + option.id;
+        $.ajax({
+            method: "GET",
+            url: url,
+            success: function (data) {
+                console.log("Servicios recibidos");
+                //El data que llegue debe tener 1 atributo, buttons: objeto boton con sus propiedades y carac siguiente
+                            //FORMATO JSON: {[{"id": 1, "name" : "Relleno", "cost": 1, "time": 3, "next": Material}, ...] }
+                let newPropertyPanelContainer = document.createElement("div");
+                newPropertyPanelContainer.id = option.next + "Container";
+                newPropertyPanelContainer.className = "propertyContainer";
+                mainPanel.append(newPropertyPanelContainer);
+                ReactDOM.render(<><PropertyPanel name={option.next} buttons={data}/></>, newPropertyPanelContainer);
+                newPropertyPanelContainer.firstChild.firstChild.firstChild.checked = true;
+            }
+        });
     }
  
     render()
@@ -51,12 +65,13 @@ class PropertyPanel extends Component {
                     </div>
                 </header>
                 <div class="tab-content flex justify-center flex-wrap">
-                    {this.state.buttons.split(",").map((element,i) => {
-                        console.log(element);
-                        var img = element.replace(" ", "-");
+                    {this.state.buttons.map((element,i) => {
+                        console.log(element.name);
+                        var id = element.id
+                        var img = element.name.replace(" ", "-");
                         return(
                             <>
-                            <div class="justify-center w-1/5" ><button onClick={(e) => this.handleClick(e, self)} class={"bg-" + img + " bg-Esculpida h-20 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center">{element}</p></div>
+                            <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + img + " h-20 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center">{element.name}</p></div>
                             </>
                         )
                     })}
@@ -67,3 +82,18 @@ class PropertyPanel extends Component {
 } 
 
 export default PropertyPanel;
+
+/*
+$.ajax({
+    method: "POST",
+    url: "/api/users",
+    data: {
+        username: username,
+        password: password,
+        authority: authority,
+    },
+    success: function (data) {
+        console.log("User Created");
+    }
+});
+*/
