@@ -35,13 +35,29 @@ class PropertyPanel extends Component {
             success: function (data) {
                 console.log("Servicios recibidos");
                 //El data que llegue debe tener 1 atributo, buttons: objeto boton con sus propiedades y carac siguiente
-                            //FORMATO JSON: {[{"id": 1, "name" : "Relleno", "cost": 1, "time": 3, "next": Material}, ...] }
-                let newPropertyPanelContainer = document.createElement("div");
-                newPropertyPanelContainer.id = option.next + "Container";
-                newPropertyPanelContainer.className = "propertyContainer";
-                mainPanel.append(newPropertyPanelContainer);
-                ReactDOM.render(<><PropertyPanel name={option.next} buttons={data}/></>, newPropertyPanelContainer);
-                newPropertyPanelContainer.firstChild.firstChild.firstChild.checked = true;
+                //FORMATO JSON: {"options": [{"id": 1, "name" : "Relleno", "cost": 1, "time": 3, "next": Material}, ...] }
+                if(data.options.length === 1 && data.options[0].next === "fin")
+                {
+                    //Se suman los tiempos y precios y se muestran
+                    var finisherDiv = document.createElement("div");
+                    var price = document.createTextNode("15€");
+                    var tiempo = document.createTextNode("20min");
+                    var buttonReserve = document.createElement("button");
+                    buttonReserve.innerText = "Reservar cita"
+                    finisherDiv.appendChild(price);
+                    finisherDiv.appendChild(tiempo);
+                    finisherDiv.appendChild(buttonReserve);
+                    mainPanel.append(finisherDiv);
+                }
+                else
+                {
+                    let newPropertyPanelContainer = document.createElement("div");
+                    newPropertyPanelContainer.id = option.next + "Container";
+                    newPropertyPanelContainer.className = "propertyContainer";
+                    mainPanel.append(newPropertyPanelContainer);
+                    ReactDOM.render(<><PropertyPanel name={option.next} buttons={data.options}/></>, newPropertyPanelContainer);
+                    newPropertyPanelContainer.firstChild.firstChild.firstChild.checked = true;
+                }
             }
         });
     }
