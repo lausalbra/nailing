@@ -13,41 +13,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nailing.app.base.Base;
-
-
-
-
-
-
 
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
-	@Autowired
-	public UsuarioService usuarioSer;
-	
-	@PostMapping()
-	public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario){
-		Usuario result = usuarioSer.addUsuario(usuario);
-		if(result != null)
-			return new ResponseEntity<Usuario>(result, HttpStatus.CREATED);
-		return new ResponseEntity<Usuario>(result, HttpStatus.BAD_REQUEST);
-	}
-	
-	@GetMapping()
-	public ResponseEntity<List<Usuario>> listUsuarios(){
-		List<Usuario> usuarios = usuarioSer.findAll();
-		return new ResponseEntity<List<Usuario>>(usuarios, HttpStatus.OK);
-	}
-	@DeleteMapping("/{id}")
-	public void deleteUsuario(@PathVariable Long id) {
-		usuarioSer.removeUsuario(id);
-	}
-	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> showUsuario(@PathVariable Long id){
-		return new ResponseEntity<Usuario>(usuarioSer.findById(id), HttpStatus.OK);
-	}
+    @Autowired
+    public UsuarioService usuarioSer;
+
+    @PostMapping()
+    public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario){
+        Usuario result = usuarioSer.addUsuario(usuario);
+        if(result != null)
+            return new ResponseEntity<Usuario>(result, HttpStatus.CREATED);
+        return new ResponseEntity<Usuario>(result, HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<Usuario>> listUsuarios(){
+        List<Usuario> usuarios = usuarioSer.findAll();
+        return new ResponseEntity<List<Usuario>>(usuarios, HttpStatus.OK);
+    }
+    
+    @DeleteMapping("/{id}")
+    public void deleteUsuario(@PathVariable Long id) {
+        usuarioSer.removeUsuario(id);
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> showUsuario(@PathVariable Long id){
+        return new ResponseEntity<Usuario>(usuarioSer.findById(id).get(), HttpStatus.OK);
+    }
 	
 }

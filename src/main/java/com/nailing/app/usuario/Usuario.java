@@ -1,5 +1,6 @@
 package com.nailing.app.usuario;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -41,6 +42,18 @@ public class Usuario {
 	@Column(name = "telefono")
 	private String telefono;
 
+        public Usuario(@Size(max = 100) @NotNull String nombre, @Size(min = 8, max = 100) @NotNull String contraseña,
+			@NotNull @Email String email, String telefono) {
+		super();
+		this.nombre = nombre;
+		this.contraseña = contraseña;
+		this.email = email;
+		this.telefono = telefono;
+	}
+	public Usuario() {
+		super();
+	}
+        
 	public String getNombre() {
 		return nombre;
 	}
@@ -73,17 +86,48 @@ public class Usuario {
 		this.telefono = telefono;
 	}
 
-	public Usuario(@Size(max = 100) @NotNull String nombre, @Size(min = 8, max = 100) @NotNull String contraseña,
-			@NotNull @Email String email, String telefono) {
-		super();
-		this.nombre = nombre;
-		this.contraseña = contraseña;
-		this.email = email;
-		this.telefono = telefono;
-	}
-	public Usuario() {
-		super();
-	}
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 13 * hash + Objects.hashCode(this.id);
+        hash = 13 * hash + Objects.hashCode(this.nombre);
+        hash = 13 * hash + Objects.hashCode(this.contraseña);
+        hash = 13 * hash + Objects.hashCode(this.email);
+        hash = 13 * hash + Objects.hashCode(this.telefono);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Usuario other = (Usuario) obj;
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.contraseña, other.contraseña)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.telefono, other.telefono)) {
+            return false;
+        }
+        return Objects.equals(this.id, other.id);
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", contrase\u00f1a=" + contraseña + ", email=" + email + ", telefono=" + telefono + '}';
+    }
 	
 
 }
