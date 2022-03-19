@@ -16,7 +16,7 @@ class PropertyPanel extends Component {
         var option = this.state.buttons.find(b => b.id === id)
         //Se debe guardar la opción en el contexto
         //Cerramos la caja
-        var checkbox = e.target.parentElement.parentElement.firstChild;
+        var checkbox = e.target.parentElement.parentElement.parentElement.firstChild;
         checkbox.checked = false;
         //Si se ha pulsado una caja anterior se eliminan las cajas posteriores
         var containerDiv = checkbox.parentElement.parentElement.parentElement;
@@ -28,10 +28,11 @@ class PropertyPanel extends Component {
         }
         //Se obtiene el panel principal para colocar la nueva caja
         var mainPanel = containerDiv.parentElement;
-        var url = "/centro/" + mainPanel.parentElement.id.toString() + "/" + option.next + "/" + option.id;
+        //El id del centro puede sacarse del contexto, el resto está en la opcion
+        //var url = "/centro/" + CONTEXTO + "/" + option.next + "/" + option.id;
         $.ajax({
             method: "GET",
-            url: url,
+            url: "https://my.api.mockaroo.com/123/123/centro/123?key=199eb280",
             success: function (data) {
                 console.log("Servicios recibidos");
                 //El data que llegue debe tener 1 atributo, buttons: objeto boton con sus propiedades y carac siguiente
