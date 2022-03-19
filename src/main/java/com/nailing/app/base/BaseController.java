@@ -22,11 +22,11 @@ public class BaseController {
 	
 //	Prueba del RestController
 //	
-//	@GetMapping("/check")
-//	public ResponseEntity<Base> checkBases(){
-//		Base base = new Base(0L, "BaseCheck", 10.12, 15.5, null);
-//		return new ResponseEntity<Base>(base, HttpStatus.OK);
-//	}
+	@GetMapping("/check")
+	public ResponseEntity<Base> checkBases(){
+		Base base = new Base(0L, "BaseCheck", 10, 15.5, null, null);
+		return new ResponseEntity<Base>(base, HttpStatus.OK);
+	}
 	
 //	añadir una nueva base (No hace falta indicar el ID)
 	@PostMapping()

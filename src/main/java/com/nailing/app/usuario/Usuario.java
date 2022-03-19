@@ -5,9 +5,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -19,81 +21,101 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class Usuario {
 	
-	@Id
-	@GeneratedValue
-	@Column(name = "id")
-	private Long id;
-	
-	@Column(name = "nombre")
-	@Size(max = 100)
-	@NotNull
-	private String nombre;
-	
-	@Column(name = "contraseña")
-	@Size(min=8,max = 100)
-	@NotNull
-	private String contraseña;
-	
-	@Column(name = "email")
-	@NotNull
-	@Email
-	private String email;
-	
-	@Column(name = "telefono")
-	private String telefono;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id;
 
-        public Usuario(@Size(max = 100) @NotNull String nombre, @Size(min = 8, max = 100) @NotNull String contraseña,
-			@NotNull @Email String email, String telefono) {
-		super();
-		this.nombre = nombre;
-		this.contraseña = contraseña;
-		this.email = email;
-		this.telefono = telefono;
-	}
-	public Usuario() {
-		super();
-	}
-        
-	public String getNombre() {
-		return nombre;
-	}
+    @Column(name = "usuario")
+    @Size(max = 100)
+    @NotBlank
+    private String usuario;
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    @Column(name = "contrasenya")
+    @Size(max = 100)
+    @NotBlank
+    private String contraseña;
 
-	public String getContraseña() {
-		return contraseña;
-	}
+    @Column(name = "email")
+    @NotNull
+    @Email
+    private String email;
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
-	}
+    @Column(name = "telefono")
+    private String telefono;
 
-	public String getEmail() {
-		return email;
-	}
+    @Column(name = "rol")
+    private String rol;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public Usuario() {
+        super();
+    }
 
-	public String getTelefono() {
-		return telefono;
-	}
+    public Usuario(String usuario, String contraseña, String email, String telefono, String rol) {
+        this.usuario = usuario;
+        this.contraseña = contraseña;
+        this.email = email;
+        this.telefono = telefono;
+        this.rol = rol;
+    }
+    
+    public Long getId() {
+        return id;
+    }
 
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 13 * hash + Objects.hashCode(this.id);
-        hash = 13 * hash + Objects.hashCode(this.nombre);
-        hash = 13 * hash + Objects.hashCode(this.contraseña);
-        hash = 13 * hash + Objects.hashCode(this.email);
-        hash = 13 * hash + Objects.hashCode(this.telefono);
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.usuario);
+        hash = 59 * hash + Objects.hashCode(this.contraseña);
+        hash = 59 * hash + Objects.hashCode(this.email);
+        hash = 59 * hash + Objects.hashCode(this.telefono);
+        hash = 59 * hash + Objects.hashCode(this.rol);
         return hash;
     }
 
@@ -109,7 +131,7 @@ public class Usuario {
             return false;
         }
         final Usuario other = (Usuario) obj;
-        if (!Objects.equals(this.nombre, other.nombre)) {
+        if (!Objects.equals(this.usuario, other.usuario)) {
             return false;
         }
         if (!Objects.equals(this.contraseña, other.contraseña)) {
@@ -121,12 +143,15 @@ public class Usuario {
         if (!Objects.equals(this.telefono, other.telefono)) {
             return false;
         }
+        if (!Objects.equals(this.rol, other.rol)) {
+            return false;
+        }
         return Objects.equals(this.id, other.id);
     }
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", contrase\u00f1a=" + contraseña + ", email=" + email + ", telefono=" + telefono + '}';
+        return "Usuario{" + "id=" + id + ", usuario=" + usuario + ", email=" + email + ", telefono=" + telefono + ", rol=" + rol + '}';
     }
 	
 
