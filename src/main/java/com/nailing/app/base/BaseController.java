@@ -59,7 +59,7 @@ public class BaseController {
 	}
 	
 	@GetMapping("/{tipoId}/centro/{centroId}")
-	public  ResponseEntity<List<Base>> basesByCentro(@PathVariable Long tipoId, @PathVariable Long centroId){
+	public  ResponseEntity<List<Base>> basesByCentroTipo(@PathVariable Long tipoId, @PathVariable Long centroId){
 		List<Base> bases = baseService.findBasesByCentroTipo(tipoId, centroId);
 		return new ResponseEntity<List<Base>>(bases, HttpStatus.OK);
 	}
