@@ -1,6 +1,7 @@
-package com.nailing.app.base;
+package com.nailing.app.tamanyo;
 
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,18 +9,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
 
 import com.nailing.app.centro.Centro;
 import com.nailing.app.components.Fases;
 
 @Entity
-@Table(name = "base")
-public class Base {
+@Table(name = "tamanyo")
+public class Tamanyo {
 
 	@Id
 	@GeneratedValue
@@ -28,7 +27,7 @@ public class Base {
 
 	@Column(name = "nombre")
 	@NotNull
-	private NombreBase nombre;
+	private NombreTamanyo nombre;
 
 	@Positive
 	@NotNull
@@ -42,24 +41,24 @@ public class Base {
 
 	@Column(name = "siguiente_fase")
 	@NotNull
-	private Fases siguienteFase;
+	private Fases siguiente_fase;
 
 	@ManyToOne
 	@JoinColumn(name = "centro_id")
 	private Centro centro;
 
-	public Base() {
+	public Tamanyo() {
 		super();
 	}
 
-	public Base(Long id, @Size(max = 50) @NotBlank NombreBase nombre, @Positive @NotNull Integer tiempo,
-			@PositiveOrZero @NotNull Double coste, @NotBlank Fases fases, Centro centro) {
+	public Tamanyo(Long id, @NotNull NombreTamanyo nombre, @Positive @NotNull Integer tiempo,
+			@PositiveOrZero @NotNull Double coste, @NotNull Fases siguiente_fase, Centro centro) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.tiempo = tiempo;
 		this.coste = coste;
-		this.siguienteFase = fases;
+		this.siguiente_fase = siguiente_fase;
 		this.centro = centro;
 	}
 
@@ -71,11 +70,11 @@ public class Base {
 		this.id = id;
 	}
 
-	public NombreBase getNombre() {
+	public NombreTamanyo getNombre() {
 		return nombre;
 	}
 
-	public void setNombre(NombreBase nombre) {
+	public void setNombre(NombreTamanyo nombre) {
 		this.nombre = nombre;
 	}
 
@@ -95,25 +94,25 @@ public class Base {
 		this.coste = coste;
 	}
 
+	public Fases getSiguiente_fase() {
+		return siguiente_fase;
+	}
+
+	public void setSiguiente_fase(Fases siguiente_fase) {
+		this.siguiente_fase = siguiente_fase;
+	}
+
 	public Centro getCentro() {
 		return centro;
 	}
 
-	public void setCentro(Centro centros) {
-		this.centro = centros;
-	}
-
-	public Fases getSiguienteFase() {
-		return siguienteFase;
-	}
-
-	public void setSiguienteFase(Fases siguienteFase) {
-		this.siguienteFase = siguienteFase;
+	public void setCentro(Centro centro) {
+		this.centro = centro;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(centro, coste, id, nombre, siguienteFase, tiempo);
+		return Objects.hash(centro, coste, id, nombre, siguiente_fase, tiempo);
 	}
 
 	@Override
@@ -124,15 +123,16 @@ public class Base {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Base other = (Base) obj;
+		Tamanyo other = (Tamanyo) obj;
 		return Objects.equals(centro, other.centro) && Objects.equals(coste, other.coste)
-				&& Objects.equals(id, other.id) && nombre == other.nombre && siguienteFase == other.siguienteFase
+				&& Objects.equals(id, other.id) && nombre == other.nombre && siguiente_fase == other.siguiente_fase
 				&& Objects.equals(tiempo, other.tiempo);
 	}
 
 	@Override
 	public String toString() {
-		return "Base [id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + ", siguienteFase="
-				+ siguienteFase + "]";
+		return "Tamanyo [id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste
+				+ ", siguiente_fase=" + siguiente_fase + "]";
 	}
+
 }
