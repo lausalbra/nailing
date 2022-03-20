@@ -1,6 +1,6 @@
 name: Nailing application
 
-on:
+#on:
 # pull_request:
 #  branches: [develop]
 
