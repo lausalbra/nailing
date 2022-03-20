@@ -21,6 +21,7 @@ import javax.validation.constraints.Size;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.nailing.app.base.Base;
+import com.nailing.app.decoracion.Decoracion;
 
 /**
  *
@@ -53,6 +54,10 @@ public class Centro {
 
 	@OneToMany(mappedBy = "centro")
 	private Set<Base> bases;
+        
+        @OneToMany(mappedBy = "centro")
+	private Set<Decoracion> decoracion;
+
 
 	public Centro() {
 	}
