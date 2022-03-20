@@ -4,6 +4,7 @@
  */
 package com.nailing.app.centro;
 
+import com.nailing.app.acabado.Acabado;
 import java.util.Objects;
 import java.util.Set;
 
