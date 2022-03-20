@@ -1,8 +1,9 @@
-import './App.css';
+import './App.css'
 import { Header } from './components/Header'
 import { Landing } from './views/Landing'
 import { Login } from './views/Login'
 import { Route } from 'wouter'
+import { BookingsList } from './views/BookingsList'
 import { Usuario } from './views/Usuario';
 import { Centro } from './views/Centro';
 import { Conocenos } from './views/Conocenos'
@@ -18,11 +19,12 @@ function App() {
           <Route path='/usuario' component={Usuario} />
           <Route path='/centro' component={Centro} />
           <Route path='/conocenos' component={Conocenos} />
+          <Route path='/cita2' component={BookingsList} />
           <Route path='/' component={Landing} />
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
