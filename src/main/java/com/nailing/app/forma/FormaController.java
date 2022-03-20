@@ -44,9 +44,9 @@ public class FormaController {
 	return new ResponseEntity<Forma>(formaService.findById(id), HttpStatus.OK);
     }
 	
-    @GetMapping("/{formaId}/centro/{centroId}")
-    public  ResponseEntity<List<Forma>> basesByCentroTipo(@PathVariable Long formaId, @PathVariable Long centroId){
-    	List<Forma> formas = formaService.findFormasByCentroBase(formaId, centroId);
+    @GetMapping("/{baseId}/centro/{centroId}")
+    public  ResponseEntity<List<Forma>> basesByCentroTipo(@PathVariable Long baseId, @PathVariable Long centroId){
+    	List<Forma> formas = formaService.findFormasByCentroBase(baseId, centroId);
 	return new ResponseEntity<List<Forma>>(formas, HttpStatus.OK);
     }
 }
