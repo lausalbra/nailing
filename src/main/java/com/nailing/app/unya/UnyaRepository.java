@@ -16,7 +16,4 @@ import org.springframework.data.repository.query.Param;
  */
 public interface UnyaRepository extends CrudRepository<Unya, Long>{
     
-    @Query("SELECT * FROM unya")
-    public Collection<Unya> findAll();
-    
 }

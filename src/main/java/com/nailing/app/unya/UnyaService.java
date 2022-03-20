@@ -26,7 +26,7 @@ public class UnyaService {
         return unyaRepository.findById(id).get();
     }
     
-    public Collection<Unya> findAll(){
+    public Iterable<Unya> findAll(){
         return unyaRepository.findAll();
     }
     
