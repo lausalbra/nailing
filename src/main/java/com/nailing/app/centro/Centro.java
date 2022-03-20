@@ -55,10 +55,6 @@ public class Centro {
 	@OneToMany(mappedBy = "centro")
 	private Set<Base> bases;
         
-        @OneToMany(mappedBy = "centro")
-	private Set<Decoracion> decoracion;
-
-
 	public Centro() {
 	}
 
