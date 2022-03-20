@@ -4,6 +4,7 @@
  */
 package com.nailing.app.centro;
 
+import com.nailing.app.acabado.Acabado;
 import java.util.Objects;
 import java.util.Set;
 
@@ -53,6 +54,9 @@ public class Centro {
 
 	@OneToMany(mappedBy = "centro")
 	private Set<Base> bases;
+        
+        @OneToMany(mappedBy = "centro")
+	private Set<Acabado> acabado;
 
 	public Centro() {
 	}
