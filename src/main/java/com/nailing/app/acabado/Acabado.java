@@ -6,7 +6,7 @@ package com.nailing.app.acabado;
 
 import com.nailing.app.centro.Centro;
 import com.nailing.app.components.Fases;
-import com.nailing.app.unya.Unya;
+import com.nailing.app.cita.Cita;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;

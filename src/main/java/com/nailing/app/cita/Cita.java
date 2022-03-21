@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.nailing.app.unya;
+package com.nailing.app.cita;
 
 import com.nailing.app.decoracion.Decoracion;
 import com.nailing.app.acabado.Acabado;
@@ -23,7 +23,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.nailing.app.base.Base;
 import com.nailing.app.forma.Forma;
 import com.nailing.app.tamanyo.Tamanyo;
+import java.time.LocalDateTime;
 import java.util.Objects;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
@@ -32,9 +34,9 @@ import javax.validation.constraints.PositiveOrZero;
  * @author Jacgarvel
  */
 @Entity
-@Table(name = "unya")
+@Table(name = "cita")
 @EntityListeners(AuditingEntityListener.class)
-public class Unya {
+public class Cita {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,6 +49,14 @@ public class Unya {
     @Column(name = "coste")
     @PositiveOrZero
     private Double coste;
+    
+    @NotNull
+    @Column(name = "hora_inicio")
+    private LocalDateTime horaInicio;
+    
+    @NotNull
+    @Column(name = "hora_fin")
+    private LocalDateTime horaFin;
     
     @ManyToOne
     @JoinColumn(name = "decoracion_id")
@@ -86,6 +96,14 @@ public class Unya {
 
     public Double getCoste() {
         return coste;
+    }
+
+    public LocalDateTime getHoraInicio() {
+        return horaInicio;
+    }
+
+    public LocalDateTime getHoraFin() {
+        return horaFin;
     }
 
     public Decoracion getDecoracion() {
@@ -128,6 +146,14 @@ public class Unya {
         this.coste = coste;
     }
 
+    public void setHoraInicio(LocalDateTime horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public void setHoraFin(LocalDateTime horaFin) {
+        this.horaFin = horaFin;
+    }
+
     public void setDecoracion(Decoracion decoracion) {
         this.decoracion = decoracion;
     }
@@ -156,10 +182,12 @@ public class Unya {
         this.forma = forma;
     }
 
-    public Unya(Long id, Integer tiempo, Double coste, Decoracion decoracion, Acabado acabado, Base base, Tipo tipo, Disenyo disenyo, Tamanyo tamanyo, Forma forma) {
+    public Cita(Long id, Integer tiempo, Double coste, LocalDateTime horaInicio, LocalDateTime horaFin, Decoracion decoracion, Acabado acabado, Base base, Tipo tipo, Disenyo disenyo, Tamanyo tamanyo, Forma forma) {
         this.id = id;
         this.tiempo = tiempo;
         this.coste = coste;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
         this.decoracion = decoracion;
         this.acabado = acabado;
         this.base = base;
@@ -169,23 +197,24 @@ public class Unya {
         this.forma = forma;
     }
 
-    public Unya() {
-        super();
+    public Cita() {
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.tiempo);
-        hash = 37 * hash + Objects.hashCode(this.coste);
-        hash = 37 * hash + Objects.hashCode(this.decoracion);
-        hash = 37 * hash + Objects.hashCode(this.acabado);
-        hash = 37 * hash + Objects.hashCode(this.base);
-        hash = 37 * hash + Objects.hashCode(this.tipo);
-        hash = 37 * hash + Objects.hashCode(this.disenyo);
-        hash = 37 * hash + Objects.hashCode(this.tamanyo);
-        hash = 37 * hash + Objects.hashCode(this.forma);
+        int hash = 7;
+        hash = 31 * hash + Objects.hashCode(this.id);
+        hash = 31 * hash + Objects.hashCode(this.tiempo);
+        hash = 31 * hash + Objects.hashCode(this.coste);
+        hash = 31 * hash + Objects.hashCode(this.horaInicio);
+        hash = 31 * hash + Objects.hashCode(this.horaFin);
+        hash = 31 * hash + Objects.hashCode(this.decoracion);
+        hash = 31 * hash + Objects.hashCode(this.acabado);
+        hash = 31 * hash + Objects.hashCode(this.base);
+        hash = 31 * hash + Objects.hashCode(this.tipo);
+        hash = 31 * hash + Objects.hashCode(this.disenyo);
+        hash = 31 * hash + Objects.hashCode(this.tamanyo);
+        hash = 31 * hash + Objects.hashCode(this.forma);
         return hash;
     }
 
@@ -200,7 +229,7 @@ public class Unya {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Unya other = (Unya) obj;
+        final Cita other = (Cita) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -208,6 +237,12 @@ public class Unya {
             return false;
         }
         if (!Objects.equals(this.coste, other.coste)) {
+            return false;
+        }
+        if (!Objects.equals(this.horaInicio, other.horaInicio)) {
+            return false;
+        }
+        if (!Objects.equals(this.horaFin, other.horaFin)) {
             return false;
         }
         if (!Objects.equals(this.decoracion, other.decoracion)) {
@@ -233,7 +268,7 @@ public class Unya {
 
     @Override
     public String toString() {
-        return "Unya{" + "id=" + id + ", tiempo=" + tiempo + ", coste=" + coste + ", decoracion=" + decoracion + ", acabado=" + acabado + ", base=" + base + ", tipo=" + tipo + ", disenyo=" + disenyo + ", tamanyo=" + tamanyo + ", forma=" + forma + '}';
+        return "Cita{" + "id=" + id + ", tiempo=" + tiempo + ", coste=" + coste + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", decoracion=" + decoracion + ", acabado=" + acabado + ", base=" + base + ", tipo=" + tipo + ", disenyo=" + disenyo + ", tamanyo=" + tamanyo + ", forma=" + forma + '}';
     }
-      
+    
 }

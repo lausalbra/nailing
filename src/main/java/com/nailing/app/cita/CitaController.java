@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.nailing.app.unya;
+package com.nailing.app.cita;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -22,32 +22,32 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Usuario
  */
 @RestController
-@RequestMapping("/unya")
-public class UnyaController {
+@RequestMapping("/cita")
+public class CitaController {
     
     @Autowired
-    UnyaService unyaService;
+    CitaService citaService;
     
     @GetMapping("/list")
-    public ResponseEntity<List<Unya>> listUnyas(){
-        List<Unya> unyas = StreamSupport.stream(unyaService.findAll()
+    public ResponseEntity<List<Cita>> listUnyas(){
+        List<Cita> unyas = StreamSupport.stream(citaService.findAll()
                 .spliterator(), false).collect(Collectors.toList());
-        return new ResponseEntity<List<Unya>>(unyas, HttpStatus.OK);
+        return new ResponseEntity<List<Cita>>(unyas, HttpStatus.OK);
     }
     
     @GetMapping("/show/{id}")
-    public ResponseEntity<Unya> showUnya(@PathVariable Long id){
+    public ResponseEntity<Cita> showUnya(@PathVariable Long id){
         try{
-            Unya unya = unyaService.findById(id);
+            Cita unya = citaService.findById(id);
             return new ResponseEntity<>(unya, HttpStatus.OK);
         }catch(NoSuchElementException e){
-            return new ResponseEntity<>(unyaService.findById(id),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(citaService.findById(id),HttpStatus.BAD_REQUEST);
         }
     }
     
     @DeleteMapping("/delete/{id}")
     public void deleteUnya(@PathVariable Long id){
-        unyaService.removeUnya(id);
+        citaService.removeUnya(id);
     }
 
 }
