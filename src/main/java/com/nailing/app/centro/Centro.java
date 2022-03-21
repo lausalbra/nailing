@@ -23,6 +23,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.nailing.app.base.Base;
 import com.nailing.app.decoracion.Decoracion;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -53,73 +54,131 @@ public class Centro {
 	@NotBlank
 	private String imagen;
 
-	@OneToMany(mappedBy = "centro")
-	private Set<Base> bases;
+	private String provincia;
         
-	public Centro() {
-	}
+        private LocalDateTime horaApertura;
+        
+        private LocalDateTime horaCierre;
 
-	public Centro(long id, String nombre, String ubicacion, String imagen) {
-		this.id = id;
-		this.nombre = nombre;
-		this.ubicacion = ubicacion;
-		this.imagen = imagen;
-	}
+    public Centro() {
+    }
 
-	public long getId() {
-		return id;
-	}
+    public Centro(String nombre, String ubicacion, String imagen, String provincia, LocalDateTime horaApertura, LocalDateTime horaCierre) {
+        this.nombre = nombre;
+        this.ubicacion = ubicacion;
+        this.imagen = imagen;
+        this.provincia = provincia;
+        this.horaApertura = horaApertura;
+        this.horaCierre = horaCierre;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public String getUbicacion() {
-		return ubicacion;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public void setUbicacion(String ubicacion) {
-		this.ubicacion = ubicacion;
-	}
+    public String getUbicacion() {
+        return ubicacion;
+    }
 
-	public String getImagen() {
-		return imagen;
-	}
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
 
-	public void setImagen(String imagen) {
-		this.imagen = imagen;
-	}
+    public String getImagen() {
+        return imagen;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(bases, id, imagen, nombre, ubicacion);
-	}
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Centro other = (Centro) obj;
-		return Objects.equals(bases, other.bases) && Objects.equals(id, other.id)
-				&& Objects.equals(imagen, other.imagen) && Objects.equals(nombre, other.nombre)
-				&& Objects.equals(ubicacion, other.ubicacion);
-	}
+    public String getProvincia() {
+        return provincia;
+    }
 
-	@Override
-	public String toString() {
-		return "Centro{" + "id=" + id + ", nombre=" + nombre + ", ubicacion=" + ubicacion + ", imagen=" + imagen + '}';
-	}
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public LocalDateTime getHoraApertura() {
+        return horaApertura;
+    }
+
+    public void setHoraApertura(LocalDateTime horaApertura) {
+        this.horaApertura = horaApertura;
+    }
+
+    public LocalDateTime getHoraCierre() {
+        return horaCierre;
+    }
+
+    public void setHoraCierre(LocalDateTime horaCierre) {
+        this.horaCierre = horaCierre;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.nombre);
+        hash = 37 * hash + Objects.hashCode(this.ubicacion);
+        hash = 37 * hash + Objects.hashCode(this.imagen);
+        hash = 37 * hash + Objects.hashCode(this.provincia);
+        hash = 37 * hash + Objects.hashCode(this.horaApertura);
+        hash = 37 * hash + Objects.hashCode(this.horaCierre);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Centro other = (Centro) obj;
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.ubicacion, other.ubicacion)) {
+            return false;
+        }
+        if (!Objects.equals(this.imagen, other.imagen)) {
+            return false;
+        }
+        if (!Objects.equals(this.provincia, other.provincia)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.horaApertura, other.horaApertura)) {
+            return false;
+        }
+        return Objects.equals(this.horaCierre, other.horaCierre);
+    }
+
+    @Override
+    public String toString() {
+        return "Centro{" + "id=" + id + ", nombre=" + nombre + ", ubicacion=" + ubicacion + ", imagen=" + imagen + ", provincia=" + provincia + ", horaApertura=" + horaApertura + ", horaCierre=" + horaCierre + '}';
+    }
+        
+        
 
 }
