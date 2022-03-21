@@ -27,9 +27,9 @@ class PropertyPanel extends Component {
             toDelete.remove();
         }
         //Se guarda esta opcion
-        sessionStorage.setItem(this.state.name, option);
-        sessionStorage.setItem(this.state.name+"Cost", option.cost);
-        sessionStorage.setItem(this.state.name+"Time", option.time);
+        sessionStorage.setItem(this.state.name, id);
+        sessionStorage.setItem(this.state.name+"Cost", option.coste);
+        sessionStorage.setItem(this.state.name+"Time", option.tiempo);
         //Si es una caja anterior se borran las variables anteriores
         switch(this.state.name){
             case("Tipo"):
@@ -145,43 +145,43 @@ class PropertyPanel extends Component {
                 console.log("Servicios recibidos");
                 //El data que llegue debe tener 1 atributo, buttons: objeto boton con sus propiedades y carac siguiente
                 //FORMATO JSON: {"options": [{"id": 1, "name" : "Relleno", "cost": 1, "time": 3, "next": Material}, ...] }
-                if(data.options.length === 1 && data.options[0].next === "fin")
+                if(data.length === 1 && data[0].next === "fin")
                 {
                     //Se suman los tiempos y precios y se muestran
                     var finisherDiv = document.createElement("div");
                     var time = 0;
                     var price = 0;
                     if(sessionStorage.getItem("Tipo") != null){
-                        time += sessionStorage.getItem("TipoTime");
-                        price += sessionStorage.getItem("TipoCost");
+                        time += parseInt(sessionStorage.getItem("TipoTime"));
+                        price += parseFloat(sessionStorage.getItem("TipoCost"));
                     }
                     if(sessionStorage.getItem("Base") != null){
-                        time += sessionStorage.getItem("BaseTime");
-                        price += sessionStorage.getItem("BaseCost");
+                        time += parseInt(sessionStorage.getItem("BaseTime"));
+                        price += parseFloat(sessionStorage.getItem("BaseCost"));
                     }
                     if(sessionStorage.getItem("Material") != null){
-                        time += sessionStorage.getItem("MaterialTime");
-                        price += sessionStorage.getItem("MaterialCost");
+                        time += parseInt(sessionStorage.getItem("MaterialTime"));
+                        price += parseFloat(sessionStorage.getItem("MaterialCost"));
                     }
                     if(sessionStorage.getItem("Forma") != null){
-                        time += sessionStorage.getItem("FormaTime");
-                        price += sessionStorage.getItem("FormaCost");
+                        time += parseInt(sessionStorage.getItem("FormaTime"));
+                        price += parseFloat(sessionStorage.getItem("FormaCost"));
                     }
                     if(sessionStorage.getItem("Tamaño") != null){
-                        time += sessionStorage.getItem("TamañoTime");
-                        price += sessionStorage.getItem("TamañoCost");
+                        time += parseInt(sessionStorage.getItem("TamañoTime"));
+                        price += parseFloat(sessionStorage.getItem("TamañoCost"));
                     }
                     if(sessionStorage.getItem("Diseño") != null){
-                        time += sessionStorage.getItem("DiseñoTime");
-                        price += sessionStorage.getItem("DiseñoCost");
+                        time += parseInt(sessionStorage.getItem("DiseñoTime"));
+                        price += parseFloat(sessionStorage.getItem("DiseñoCost"));
                     }
                     if(sessionStorage.getItem("Decoracion") != null){
-                        time += sessionStorage.getItem("DecoracionTime");
-                        price += sessionStorage.getItem("DecoracionCost");
+                        time += parseInt(sessionStorage.getItem("DecoracionTime"));
+                        price += parseFloat(sessionStorage.getItem("DecoracionCost"));
                     }
                     if(sessionStorage.getItem("Acabado") != null){
-                        time += sessionStorage.getItem("AcabadoTime");
-                        price += sessionStorage.getItem("AcabadoCost");
+                        time += parseInt(sessionStorage.getItem("AcabadoTime"));
+                        price += parseFloat(sessionStorage.getItem("AcabadoCost"));
                     }
                     var priceElement = document.createTextNode(price.toString());
                     var timeElement = document.createTextNode(time.toString());
@@ -192,6 +192,8 @@ class PropertyPanel extends Component {
                             method: "POST",
                             data: {usuario: sessionStorage.getItem("userId"),
                                 centro: sessionStorage.getItem("centreId"),
+                                precio: price.toString(),
+                                tiempo: time.toString(),
                                 tipo: sessionStorage.getItem("Tipo"),
                                 base: sessionStorage.getItem("Base"),
                                 material: sessionStorage.getItem("Material"),
@@ -211,12 +213,12 @@ class PropertyPanel extends Component {
                 else
                 {
                     let newPropertyPanelContainer = document.createElement("div");
-                    var nextName = option.next.charAt(0).toUpperCase() + option.next.slice(1,-1);
+                    var nextName = option.siguienteFase.charAt(0).toUpperCase() + option.siguienteFase.slice(1,-1);
                     nextName.replace("ny","ñ");
                     newPropertyPanelContainer.id = nextName + "Container";
                     newPropertyPanelContainer.className = "propertyContainer";
                     mainPanel.append(newPropertyPanelContainer);
-                    ReactDOM.render(<><PropertyPanel name={nextName} buttons={data.options}/></>, newPropertyPanelContainer);
+                    ReactDOM.render(<><PropertyPanel name={nextName} buttons={data}/></>, newPropertyPanelContainer);
                     newPropertyPanelContainer.firstChild.firstChild.firstChild.checked = true;
                 }
             }
@@ -243,12 +245,12 @@ class PropertyPanel extends Component {
                 </header>
                 <div class="tab-content flex justify-center flex-wrap">
                     {this.state.buttons.map((element,i) => {
-                        console.log(element.name);
+                        console.log(element.nombre);
                         var id = element.id
-                        var img = element.name.replace(" ", "-");
+                        var img = element.nombre.replace(" ", "-");
                         return(
                             <>
-                            <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + img + " h-20 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center">{element.name}</p></div>
+                            <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + img + " h-20 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center">{element.nombre}</p></div>
                             </>
                         )
                     })}
