@@ -6,7 +6,7 @@ export function Centro() {
     return (
         <>
             <Nombre name={'Name'} ></Nombre>
-            <CenterDetails image={foto} address={'C/calle nº1'} rating={'5'}  ></CenterDetails>
+            <CenterDetails image={foto} address={'C/calle nº1'} rating={'3'}  ></CenterDetails>
 
         </>
 

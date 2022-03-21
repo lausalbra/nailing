@@ -2,14 +2,13 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import "./User.css";
 
 export function UserDetails({ image, username, email, phone }) {
   return (
-    <Card class="card" sx={{ minWidth: 275 }}>
+    <Card style={{backgroundColor: 'rgb(248, 225, 228)'}} sx={{ minWidth: 275 }}>
       <CardContent>
       <div className="flex items-center">
-            <img src={image} alt="img" className="max-w-full float-left bg-white" />
+            <img src={image} alt="img" className="w-52 aspect-square rounded-md shadow-md max-w-full float-left bg-white" />
             <div className="ml-5 items-center">
                 <p><strong>Email:</strong> {email}</p>
                 <p><strong>Teléfono:</strong> {phone}</p>
@@ -17,8 +16,9 @@ export function UserDetails({ image, username, email, phone }) {
         </div>
       </CardContent>
       <CardActions>
-            <button className="border-2 border-pink-300 text-black px-32 py-3 rounded-md text-1xl font-medium hover:bg-pink-300 transition duration-300">Mis reservas</button>
+            <button className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Mis reservas</button>
       </CardActions>
     </Card>
+    
   );
 }
