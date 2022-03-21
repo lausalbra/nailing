@@ -51,9 +51,6 @@ public class Decoracion {
     @Column(name = "siguiente_fase")
     private Fases siguienteFase;
     
-    @OneToMany(mappedBy = "decoracion")
-    private Set<Unya> unyas;
-    
     @ManyToOne
     @JoinColumn(name = "centro_id")
     private Centro centro;
@@ -76,10 +73,6 @@ public class Decoracion {
 
     public Fases getSiguienteFase() {
         return siguienteFase;
-    }
-
-    public Set<Unya> getUnyas() {
-        return unyas;
     }
 
     public Centro getCentro() {
@@ -106,21 +99,16 @@ public class Decoracion {
         this.siguienteFase = siguienteFase;
     }
 
-    public void setUnyas(Set<Unya> unyas) {
-        this.unyas = unyas;
-    }
-
     public void setCentro(Centro centro) {
         this.centro = centro;
     }
 
-    public Decoracion(Long id, NombreDecoracion nombre, Integer tiempo, Double coste, Fases siguienteFase, Set<Unya> unyas, Centro centro) {
+    public Decoracion(Long id, NombreDecoracion nombre, Integer tiempo, Double coste, Fases siguienteFase, Centro centro) {
         this.id = id;
         this.nombre = nombre;
         this.tiempo = tiempo;
         this.coste = coste;
         this.siguienteFase = siguienteFase;
-        this.unyas = unyas;
         this.centro = centro;
     }
 
@@ -130,14 +118,13 @@ public class Decoracion {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 31 * hash + Objects.hashCode(this.id);
-        hash = 31 * hash + Objects.hashCode(this.nombre);
-        hash = 31 * hash + Objects.hashCode(this.tiempo);
-        hash = 31 * hash + Objects.hashCode(this.coste);
-        hash = 31 * hash + Objects.hashCode(this.siguienteFase);
-        hash = 31 * hash + Objects.hashCode(this.unyas);
-        hash = 31 * hash + Objects.hashCode(this.centro);
+        int hash = 3;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.nombre);
+        hash = 17 * hash + Objects.hashCode(this.tiempo);
+        hash = 17 * hash + Objects.hashCode(this.coste);
+        hash = 17 * hash + Objects.hashCode(this.siguienteFase);
+        hash = 17 * hash + Objects.hashCode(this.centro);
         return hash;
     }
 
@@ -168,15 +155,12 @@ public class Decoracion {
         if (this.siguienteFase != other.siguienteFase) {
             return false;
         }
-        if (!Objects.equals(this.unyas, other.unyas)) {
-            return false;
-        }
         return Objects.equals(this.centro, other.centro);
     }
 
     @Override
     public String toString() {
-        return "Decoracion{" + "id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + ", siguienteFase=" + siguienteFase + ", unyas=" + unyas + ", centro=" + centro + '}';
+        return "Decoracion{" + "id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + ", siguienteFase=" + siguienteFase + ", centro=" + centro + '}';
     }
 
 }

@@ -21,6 +21,8 @@ import javax.persistence.Table;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.nailing.app.base.Base;
+import com.nailing.app.forma.Forma;
+import com.nailing.app.tamanyo.Tamanyo;
 import java.util.Objects;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
@@ -65,6 +67,14 @@ public class Unya {
     @ManyToOne
     @JoinColumn(name = "disenyo_id")
     private Disenyo disenyo;
+    
+    @ManyToOne
+    @JoinColumn(name = "tamanyo_id")
+    private Tamanyo tamanyo;
+    
+    @ManyToOne
+    @JoinColumn(name = "forma_id")
+    private Forma forma;
 
     public Long getId() {
         return id;
@@ -96,6 +106,14 @@ public class Unya {
 
     public Disenyo getDisenyo() {
         return disenyo;
+    }
+
+    public Tamanyo getTamanyo() {
+        return tamanyo;
+    }
+
+    public Forma getForma() {
+        return forma;
     }
 
     public void setId(Long id) {
@@ -130,17 +148,44 @@ public class Unya {
         this.disenyo = disenyo;
     }
 
+    public void setTamanyo(Tamanyo tamanyo) {
+        this.tamanyo = tamanyo;
+    }
+
+    public void setForma(Forma forma) {
+        this.forma = forma;
+    }
+
+    public Unya(Long id, Integer tiempo, Double coste, Decoracion decoracion, Acabado acabado, Base base, Tipo tipo, Disenyo disenyo, Tamanyo tamanyo, Forma forma) {
+        this.id = id;
+        this.tiempo = tiempo;
+        this.coste = coste;
+        this.decoracion = decoracion;
+        this.acabado = acabado;
+        this.base = base;
+        this.tipo = tipo;
+        this.disenyo = disenyo;
+        this.tamanyo = tamanyo;
+        this.forma = forma;
+    }
+
+    public Unya() {
+        super();
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 61 * hash + Objects.hashCode(this.id);
-        hash = 61 * hash + Objects.hashCode(this.tiempo);
-        hash = 61 * hash + Objects.hashCode(this.coste);
-        hash = 61 * hash + Objects.hashCode(this.decoracion);
-        hash = 61 * hash + Objects.hashCode(this.acabado);
-        hash = 61 * hash + Objects.hashCode(this.base);
-        hash = 61 * hash + Objects.hashCode(this.tipo);
-        hash = 61 * hash + Objects.hashCode(this.disenyo);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.tiempo);
+        hash = 37 * hash + Objects.hashCode(this.coste);
+        hash = 37 * hash + Objects.hashCode(this.decoracion);
+        hash = 37 * hash + Objects.hashCode(this.acabado);
+        hash = 37 * hash + Objects.hashCode(this.base);
+        hash = 37 * hash + Objects.hashCode(this.tipo);
+        hash = 37 * hash + Objects.hashCode(this.disenyo);
+        hash = 37 * hash + Objects.hashCode(this.tamanyo);
+        hash = 37 * hash + Objects.hashCode(this.forma);
         return hash;
     }
 
@@ -177,12 +222,18 @@ public class Unya {
         if (!Objects.equals(this.tipo, other.tipo)) {
             return false;
         }
-        return Objects.equals(this.disenyo, other.disenyo);
+        if (!Objects.equals(this.disenyo, other.disenyo)) {
+            return false;
+        }
+        if (!Objects.equals(this.tamanyo, other.tamanyo)) {
+            return false;
+        }
+        return Objects.equals(this.forma, other.forma);
     }
 
     @Override
     public String toString() {
-        return "Unya{" + "id=" + id + ", tiempo=" + tiempo + ", coste=" + coste + ", decoracion=" + decoracion + ", acabado=" + acabado + ", base=" + base + ", tipo=" + tipo + ", disenyo=" + disenyo + '}';
+        return "Unya{" + "id=" + id + ", tiempo=" + tiempo + ", coste=" + coste + ", decoracion=" + decoracion + ", acabado=" + acabado + ", base=" + base + ", tipo=" + tipo + ", disenyo=" + disenyo + ", tamanyo=" + tamanyo + ", forma=" + forma + '}';
     }
-
+      
 }
