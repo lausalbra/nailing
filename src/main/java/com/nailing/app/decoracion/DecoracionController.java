@@ -59,4 +59,10 @@ public class DecoracionController {
                 .spliterator(), false).collect(Collectors.toList());
         return new ResponseEntity<List<Decoracion>>(decos,HttpStatus.OK);
     }
+    
+    @GetMapping("{disenyoId}/centro/{centroId}")
+    public ResponseEntity<List<Decoracion>> decoracionesByCentroDisenyo(@PathVariable Long disenyoId, @PathVariable Long centroId){
+        List<Decoracion> decoraciones = decoracionService.findDecoracionByCentroDisenyo(disenyoId, centroId);
+        return new ResponseEntity<List<Decoracion>>(decoraciones, HttpStatus.OK);
+    }
 }

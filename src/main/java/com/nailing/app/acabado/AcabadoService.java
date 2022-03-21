@@ -4,6 +4,7 @@
  */
 package com.nailing.app.acabado;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,9 @@ public class AcabadoService {
         if(acabado != null){
             acabadoRepository.delete(acabado);
         }
+    }
+    
+    public List<Acabado> findAcabadoByCentro( Long centroId){
+        return acabadoRepository.findByCentro(centroId);        
     }
 }

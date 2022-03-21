@@ -13,8 +13,5 @@ export function Landing() {
             <PictureRight image={chicaLanding} text={data.introduccion} ></PictureRight>
 
         </>
-
-
-
     )
 }

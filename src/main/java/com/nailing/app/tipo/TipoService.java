@@ -5,6 +5,7 @@
 package com.nailing.app.tipo;
 
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +38,7 @@ public class TipoService {
         }
     }
     
+    public List<Tipo> findByCentro(Long id){
+        return tiporepository.findByCentro(id);
+    }
 }

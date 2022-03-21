@@ -24,13 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Usuario
  */
 @RestController
-@RequestMapping("/acab")
+@RequestMapping("/acabados")
 public class AcabadoController {
     
     @Autowired
     AcabadoService acabadoService;
     
-        @PostMapping("/add")
+    @PostMapping("/add")
     public ResponseEntity<Acabado> addAcabado(@RequestBody Acabado acabado){
         Acabado acab = acabadoService.addAcabado(acabado);
         if(acab == null)
@@ -57,5 +57,11 @@ public class AcabadoController {
     public ResponseEntity<List<Acabado>> listAcabado(){
         List<Acabado> acabados = StreamSupport.stream(acabadoService.findAll().spliterator(), false).collect(Collectors.toList());
         return new ResponseEntity<List<Acabado>>(acabados,HttpStatus.OK);
+    }
+    
+    @GetMapping("/centro/{centroId}")
+    public ResponseEntity<List<Acabado>> acabadosByCentro(@PathVariable Long centroId){
+        List<Acabado> acabados = acabadoService.findAcabadoByCentro(centroId);
+        return new ResponseEntity<List<Acabado>>(acabados, HttpStatus.OK);
     }
 }

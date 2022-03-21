@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.nailing.app.tipo.Tipo;
 import com.nailing.app.tipo.TipoRepository;
+import com.nailing.app.tipo.NombreTipo;
 
 @Service("baseService")
 public class BaseService {
@@ -50,7 +51,7 @@ public class BaseService {
 		List<Base> basesCentro;
 		
 		switch (tipo.get().getNombre()) {
-		case "ESCULPIDA":
+		case ESCULPIDA:
 			bases = Arrays.asList(NombreBase.DUAL_SYSTEM, NombreBase.GEL, NombreBase.ACRILICO, NombreBase.ACRYGEL);
 			basesCentro = baseRepository.findByCentro(centroId);
 			
@@ -60,7 +61,7 @@ public class BaseService {
 			}
 			break;
 
-		case "NATURALES":
+		case NATURAL:
 			bases = Arrays.asList(NombreBase.SEMIPERMANENTE, NombreBase.SEMIPERMANENTE_REFUERZO, NombreBase.JAPONESA);
 			basesCentro = baseRepository.findByCentro(centroId);
 			
