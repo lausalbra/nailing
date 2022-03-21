@@ -1,6 +1,7 @@
 import './App.css'
 import { Header } from './components/Header'
 import { Landing } from './views/Landing'
+import { Feedback } from './views/Feedback'
 import { Login } from './views/Login'
 import { Route } from 'wouter'
 import { BookingsList } from './views/BookingsList'
@@ -8,7 +9,7 @@ import { Usuario } from './views/Usuario'
 import { Conocenos } from './views/Conocenos'
 import { Cita } from './views/Cita'
 import { MisCitasList } from './views/MisCitasList'
-function App () {
+function App() {
   return (
 
     <div className='overflow-auto'>
@@ -21,6 +22,7 @@ function App () {
           <Route path='/centro' component={BookingsList} />
           <Route path='/conocenos' component={Conocenos} />
           <Route path='/cita' component={BookingsList} />
+          <Route path='/feedback' component={Feedback} />
           <Route path='/miscitas' component={MisCitasList} />
           <Route path='/personalizacion' component={Cita} />
           <Route path='/' component={Landing} />
