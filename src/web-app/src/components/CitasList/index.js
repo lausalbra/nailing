@@ -5,11 +5,10 @@ import ButtonBase from '@mui/material/ButtonBase'
 import Typography from '@mui/material/Typography'
 import { Link } from 'wouter'
 
-// Images será al fin y al cabo lo que consumamos de la api, para eso usaremos Axios, ver componente ApiConsum
 // npm install @mui/material @emotion/react @emotion/styled
-export function List ({ provincia }) {
+export function CitasList () {
   // const url = 'https://my.api.mockaroo.com/centros.json?key=64324960'
-  const url = 'https://my.api.mockaroo.com/centros.json?key=86580d70'
+  const url = 'https://my.api.mockaroo.com/citas.json?key=86580d70'
   const xhr = new XMLHttpRequest()
   const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
@@ -95,21 +94,15 @@ export function List ({ provincia }) {
   }, [])
   // NO meter xhr en el array de dependencias
 
-  let filtrado
-  if (!provincia || provincia === 'ninguna') {
-    filtrado = resObj
-  } else {
-    filtrado = resObj.filter(c => c.provincia === provincia)
-  }
   console.log(resObj)
   const enlace = Link({ className: 'block w-64 h-20', to: '/' })
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%' }}>
-      {filtrado.map((image) => (
+      {resObj.map((image) => (
         <ImageButton
           focusRipple
           LinkComponent={enlace}
-          key={image.nombre}
+          key={image.id}
           style={{
             width: '30%'
           }}
@@ -129,7 +122,7 @@ export function List ({ provincia }) {
               }}
             >
               <Link to='/'> {/* TODO: METER LOS ENLACES DE LOS CENTROS (ruta/{image.id}) */}
-                {image.nombre}
+                {image.hora_inicio} - {image.hora_fin} <br /> {image.centro}
               </Link>
               <ImageMarked className='MuiImageMarked-root' />
             </Typography>
