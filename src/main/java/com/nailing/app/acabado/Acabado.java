@@ -6,7 +6,7 @@ package com.nailing.app.acabado;
 
 import com.nailing.app.centro.Centro;
 import com.nailing.app.components.Fases;
-import com.nailing.app.unya.Unya;
+import com.nailing.app.cita.Cita;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -51,27 +51,10 @@ public class Acabado {
     @Column(name = "siguiente_fase")
     private Fases siguienteFase;
     
-    @OneToMany(mappedBy = "acabado")
-    private Set<Unya> unyas;
-    
     @ManyToOne
     @JoinColumn(name = "centro_id")
     private Centro centro;
 
-    public Acabado(Long id, NombreAcabado nombre, Integer tiempo, Double coste, Fases siguienteFase, Set<Unya> unyas, Centro centro) {
-        this.id = id;
-        this.nombre = nombre;
-        this.tiempo = tiempo;
-        this.coste = coste;
-        this.siguienteFase = siguienteFase;
-        this.unyas = unyas;
-        this.centro = centro;
-    }
-
-    public Acabado() {
-        super();
-    }
-    
     public Long getId() {
         return id;
     }
@@ -90,10 +73,6 @@ public class Acabado {
 
     public Fases getSiguienteFase() {
         return siguienteFase;
-    }
-
-    public Set<Unya> getUnyas() {
-        return unyas;
     }
 
     public Centro getCentro() {
@@ -120,24 +99,32 @@ public class Acabado {
         this.siguienteFase = siguienteFase;
     }
 
-    public void setUnyas(Set<Unya> unyas) {
-        this.unyas = unyas;
-    }
-
     public void setCentro(Centro centro) {
         this.centro = centro;
     }
 
+    public Acabado(Long id, NombreAcabado nombre, Integer tiempo, Double coste, Fases siguienteFase, Centro centro) {
+        this.id = id;
+        this.nombre = nombre;
+        this.tiempo = tiempo;
+        this.coste = coste;
+        this.siguienteFase = siguienteFase;
+        this.centro = centro;
+    }
+
+    public Acabado() {
+        super();
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 17 * hash + Objects.hashCode(this.id);
-        hash = 17 * hash + Objects.hashCode(this.nombre);
-        hash = 17 * hash + Objects.hashCode(this.tiempo);
-        hash = 17 * hash + Objects.hashCode(this.coste);
-        hash = 17 * hash + Objects.hashCode(this.siguienteFase);
-        hash = 17 * hash + Objects.hashCode(this.unyas);
-        hash = 17 * hash + Objects.hashCode(this.centro);
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.nombre);
+        hash = 29 * hash + Objects.hashCode(this.tiempo);
+        hash = 29 * hash + Objects.hashCode(this.coste);
+        hash = 29 * hash + Objects.hashCode(this.siguienteFase);
+        hash = 29 * hash + Objects.hashCode(this.centro);
         return hash;
     }
 
@@ -168,17 +155,12 @@ public class Acabado {
         if (this.siguienteFase != other.siguienteFase) {
             return false;
         }
-        if (!Objects.equals(this.unyas, other.unyas)) {
-            return false;
-        }
         return Objects.equals(this.centro, other.centro);
     }
 
     @Override
     public String toString() {
-        return "Acabado{" + "id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + ", siguienteFase=" + siguienteFase + ", unyas=" + unyas + ", centro=" + centro + '}';
+        return "Acabado{" + "id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + ", siguienteFase=" + siguienteFase + ", centro=" + centro + '}';
     }
-
-    
-    
+ 
 }
