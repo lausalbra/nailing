@@ -1,7 +1,11 @@
 import './App.css'
 import { Header } from './components/Header'
 import { Landing } from './views/Landing'
+<<<<<<< Updated upstream
+=======
+import { Feedback } from './views/Feedback'
 import { Login } from './views/Login'
+>>>>>>> Stashed changes
 import { Route } from 'wouter'
 import { BookingsList } from './views/BookingsList'
 import { Usuario } from './views/Usuario'
@@ -21,6 +25,7 @@ function App() {
           <Route path='/centro' component={Centro} />
           <Route path='/conocenos' component={Conocenos} />
           <Route path='/cita' component={BookingsList} />
+          <Route path='/feedback' component={Feedback} />
           <Route path='/personalizacion' component={Cita} />
           <Route path='/' component={Landing} />
         </div>
