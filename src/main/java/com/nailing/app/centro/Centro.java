@@ -24,6 +24,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.nailing.app.base.Base;
 import com.nailing.app.decoracion.Decoracion;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  *
@@ -51,14 +52,14 @@ public class Centro {
 
 	private String provincia;
         
-        private LocalDateTime horaApertura;
+        private LocalTime horaApertura;
         
-        private LocalDateTime horaCierre;
+        private LocalTime horaCierre;
 
     public Centro() {
     }
 
-    public Centro(String nombre, String imagen, String provincia, LocalDateTime horaApertura, LocalDateTime horaCierre) {
+    public Centro(String nombre, String imagen, String provincia, LocalTime horaApertura, LocalTime horaCierre) {
         this.nombre = nombre;
         this.imagen = imagen;
         this.provincia = provincia;
@@ -98,19 +99,19 @@ public class Centro {
         this.provincia = provincia;
     }
 
-    public LocalDateTime getHoraApertura() {
+    public LocalTime getHoraApertura() {
         return horaApertura;
     }
 
-    public void setHoraApertura(LocalDateTime horaApertura) {
+    public void setHoraApertura(LocalTime horaApertura) {
         this.horaApertura = horaApertura;
     }
 
-    public LocalDateTime getHoraCierre() {
+    public LocalTime getHoraCierre() {
         return horaCierre;
     }
 
-    public void setHoraCierre(LocalDateTime horaCierre) {
+    public void setHoraCierre(LocalTime horaCierre) {
         this.horaCierre = horaCierre;
     }
 
