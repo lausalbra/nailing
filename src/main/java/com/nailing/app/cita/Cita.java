@@ -26,6 +26,7 @@ import com.nailing.app.forma.Forma;
 import com.nailing.app.tamanyo.Tamanyo;
 import com.nailing.app.usuario.Usuario;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -50,11 +51,11 @@ public class Cita {
     
     @NotNull
     @Column(name = "hora_inicio")
-    private LocalDateTime horaInicio;
+    private LocalTime horaInicio;
     
     @NotNull
     @Column(name = "hora_fin")
-    private LocalDateTime horaFin;
+    private LocalTime horaFin;
     
     @ManyToOne
     @JoinColumn(name = "decoracion_id")
@@ -95,7 +96,7 @@ public class Cita {
     public Cita() {
     }
 
-    public Cita(Double coste, LocalDateTime horaInicio, LocalDateTime horaFin, Decoracion decoracion, Acabado acabado, Base base, Tipo tipo, Disenyo disenyo, Tamanyo tamanyo, Forma forma, Usuario usuario, Centro centro) {
+    public Cita(Double coste, LocalTime horaInicio, LocalTime horaFin, Decoracion decoracion, Acabado acabado, Base base, Tipo tipo, Disenyo disenyo, Tamanyo tamanyo, Forma forma, Usuario usuario, Centro centro) {
         this.coste = coste;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
@@ -126,19 +127,19 @@ public class Cita {
         this.coste = coste;
     }
 
-    public LocalDateTime getHoraInicio() {
+    public LocalTime getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(LocalDateTime horaInicio) {
+    public void setHoraInicio(LocalTime horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public LocalDateTime getHoraFin() {
+    public LocalTime getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(LocalDateTime horaFin) {
+    public void setHoraFin(LocalTime horaFin) {
         this.horaFin = horaFin;
     }
 
