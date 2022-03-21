@@ -40,15 +40,14 @@ public class Disenyo {
     @NotNull
     @Column(name = "tiempo")
     private Integer tiempo;
-
     
     @PositiveOrZero
     @NotNull
     @Column(name = "coste")
     private Double coste;
 
-    @Column(name = "siguiente_fase")
     @NotNull
+    @Column(name = "siguiente_fase")
     private Fases siguienteFase;
 
     @ManyToOne
