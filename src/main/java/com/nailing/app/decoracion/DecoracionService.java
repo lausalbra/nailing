@@ -6,6 +6,7 @@ package com.nailing.app.decoracion;
 
 import com.nailing.app.disenyo.Disenyo;
 import com.nailing.app.disenyo.DisenyoRepository;
+import com.nailing.app.disenyo.NombreDisenyo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -52,7 +53,7 @@ public class DecoracionService {
         List<NombreDecoracion> decoraciones;
         List<Decoracion> decoracionesCentro;
         
-        if(disenyo.get().getNombre().equals("LISAS")){ //A la espera de la implementacion de NombreDisenyo
+        if(disenyo.get().getNombre().equals(NombreDisenyo.LISAS)){ //A la espera de la implementacion de NombreDisenyo
             result = decoracionRepository.findByCentro(centroId);
             return result;
         }else{
