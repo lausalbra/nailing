@@ -14,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,13 +49,5 @@ public class UnyaController {
     public void deleteUnya(@PathVariable Long id){
         unyaService.removeUnya(id);
     }
-    
-    @PostMapping("/add")
-    public ResponseEntity<Unya> addUnya(@RequestBody Unya unya){
-        Unya nail = unyaService.addUnya(unya);
-        if(nail == null)
-            return new ResponseEntity<Unya>(nail, HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<Unya>(nail, HttpStatus.CREATED);
-    }
-    
+
 }
