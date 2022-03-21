@@ -27,7 +27,7 @@ class PropertyPanel extends Component {
             toDelete.remove();
         }
         //Se guarda esta opcion
-        sessionStorage.setItem(this.state.name, id);
+        sessionStorage.setItem(this.state.name, option);
         sessionStorage.setItem(this.state.name+"Cost", option.cost);
         sessionStorage.setItem(this.state.name+"Time", option.time);
         //Si es una caja anterior se borran las variables anteriores
@@ -137,7 +137,7 @@ class PropertyPanel extends Component {
         //Se obtiene el panel principal para colocar la nueva caja
         var mainPanel = containerDiv.parentElement;
         //El id del centro puede sacarse del contexto, el resto está en la opcion
-        //var url = "/centro/" + CONTEXTO + "/" + option.next + "/" + option.id;
+        //var url = option.next + "/" + option.id + "/centro/" + sessionStorage.getItem("centreId"); 
         $.ajax({
             method: "GET",
             url: "https://my.api.mockaroo.com/123/123/centro/123?key=199eb280",
@@ -211,10 +211,12 @@ class PropertyPanel extends Component {
                 else
                 {
                     let newPropertyPanelContainer = document.createElement("div");
-                    newPropertyPanelContainer.id = option.next + "Container";
+                    var nextName = option.next.charAt(0).toUpperCase() + option.next.slice(1,-1);
+                    nextName.replace("ny","ñ");
+                    newPropertyPanelContainer.id = nextName + "Container";
                     newPropertyPanelContainer.className = "propertyContainer";
                     mainPanel.append(newPropertyPanelContainer);
-                    ReactDOM.render(<><PropertyPanel name={option.next} buttons={data.options}/></>, newPropertyPanelContainer);
+                    ReactDOM.render(<><PropertyPanel name={nextName} buttons={data.options}/></>, newPropertyPanelContainer);
                     newPropertyPanelContainer.firstChild.firstChild.firstChild.checked = true;
                 }
             }
