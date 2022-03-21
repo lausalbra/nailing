@@ -26,6 +26,114 @@ class PropertyPanel extends Component {
             nextSibling = nextSibling.nextElementSibling;
             toDelete.remove();
         }
+        //Se guarda esta opcion
+        sessionStorage.setItem(this.state.name, id);
+        sessionStorage.setItem(this.state.name+"Cost", option.cost);
+        sessionStorage.setItem(this.state.name+"Time", option.time);
+        //Si es una caja anterior se borran las variables anteriores
+        switch(this.state.name){
+            case("Tipo"):
+                sessionStorage.removeItem("Base");
+                sessionStorage.removeItem("BaseCost");
+                sessionStorage.removeItem("BaseTime");
+                sessionStorage.removeItem("Material");
+                sessionStorage.removeItem("MaterialCost");
+                sessionStorage.removeItem("MaterialTime");
+                sessionStorage.removeItem("Forma");
+                sessionStorage.removeItem("FormaCost");
+                sessionStorage.removeItem("FormaTime");
+                sessionStorage.removeItem("Tamaño");
+                sessionStorage.removeItem("TamañoCost");
+                sessionStorage.removeItem("TamañoTime");
+                sessionStorage.removeItem("Diseño");
+                sessionStorage.removeItem("DiseñoCost");
+                sessionStorage.removeItem("DiseñoTime");
+                sessionStorage.removeItem("Decoracion");
+                sessionStorage.removeItem("DecoracionCost");
+                sessionStorage.removeItem("DecoracionTime");
+                sessionStorage.removeItem("Acabado");
+                sessionStorage.removeItem("AcabadoCost");
+                sessionStorage.removeItem("AcabadoTime");
+                break;
+            case("Base"):
+                sessionStorage.removeItem("Material");
+                sessionStorage.removeItem("MaterialCost");
+                sessionStorage.removeItem("MaterialTime");
+                sessionStorage.removeItem("Forma");
+                sessionStorage.removeItem("FormaCost");
+                sessionStorage.removeItem("FormaTime");
+                sessionStorage.removeItem("Tamaño");
+                sessionStorage.removeItem("TamañoCost");
+                sessionStorage.removeItem("TamañoTime");
+                sessionStorage.removeItem("Diseño");
+                sessionStorage.removeItem("DiseñoCost");
+                sessionStorage.removeItem("DiseñoTime");
+                sessionStorage.removeItem("Decoracion");
+                sessionStorage.removeItem("DecoracionCost");
+                sessionStorage.removeItem("DecoracionTime");
+                sessionStorage.removeItem("Acabado");
+                sessionStorage.removeItem("AcabadoCost");
+                sessionStorage.removeItem("AcabadoTime");
+                break;
+            case("Material"):
+                sessionStorage.removeItem("Forma");
+                sessionStorage.removeItem("FormaCost");
+                sessionStorage.removeItem("FormaTime");
+                sessionStorage.removeItem("Tamaño");
+                sessionStorage.removeItem("TamañoCost");
+                sessionStorage.removeItem("TamañoTime");
+                sessionStorage.removeItem("Diseño");
+                sessionStorage.removeItem("DiseñoCost");
+                sessionStorage.removeItem("DiseñoTime");
+                sessionStorage.removeItem("Decoracion");
+                sessionStorage.removeItem("DecoracionCost");
+                sessionStorage.removeItem("DecoracionTime");
+                sessionStorage.removeItem("Acabado");
+                sessionStorage.removeItem("AcabadoCost");
+                sessionStorage.removeItem("AcabadoTime");
+                break;
+            case("Forma"):
+                sessionStorage.removeItem("Tamaño");
+                sessionStorage.removeItem("TamañoCost");
+                sessionStorage.removeItem("TamañoTime");
+                sessionStorage.removeItem("Diseño");
+                sessionStorage.removeItem("DiseñoCost");
+                sessionStorage.removeItem("DiseñoTime");
+                sessionStorage.removeItem("Decoracion");
+                sessionStorage.removeItem("DecoracionCost");
+                sessionStorage.removeItem("DecoracionTime");
+                sessionStorage.removeItem("Acabado");
+                sessionStorage.removeItem("AcabadoCost");
+                sessionStorage.removeItem("AcabadoTime");
+                break;
+            case("Tamaño"):
+                sessionStorage.removeItem("Diseño");
+                sessionStorage.removeItem("DiseñoCost");
+                sessionStorage.removeItem("DiseñoTime");
+                sessionStorage.removeItem("Decoracion");
+                sessionStorage.removeItem("DecoracionCost");
+                sessionStorage.removeItem("DecoracionTime");
+                sessionStorage.removeItem("Acabado");
+                sessionStorage.removeItem("AcabadoCost");
+                sessionStorage.removeItem("AcabadoTime");
+                break;
+            case("Diseño"):
+                sessionStorage.removeItem("Decoracion");
+                sessionStorage.removeItem("DecoracionCost");
+                sessionStorage.removeItem("DecoracionTime");
+                sessionStorage.removeItem("Acabado");
+                sessionStorage.removeItem("AcabadoCost");
+                sessionStorage.removeItem("AcabadoTime");
+                break;
+            case("Decoracion"):
+                sessionStorage.removeItem("Acabado");
+                sessionStorage.removeItem("AcabadoCost");
+                sessionStorage.removeItem("AcabadoTime");
+                break;
+            default:
+                break;
+        }
+
         //Se obtiene el panel principal para colocar la nueva caja
         var mainPanel = containerDiv.parentElement;
         //El id del centro puede sacarse del contexto, el resto está en la opcion
@@ -41,12 +149,62 @@ class PropertyPanel extends Component {
                 {
                     //Se suman los tiempos y precios y se muestran
                     var finisherDiv = document.createElement("div");
-                    var price = document.createTextNode("15€");
-                    var tiempo = document.createTextNode("20min");
+                    var time = 0;
+                    var price = 0;
+                    if(sessionStorage.getItem("Tipo") != null){
+                        time += sessionStorage.getItem("TipoTime");
+                        price += sessionStorage.getItem("TipoCost");
+                    }
+                    if(sessionStorage.getItem("Base") != null){
+                        time += sessionStorage.getItem("BaseTime");
+                        price += sessionStorage.getItem("BaseCost");
+                    }
+                    if(sessionStorage.getItem("Material") != null){
+                        time += sessionStorage.getItem("MaterialTime");
+                        price += sessionStorage.getItem("MaterialCost");
+                    }
+                    if(sessionStorage.getItem("Forma") != null){
+                        time += sessionStorage.getItem("FormaTime");
+                        price += sessionStorage.getItem("FormaCost");
+                    }
+                    if(sessionStorage.getItem("Tamaño") != null){
+                        time += sessionStorage.getItem("TamañoTime");
+                        price += sessionStorage.getItem("TamañoCost");
+                    }
+                    if(sessionStorage.getItem("Diseño") != null){
+                        time += sessionStorage.getItem("DiseñoTime");
+                        price += sessionStorage.getItem("DiseñoCost");
+                    }
+                    if(sessionStorage.getItem("Decoracion") != null){
+                        time += sessionStorage.getItem("DecoracionTime");
+                        price += sessionStorage.getItem("DecoracionCost");
+                    }
+                    if(sessionStorage.getItem("Acabado") != null){
+                        time += sessionStorage.getItem("AcabadoTime");
+                        price += sessionStorage.getItem("AcabadoCost");
+                    }
+                    var priceElement = document.createTextNode(price.toString());
+                    var timeElement = document.createTextNode(time.toString());
                     var buttonReserve = document.createElement("button");
                     buttonReserve.innerText = "Reservar cita"
-                    finisherDiv.appendChild(price);
-                    finisherDiv.appendChild(tiempo);
+                    buttonReserve.onclick = function() {
+                        $.ajax({
+                            method: "POST",
+                            data: {usuario: sessionStorage.getItem("userId"),
+                                centro: sessionStorage.getItem("centreId"),
+                                tipo: sessionStorage.getItem("Tipo"),
+                                base: sessionStorage.getItem("Base"),
+                                material: sessionStorage.getItem("Material"),
+                                forma: sessionStorage.getItem("Forma"),
+                                tamanyo: sessionStorage.getItem("Tamaño"),
+                                disenyo: sessionStorage.getItem("Diseño"),
+                                decoracion: sessionStorage.getItem("Decoracion"),
+                                acabado: sessionStorage.getItem("Acabado")},
+                            url: "centro/reservaCita" //NO DEFINITVA
+                        });
+                    };
+                    finisherDiv.appendChild(priceElement);
+                    finisherDiv.appendChild(timeElement);
                     finisherDiv.appendChild(buttonReserve);
                     mainPanel.append(finisherDiv);
                 }

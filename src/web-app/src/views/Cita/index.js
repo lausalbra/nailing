@@ -37,6 +37,7 @@ export function Cita() {
 
     useEffect(() => {
         if(state.buttons.length != 0){
+            sessionStorage.setItem("centreId", state.id);
             setState({ id: state.id, name: state.name, isPaneOpen: true, buttons: state.buttons});
         }
     }, [state.buttons]);
