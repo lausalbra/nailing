@@ -14,6 +14,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface FormaRepository extends CrudRepository<Forma, Long>{
     //	encontrar las formas de un centro concreto por su ID
-    @Query("SELECT forma from forma forma where forma.centro.id = ?1")
+    @Query("SELECT forma from Forma forma where forma.centro.id = ?1")
     public List<Forma> findByCentro(Long id);
 }
