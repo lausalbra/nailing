@@ -52,7 +52,7 @@ public class DecoracionService {
         List<NombreDecoracion> decoraciones;
         List<Decoracion> decoracionesCentro;
         
-        if(disenyo.get().getNombre().equals("Lisas")){ //A la espera de la implementacion de NombreDisenyo
+        if(disenyo.get().getNombre().equals("LISAS")){ //A la espera de la implementacion de NombreDisenyo
             result = decoracionRepository.findByCentro(centroId);
             return result;
         }else{
