@@ -1,11 +1,11 @@
 name: Nailing application
 
 on:
- pull_request:
-  branches: [develop,main]
+# pull_request:
+#  branches: [develop]
 
 jobs:
-  build:
+  build_backend:
     runs-on: ubuntu-latest
 
     services:
@@ -30,6 +30,22 @@ jobs:
     - name: Build with Maven
       run: |
           mvn --batch-mode --update-snapshots verify
+          
+  build-frontend:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/web-app
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - name: Install frontend dependencies
+        run: npm install
+    
   # deploy:
   #   runs-on: ubuntu-latest
   #   steps:
