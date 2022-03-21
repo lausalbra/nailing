@@ -5,12 +5,24 @@
 package com.nailing.app.cita;
 
 import com.nailing.app.acabado.Acabado;
+import com.nailing.app.acabado.AcabadoService;
 import com.nailing.app.base.Base;
+import com.nailing.app.base.BaseService;
+import com.nailing.app.centro.Centro;
+import com.nailing.app.centro.CentroService;
 import com.nailing.app.decoracion.Decoracion;
 import com.nailing.app.decoracion.DecoracionService;
 import com.nailing.app.disenyo.Disenyo;
 import com.nailing.app.disenyo.DisenyoService;
-import java.util.Collection;
+import com.nailing.app.forma.Forma;
+import com.nailing.app.forma.FormaService;
+import com.nailing.app.tamanyo.Tamanyo;
+import com.nailing.app.tamanyo.TamanyoService;
+import com.nailing.app.tipo.Tipo;
+import com.nailing.app.tipo.TipoService;
+import com.nailing.app.usuario.Usuario;
+import com.nailing.app.usuario.UsuarioService;
+import java.time.LocalDateTime;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,15 +43,50 @@ public class CitaService {
     @Autowired
     private DisenyoService disenyoService;
     
+    @Autowired
+    private BaseService baseService;
+    
+    @Autowired
+    private AcabadoService acabadoService;
+    
+    @Autowired
+    private CentroService centroService;
+    
+    @Autowired
+    private TamanyoService tamanyoService;
+    
+    @Autowired
+    private TipoService tipoService;
+    
+    @Autowired
+    private FormaService formaService;
+    
+    @Autowired
+    private UsuarioService usuarioService;
+    
+    
     public Cita addCita(Map<String,String> ids){
-        Decoracion deco = decoracionService.findById(Long.parseLong(ids.get("decoracion_id")));
-        Disenyo dis = disenyoService.findById(Long.parseLong(ids.get("disenyo_id")));
-        Base base = decoracionService.findById(Long.parseLong(ids.get("decoracion_id")));
-        Acabado acabado = decoracionService.findById(Long.parseLong(ids.get("decoracion_id")));
-        Decoracion centro = decoracionService.findById(Long.parseLong(ids.get("decoracion_id")));
-        Decoracion tamanyo = decoracionService.findById(Long.parseLong(ids.get("decoracion_id")));
-        Decoracion forma = decoracionService.findById(Long.parseLong(ids.get("decoracion_id")));
-        Decoracion tipo = decoracionService.findById(Long.parseLong(ids.get("decoracion_id")));
+        Decoracion decoracion = decoracionService.findById(Long.parseLong(ids.get("decoracion")));
+        Disenyo disenyo = disenyoService.findById(Long.parseLong(ids.get("disenyo")));
+        Base base = baseService.findById(Long.parseLong(ids.get("base")));
+        Acabado acabado = acabadoService.findById(Long.parseLong(ids.get("acabado")));
+        Tamanyo tamanyo = tamanyoService.findById(Long.parseLong(ids.get("tamanyo")));
+        Forma forma = formaService.findById(Long.parseLong(ids.get("forma")));
+        Tipo tipo = tipoService.findById(Long.parseLong(ids.get("tipo")));
+        
+        Usuario usuario = usuarioService.findById(Long.parseLong(ids.get("usuario"))).get();
+        Centro centro = centroService.findById(Long.parseLong(ids.get("centro"))).get();
+        Double precio = Double.valueOf(ids.get("precio"));
+        Integer tiempo = Integer.valueOf(ids.get("tiempo"));
+        
+        LocalDateTime horaInicio = centro.getHoraApertura();
+        LocalDateTime horaFin = horaInicio.plusMinutes(tiempo);
+        
+        Cita cita = new Cita(precio,horaInicio,horaFin,decoracion,acabado,base,tipo,disenyo,tamanyo,forma,usuario,centro);
+        
+        return citaRepository.save(cita);
+        
+        
     }
     
     public Cita findById(Long id){

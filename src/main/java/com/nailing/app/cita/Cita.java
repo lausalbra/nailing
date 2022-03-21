@@ -21,8 +21,10 @@ import javax.persistence.Table;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.nailing.app.base.Base;
+import com.nailing.app.centro.Centro;
 import com.nailing.app.forma.Forma;
 import com.nailing.app.tamanyo.Tamanyo;
+import com.nailing.app.usuario.Usuario;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
@@ -41,10 +43,6 @@ public class Cita {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @Column(name = "tiempo")
-    @Positive
-    private Integer tiempo;
     
     @Column(name = "coste")
     @PositiveOrZero
@@ -85,136 +83,153 @@ public class Cita {
     @ManyToOne
     @JoinColumn(name = "forma_id")
     private Forma forma;
+    
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+    
+    @ManyToOne
+    @JoinColumn(name = "centro_id")
+    private Centro centro;
+
+    public Cita() {
+    }
+
+    public Cita(Double coste, LocalDateTime horaInicio, LocalDateTime horaFin, Decoracion decoracion, Acabado acabado, Base base, Tipo tipo, Disenyo disenyo, Tamanyo tamanyo, Forma forma, Usuario usuario, Centro centro) {
+        this.coste = coste;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.decoracion = decoracion;
+        this.acabado = acabado;
+        this.base = base;
+        this.tipo = tipo;
+        this.disenyo = disenyo;
+        this.tamanyo = tamanyo;
+        this.forma = forma;
+        this.usuario = usuario;
+        this.centro = centro;
+    }
 
     public Long getId() {
         return id;
-    }
-
-    public Integer getTiempo() {
-        return tiempo;
-    }
-
-    public Double getCoste() {
-        return coste;
-    }
-
-    public LocalDateTime getHoraInicio() {
-        return horaInicio;
-    }
-
-    public LocalDateTime getHoraFin() {
-        return horaFin;
-    }
-
-    public Decoracion getDecoracion() {
-        return decoracion;
-    }
-
-    public Acabado getAcabado() {
-        return acabado;
-    }
-
-    public Base getBase() {
-        return base;
-    }
-
-    public Tipo getTipo() {
-        return tipo;
-    }
-
-    public Disenyo getDisenyo() {
-        return disenyo;
-    }
-
-    public Tamanyo getTamanyo() {
-        return tamanyo;
-    }
-
-    public Forma getForma() {
-        return forma;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setTiempo(Integer tiempo) {
-        this.tiempo = tiempo;
+    public Double getCoste() {
+        return coste;
     }
 
     public void setCoste(Double coste) {
         this.coste = coste;
     }
 
+    public LocalDateTime getHoraInicio() {
+        return horaInicio;
+    }
+
     public void setHoraInicio(LocalDateTime horaInicio) {
         this.horaInicio = horaInicio;
+    }
+
+    public LocalDateTime getHoraFin() {
+        return horaFin;
     }
 
     public void setHoraFin(LocalDateTime horaFin) {
         this.horaFin = horaFin;
     }
 
+    public Decoracion getDecoracion() {
+        return decoracion;
+    }
+
     public void setDecoracion(Decoracion decoracion) {
         this.decoracion = decoracion;
+    }
+
+    public Acabado getAcabado() {
+        return acabado;
     }
 
     public void setAcabado(Acabado acabado) {
         this.acabado = acabado;
     }
 
+    public Base getBase() {
+        return base;
+    }
+
     public void setBase(Base base) {
         this.base = base;
+    }
+
+    public Tipo getTipo() {
+        return tipo;
     }
 
     public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
 
+    public Disenyo getDisenyo() {
+        return disenyo;
+    }
+
     public void setDisenyo(Disenyo disenyo) {
         this.disenyo = disenyo;
+    }
+
+    public Tamanyo getTamanyo() {
+        return tamanyo;
     }
 
     public void setTamanyo(Tamanyo tamanyo) {
         this.tamanyo = tamanyo;
     }
 
+    public Forma getForma() {
+        return forma;
+    }
+
     public void setForma(Forma forma) {
         this.forma = forma;
     }
 
-    public Cita(Long id, Integer tiempo, Double coste, LocalDateTime horaInicio, LocalDateTime horaFin, Decoracion decoracion, Acabado acabado, Base base, Tipo tipo, Disenyo disenyo, Tamanyo tamanyo, Forma forma) {
-        this.id = id;
-        this.tiempo = tiempo;
-        this.coste = coste;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.decoracion = decoracion;
-        this.acabado = acabado;
-        this.base = base;
-        this.tipo = tipo;
-        this.disenyo = disenyo;
-        this.tamanyo = tamanyo;
-        this.forma = forma;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public Cita() {
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Centro getCentro() {
+        return centro;
+    }
+
+    public void setCentro(Centro centro) {
+        this.centro = centro;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 31 * hash + Objects.hashCode(this.id);
-        hash = 31 * hash + Objects.hashCode(this.tiempo);
-        hash = 31 * hash + Objects.hashCode(this.coste);
-        hash = 31 * hash + Objects.hashCode(this.horaInicio);
-        hash = 31 * hash + Objects.hashCode(this.horaFin);
-        hash = 31 * hash + Objects.hashCode(this.decoracion);
-        hash = 31 * hash + Objects.hashCode(this.acabado);
-        hash = 31 * hash + Objects.hashCode(this.base);
-        hash = 31 * hash + Objects.hashCode(this.tipo);
-        hash = 31 * hash + Objects.hashCode(this.disenyo);
-        hash = 31 * hash + Objects.hashCode(this.tamanyo);
-        hash = 31 * hash + Objects.hashCode(this.forma);
+        int hash = 5;
+        hash = 41 * hash + Objects.hashCode(this.id);
+        hash = 41 * hash + Objects.hashCode(this.coste);
+        hash = 41 * hash + Objects.hashCode(this.horaInicio);
+        hash = 41 * hash + Objects.hashCode(this.horaFin);
+        hash = 41 * hash + Objects.hashCode(this.decoracion);
+        hash = 41 * hash + Objects.hashCode(this.acabado);
+        hash = 41 * hash + Objects.hashCode(this.base);
+        hash = 41 * hash + Objects.hashCode(this.tipo);
+        hash = 41 * hash + Objects.hashCode(this.disenyo);
+        hash = 41 * hash + Objects.hashCode(this.tamanyo);
+        hash = 41 * hash + Objects.hashCode(this.forma);
+        hash = 41 * hash + Objects.hashCode(this.usuario);
+        hash = 41 * hash + Objects.hashCode(this.centro);
         return hash;
     }
 
@@ -231,9 +246,6 @@ public class Cita {
         }
         final Cita other = (Cita) obj;
         if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.tiempo, other.tiempo)) {
             return false;
         }
         if (!Objects.equals(this.coste, other.coste)) {
@@ -263,12 +275,20 @@ public class Cita {
         if (!Objects.equals(this.tamanyo, other.tamanyo)) {
             return false;
         }
-        return Objects.equals(this.forma, other.forma);
+        if (!Objects.equals(this.forma, other.forma)) {
+            return false;
+        }
+        if (!Objects.equals(this.usuario, other.usuario)) {
+            return false;
+        }
+        return Objects.equals(this.centro, other.centro);
     }
 
     @Override
     public String toString() {
-        return "Cita{" + "id=" + id + ", tiempo=" + tiempo + ", coste=" + coste + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", decoracion=" + decoracion + ", acabado=" + acabado + ", base=" + base + ", tipo=" + tipo + ", disenyo=" + disenyo + ", tamanyo=" + tamanyo + ", forma=" + forma + '}';
+        return "Cita{" + "id=" + id + ", coste=" + coste + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", decoracion=" + decoracion + ", acabado=" + acabado + ", base=" + base + ", tipo=" + tipo + ", disenyo=" + disenyo + ", tamanyo=" + tamanyo + ", forma=" + forma + ", usuario=" + usuario + ", centro=" + centro + '}';
     }
+
+    
     
 }
