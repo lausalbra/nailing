@@ -23,6 +23,7 @@ import com.nailing.app.tipo.TipoService;
 import com.nailing.app.usuario.Usuario;
 import com.nailing.app.usuario.UsuarioService;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,13 +80,12 @@ public class CitaService {
         Double precio = Double.valueOf(ids.get("precio"));
         Integer tiempo = Integer.valueOf(ids.get("tiempo"));
         
-        LocalDateTime horaInicio = centro.getHoraApertura();
-        LocalDateTime horaFin = horaInicio.plusMinutes(tiempo);
+        LocalTime horaInicio = centro.getHoraApertura();
+        LocalTime horaFin = horaInicio.plusMinutes(tiempo);
         
         Cita cita = new Cita(precio,horaInicio,horaFin,decoracion,acabado,base,tipo,disenyo,tamanyo,forma,usuario,centro);
         
         return citaRepository.save(cita);
-        
         
     }
     
