@@ -4,6 +4,8 @@
  */
 package com.nailing.app.acabado;
 
+import com.nailing.app.centro.Centro;
+import com.nailing.app.components.Fases;
 import com.nailing.app.unya.Unya;
 import java.util.Objects;
 import java.util.Set;
@@ -13,6 +15,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -34,7 +38,7 @@ public class Acabado {
     
     @Column(name = "nombre")
     @NotBlank
-    private String nombre;
+    private NombreAcabado nombre;
     
     @Column(name = "tiempo")
     @Positive
@@ -44,14 +48,35 @@ public class Acabado {
     @Positive
     private Double coste;
     
+    @Column(name = "siguiente_fase")
+    private Fases siguienteFase;
+    
     @OneToMany(mappedBy = "acabado")
     private Set<Unya> unyas;
+    
+    @ManyToOne
+    @JoinColumn(name = "centro_id")
+    private Centro centro;
 
+    public Acabado(Long id, NombreAcabado nombre, Integer tiempo, Double coste, Fases siguienteFase, Set<Unya> unyas, Centro centro) {
+        this.id = id;
+        this.nombre = nombre;
+        this.tiempo = tiempo;
+        this.coste = coste;
+        this.siguienteFase = siguienteFase;
+        this.unyas = unyas;
+        this.centro = centro;
+    }
+
+    public Acabado() {
+        super();
+    }
+    
     public Long getId() {
         return id;
     }
 
-    public String getNombre() {
+    public NombreAcabado getNombre() {
         return nombre;
     }
 
@@ -63,15 +88,23 @@ public class Acabado {
         return coste;
     }
 
+    public Fases getSiguienteFase() {
+        return siguienteFase;
+    }
+
     public Set<Unya> getUnyas() {
         return unyas;
+    }
+
+    public Centro getCentro() {
+        return centro;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setNombre(String nombre) {
+    public void setNombre(NombreAcabado nombre) {
         this.nombre = nombre;
     }
 
@@ -83,30 +116,28 @@ public class Acabado {
         this.coste = coste;
     }
 
+    public void setSiguienteFase(Fases siguienteFase) {
+        this.siguienteFase = siguienteFase;
+    }
+
     public void setUnyas(Set<Unya> unyas) {
         this.unyas = unyas;
     }
 
-    public Acabado(Long id, String nombre, Integer tiempo, Double coste, Set<Unya> unyas) {
-        this.id = id;
-        this.nombre = nombre;
-        this.tiempo = tiempo;
-        this.coste = coste;
-        this.unyas = unyas;
-    }
-
-    public Acabado() {
-        super();
+    public void setCentro(Centro centro) {
+        this.centro = centro;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.nombre);
-        hash = 53 * hash + Objects.hashCode(this.tiempo);
-        hash = 53 * hash + Objects.hashCode(this.coste);
-        hash = 53 * hash + Objects.hashCode(this.unyas);
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.nombre);
+        hash = 17 * hash + Objects.hashCode(this.tiempo);
+        hash = 17 * hash + Objects.hashCode(this.coste);
+        hash = 17 * hash + Objects.hashCode(this.siguienteFase);
+        hash = 17 * hash + Objects.hashCode(this.unyas);
+        hash = 17 * hash + Objects.hashCode(this.centro);
         return hash;
     }
 
@@ -122,10 +153,10 @@ public class Acabado {
             return false;
         }
         final Acabado other = (Acabado) obj;
-        if (!Objects.equals(this.nombre, other.nombre)) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.id, other.id)) {
+        if (this.nombre != other.nombre) {
             return false;
         }
         if (!Objects.equals(this.tiempo, other.tiempo)) {
@@ -134,12 +165,20 @@ public class Acabado {
         if (!Objects.equals(this.coste, other.coste)) {
             return false;
         }
-        return Objects.equals(this.unyas, other.unyas);
+        if (this.siguienteFase != other.siguienteFase) {
+            return false;
+        }
+        if (!Objects.equals(this.unyas, other.unyas)) {
+            return false;
+        }
+        return Objects.equals(this.centro, other.centro);
     }
 
     @Override
     public String toString() {
-        return "Acabado{" + "id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + ", unyas=" + unyas + '}';
+        return "Acabado{" + "id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + ", siguienteFase=" + siguienteFase + ", unyas=" + unyas + ", centro=" + centro + '}';
     }
+
+    
     
 }

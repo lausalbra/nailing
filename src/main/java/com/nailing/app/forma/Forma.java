@@ -2,42 +2,40 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.nailing.app.tipo;
+package com.nailing.app.forma;
 
+import com.nailing.app.base.NombreBase;
 import com.nailing.app.centro.Centro;
 import com.nailing.app.components.Fases;
 import java.util.Objects;
-import javax.persistence.EntityListeners;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
+
 /**
  *
- * @author CANDELA
+ * @author jaime
  */
+
 @Entity
-@Table(name = "tipo")
-@EntityListeners(AuditingEntityListener.class)
-public class Tipo {
-    
+@Table(name = "forma")
+public class Forma {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    @Column (name="id")
+    @GeneratedValue
+    @Column(name = "id")
     private Long id;
-    
+
     @Column(name = "nombre")
     @NotNull
-    private NombreTipo nombre;
-    
+    private NombreForma nombre;
+
     @Positive
     @NotNull
     @Column(name = "tiempo")
@@ -56,10 +54,10 @@ public class Tipo {
     @JoinColumn(name = "centro_id")
     private Centro centro;
 
-    public Tipo() {
+    public Forma() {
     }
 
-    public Tipo(Long id, NombreTipo nombre, Integer tiempo, Double coste, Fases siguienteFase, Centro centro) {
+    public Forma(Long id, NombreForma nombre, Integer tiempo, Double coste, Fases siguienteFase, Centro centro) {
         this.id = id;
         this.nombre = nombre;
         this.tiempo = tiempo;
@@ -76,11 +74,11 @@ public class Tipo {
         this.id = id;
     }
 
-    public NombreTipo getNombre() {
+    public NombreForma getNombre() {
         return nombre;
     }
 
-    public void setNombre(NombreTipo nombre) {
+    public void setNombre(NombreForma nombre) {
         this.nombre = nombre;
     }
 
@@ -119,12 +117,12 @@ public class Tipo {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.nombre);
-        hash = 53 * hash + Objects.hashCode(this.tiempo);
-        hash = 53 * hash + Objects.hashCode(this.coste);
-        hash = 53 * hash + Objects.hashCode(this.siguienteFase);
-        hash = 53 * hash + Objects.hashCode(this.centro);
+        hash = 73 * hash + Objects.hashCode(this.id);
+        hash = 73 * hash + Objects.hashCode(this.nombre);
+        hash = 73 * hash + Objects.hashCode(this.tiempo);
+        hash = 73 * hash + Objects.hashCode(this.coste);
+        hash = 73 * hash + Objects.hashCode(this.siguienteFase);
+        hash = 73 * hash + Objects.hashCode(this.centro);
         return hash;
     }
 
@@ -139,7 +137,7 @@ public class Tipo {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Tipo other = (Tipo) obj;
+        final Forma other = (Forma) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -158,13 +156,10 @@ public class Tipo {
         return Objects.equals(this.centro, other.centro);
     }
 
-    
-    
     @Override
     public String toString() {
-        return "Tipo{" + "id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + ", siguienteFase=" + siguienteFase + ", centro=" + centro + '}';
+        return "Forma{" + "id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + ", siguienteFase=" + siguienteFase + ", centro=" + centro + '}';
     }
-
-
+        
     
 }
