@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.nailing.app.disenyo;
+import com.nailing.app.centro.Centro;
+import com.nailing.app.components.Fases;
 import java.util.Objects;
 import javax.persistence.EntityListeners;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,8 +14,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Column;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 /**
  *
  * @author CANDELA
@@ -22,30 +27,43 @@ import javax.validation.constraints.Size;
 @Table(name = "disenyo")
 @EntityListeners(AuditingEntityListener.class)
 public class Disenyo {
-     @Id
+    @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     @Column (name="id")
     private Long id;
 
     @Column(name = "nombre")
-    @Size(max=1000)
-    @NotBlank
-    private String nombre;
+    @NotNull
+    private NombreDisenyo nombre;
 
+    @Positive
+    @NotNull
     @Column(name = "tiempo")
-    @NotBlank
-    private Double tiempo;
-
+    private Integer tiempo;
+    
+    @PositiveOrZero
+    @NotNull
     @Column(name = "coste")
-    @NotBlank
     private Double coste;
 
-    public String getNombre() {
-        return nombre;
+    @NotNull
+    @Column(name = "siguiente_fase")
+    private Fases siguienteFase;
+
+    @ManyToOne
+    @JoinColumn(name = "centro_id")
+    private Centro centro;
+
+    public Disenyo() {
     }
 
-    public void setNombre(String nombre) {
+    public Disenyo(Long id, NombreDisenyo nombre, Integer tiempo, Double coste, Fases siguienteFase, Centro centro) {
+        this.id = id;
         this.nombre = nombre;
+        this.tiempo = tiempo;
+        this.coste = coste;
+        this.siguienteFase = siguienteFase;
+        this.centro = centro;
     }
 
     public Long getId() {
@@ -56,11 +74,19 @@ public class Disenyo {
         this.id = id;
     }
 
-    public Double getTiempo() {
+    public NombreDisenyo getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(NombreDisenyo nombre) {
+        this.nombre = nombre;
+    }
+
+    public Integer getTiempo() {
         return tiempo;
     }
 
-    public void setTiempo(Double tiempo) {
+    public void setTiempo(Integer tiempo) {
         this.tiempo = tiempo;
     }
 
@@ -72,23 +98,31 @@ public class Disenyo {
         this.coste = coste;
     }
 
-    public Disenyo() {
+    public Fases getSiguienteFase() {
+        return siguienteFase;
     }
 
-    public Disenyo(Long id, String nombre, Double tiempo, Double coste) {
-        this.id = id;
-        this.nombre = nombre;
-        this.tiempo = tiempo;
-        this.coste = coste;
+    public void setSiguienteFase(Fases siguienteFase) {
+        this.siguienteFase = siguienteFase;
+    }
+
+    public Centro getCentro() {
+        return centro;
+    }
+
+    public void setCentro(Centro centro) {
+        this.centro = centro;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.id);
-        hash = 83 * hash + Objects.hashCode(this.nombre);
-        hash = 83 * hash + Objects.hashCode(this.tiempo);
-        hash = 83 * hash + Objects.hashCode(this.coste);
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.nombre);
+        hash = 59 * hash + Objects.hashCode(this.tiempo);
+        hash = 59 * hash + Objects.hashCode(this.coste);
+        hash = 59 * hash + Objects.hashCode(this.siguienteFase);
+        hash = 59 * hash + Objects.hashCode(this.centro);
         return hash;
     }
 
@@ -113,12 +147,20 @@ public class Disenyo {
         if (!Objects.equals(this.tiempo, other.tiempo)) {
             return false;
         }
-        return Objects.equals(this.coste, other.coste);
+        if (!Objects.equals(this.coste, other.coste)) {
+            return false;
+        }
+        if (this.siguienteFase != other.siguienteFase) {
+            return false;
+        }
+        return Objects.equals(this.centro, other.centro);
     }
 
     @Override
     public String toString() {
-        return "Disenyo{" + "id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + '}';
+        return "Disenyo{" + "id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + ", siguienteFase=" + siguienteFase + ", centro=" + centro + '}';
     }
+
+   
     
 }
