@@ -48,6 +48,12 @@ public class CitaController {
         }
     }
     
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Cita>> citaByUser(@PathVariable Long userId){
+        List<Cita> citas = citaService.findByUsuario(userId);
+        return new ResponseEntity<>(citas, HttpStatus.OK);
+    }
+    
     @DeleteMapping("/delete/{id}")
     public void deleteUnya(@PathVariable Long id){
         citaService.removeUnya(id);
