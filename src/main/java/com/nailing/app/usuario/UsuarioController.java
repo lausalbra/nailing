@@ -38,9 +38,9 @@ public class UsuarioController {
     public ResponseEntity<String> addUsuario(@RequestBody Map<String,String> usuario){
         Boolean result = encoder.findByUsuarioContrasenya(usuario.get("user"), usuario.get("password"));
         if(result){
-            return new ResponseEntity<String>("Esta el usuario xulo", HttpStatus.OK);
+            return new ResponseEntity<String>("Usuario encontrado", HttpStatus.OK);
         }else{
-            return new ResponseEntity<String>("No me engañas picha", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Usuario no encontrado", HttpStatus.BAD_REQUEST);
         }
         
     }
