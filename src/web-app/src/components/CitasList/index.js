@@ -8,8 +8,8 @@ import { Link } from 'wouter'
 // npm install @mui/material @emotion/react @emotion/styled
 export function CitasList () {
   // const url = 'https://my.api.mockaroo.com/centros.json?key=64324960'
-  const url = 'https://my.api.mockaroo.com/citas.json?key=86580d70'
-  const xhr = new XMLHttpRequest()
+  const url_get = 'https://my.api.mockaroo.com/citas.json?key=86580d70'
+  const xhr_get = new XMLHttpRequest()
   const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
     height: 200,
@@ -77,9 +77,9 @@ export function CitasList () {
   const [resObj, setObj] = useState([])
 
   useEffect(() => {
-    xhr.open('get', url)
-    xhr.send()
-    xhr.onload = function () {
+    xhr_get.open('get', url_get)
+    xhr_get.send()
+    xhr_get.onload = function () {
       if (this.status === 200) {
         try {
           setObj(JSON.parse(this.responseText))
@@ -96,9 +96,33 @@ export function CitasList () {
 
   console.log(resObj)
   const enlace = Link({ className: 'block w-64 h-20', to: '/' })
+
+  function cancelarCita(obj) {
+    // eslint-disable-next-line no-restricted-globals
+    let accepted = confirm("¿Está seguro de que quiere cancelar su cita en " + obj.centro + "?");
+    if (accepted) {
+      const url_del = "https://my.api.mockaroo.com/resCita/" + obj.id +".json?key=88b89640"
+      const xhr_del = new XMLHttpRequest()
+      xhr_del.open('delete', url_del)
+      xhr_del.send()
+      xhr_del.onload = function () {
+        if (this.status === 200) {
+          try {
+            console.log('LLAMADA A LA API EXITOSA (delete)')
+            // eslint-disable-next-line no-restricted-globals
+            location.reload()
+          } catch (e) {
+            console.warn(e)
+          }
+        } else {
+          console.warn('Error en la petición REST: ' + this.status)
+        }
+      }
+    }
+  }
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%' }}>
-      {resObj.map((image) => (
+      {resObj.map((image) => ( 
         <ImageButton
           focusRipple
           LinkComponent={enlace}
@@ -107,7 +131,7 @@ export function CitasList () {
             width: '30%'
           }}
         >
-          <ImageSrc style={{ backgroundImage: `url(${image.imagen})` }} />
+          <ImageSrc style={{ backgroundImage: `url(${image.imagen})` }} /> 
           <ImageBackdrop className='MuiImageBackdrop-root' />
           <Image>
             <Typography
@@ -121,9 +145,9 @@ export function CitasList () {
                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
               }}
             >
-              <Link to='/'> {/* TODO: METER LOS ENLACES DE LOS CENTROS (ruta/{image.id}) */}
+              <button onClick={() => cancelarCita(image)}>
                 {image.hora_inicio} - {image.hora_fin} <br /> {image.centro}
-              </Link>
+              </button>
               <ImageMarked className='MuiImageMarked-root' />
             </Typography>
           </Image>
