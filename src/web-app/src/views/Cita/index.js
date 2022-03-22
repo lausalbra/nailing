@@ -27,16 +27,18 @@ export function Cita() {
                     console.log("Servicios recibidos");
                     console.log(data);
                     //El data que llegue debe tener 1 atributo, buttons: objeto boton con sus propiedades y carac siguiente
-                    //FORMATO JSON: {"options": [{"id": 1, "name" : "Relleno", "cost": 1, "time": 3, "next": Material}, ...] }
-                    setState({ id: state.id, name: state.name, isPaneOpen: false, buttons: data.options });
+                    //FORMATO JSON: {"tipo": [{"id": 1, "nombre" : "Relleno", "coste": 1, "tiempo": 3, "siguienteFase": Material, "centro":...}, ...] }
+                    setState({ id: state.id, name: state.name, isPaneOpen: false, buttons: data});
+
                 }
             });
         }
     }, [state.id]);
 
     useEffect(() => {
-        if (state.buttons.length != 0) {
-            setState({ id: state.id, name: state.name, isPaneOpen: true, buttons: state.buttons });
+        if(state.buttons.length != 0){
+            sessionStorage.setItem("centreId", state.id);
+            setState({ id: state.id, name: state.name, isPaneOpen: true, buttons: state.buttons});
         }
     }, [state.buttons]);
 
