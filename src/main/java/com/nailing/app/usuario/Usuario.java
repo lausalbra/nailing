@@ -34,7 +34,7 @@ public class Usuario {
     @Column(name = "contrasenya")
     @Size(max = 100)
     @NotBlank
-    private String contraseña;
+    private String contrasenya;
 
     @Column(name = "email")
     @NotNull
@@ -51,9 +51,9 @@ public class Usuario {
         super();
     }
 
-    public Usuario(String usuario, String contraseña, String email, String telefono, String rol) {
+    public Usuario(String usuario, String contrasenya, String email, String telefono, String rol) {
         this.usuario = usuario;
-        this.contraseña = contraseña;
+        this.contrasenya = contrasenya;
         this.email = email;
         this.telefono = telefono;
         this.rol = rol;
@@ -75,12 +75,12 @@ public class Usuario {
         this.usuario = usuario;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasenya() {
+        return contrasenya;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasenya(String contrasenya) {
+        this.contrasenya = contrasenya;
     }
 
     public String getEmail() {
@@ -112,7 +112,7 @@ public class Usuario {
         int hash = 7;
         hash = 59 * hash + Objects.hashCode(this.id);
         hash = 59 * hash + Objects.hashCode(this.usuario);
-        hash = 59 * hash + Objects.hashCode(this.contraseña);
+        hash = 59 * hash + Objects.hashCode(this.contrasenya);
         hash = 59 * hash + Objects.hashCode(this.email);
         hash = 59 * hash + Objects.hashCode(this.telefono);
         hash = 59 * hash + Objects.hashCode(this.rol);
@@ -134,7 +134,7 @@ public class Usuario {
         if (!Objects.equals(this.usuario, other.usuario)) {
             return false;
         }
-        if (!Objects.equals(this.contraseña, other.contraseña)) {
+        if (!Objects.equals(this.contrasenya, other.contrasenya)) {
             return false;
         }
         if (!Objects.equals(this.email, other.email)) {

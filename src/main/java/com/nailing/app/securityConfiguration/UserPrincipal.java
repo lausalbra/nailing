@@ -35,7 +35,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.usuario.getContraseña();
+        return this.usuario.getContrasenya();
     }
 
     @Override

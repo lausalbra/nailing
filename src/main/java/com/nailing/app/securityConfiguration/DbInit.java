@@ -8,6 +8,7 @@ import com.nailing.app.usuario.Usuario;
 import com.nailing.app.usuario.UsuarioRepository;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,16 @@ public class DbInit implements CommandLineRunner {
 
         // Save to db
         this.usuarioRepository.saveAll(users);
+    }
+    
+    //encontrar usuario por usuario contrasenya
+    public Boolean findByUsuarioContrasenya(String usuario, String contrasenya) {
+        Usuario usuario2 = usuarioRepository.findByUsername(usuario);
+        if(usuario2 != null){
+            if(passwordEncoder.matches(contrasenya, usuario2.getContrasenya())){
+                return true;
+            }
+        }
+        return false;
     }
 }

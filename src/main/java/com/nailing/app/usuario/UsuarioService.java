@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -17,10 +20,17 @@ public class UsuarioService {
     public Usuario addUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
+    
     //encontrar usuario por su id
     public Optional<Usuario> findById(Long id) {
         return usuarioRepository.findById(id);
     }
+    
+    //encontrar usuario por su usuario
+    public Usuario findByUsuario(String usuario) {
+        return usuarioRepository.findByUsername(usuario);
+    }
+    
     public void removeUsuario(Long id) {
         Optional<Usuario> usuario = findById(id);
         if(usuario.isPresent()){
