@@ -9,6 +9,7 @@ import { Usuario } from './views/Usuario'
 import { Conocenos } from './views/Conocenos'
 import { Cita } from './views/Cita'
 import { MisCitasList } from './views/MisCitasList'
+import { Error } from './views/Error'
 function App() {
   return (
 
@@ -25,6 +26,7 @@ function App() {
           <Route path='/feedback' component={Feedback} />
           <Route path='/miscitas' component={MisCitasList} />
           <Route path='/personalizacion' component={Cita} />
+          <Route path='/error' component={Error} />
           <Route path='/' component={Landing} />
         </div>
       </div>
