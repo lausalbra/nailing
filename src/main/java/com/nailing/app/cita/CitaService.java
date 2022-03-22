@@ -108,4 +108,13 @@ public class CitaService {
             citaRepository.delete(unya);
         }
     }
+    
+    public void removeCitaByUser(Long userId, Long citaId){
+        List<Cita> citas = findByUsuario(userId);
+        for(Cita c: citas){
+            if(c.getId().equals(citaId)){
+                citaRepository.delete(c);
+            }
+        }
+    }
 }

@@ -58,6 +58,11 @@ public class CitaController {
     public void deleteUnya(@PathVariable Long id){
         citaService.removeUnya(id);
     }
+    
+    @DeleteMapping("/user/{userId}/delete/{citaId}")
+    public void deleteUnya(@PathVariable Long userId,@PathVariable Long citaId){
+        citaService.removeCitaByUser(userId, citaId);
+    }
 
     @PostMapping("")
     public ResponseEntity<Cita> addCita(@RequestBody Map<String,String> ids){
