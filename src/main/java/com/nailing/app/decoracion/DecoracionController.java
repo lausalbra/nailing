@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Usuario
  */
 @RestController
-@RequestMapping("/decos")
+@RequestMapping("/decoraciones")
 public class DecoracionController {
     
     @Autowired
