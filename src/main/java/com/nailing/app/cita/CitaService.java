@@ -24,6 +24,7 @@ import com.nailing.app.usuario.Usuario;
 import com.nailing.app.usuario.UsuarioService;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -91,6 +92,10 @@ public class CitaService {
     
     public Cita findById(Long id){
         return citaRepository.findById(id).get();
+    }
+    
+    public List<Cita> findByUsuario(Long id){
+        return citaRepository.findByUsuario(id);
     }
     
     public Iterable<Cita> findAll(){
