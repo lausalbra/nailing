@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Usuario
  */
 @RestController
-@RequestMapping("/decos")
+@RequestMapping("/decoraciones")
 public class DecoracionController {
     
     @Autowired
@@ -58,5 +58,11 @@ public class DecoracionController {
         List<Decoracion> decos = StreamSupport.stream(decoracionService.findAll()
                 .spliterator(), false).collect(Collectors.toList());
         return new ResponseEntity<List<Decoracion>>(decos,HttpStatus.OK);
+    }
+    
+    @GetMapping("{disenyoId}/centro/{centroId}")
+    public ResponseEntity<List<Decoracion>> decoracionesByCentroDisenyo(@PathVariable Long disenyoId, @PathVariable Long centroId){
+        List<Decoracion> decoraciones = decoracionService.findDecoracionByCentroDisenyo(disenyoId, centroId);
+        return new ResponseEntity<List<Decoracion>>(decoraciones, HttpStatus.OK);
     }
 }

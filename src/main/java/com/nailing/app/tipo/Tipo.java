@@ -4,6 +4,8 @@
  */
 package com.nailing.app.tipo;
 
+import com.nailing.app.centro.Centro;
+import com.nailing.app.components.Fases;
 import java.util.Objects;
 import javax.persistence.EntityListeners;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -13,8 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Column;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 /**
  *
  * @author CANDELA
@@ -30,24 +35,37 @@ public class Tipo {
     private Long id;
     
     @Column(name = "nombre")
-    @Size(max=1000)
-    @NotBlank
-    private String nombre;
+    @NotNull
+    private NombreTipo nombre;
     
+    @Positive
+    @NotNull
     @Column(name = "tiempo")
-    @NotBlank
-    private Double tiempo;
+    private Integer tiempo;
     
+    @PositiveOrZero
+    @NotNull
     @Column(name = "coste")
-    @NotBlank
     private Double coste;
+    
+    @Column(name = "siguiente_fase")
+    @NotNull
+    private Fases siguienteFase;
+    
+    @ManyToOne
+    @JoinColumn(name = "centro_id")
+    private Centro centro;
 
-    public String getNombre() {
-        return nombre;
+    public Tipo() {
     }
 
-    public void setNombre(String nombre) {
+    public Tipo(Long id, NombreTipo nombre, Integer tiempo, Double coste, Fases siguienteFase, Centro centro) {
+        this.id = id;
         this.nombre = nombre;
+        this.tiempo = tiempo;
+        this.coste = coste;
+        this.siguienteFase = siguienteFase;
+        this.centro = centro;
     }
 
     public Long getId() {
@@ -58,11 +76,19 @@ public class Tipo {
         this.id = id;
     }
 
-    public Double getTiempo() {
+    public NombreTipo getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(NombreTipo nombre) {
+        this.nombre = nombre;
+    }
+
+    public Integer getTiempo() {
         return tiempo;
     }
 
-    public void setTiempo(Double tiempo) {
+    public void setTiempo(Integer tiempo) {
         this.tiempo = tiempo;
     }
 
@@ -74,23 +100,31 @@ public class Tipo {
         this.coste = coste;
     }
 
-    public Tipo(Long id, String nombre, Double tiempo, Double coste) {
-        this.id = id;
-        this.nombre = nombre;
-        this.tiempo = tiempo;
-        this.coste = coste;
+    public Fases getSiguienteFase() {
+        return siguienteFase;
     }
 
-    public Tipo() {
+    public void setSiguienteFase(Fases siguienteFase) {
+        this.siguienteFase = siguienteFase;
+    }
+
+    public Centro getCentro() {
+        return centro;
+    }
+
+    public void setCentro(Centro centro) {
+        this.centro = centro;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.nombre);
-        hash = 97 * hash + Objects.hashCode(this.tiempo);
-        hash = 97 * hash + Objects.hashCode(this.coste);
+        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.nombre);
+        hash = 53 * hash + Objects.hashCode(this.tiempo);
+        hash = 53 * hash + Objects.hashCode(this.coste);
+        hash = 53 * hash + Objects.hashCode(this.siguienteFase);
+        hash = 53 * hash + Objects.hashCode(this.centro);
         return hash;
     }
 
@@ -106,22 +140,31 @@ public class Tipo {
             return false;
         }
         final Tipo other = (Tipo) obj;
-        if (!Objects.equals(this.nombre, other.nombre)) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.id, other.id)) {
+        if (this.nombre != other.nombre) {
             return false;
         }
         if (!Objects.equals(this.tiempo, other.tiempo)) {
             return false;
         }
-        return Objects.equals(this.coste, other.coste);
+        if (!Objects.equals(this.coste, other.coste)) {
+            return false;
+        }
+        if (this.siguienteFase != other.siguienteFase) {
+            return false;
+        }
+        return Objects.equals(this.centro, other.centro);
     }
 
+    
+    
     @Override
     public String toString() {
-        return "Tipo{" + "id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + '}';
+        return "Tipo{" + "id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + ", siguienteFase=" + siguienteFase + ", centro=" + centro + '}';
     }
-    
+
+
     
 }

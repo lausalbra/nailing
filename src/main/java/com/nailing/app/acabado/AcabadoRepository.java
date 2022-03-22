@@ -4,6 +4,8 @@
  */
 package com.nailing.app.acabado;
 
+import java.util.List;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -12,5 +14,7 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface AcabadoRepository extends CrudRepository<Acabado, Long>{
     
+    @Query("SELECT acabado from Acabado acabado where acabado.centro.id = ?1")
+    public List<Acabado> findByCentro(Long id);
     
 }

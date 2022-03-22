@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nailing.app.components.Fases;
+
 @RestController
 @RequestMapping("/bases")
 public class BaseController {
@@ -24,18 +26,18 @@ public class BaseController {
 //	
 	@GetMapping("/check")
 	public ResponseEntity<Base> checkBases(){
-		Base base = new Base(0L, "BaseCheck", 10, 15.5, null, null);
+		Base base = new Base(0L, NombreBase.ACRILICO, 10, 15.5, Fases.formas, null);
 		return new ResponseEntity<Base>(base, HttpStatus.OK);
 	}
 	
 //	añadir una nueva base (No hace falta indicar el ID)
-	@PostMapping()
-	public ResponseEntity<Base> addBase(@RequestBody Base base){
-		Base result = baseService.addBase(base);
-		if(result != null)
-			return new ResponseEntity<Base>(result, HttpStatus.CREATED);
-		return new ResponseEntity<Base>(result, HttpStatus.BAD_REQUEST);
-	}
+//	@PostMapping()
+//	public ResponseEntity<Base> addBase(@RequestBody Base base){
+//		Base result = baseService.addBase(base);
+//		if(result != null)
+//			return new ResponseEntity<Base>(result, HttpStatus.CREATED);
+//		return new ResponseEntity<Base>(result, HttpStatus.BAD_REQUEST);
+//	}
 	
 //	mostrar todas las bases existentes en la base de datos
 	@GetMapping()
@@ -56,5 +58,10 @@ public class BaseController {
 		return new ResponseEntity<Base>(baseService.findById(id), HttpStatus.OK);
 	}
 	
+	@GetMapping("/{tipoId}/centro/{centroId}")
+	public  ResponseEntity<List<Base>> basesByCentroTipo(@PathVariable Long tipoId, @PathVariable Long centroId){
+		List<Base> bases = baseService.findBasesByCentroTipo(tipoId, centroId);
+		return new ResponseEntity<List<Base>>(bases, HttpStatus.OK);
+	}
 	
 }

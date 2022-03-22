@@ -1,8 +1,6 @@
 package com.nailing.app.base;
 
 import java.util.Objects;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +15,7 @@ import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 import com.nailing.app.centro.Centro;
-import com.nailing.app.unya.Unya;
+import com.nailing.app.components.Fases;
 
 @Entity
 @Table(name = "base")
@@ -29,9 +27,8 @@ public class Base {
 	private Long id;
 
 	@Column(name = "nombre")
-	@Size(max = 50)
-	@NotBlank
-	private String nombre;
+	@NotNull
+	private NombreBase nombre;
 
 	@Positive
 	@NotNull
@@ -43,6 +40,10 @@ public class Base {
 	@Column(name = "coste")
 	private Double coste;
 
+	@Column(name = "siguiente_fase")
+	@NotNull
+	private Fases siguienteFase;
+
 	@ManyToOne
 	@JoinColumn(name = "centro_id")
 	private Centro centro;
@@ -51,13 +52,14 @@ public class Base {
 		super();
 	}
 
-	public Base(Long id, @Size(max = 50) @NotBlank String nombre, @Positive @NotNull Integer tiempo,
-			@PositiveOrZero @NotNull Double coste, Centro centro, Set<Unya> unyas) {
+	public Base(Long id, @Size(max = 50) @NotBlank NombreBase nombre, @Positive @NotNull Integer tiempo,
+			@PositiveOrZero @NotNull Double coste, @NotBlank Fases fases, Centro centro) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.tiempo = tiempo;
 		this.coste = coste;
+		this.siguienteFase = fases;
 		this.centro = centro;
 	}
 
@@ -69,11 +71,11 @@ public class Base {
 		this.id = id;
 	}
 
-	public String getNombre() {
+	public NombreBase getNombre() {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	public void setNombre(NombreBase nombre) {
 		this.nombre = nombre;
 	}
 
@@ -100,10 +102,18 @@ public class Base {
 	public void setCentro(Centro centros) {
 		this.centro = centros;
 	}
-	
+
+	public Fases getSiguienteFase() {
+		return siguienteFase;
+	}
+
+	public void setSiguienteFase(Fases siguienteFase) {
+		this.siguienteFase = siguienteFase;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(centro, coste, id, nombre, tiempo);
+		return Objects.hash(centro, coste, id, nombre, siguienteFase, tiempo);
 	}
 
 	@Override
@@ -116,13 +126,13 @@ public class Base {
 			return false;
 		Base other = (Base) obj;
 		return Objects.equals(centro, other.centro) && Objects.equals(coste, other.coste)
-				&& Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre)
+				&& Objects.equals(id, other.id) && nombre == other.nombre && siguienteFase == other.siguienteFase
 				&& Objects.equals(tiempo, other.tiempo);
 	}
 
 	@Override
 	public String toString() {
-		return "Base [id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + "]";
+		return "Base [id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste + ", siguienteFase="
+				+ siguienteFase + "]";
 	}
-
 }
