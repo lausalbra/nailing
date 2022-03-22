@@ -10,9 +10,9 @@ DELETE FROM acabado;
 DELETE FROM centro;
 
 ---------------------------------------------CENTROS---------------------------------------------
-INSERT INTO centro (id, hora_apertura, hora_cierre, imagen, nombre, provincia) VALUES (1, '09:00:00', '21:00:00', null, 'Uñas Pepa', 'Málaga');
-INSERT INTO centro (id, hora_apertura, hora_cierre, imagen, nombre, provincia) VALUES (2, '08:30:00', '20:30:00', null, 'Nails Factory', 'Sevilla');
-INSERT INTO centro (id, hora_apertura, hora_cierre, imagen, nombre, provincia) VALUES (3, '09:30:00', '21:30:00', null, 'Mafalda Salón de Belleza', 'Cádiz');
+INSERT INTO centro (id, hora_apertura, hora_cierre, imagen, nombre, provincia) VALUES (1, '09:00:00', '21:00:00', 'https://dummyimage.com/600x400/b061cf/ffffff.png&text=U%C3%B1as+Pepa', 'Uñas Pepa', 'Málaga');
+INSERT INTO centro (id, hora_apertura, hora_cierre, imagen, nombre, provincia) VALUES (2, '08:30:00', '20:30:00', 'https://dummyimage.com/600x400/b061cf/ffffff.png&text=Nails+Factory', 'Nails Factory', 'Sevilla');
+INSERT INTO centro (id, hora_apertura, hora_cierre, imagen, nombre, provincia) VALUES (3, '09:30:00', '21:30:00', 'https://dummyimage.com/600x400/b061cf/ffffff.png&text=Mafalda', 'Mafalda Salón de Belleza', 'Cádiz');
 
 ----------------------------------------------TIPOS----------------------------------------------
 --CENTRO 1--
