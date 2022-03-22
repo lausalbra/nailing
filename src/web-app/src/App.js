@@ -9,11 +9,11 @@ import { Usuario } from './views/Usuario'
 import { Conocenos } from './views/Conocenos'
 import { Cita } from './views/Cita'
 import { MisCitasList } from './views/MisCitasList'
+import { Error } from './views/Error'
 function App() {
   return (
 
     <div className='overflow-auto'>
-      <Header />
       <div className=' bg-slate-100 '>
         {/* Las rutas entran en orden de matching por lo que la menos especifica va al final */}
         <div className='w-4/5 bg-white mx-auto min-h-screen shadow-2xl shadow-pink-300 '>
@@ -25,6 +25,7 @@ function App() {
           <Route path='/feedback' component={Feedback} />
           <Route path='/miscitas' component={MisCitasList} />
           <Route path='/personalizacion' component={Cita} />
+          <Route path='/error' component={Error} />
           <Route path='/' component={Landing} />
         </div>
       </div>

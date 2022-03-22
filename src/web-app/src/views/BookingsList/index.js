@@ -1,7 +1,9 @@
 import { Filter } from '../../components/Filter'
-export function BookingsList () {
+import { Header } from "../../components/Header"
+export function BookingsList() {
   return (
     <>
+      <Header />
       <Filter />
     </>
 

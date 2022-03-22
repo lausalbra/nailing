@@ -1,7 +1,9 @@
 import { CitasList } from '../../components/CitasList'
-export function MisCitasList () {
+import { Header } from "../../components/Header"
+export function MisCitasList() {
   return (
     <>
+      <Header />
       <CitasList />
     </>
 
