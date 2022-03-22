@@ -10,12 +10,13 @@ import jaime from '../../static/ImagenesEquipo/Jaime.png'
 import javi from '../../static/ImagenesEquipo/Javi.png'
 import laura from '../../static/ImagenesEquipo/Laura.png'
 import vicen from '../../static/ImagenesEquipo/Vicen.png'
-
+import { Header } from "../../components/Header"
 
 export function Conocenos() {
 
     return (
         <>
+            <Header />
             <h1 className='p-5 text-2xl underline'><i>Equipo Back-End</i></h1>
             <div className='grid grid-rows-1 grid-cols-6 items-center'>
                 <CardWorker photo={candela} name="Candelaria" role="Analista Programadora" mail="candelajordano @gmail.com" />

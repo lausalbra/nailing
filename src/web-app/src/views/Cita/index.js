@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SlidingPane from "../../components/SlidingPane/index.tsx";
 import PropertyPanel from "../../components/PropertyPanel/index.js";
+import { Header } from "../../components/Header"
 import $ from 'jquery';
 
 /*function toggleButtonState(event) {
@@ -28,7 +29,7 @@ export function Cita() {
                     console.log(data);
                     //El data que llegue debe tener 1 atributo, buttons: objeto boton con sus propiedades y carac siguiente
                     //FORMATO JSON: {"tipo": [{"id": 1, "nombre" : "Relleno", "coste": 1, "tiempo": 3, "siguienteFase": Material, "centro":...}, ...] }
-                    setState({ id: state.id, name: state.name, isPaneOpen: false, buttons: data});
+                    setState({ id: state.id, name: state.name, isPaneOpen: false, buttons: data });
 
                 }
             });
@@ -36,14 +37,16 @@ export function Cita() {
     }, [state.id]);
 
     useEffect(() => {
-        if(state.buttons.length != 0){
+        if (state.buttons.length != 0) {
             sessionStorage.setItem("centreId", state.id);
-            setState({ id: state.id, name: state.name, isPaneOpen: true, buttons: state.buttons});
+            setState({ id: state.id, name: state.name, isPaneOpen: true, buttons: state.buttons });
         }
     }, [state.buttons]);
 
     return (
         <>
+            <Header />
+
             <button id="420" className="border-2 border-purple-600 text-black px-32 py-3 rounded-md text-1xl font-medium hover:bg-purple-600 transition duration-300"
                 onClick={(event) => setState({ isPaneOpen: false, id: event.target.id, name: event.target.innerText, buttons: [] })}>Centro1</button>
             <button id="421" className="border-2 border-purple-600 text-black px-32 py-3 rounded-md text-1xl font-medium hover:bg-purple-600 transition duration-300"
