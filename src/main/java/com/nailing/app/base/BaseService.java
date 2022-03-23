@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.nailing.app.tipo.Tipo;
 import com.nailing.app.tipo.TipoRepository;
-import com.nailing.app.tipo.NombreTipo;
 
 @Service("baseService")
 public class BaseService {

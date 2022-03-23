@@ -25,11 +25,9 @@ import com.nailing.app.centro.Centro;
 import com.nailing.app.forma.Forma;
 import com.nailing.app.tamanyo.Tamanyo;
 import com.nailing.app.usuario.Usuario;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
 /**

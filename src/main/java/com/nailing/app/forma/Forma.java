@@ -4,7 +4,6 @@
  */
 package com.nailing.app.forma;
 
-import com.nailing.app.base.NombreBase;
 import com.nailing.app.centro.Centro;
 import com.nailing.app.components.Fases;
 import java.util.Objects;

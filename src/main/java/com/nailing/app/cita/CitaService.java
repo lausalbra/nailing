@@ -22,7 +22,6 @@ import com.nailing.app.tipo.Tipo;
 import com.nailing.app.tipo.TipoService;
 import com.nailing.app.usuario.Usuario;
 import com.nailing.app.usuario.UsuarioService;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;

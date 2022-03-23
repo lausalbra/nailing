@@ -65,8 +65,8 @@ public class DisenyoService {
         return result;
     }
     
-        public List<Disenyo> findDisenyosByCentroBase(Long BaseId, Long centroId){
-        Base base = baserepository.findById(BaseId);
+        public List<Disenyo> findDisenyosByCentroBase(Long baseId, Long centroId){
+        Base base = baserepository.findById(baseId);
         List<Disenyo> result = new ArrayList<>();
         List<NombreDisenyo> disenyos;
         List<Disenyo> disenyosCentro;

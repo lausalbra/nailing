@@ -9,7 +9,6 @@ import com.nailing.app.disenyo.DisenyoRepository;
 import com.nailing.app.disenyo.NombreDisenyo;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +52,7 @@ public class DecoracionService {
         List<NombreDecoracion> decoraciones;
         List<Decoracion> decoracionesCentro;
         
-        if(disenyo.get().getNombre().equals(NombreDisenyo.LISAS)){ //A la espera de la implementacion de NombreDisenyo
+        if(disenyo.get().getNombre().equals(NombreDisenyo.LISAS)){
             result = decoracionRepository.findByCentro(centroId);
             return result;
         }else{

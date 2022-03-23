@@ -32,7 +32,7 @@ public class FormaController {
     @GetMapping()
     public ResponseEntity<List<Forma>> listFormas(){
     	List<Forma> formas = formaService.findAll();
-	return new ResponseEntity<List<Forma>>(formas, HttpStatus.OK);
+	return new ResponseEntity<>(formas, HttpStatus.OK);
     }
 	
 //	borrar una forma por su ID
@@ -44,12 +44,12 @@ public class FormaController {
 //	encontrar una forma por su ID
     @GetMapping("/{id}")
     public ResponseEntity<Forma> showBase(@PathVariable Long id){
-	return new ResponseEntity<Forma>(formaService.findById(id), HttpStatus.OK);
+	return new ResponseEntity<>(formaService.findById(id), HttpStatus.OK);
     }
 	
     @GetMapping("/{baseId}/centro/{centroId}")
-    public  ResponseEntity<List<Forma>> basesByCentroTipo(@PathVariable Long baseId, @PathVariable Long centroId){
-    	List<Forma> formas = formaService.findFormasByCentroBase(baseId, centroId);
-	return new ResponseEntity<List<Forma>>(formas, HttpStatus.OK);
+    public  ResponseEntity<List<Forma>> basesByCentroTipo( @PathVariable Long centroId){
+    	List<Forma> formas = formaService.findFormasByCentroBase(centroId);
+	return new ResponseEntity<>(formas, HttpStatus.OK);
     }
 }
