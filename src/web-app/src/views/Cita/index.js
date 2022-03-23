@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from 'react-dom'
 import SlidingPane from "../../components/SlidingPane/index.tsx";
 import PropertyPanel from "../../components/PropertyPanel/index.js";
-import $ from 'jquery'; 
+import { Header } from "../../components/Header"
+import $ from 'jquery';
 
 
 export function Cita() {
@@ -34,9 +35,9 @@ export function Cita() {
     }, [state.id]);
 
     useEffect(() => {
-        if(state.buttons.length !== 0){
+        if (state.buttons.length != 0) {
             sessionStorage.setItem("centreId", state.id);
-            setState({ id: state.id, name: state.name, isPaneOpen: true, buttons: state.buttons});
+            setState({ id: state.id, name: state.name, isPaneOpen: true, buttons: state.buttons });
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.buttons]);
