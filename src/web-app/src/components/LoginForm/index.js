@@ -9,6 +9,16 @@ export function LoginForm() {
     const user = useRef()
     const password = useRef()
 
+    const [state, changeState] = useState(true)
+    const [locationPath, locationPush] = useLocation()
+
+    const mock = {
+        "user": "admin",
+        "password": "password",
+        "mail": "mockedMail@gmail.com",
+        "phone": 601326967
+    }
+
     function handleSubmit(evt) {
         evt.preventDefault()
         const url = "https://nailingdevelop.herokuapp.com/login"

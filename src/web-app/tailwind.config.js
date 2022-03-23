@@ -10,7 +10,9 @@ module.exports = {
         'logo-completo': "url('./static/Logo-Completo.png')",
         'logo-inicial': "url('./static/Logo-Inicial.png')",
         'botes-landing': "url('./static/Landing2.png')",
-        'chica-landing': "url('./static/landing3.jpg')"
+        'chica-landing': "url('./static/landing3.jpg')",
+        'Esculpida': "url('./static/mockButtonPhoto.jpg')",
+        'Uña-natural': "url('./static/mockButtonPhoto.jpg')",
       }
     },
   },
