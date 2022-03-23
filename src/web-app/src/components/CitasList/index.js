@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'wouter'
+import { useLocation, Link } from 'wouter'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
 import Typography from '@mui/material/Typography'
-import { Link } from 'wouter'
 
-// npm install @mui/material @emotion/react @emotion/styled
 export function CitasList () {
-  // const url = 'https://my.api.mockaroo.com/centros.json?key=64324960'
-  const url_get = 'https://my.api.mockaroo.com/citas.json?key=86580d70'
-  const user = sessionStorage.getItem("userLogged")
-  // const endpoint = 'https://nailingdevelop.herokuapp.com'
-  // const endpoint = 'https://nailingtest.herokuapp.com'
-  // const url_get = endpoint + '/cita/user' + user.id
+  
+  const id = sessionStorage.getItem('userId')
+  const endpoint = 'https://nailingtest.herokuapp.com'
+  const url_get = endpoint + '/cita/user/' + id
   const xhr_get = new XMLHttpRequest()
   const [locationPath, locationPush] = useLocation()
   const ImageButton = styled(ButtonBase)(({ theme }) => ({
@@ -84,36 +80,34 @@ export function CitasList () {
 
   useEffect(() => {
     xhr_get.open('get', url_get)
+    xhr_get.setRequestHeader("Authorization", "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword")));
     xhr_get.send()
     xhr_get.onload = function () {
       if (this.status === 200) {
         try {
           setObj(JSON.parse(this.responseText))
           console.log('Petición Rest exitosa (getCitas)')
-
         } catch (e) {
           console.warn('Excepción capturada en la petición REST')
-          sessionStorage.setItem(e)
+          sessionStorage.setItem('errorMessage', e)
           locationPush('/error')
         }
       } else {
         console.warn('Error en la petición REST')
-        sessionStorage.setItem("La API Rest (" + url_get + ") ha devuelto el error " + this.status)
+        sessionStorage.setItem('errorMessage', 'La API Rest (' + url_get + ') ha devuelto error ' + this.status)
         locationPush('/error')
+
       }
     }
   }, [])
   // NO meter xhr en el array de dependencias
 
   console.log(resObj)
-  const enlace = Link({ className: 'block w-64 h-20', to: '/' })
-
-  function cancelarCita(obj) {
+  function cancelarCita (obj) {
     // eslint-disable-next-line no-restricted-globals
-    let accepted = confirm("¿Está seguro de que quiere cancelar su cita en " + obj.centro + "?");
+    const accepted = confirm('¿Está seguro de que quiere cancelar su cita en ' + obj.centro + '?')
     if (accepted) {
-      // const url_del = endpoint + '/cita/delete/' + obj.id 
-      const url_del = "https://my.api.mockaroo.com/resCita/" + obj.id + ".json?key=88b89640&__method=DELETE"
+      const url_del = endpoint + '/cita/delete/' + obj.id
       const xhr_del = new XMLHttpRequest()
       xhr_del.open('delete', url_del)
       xhr_del.send()
@@ -124,12 +118,12 @@ export function CitasList () {
             locationPush('/miscitas')
           } catch (e) {
             console.warn('Excepción capturada en la petición REST')
-            sessionStorage.setItem(e)
+            sessionStorage.setItem('errorMessage', e)
             locationPush('/error')
           }
         } else {
           console.warn('Error en la petición REST')
-          sessionStorage.setItem("La API Rest (" + url_del + ") ha devuelto el error " + this.status)
+          sessionStorage.setItem('errorMessage', 'La API Rest (' + url_del + ') ha devuelto error ' + this.status)
           locationPush('/error')
         }
       }
@@ -137,16 +131,15 @@ export function CitasList () {
   }
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%' }}>
-      {resObj.map((image) => ( 
+      {resObj.map((image) => (
         <ImageButton
           focusRipple
-          LinkComponent={enlace}
           key={image.id}
           style={{
             width: '30%'
           }}
         >
-          <ImageSrc style={{ backgroundImage: `url(${image.imagen})` }} /> 
+          <ImageSrc style={{ backgroundImage: `url(${image.imagen})` }} />
           <ImageBackdrop className='MuiImageBackdrop-root' />
           <Image>
             <Typography
