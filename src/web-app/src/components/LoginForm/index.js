@@ -1,51 +1,66 @@
+import { data } from 'autoprefixer'
 import { useRef, useState } from 'react'
 import { useLocation } from 'wouter'
-import { httpRequest } from '../../services/common/commonService'
+import { postData } from '../../services/common/common'
 
 export function LoginForm() {
 
-    const [state, changeState] = useState(true)
-    const [locationPath, locationPush] = useLocation()
     const user = useRef()
     const password = useRef()
+    let isLogged = null
+    const [state, changeState] = useState(true)
+    const [locationPath, locationPush] = useLocation()
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic dXN1YXJpbzE6dXN1YXJpbzE='
+    }
 
-    function handleSubmit(evt) {
+    async function handleSubmit(evt) {
         evt.preventDefault()
-        const url = "https://nailingdevelop.herokuapp.com/login"
+
+        const url = "https://nailingtest.herokuapp.com/login"
         const body = {
-            "user": user,
-            "password": password
+            "user": user.current.value,
+            "password": password.current.value
         }
-        const userLogged = httpRequest('POST', url, [], body)
+
+        const call = await postData(url, body, {
+            'Content-Type': 'application/json',
+        })
+            .then(async function (data) {
+
+                const user = data
+
+                console.log(user)
+                sessionStorage.setItem("userId", user.id)
+                sessionStorage.setItem("userName", user.usuario)
+                sessionStorage.setItem("userPassword", user.contrasenya)
+                sessionStorage.setItem("userEmail", user.email)
+                sessionStorage.setItem("userPhone", user.telefono)
+                sessionStorage.setItem("isLogged", true)
+
+                //Hago la llamada con oaut
+
+                await postData(url, body, headers)
+
+                locationPush('/')
+            }
+            ).catch(
+                setTimeout(() => {
+                    changeState(false)
+                }, 500)
+            );
 
 
-        if (userLogged.getResponseHeader('status') === 200) {
-            //Añado el id y el estado isLogged
-            sessionStorage.setItem("userLogged", userLogged);
-            sessionStorage.setItem("isLogged", true);
 
-            //Aqui hago get del usuario para obtener sus datos
-            const url = `https://nailingdevelop.herokuapp.com/usuarios/${userLogged}`
-            // Cabezera authorization generada con https://www.blitter.se/utils/basic-authentication-header-generator/ y datos usuario1 usuario1
-            const data = httpRequest('GET', url, ["Authorization: Basic dXN1YXJpbzE6dXN1YXJpbzE="], "")
-            sessionStorage.setItem("userName", data.nombre);
-            sessionStorage.setItem("userEmail", data.email);
-            sessionStorage.setItem("userPhone", data.telefono);
-            changeState(true)
-            locationPush('/')
-        } else {
-            changeState(false)
-
-        }
-        console.log(user.current.value, password.current.value)
     }
 
     return state ? (
         <form className='grid border-2 border-pink-300 p-5 rounded-md' onSubmit={handleSubmit} >
             <label className='text-lg' htmlFor="user"> Usuario:</label>
-            <input className="border-black border-2  rounded-sm mb-4" name="user" type="text" ref={user} />
+            <input className="border-black border-2  rounded-sm mb-4" name="user" type="text" ref={user} required minlength="2" maxlength="100" />
             <label className='text-lg' htmlFor="password">   Contraseña:</label>
-            <input className="border-black border-2 mb-4 rounded-sm" name="password" type="password" ref={password} />
+            <input className="border-black border-2 mb-4 rounded-sm" name="password" type="password" ref={password} required minlength="2" maxlength="100" />
             <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
         </form>
     )
@@ -53,12 +68,13 @@ export function LoginForm() {
         (<form className='grid border-2 border-pink-300 p-5 rounded-md' onSubmit={handleSubmit} >
             <label className='text-lg' htmlFor="user"> Usuario:</label>
 
-            <input className="border-black border-2  rounded-sm mb-4" name="user" type="text" ref={user} required minLength={1} maxLength={100} />
+            <input className="border-black border-2  rounded-sm mb-4" name="user" type="text" ref={user} />
             <label className='text-lg' htmlFor="password">   Contraseña:</label>
-            <input className="border-black border-2 mb-4 rounded-sm" name="password" type="password" ref={password} required minLength={8} maxLength={100} />
-            < p className='text-sm text-red-600 pb-2' > Usuario o Contraseña No Válidos</p>
+            <input className="border-black border-2 mb-4 rounded-sm" name="password" type="password" ref={password} />
+            < p className='text-sm text-red-600' > Usuario o Contraseña No Válidos</p>
             <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
 
         </form >)
+
 
 }

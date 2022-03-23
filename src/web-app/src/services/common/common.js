@@ -1,30 +1,15 @@
-export function httpRequest(method, url, headers, body) {
-    return new Promise(function (resolve, reject) {
-        let xhr = new XMLHttpRequest();
-        xhr.open(method, url);
-        xhr.onload = function () {
-            if (this.status >= 200 && this.status < 300) {
-                resolve(xhr.response);
-            } else {
-                reject({
-                    status: this.status,
-                    statusText: xhr.statusText
-                });
-            }
-        };
-        xhr.onerror = function () {
-            reject({
-                status: this.status,
-                statusText: xhr.statusText
-            });
-        };
-
-        if (Object.keys(headers).length > 0) {
-            for (var key in headers) {
-                xhr.setRequestHeader(key, headers[key]);
-            }
-        }
-
-        xhr.send(body);
+// Ejemplo implementando el metodo POST:
+export async function postData(url = '', data = {}, headersJSON = {}) {
+    // Opciones por defecto estan marcadas con un *
+    const response = await fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: headersJSON,
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
     });
-} 
+    return response.json(); // parses JSON response into native JavaScript objects
+}

@@ -1,11 +1,10 @@
 import { Link } from 'wouter'
 export function Header() {
 
-  const user = sessionStorage.getItem("userLogged")
   const isLogged = sessionStorage.getItem("isLogged")
 
-  console.log("User -> " + user)
-  console.log("user distinto null -> " + user !== null)
+  console.log(isLogged)
+
 
   return isLogged === 'true' ? (
     <>
