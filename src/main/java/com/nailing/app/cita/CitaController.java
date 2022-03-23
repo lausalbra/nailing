@@ -67,12 +67,12 @@ public class CitaController {
         citaService.removeCitaByUser(userId, citaId);
     }
 
-    @PostMapping("")
+    @PostMapping("/add")
     public ResponseEntity<Cita> addCita(@RequestBody Map<String,String> ids){
         Cita cita = citaService.addCita(ids);
         if(cita == null){
-            return new ResponseEntity<Cita>(cita, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(cita, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<Cita>(cita, HttpStatus.CREATED);
+        return new ResponseEntity<>(cita, HttpStatus.CREATED);
     }
 }
