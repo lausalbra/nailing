@@ -9,11 +9,11 @@ import { Link } from 'wouter'
 // npm install @mui/material @emotion/react @emotion/styled
 export function CitasList () {
   // const url = 'https://my.api.mockaroo.com/centros.json?key=64324960'
-  // const url_get = 'https://my.api.mockaroo.com/citas.json?key=86580d70'
+  const url_get = 'https://my.api.mockaroo.com/citas.json?key=86580d70'
   const user = sessionStorage.getItem("userLogged")
   // const endpoint = 'https://nailingdevelop.herokuapp.com'
-  const endpoint = 'https://nailingtest.herokuapp.com'
-  const url_get = endpoint + '/cita/show' + user.id
+  // const endpoint = 'https://nailingtest.herokuapp.com'
+  // const url_get = endpoint + '/cita/user' + user.id
   const xhr_get = new XMLHttpRequest()
   const [locationPath, locationPush] = useLocation()
   const ImageButton = styled(ButtonBase)(({ theme }) => ({
@@ -89,13 +89,16 @@ export function CitasList () {
       if (this.status === 200) {
         try {
           setObj(JSON.parse(this.responseText))
-          console.log('LLAMADA A LA API EXITOSA (getCitas)')
+          console.log('Petición Rest exitosa (getCitas)')
+
         } catch (e) {
-          console.warn('No se pudo parsear Manin. Hit.')
+          console.warn('Excepción capturada en la petición REST')
+          sessionStorage.setItem(e)
           locationPush('/error')
         }
       } else {
-        console.warn('Error en la petición REST: ' + this.status)
+        console.warn('Error en la petición REST')
+        sessionStorage.setItem("La API Rest (" + url_get + ") ha devuelto el error " + this.status)
         locationPush('/error')
       }
     }
@@ -109,22 +112,24 @@ export function CitasList () {
     // eslint-disable-next-line no-restricted-globals
     let accepted = confirm("¿Está seguro de que quiere cancelar su cita en " + obj.centro + "?");
     if (accepted) {
-      const url_del = endpoint + '/cita/delete/' + obj.id 
+      // const url_del = endpoint + '/cita/delete/' + obj.id 
+      const url_del = "https://my.api.mockaroo.com/resCita/" + obj.id + ".json?key=88b89640&__method=DELETE"
       const xhr_del = new XMLHttpRequest()
       xhr_del.open('delete', url_del)
       xhr_del.send()
       xhr_del.onload = function () {
         if (this.status === 200) {
           try {
-            console.log('LLAMADA A LA API EXITOSA (delete)')
-            // eslint-disable-next-line no-restricted-globals
+            console.log('Petición Rest exitosa (delete cita)')
             locationPush('/miscitas')
           } catch (e) {
-            console.warn('Excepción capturada en la petición REST:')
+            console.warn('Excepción capturada en la petición REST')
+            sessionStorage.setItem(e)
             locationPush('/error')
           }
         } else {
-          console.warn('Error en la petición REST: ' + this.status)
+          console.warn('Error en la petición REST')
+          sessionStorage.setItem("La API Rest (" + url_del + ") ha devuelto el error " + this.status)
           locationPush('/error')
         }
       }
