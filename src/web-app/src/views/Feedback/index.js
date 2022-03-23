@@ -1,14 +1,15 @@
-import { LoginForm } from "../../components/LoginForm"
+import { FeedbackForm } from "../../components/FeedbackForm"
 import { Card } from "../../components/Card"
 import { Header } from "../../components/Header"
-export function Login() {
+export function Feedback() {
     return (
-
         <>
             <Header />
-
-            <Card title="Iniciar Sesión" component={<LoginForm />}>
+            <Card title="FeedBack" component={<FeedbackForm />}>
             </Card>
         </>
+
+
+
     )
 }
