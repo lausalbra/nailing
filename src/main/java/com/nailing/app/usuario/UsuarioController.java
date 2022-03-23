@@ -35,12 +35,12 @@ public class UsuarioController {
     }
     
     @PostMapping("/login")
-    public ResponseEntity<String> addUsuario(@RequestBody Map<String,String> usuario){
-        Boolean result = encoder.findByUsuarioContrasenya(usuario.get("user"), usuario.get("password"));
-        if(result){
-            return new ResponseEntity<String>("Usuario encontrado", HttpStatus.OK);
+    public ResponseEntity<Usuario> addUsuario(@RequestBody Map<String,String> usuario){
+        Usuario result = encoder.findByUsuarioContrasenya(usuario.get("user"), usuario.get("password"));
+        if(result!=null){
+            return new ResponseEntity<Usuario>(result, HttpStatus.OK);
         }else{
-            return new ResponseEntity<String>("Usuario no encontrado", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Usuario>(result, HttpStatus.BAD_REQUEST);
         }
         
     }
