@@ -1,4 +1,4 @@
-package com.nailing.app;
+package com.nailing.APP;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
