@@ -67,22 +67,54 @@ public class CitaService {
     
     
     public Cita addCita(Map<String,String> ids){
-        Decoracion decoracion = decoracionService.findById(Long.parseLong(ids.get("decoracion")));
-        Disenyo disenyo = disenyoService.findById(Long.parseLong(ids.get("disenyo")));
-        Base base = baseService.findById(Long.parseLong(ids.get("base")));
-        Acabado acabado = acabadoService.findById(Long.parseLong(ids.get("acabado")));
-        Tamanyo tamanyo = tamanyoService.findById(Long.parseLong(ids.get("tamanyo")));
-        Forma forma = formaService.findById(Long.parseLong(ids.get("forma")));
-        Tipo tipo = tipoService.findById(Long.parseLong(ids.get("tipo")));
+        Decoracion decoracion = null;
+        Disenyo disenyo = null;
+        Base base = null;
+        Acabado acabado = null;
+        Tamanyo tamanyo = null;
+        Forma forma = null;
+        Tipo tipo = null;
+        Usuario usuario = null;
+        Centro centro = null;
+        Double precio = null;
+        Integer tiempo;
+        LocalTime horaInicio = null;
+        LocalTime horaFin = null;
         
-        Usuario usuario = usuarioService.findById(Long.parseLong(ids.get("usuario"))).get();
-        Centro centro = centroService.findById(Long.parseLong(ids.get("centro"))).get();
-        Double precio = Double.valueOf(ids.get("precio"));
-        Integer tiempo = Integer.valueOf(ids.get("tiempo"));
-        
-        LocalTime horaInicio = centro.getHoraApertura();
-        LocalTime horaFin = horaInicio.plusMinutes(tiempo);
-        
+        if(ids.get("decoracion")!=null){
+            decoracion = decoracionService.findById(Long.parseLong(ids.get("decoracion")));
+        }
+        if(ids.get("disenyo")!=null){
+            disenyo = disenyoService.findById(Long.parseLong(ids.get("disenyo")));
+        }
+        if(ids.get("base")!=null){
+            base = baseService.findById(Long.parseLong(ids.get("base")));
+        }
+        if(ids.get("acabado")!=null){
+            acabado = acabadoService.findById(Long.parseLong(ids.get("acabado")));
+        }
+        if(ids.get("tamanyo")!=null){
+            tamanyo = tamanyoService.findById(Long.parseLong(ids.get("tamanyo")));
+        }
+        if(ids.get("forma")!=null){
+            forma = formaService.findById(Long.parseLong(ids.get("forma")));
+        }
+        if(ids.get("tipo")!=null){
+            tipo = tipoService.findById(Long.parseLong(ids.get("tipo")));
+        }
+        if(ids.get("usuario")!=null){
+            usuario = usuarioService.findById(Long.parseLong(ids.get("usuario"))).get();
+        }
+        if(ids.get("centro")!=null && ids.get("tiempo")!=null){
+            centro = centroService.findById(Long.parseLong(ids.get("centro"))).get();
+            tiempo = Integer.valueOf(ids.get("tiempo"));
+            horaInicio = centro.getHoraApertura();
+            horaFin = horaInicio.plusMinutes(tiempo);
+        }
+        if(ids.get("precio")!=null){
+            precio = Double.valueOf(ids.get("precio"));
+        }
+          
         Cita cita = new Cita(precio,horaInicio,horaFin,decoracion,acabado,base,tipo,disenyo,tamanyo,forma,usuario,centro);
         
         return citaRepository.save(cita);
