@@ -41,7 +41,7 @@ public class Tamanyo {
 
 	@Column(name = "siguiente_fase")
 	@NotNull
-	private Fases siguiente_fase;
+	private Fases siguienteFase;
 
 	@ManyToOne
 	@JoinColumn(name = "centro_id")
@@ -58,7 +58,7 @@ public class Tamanyo {
 		this.nombre = nombre;
 		this.tiempo = tiempo;
 		this.coste = coste;
-		this.siguiente_fase = siguiente_fase;
+		this.siguienteFase = siguiente_fase;
 		this.centro = centro;
 	}
 
@@ -95,11 +95,11 @@ public class Tamanyo {
 	}
 
 	public Fases getSiguiente_fase() {
-		return siguiente_fase;
+		return siguienteFase;
 	}
 
 	public void setSiguiente_fase(Fases siguiente_fase) {
-		this.siguiente_fase = siguiente_fase;
+		this.siguienteFase = siguiente_fase;
 	}
 
 	public Centro getCentro() {
@@ -112,7 +112,7 @@ public class Tamanyo {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(centro, coste, id, nombre, siguiente_fase, tiempo);
+		return Objects.hash(centro, coste, id, nombre, siguienteFase, tiempo);
 	}
 
 	@Override
@@ -125,14 +125,14 @@ public class Tamanyo {
 			return false;
 		Tamanyo other = (Tamanyo) obj;
 		return Objects.equals(centro, other.centro) && Objects.equals(coste, other.coste)
-				&& Objects.equals(id, other.id) && nombre == other.nombre && siguiente_fase == other.siguiente_fase
+				&& Objects.equals(id, other.id) && nombre == other.nombre && siguienteFase == other.siguienteFase
 				&& Objects.equals(tiempo, other.tiempo);
 	}
 
 	@Override
 	public String toString() {
 		return "Tamanyo [id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", coste=" + coste
-				+ ", siguiente_fase=" + siguiente_fase + "]";
+				+ ", siguiente_fase=" + siguienteFase + "]";
 	}
 
 }
