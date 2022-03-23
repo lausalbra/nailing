@@ -1,5 +1,4 @@
 import './App.css'
-import { Header } from './components/Header'
 import { Landing } from './views/Landing'
 import { Feedback } from './views/Feedback'
 import { Login } from './views/Login'

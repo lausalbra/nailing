@@ -1,7 +1,8 @@
 export function Picture({ image }) {
-
+    const t = `block h-full bg-cover ${image} bg-no-repeat bg-center clear-both`
     return (
-        <div className="block clear-both min-w-fit ">
-            <img src={image} alt="img" className="min-w-full max-h-[400px]" />
-        </div>)
+        <picture className={t}>
+        </picture>
+
+    )
 }
