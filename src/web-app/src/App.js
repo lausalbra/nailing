@@ -20,7 +20,7 @@ function App () {
         <div className='w-4/5 bg-white mx-auto min-h-screen shadow-2xl shadow-pink-300 '>
           <Route path='/login' component={Login} />
           <Route path='/usuario' component={Usuario} />
-          <Route path='/centrodetalle' component={Centro} />
+          <Route path='/centrodetalle/:id' component={Centro} />
           <Route path='/centro' component={BookingsList} />
           <Route path='/conocenos' component={Conocenos} />
           <Route path='/cita' component={BookingsList} />
