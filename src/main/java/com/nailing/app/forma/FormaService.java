@@ -4,11 +4,7 @@
  */
 package com.nailing.app.forma;
 
-import com.nailing.app.base.Base;
-import com.nailing.app.base.BaseService;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +17,7 @@ import org.springframework.stereotype.Service;
 public class FormaService {
     @Autowired
     private FormaRepository formaRepository;
-    @Autowired
-    private BaseService baseService;
-	
-//	guardar/editar
+
     public Forma addForma(Forma forma) {
 		
     	return formaRepository.save(forma);
@@ -49,8 +42,7 @@ public class FormaService {
     }
 	
 //	encontrar las bases que posee el centro dado según el tipo seleccionado
-    public List<Forma> findFormasByCentroBase(Long baseId, Long centroId) {	
-        List<Forma> result = formaRepository.findByCentro(centroId);
-	return result;
+    public List<Forma> findFormasByCentroBase(Long centroId) {	
+        return formaRepository.findByCentro(centroId);
     }
 }

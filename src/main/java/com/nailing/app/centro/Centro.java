@@ -4,26 +4,19 @@
  */
 package com.nailing.app.centro;
 
-import com.nailing.app.acabado.Acabado;
 import java.util.Objects;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.nailing.app.base.Base;
-import com.nailing.app.decoracion.Decoracion;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**

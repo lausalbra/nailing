@@ -4,7 +4,6 @@
  */
 package com.nailing.app.tipo;
 
-import com.nailing.app.components.Fases;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +31,7 @@ public class TipoController {
     @GetMapping()
     public ResponseEntity<List<Tipo>> listTipos(){
         List<Tipo> tipos = (List<Tipo>) tipoService.findAll();
-        return new ResponseEntity<List<Tipo>>(tipos, HttpStatus.OK);
+        return new ResponseEntity<>(tipos, HttpStatus.OK);
     }
     
     @DeleteMapping("/{id}")
@@ -42,12 +41,12 @@ public class TipoController {
         
      @GetMapping("/{id}")
 	public ResponseEntity<Tipo> showTipo(@PathVariable Long id){
-		return new ResponseEntity<Tipo>(tipoService.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(tipoService.findById(id), HttpStatus.OK);
 	}
         
     @GetMapping("/centro/{centroId}")
 	public  ResponseEntity<List<Tipo>> findByCentro(@PathVariable Long centroId){
 		List<Tipo> tipos = tipoService.findByCentro(centroId);
-		return new ResponseEntity<List<Tipo>>(tipos, HttpStatus.OK);
+		return new ResponseEntity<>(tipos, HttpStatus.OK);
 	}    
 }
