@@ -14,15 +14,11 @@ export function Cita() {
     })
 
     useEffect(() => {
-<<<<<<< HEAD
         if (state.id !== "" && state.buttons.length === 0) {
-=======
-        if(state.id !== "" && state.buttons.length == 0){
->>>>>>> parent of f5e69d1 (Merge branch 'release-v0' into Task-031-Personalización-de-uña-#31)
             $.ajax({
                 method: "GET",
                 headers: {
-                    "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                    "Authorization": "Basic " + btoa("usuario1" + ":" + "usuario1")//btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
                 },
                 url: "https://nailingtest.herokuapp.com/tipos/centro/" + state.id.toString(),
                 success: function (data) {
@@ -47,16 +43,9 @@ export function Cita() {
 
     return (
         <>
-<<<<<<< HEAD
-
             <button id="1" className="border-2 border-purple-600 text-black px-32 py-3 rounded-md text-1xl font-medium hover:bg-purple-600 transition duration-300"
                 onClick={(event) => setState({ isPaneOpen: false, id: event.target.id, name: event.target.innerText, buttons: []})}>Centro1</button>
             <button id="2" className="border-2 border-purple-600 text-black px-32 py-3 rounded-md text-1xl font-medium hover:bg-purple-600 transition duration-300"
-=======
-            <button id="420" className="border-2 border-purple-600 text-black px-32 py-3 rounded-md text-1xl font-medium hover:bg-purple-600 transition duration-300"
-                onClick={(event) => setState({ isPaneOpen: false, id: event.target.id, name: event.target.innerText, buttons: []})}>Centro1</button>
-            <button id="421" className="border-2 border-purple-600 text-black px-32 py-3 rounded-md text-1xl font-medium hover:bg-purple-600 transition duration-300"
->>>>>>> parent of f5e69d1 (Merge branch 'release-v0' into Task-031-Personalización-de-uña-#31)
                 onClick={(event) => setState({ isPaneOpen: false, id: event.target.id, name: event.target.innerText, buttons: []})}>Centro2</button>            
             <div class="centerIdDiv" id={state.id}>
                 <SlidingPane children={<div id={"TipoContainer"} class="propertyContainer"><PropertyPanel name="Tipo" buttons={state.buttons} /></div> } title={state.name} isOpen={state.isPaneOpen} from="bottom" width="100%" onRequestClose={() => { setState({ isPaneOpen: false, id: "", name: "", buttons: [] });}}/>

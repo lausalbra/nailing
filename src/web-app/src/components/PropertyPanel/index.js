@@ -177,26 +177,32 @@ class PropertyPanel extends Component {
             }
             var priceElement = document.createTextNode("Coste: " + price.toString() + " ");
             var timeElement = document.createTextNode("Tiempo: " + time.toString() + " ");
+            const postData = {
+                //usuario: sessionStorage.getItem("userId"),
+                usuario: "8",
+                centro: sessionStorage.getItem("centreId"),
+                precio: price.toString(),
+                tiempo: time.toString(),
+                tipo: sessionStorage.getItem("Tipo"),
+                base: sessionStorage.getItem("Base"),
+                material: sessionStorage.getItem("Material"),
+                forma: sessionStorage.getItem("Forma"),
+                tamanyo: sessionStorage.getItem("Tamaño"),
+                disenyo: sessionStorage.getItem("Diseño"),
+                decoracion: sessionStorage.getItem("Decoracion"),
+                acabado: sessionStorage.getItem("Acabado")
+            };
+            var json = JSON.stringify(postData);
             var buttonReserve = document.createElement("button");
             buttonReserve.innerText = "Reservar cita"
             buttonReserve.onclick = function() {
                 $.ajax({
                     method: "POST",
+                    contentType: "application/json",
                     headers: {
-                        "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                        "Authorization": "Basic " + btoa("usuario1" + ":" + "usuario1")
                     },
-                    data: {usuario: sessionStorage.getItem("userId"),
-                        centro: sessionStorage.getItem("centreId"),
-                        precio: price.toString(),
-                        tiempo: time.toString(),
-                        tipo: sessionStorage.getItem("Tipo"),
-                        base: sessionStorage.getItem("Base"),
-                        material: sessionStorage.getItem("Material"),
-                        forma: sessionStorage.getItem("Forma"),
-                        tamanyo: sessionStorage.getItem("Tamaño"),
-                        disenyo: sessionStorage.getItem("Diseño"),
-                        decoracion: sessionStorage.getItem("Decoracion"),
-                        acabado: sessionStorage.getItem("Acabado")},
+                    data: json,
                     url: "https://nailingtest.herokuapp.com/cita/add"
                 });
             };
@@ -212,7 +218,7 @@ class PropertyPanel extends Component {
                 url: "https://nailingtest.herokuapp.com/" + url,
                 //QUITAR CUANDO FUNCIONE LOGIN
                 headers: {
-                    "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                    "Authorization": "Basic " + btoa("usuario1" + ":" + "usuario1")
                 },
                 success: function (data) {
                     console.log("Servicios recibidos");
