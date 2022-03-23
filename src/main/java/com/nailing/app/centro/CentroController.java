@@ -40,7 +40,7 @@ public class CentroController {
 	centroService.delete(id);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/details/{id}")
     public ResponseEntity<Centro> findById(@PathVariable Long id){
 	return new ResponseEntity<Centro>(centroService.findById(id).get(), HttpStatus.OK);
     }
