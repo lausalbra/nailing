@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 
-export function UserDetails({ image, username, email, phone }) {
+export function UserDetails({ image, email, phone }) {
   return (
     <Card style={{backgroundColor: 'rgb(248, 225, 228)'}} sx={{ minWidth: 275 }}>
       <CardContent>
