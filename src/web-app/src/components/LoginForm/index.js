@@ -1,8 +1,11 @@
 import { useRef, useState } from 'react'
 import { useLocation } from 'wouter'
+import { httpRequest } from '../../services/common/commonService'
 
 export function LoginForm() {
 
+    const [state, changeState] = useState(true)
+    const [locationPath, locationPush] = useLocation()
     const user = useRef()
     const password = useRef()
 
@@ -18,10 +21,26 @@ export function LoginForm() {
 
     function handleSubmit(evt) {
         evt.preventDefault()
+        const url = "https://nailingdevelop.herokuapp.com/login"
+        const body = {
+            "user": user,
+            "password": password
+        }
+        const userLogged = httpRequest('POST', url, [], body)
 
-        if (user.current.value === mock.user && password.current.value === mock.password) {
-            sessionStorage.setItem("userLogged", mock);
+
+        if (userLogged.getResponseHeader('status') === 200) {
+            //Añado el id y el estado isLogged
+            sessionStorage.setItem("userLogged", userLogged);
             sessionStorage.setItem("isLogged", true);
+
+            //Aqui hago get del usuario para obtener sus datos
+            const url = `https://nailingdevelop.herokuapp.com/usuarios/${userLogged}`
+            // Cabezera authorization generada con https://www.blitter.se/utils/basic-authentication-header-generator/ y datos usuario1 usuario1
+            const data = httpRequest('GET', url, ["Authorization: Basic dXN1YXJpbzE6dXN1YXJpbzE="], "")
+            sessionStorage.setItem("userName", data.nombre);
+            sessionStorage.setItem("userEmail", data.email);
+            sessionStorage.setItem("userPhone", data.telefono);
             changeState(true)
             locationPush('/')
         } else {
@@ -51,6 +70,5 @@ export function LoginForm() {
             <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
 
         </form >)
-
 
 }
