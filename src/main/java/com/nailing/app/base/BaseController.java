@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nailing.app.components.Fases;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE })
 @RequestMapping("/bases")
 public class BaseController {
 	
