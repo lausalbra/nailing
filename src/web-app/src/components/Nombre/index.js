@@ -1,6 +1,6 @@
 export function Nombre({ name }) {
     return (
         <div className="flex">
-            <strong className="mb-5 mt-5 text-lg">{name}</strong>
+            <strong className="ml-5 mb-5 mt-5 text-lg">{name}</strong>
         </div>)
 }
