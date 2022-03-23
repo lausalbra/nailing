@@ -9,9 +9,6 @@ export function LoginForm() {
     const user = useRef()
     const password = useRef()
 
-    const [state, changeState] = useState(true)
-    const [locationPath, locationPush] = useLocation()
-
     const mock = {
         "user": "admin",
         "password": "password",
@@ -21,7 +18,7 @@ export function LoginForm() {
 
     function handleSubmit(evt) {
         evt.preventDefault()
-        const url = "https://nailingdevelop.herokuapp.com/login"
+        const url = "https://nailingtest.herokuapp.com/login"
         const body = {
             "user": user,
             "password": password
@@ -35,7 +32,7 @@ export function LoginForm() {
             sessionStorage.setItem("isLogged", true);
 
             //Aqui hago get del usuario para obtener sus datos
-            const url = `https://nailingdevelop.herokuapp.com/usuarios/${userLogged}`
+            const url = `https://nailingtest.herokuapp.com/usuarios/${userLogged}`
             // Cabezera authorization generada con https://www.blitter.se/utils/basic-authentication-header-generator/ y datos usuario1 usuario1
             const data = httpRequest('GET', url, ["Authorization: Basic dXN1YXJpbzE6dXN1YXJpbzE="], "")
             sessionStorage.setItem("userName", data.nombre);

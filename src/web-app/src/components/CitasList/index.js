@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useLocation } from 'wouter'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
@@ -8,8 +9,13 @@ import { Link } from 'wouter'
 // npm install @mui/material @emotion/react @emotion/styled
 export function CitasList () {
   // const url = 'https://my.api.mockaroo.com/centros.json?key=64324960'
-  const url_get = 'https://my.api.mockaroo.com/citas.json?key=86580d70'
+  // const url_get = 'https://my.api.mockaroo.com/citas.json?key=86580d70'
+  const user = sessionStorage.getItem("userLogged")
+  // const endpoint = 'https://nailingdevelop.herokuapp.com'
+  const endpoint = 'https://nailingtest.herokuapp.com'
+  const url_get = endpoint + '/cita/show' + user.id
   const xhr_get = new XMLHttpRequest()
+  const [locationPath, locationPush] = useLocation()
   const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
     height: 200,
@@ -83,12 +89,14 @@ export function CitasList () {
       if (this.status === 200) {
         try {
           setObj(JSON.parse(this.responseText))
-          console.log('LLAMADA A LA API EXITOSA')
+          console.log('LLAMADA A LA API EXITOSA (getCitas)')
         } catch (e) {
           console.warn('No se pudo parsear Manin. Hit.')
+          locationPush('/error')
         }
       } else {
-        console.warn('No se recive un 200 Manin. Hit.')
+        console.warn('Error en la petición REST: ' + this.status)
+        locationPush('/error')
       }
     }
   }, [])
@@ -101,7 +109,7 @@ export function CitasList () {
     // eslint-disable-next-line no-restricted-globals
     let accepted = confirm("¿Está seguro de que quiere cancelar su cita en " + obj.centro + "?");
     if (accepted) {
-      const url_del = "https://my.api.mockaroo.com/resCita/" + obj.id +".json?key=88b89640"
+      const url_del = endpoint + '/cita/delete/' + obj.id 
       const xhr_del = new XMLHttpRequest()
       xhr_del.open('delete', url_del)
       xhr_del.send()
@@ -110,12 +118,14 @@ export function CitasList () {
           try {
             console.log('LLAMADA A LA API EXITOSA (delete)')
             // eslint-disable-next-line no-restricted-globals
-            location.reload()
+            locationPush('/miscitas')
           } catch (e) {
-            console.warn(e)
+            console.warn('Excepción capturada en la petición REST:')
+            locationPush('/error')
           }
         } else {
           console.warn('Error en la petición REST: ' + this.status)
+          locationPush('/error')
         }
       }
     }
