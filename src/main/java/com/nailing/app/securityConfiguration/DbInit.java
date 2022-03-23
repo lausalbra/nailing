@@ -35,7 +35,7 @@ public class DbInit implements CommandLineRunner {
 
         // Crete users
         Usuario usuario1 = new Usuario("usuario1",passwordEncoder.encode("usuario1"),"email@email.com","555555555","USER");
-        Usuario usuario2 = new Usuario("usuario1",passwordEncoder.encode("usuario2"),"email2@email.com","55556555","ADMIN");
+        Usuario usuario2 = new Usuario("usuario2",passwordEncoder.encode("usuario2"),"email2@email.com","55556555","ADMIN");
         List<Usuario> users = Arrays.asList(usuario1,usuario2);
 
         // Save to db
