@@ -1,25 +1,36 @@
-import './App.css';
+import './App.css'
 import { Header } from './components/Header'
 import { Landing } from './views/Landing'
-import { ResCita } from './views/ResCita'
+import { Feedback } from './views/Feedback'
+import { Login } from './views/Login'
 import { Route } from 'wouter'
-import { Usuario } from './views/Usuario';
-import { Centro } from './views/Centro';
+import { BookingsList } from './views/BookingsList'
+import { Usuario } from './views/Usuario'
+import { Conocenos } from './views/Conocenos'
+import { Cita } from './views/Cita'
+import { MisCitasList } from './views/MisCitasList'
+import { Error } from './views/Error'
 function App() {
   return (
-    <div>
-      <Header />
-      <div className=" bg-white-100 min-h-screen grid grid-rows-[500px_300px_500px_300px]">
-        {/* Las rutas entran en orden de matching por lo que la menos especifica va al final*/}
-        <main className='w-4/5 mx-auto'>
-          <Route path='/' component={Landing} />
+
+    <div className='overflow-auto'>
+      <div className=' bg-slate-100 '>
+        {/* Las rutas entran en orden de matching por lo que la menos especifica va al final */}
+        <div className='w-4/5 bg-white mx-auto min-h-screen shadow-2xl shadow-pink-300 '>
+          <Route path='/login' component={Login} />
           <Route path='/usuario' component={Usuario} />
-          <Route path='/centro' component={Centro} />
-          <Route path='/cita' component={ResCita} />
-        </main>
+          <Route path='/centro' component={BookingsList} />
+          <Route path='/conocenos' component={Conocenos} />
+          <Route path='/cita' component={BookingsList} />
+          <Route path='/feedback' component={Feedback} />
+          <Route path='/miscitas' component={MisCitasList} />
+          <Route path='/personalizacion' component={Cita} />
+          <Route path='/error' component={Error} />
+          <Route path='/' component={Landing} />
+        </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
