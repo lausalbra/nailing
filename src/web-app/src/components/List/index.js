@@ -9,7 +9,7 @@ import { Link } from 'wouter'
 // npm install @mui/material @emotion/react @emotion/styled
 export function List ({ provincia }) {
   // const url = 'https://my.api.mockaroo.com/centros.json?key=64324960'
-  const url = 'https://my.api.mockaroo.com/centros.json?key=86580d70'
+  const url = 'https://nailingtest.herokuapp.com/centros'
   const xhr = new XMLHttpRequest()
   const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
@@ -86,10 +86,10 @@ export function List ({ provincia }) {
           setObj(JSON.parse(this.responseText))
           console.log('LLAMADA A LA API EXITOSA')
         } catch (e) {
-          console.warn('No se pudo parsear Manin. Hit.')
+          console.warn('No se pudo parsear. Hit.')
         }
       } else {
-        console.warn('No se recive un 200 Manin. Hit.')
+        console.warn('No se recive un 200. Hit.')
       }
     }
   }, [])
@@ -128,7 +128,7 @@ export function List ({ provincia }) {
                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
               }}
             >
-              <Link to='/'> {/* TODO: METER LOS ENLACES DE LOS CENTROS (ruta/{image.id}) */}
+              <Link to={'/centrodetalle/' + image.id}>
                 {image.nombre}
               </Link>
               <ImageMarked className='MuiImageMarked-root' />

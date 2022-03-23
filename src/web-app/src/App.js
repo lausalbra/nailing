@@ -10,7 +10,8 @@ import { Conocenos } from './views/Conocenos'
 import { Cita } from './views/Cita'
 import { MisCitasList } from './views/MisCitasList'
 import { Error } from './views/Error'
-function App() {
+import { Centro } from './views/Centro'
+function App () {
   return (
 
     <div className='overflow-auto'>
@@ -19,6 +20,7 @@ function App() {
         <div className='w-4/5 bg-white mx-auto min-h-screen shadow-2xl shadow-pink-300 '>
           <Route path='/login' component={Login} />
           <Route path='/usuario' component={Usuario} />
+          <Route path='/centrodetalle' component={Centro} />
           <Route path='/centro' component={BookingsList} />
           <Route path='/conocenos' component={Conocenos} />
           <Route path='/cita' component={BookingsList} />
