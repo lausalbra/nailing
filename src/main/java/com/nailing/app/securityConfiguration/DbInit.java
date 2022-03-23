@@ -43,13 +43,13 @@ public class DbInit implements CommandLineRunner {
     }
     
     //encontrar usuario por usuario contrasenya
-    public Boolean findByUsuarioContrasenya(String usuario, String contrasenya) {
+    public Usuario findByUsuarioContrasenya(String usuario, String contrasenya) {
         Usuario usuario2 = usuarioRepository.findByUsername(usuario);
         if(usuario2 != null){
             if(passwordEncoder.matches(contrasenya, usuario2.getContrasenya())){
-                return true;
+                return usuario2;
             }
         }
-        return false;
+        return null;
     }
 }
