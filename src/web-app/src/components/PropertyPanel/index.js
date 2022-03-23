@@ -13,7 +13,7 @@ class PropertyPanel extends Component {
     handleClick(e, self){
         //Obtiene el boton pulsado
         var id = e.target.id;
-        var option = this.state.buttons.find(b => b.id === id)
+        var option = this.state.buttons.find(b => b.id.toString() === id)
         //Se debe guardar la opción en el contexto
         //Cerramos la caja
         var checkbox = e.target.parentElement.parentElement.parentElement.firstChild;
@@ -137,92 +137,98 @@ class PropertyPanel extends Component {
         //Se obtiene el panel principal para colocar la nueva caja
         var mainPanel = containerDiv.parentElement;
         //El id del centro puede sacarse del contexto, el resto está en la opcion
-        //var url = option.next + "/" + option.id + "/centro/" + sessionStorage.getItem("centreId"); 
-        $.ajax({
-            method: "GET",
-            url: "https://my.api.mockaroo.com/123/123/centro/123?key=199eb280",
-            success: function (data) {
-                console.log("Servicios recibidos");
-                //El data que llegue debe tener 1 atributo, buttons: objeto boton con sus propiedades y carac siguiente
-                //FORMATO JSON: {"options": [{"id": 1, "name" : "Relleno", "cost": 1, "time": 3, "next": Material}, ...] }
-                if(data.length === 1 && data[0].next === "fin")
-                {
-                    //Se suman los tiempos y precios y se muestran
-                    var finisherDiv = document.createElement("div");
-                    var time = 0;
-                    var price = 0;
-                    if(sessionStorage.getItem("Tipo") != null){
-                        time += parseInt(sessionStorage.getItem("TipoTime"));
-                        price += parseFloat(sessionStorage.getItem("TipoCost"));
-                    }
-                    if(sessionStorage.getItem("Base") != null){
-                        time += parseInt(sessionStorage.getItem("BaseTime"));
-                        price += parseFloat(sessionStorage.getItem("BaseCost"));
-                    }
-                    if(sessionStorage.getItem("Material") != null){
-                        time += parseInt(sessionStorage.getItem("MaterialTime"));
-                        price += parseFloat(sessionStorage.getItem("MaterialCost"));
-                    }
-                    if(sessionStorage.getItem("Forma") != null){
-                        time += parseInt(sessionStorage.getItem("FormaTime"));
-                        price += parseFloat(sessionStorage.getItem("FormaCost"));
-                    }
-                    if(sessionStorage.getItem("Tamaño") != null){
-                        time += parseInt(sessionStorage.getItem("TamañoTime"));
-                        price += parseFloat(sessionStorage.getItem("TamañoCost"));
-                    }
-                    if(sessionStorage.getItem("Diseño") != null){
-                        time += parseInt(sessionStorage.getItem("DiseñoTime"));
-                        price += parseFloat(sessionStorage.getItem("DiseñoCost"));
-                    }
-                    if(sessionStorage.getItem("Decoracion") != null){
-                        time += parseInt(sessionStorage.getItem("DecoracionTime"));
-                        price += parseFloat(sessionStorage.getItem("DecoracionCost"));
-                    }
-                    if(sessionStorage.getItem("Acabado") != null){
-                        time += parseInt(sessionStorage.getItem("AcabadoTime"));
-                        price += parseFloat(sessionStorage.getItem("AcabadoCost"));
-                    }
-                    var priceElement = document.createTextNode(price.toString());
-                    var timeElement = document.createTextNode(time.toString());
-                    var buttonReserve = document.createElement("button");
-                    buttonReserve.innerText = "Reservar cita"
-                    buttonReserve.onclick = function() {
-                        $.ajax({
-                            method: "POST",
-                            data: {usuario: sessionStorage.getItem("userId"),
-                                centro: sessionStorage.getItem("centreId"),
-                                precio: price.toString(),
-                                tiempo: time.toString(),
-                                tipo: sessionStorage.getItem("Tipo"),
-                                base: sessionStorage.getItem("Base"),
-                                material: sessionStorage.getItem("Material"),
-                                forma: sessionStorage.getItem("Forma"),
-                                tamanyo: sessionStorage.getItem("Tamaño"),
-                                disenyo: sessionStorage.getItem("Diseño"),
-                                decoracion: sessionStorage.getItem("Decoracion"),
-                                acabado: sessionStorage.getItem("Acabado")},
-                            url: "centro/reservaCita" //NO DEFINITVA
-                        });
-                    };
-                    finisherDiv.appendChild(priceElement);
-                    finisherDiv.appendChild(timeElement);
-                    finisherDiv.appendChild(buttonReserve);
-                    mainPanel.append(finisherDiv);
-                }
-                else
-                {
+        if(option.siguienteFase === "fin")
+        {
+            //Se suman los tiempos y precios y se muestran
+            var finisherDiv = document.createElement("div");
+            var time = 0;
+            var price = 0;
+            if(sessionStorage.getItem("Tipo") != null){
+                time += parseInt(sessionStorage.getItem("TipoTime"));
+                price += parseFloat(sessionStorage.getItem("TipoCost"));
+            }
+            if(sessionStorage.getItem("Base") != null){
+                time += parseInt(sessionStorage.getItem("BaseTime"));
+                price += parseFloat(sessionStorage.getItem("BaseCost"));
+            }
+            if(sessionStorage.getItem("Material") != null){
+                time += parseInt(sessionStorage.getItem("MaterialTime"));
+                price += parseFloat(sessionStorage.getItem("MaterialCost"));
+            }
+            if(sessionStorage.getItem("Forma") != null){
+                time += parseInt(sessionStorage.getItem("FormaTime"));
+                price += parseFloat(sessionStorage.getItem("FormaCost"));
+            }
+            if(sessionStorage.getItem("Tamaño") != null){
+                time += parseInt(sessionStorage.getItem("TamañoTime"));
+                price += parseFloat(sessionStorage.getItem("TamañoCost"));
+            }
+            if(sessionStorage.getItem("Diseño") != null){
+                time += parseInt(sessionStorage.getItem("DiseñoTime"));
+                price += parseFloat(sessionStorage.getItem("DiseñoCost"));
+            }
+            if(sessionStorage.getItem("Decoracion") != null){
+                time += parseInt(sessionStorage.getItem("DecoracionTime"));
+                price += parseFloat(sessionStorage.getItem("DecoracionCost"));
+            }
+            if(sessionStorage.getItem("Acabado") != null){
+                time += parseInt(sessionStorage.getItem("AcabadoTime"));
+                price += parseFloat(sessionStorage.getItem("AcabadoCost"));
+            }
+            var priceElement = document.createTextNode("Coste: " + price.toString() + " ");
+            var timeElement = document.createTextNode("Tiempo: " + time.toString() + " ");
+            var buttonReserve = document.createElement("button");
+            buttonReserve.innerText = "Reservar cita"
+            buttonReserve.onclick = function() {
+                $.ajax({
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                    },
+                    data: {usuario: sessionStorage.getItem("userId"),
+                        centro: sessionStorage.getItem("centreId"),
+                        precio: price.toString(),
+                        tiempo: time.toString(),
+                        tipo: sessionStorage.getItem("Tipo"),
+                        base: sessionStorage.getItem("Base"),
+                        material: sessionStorage.getItem("Material"),
+                        forma: sessionStorage.getItem("Forma"),
+                        tamanyo: sessionStorage.getItem("Tamaño"),
+                        disenyo: sessionStorage.getItem("Diseño"),
+                        decoracion: sessionStorage.getItem("Decoracion"),
+                        acabado: sessionStorage.getItem("Acabado")},
+                    url: "https://nailingtest.herokuapp.com/cita/add"
+                });
+            };
+            finisherDiv.appendChild(priceElement);
+            finisherDiv.appendChild(timeElement);
+            finisherDiv.appendChild(buttonReserve);
+            mainPanel.append(finisherDiv);
+        }
+        else{
+            var url = option.siguienteFase + "/" + option.id + "/centro/" + sessionStorage.getItem("centreId"); 
+            $.ajax({
+                method: "GET",
+                url: "https://nailingtest.herokuapp.com/" + url,
+                //QUITAR CUANDO FUNCIONE LOGIN
+                headers: {
+                    "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                },
+                success: function (data) {
+                    console.log("Servicios recibidos");
+                    //El data que llegue debe tener 1 atributo, buttons: objeto boton con sus propiedades y carac siguiente
+                    //FORMATO JSON: {"options": [{"id": 1, "name" : "Relleno", "cost": 1, "time": 3, "next": Material}, ...] }
                     let newPropertyPanelContainer = document.createElement("div");
-                    var nextName = option.siguienteFase.charAt(0).toUpperCase() + option.siguienteFase.slice(1,-1);
-                    nextName.replace("ny","ñ");
+                    var nextName = option.siguienteFase.charAt(0).toUpperCase() + option.siguienteFase.slice(1);
+                    nextName = nextName.replace("ny","ñ");
                     newPropertyPanelContainer.id = nextName + "Container";
                     newPropertyPanelContainer.className = "propertyContainer";
                     mainPanel.append(newPropertyPanelContainer);
                     ReactDOM.render(<><PropertyPanel name={nextName} buttons={data}/></>, newPropertyPanelContainer);
                     newPropertyPanelContainer.firstChild.firstChild.firstChild.checked = true;
                 }
-            }
-        });
+            });
+        }
     }
  
     render()
@@ -261,18 +267,3 @@ class PropertyPanel extends Component {
 } 
 
 export default PropertyPanel;
-
-/*
-$.ajax({
-    method: "POST",
-    url: "/api/users",
-    data: {
-        username: username,
-        password: password,
-        authority: authority,
-    },
-    success: function (data) {
-        console.log("User Created");
-    }
-});
-*/

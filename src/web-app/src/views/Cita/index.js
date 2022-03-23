@@ -3,12 +3,6 @@ import SlidingPane from "../../components/SlidingPane/index.tsx";
 import PropertyPanel from "../../components/PropertyPanel/index.js";
 import $ from 'jquery';
 
-/*function toggleButtonState(event) {
-    let selectedWord = window.getSelection().toString();
-    fetchAPI(selectedWord).then(result => {
-      this.setState({ result });
-    });
-  };*/
 
 export function Cita() {
     const [state, setState] = useState({
@@ -19,10 +13,13 @@ export function Cita() {
     })
 
     useEffect(() => {
-        if (state.id !== "" && state.buttons.length == 0) {
+        if (state.id !== "" && state.buttons.length === 0) {
             $.ajax({
                 method: "GET",
-                url: "https://my.api.mockaroo.com/tipo/centro/123?key=199eb280", //"/tipo/centro/" + event.target.id.toString(),
+                headers: {
+                    "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                },
+                url: "https://nailingtest.herokuapp.com/tipos/centro/" + state.id.toString(),
                 success: function (data) {
                     console.log("Servicios recibidos");
                     console.log(data);
@@ -33,21 +30,24 @@ export function Cita() {
                 }
             });
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.id]);
 
     useEffect(() => {
-        if(state.buttons.length != 0){
+        if(state.buttons.length !== 0){
             sessionStorage.setItem("centreId", state.id);
             setState({ id: state.id, name: state.name, isPaneOpen: true, buttons: state.buttons});
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.buttons]);
 
     return (
         <>
-            <button id="420" className="border-2 border-purple-600 text-black px-32 py-3 rounded-md text-1xl font-medium hover:bg-purple-600 transition duration-300"
-                onClick={(event) => setState({ isPaneOpen: false, id: event.target.id, name: event.target.innerText, buttons: [] })}>Centro1</button>
-            <button id="421" className="border-2 border-purple-600 text-black px-32 py-3 rounded-md text-1xl font-medium hover:bg-purple-600 transition duration-300"
-                onClick={(event) => setState({ isPaneOpen: false, id: event.target.id, name: event.target.innerText, buttons: [] })}>Centro2</button>
+
+            <button id="1" className="border-2 border-purple-600 text-black px-32 py-3 rounded-md text-1xl font-medium hover:bg-purple-600 transition duration-300"
+                onClick={(event) => setState({ isPaneOpen: false, id: event.target.id, name: event.target.innerText, buttons: []})}>Centro1</button>
+            <button id="2" className="border-2 border-purple-600 text-black px-32 py-3 rounded-md text-1xl font-medium hover:bg-purple-600 transition duration-300"
+                onClick={(event) => setState({ isPaneOpen: false, id: event.target.id, name: event.target.innerText, buttons: []})}>Centro2</button>            
             <div class="centerIdDiv" id={state.id}>
                 <SlidingPane children={<div id={"TipoContainer"} class="propertyContainer"><PropertyPanel name="Tipo" buttons={state.buttons} /></div>} title={state.name} isOpen={state.isPaneOpen} from="bottom" width="100%" onRequestClose={() => { setState({ isPaneOpen: false, id: "", name: "", buttons: [] }); }} />
             </div>
