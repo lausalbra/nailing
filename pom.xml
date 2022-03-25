@@ -80,6 +80,12 @@
                 <artifactId>httpclient</artifactId>
                 <scope>test</scope>
             </dependency>
+		
+	    <dependency>
+                <artifactId>junit</artifactId>
+                <groupId>junit</groupId>
+            </dependency>
+		
 	</dependencies>
 
 	<build>
