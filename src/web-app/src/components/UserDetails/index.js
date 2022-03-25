@@ -2,8 +2,10 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import { useLocation } from 'wouter'
 
 export function UserDetails({ image, email, phone }) {
+  const [locationPath, locationPush] = useLocation()
   return (
     <Card style={{backgroundColor: 'rgb(248, 225, 228)'}} sx={{ minWidth: 275 }}>
       <CardContent>
@@ -16,7 +18,7 @@ export function UserDetails({ image, email, phone }) {
         </div>
       </CardContent>
       <CardActions>
-            <button className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Mis reservas</button>
+            <button onClick={() => locationPush('/miscitas')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Mis reservas</button>
       </CardActions>
     </Card>
     

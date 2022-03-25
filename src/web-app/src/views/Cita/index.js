@@ -19,7 +19,7 @@ export function Cita() {
             $.ajax({
                 method: "GET",
                 headers: {
-                    "Authorization": "Basic " + btoa("usuario1" + ":" + "usuario1")//btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                    "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
                 },
                 url: "https://nailingtest.herokuapp.com/tipos/centro/" + state.id.toString(),
                 success: function (data) {

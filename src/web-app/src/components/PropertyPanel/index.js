@@ -178,8 +178,7 @@ class PropertyPanel extends Component {
             var priceElement = document.createTextNode("Coste: " + price.toString() + " ");
             var timeElement = document.createTextNode("Tiempo: " + time.toString() + " ");
             const postData = {
-                //usuario: sessionStorage.getItem("userId"),
-                usuario: "8",
+                usuario: sessionStorage.getItem("userId"),
                 centro: sessionStorage.getItem("centreId"),
                 precio: price.toString(),
                 tiempo: time.toString(),
@@ -200,7 +199,7 @@ class PropertyPanel extends Component {
                     method: "POST",
                     contentType: "application/json",
                     headers: {
-                        "Authorization": "Basic " + btoa("usuario1" + ":" + "usuario1")
+                        "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
                     },
                     data: json,
                     url: "https://nailingtest.herokuapp.com/cita/add"
@@ -218,7 +217,7 @@ class PropertyPanel extends Component {
                 url: "https://nailingtest.herokuapp.com/" + url,
                 //QUITAR CUANDO FUNCIONE LOGIN
                 headers: {
-                    "Authorization": "Basic " + btoa("usuario1" + ":" + "usuario1")
+                    "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
                 },
                 success: function (data) {
                     console.log("Servicios recibidos");

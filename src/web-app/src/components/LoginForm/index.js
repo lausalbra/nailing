@@ -33,7 +33,7 @@ export function LoginForm() {
                 console.log(user)
                 sessionStorage.setItem("userId", user.id)
                 sessionStorage.setItem("userName", user.usuario)
-                sessionStorage.setItem("userPassword", user.contrasenya)
+                sessionStorage.setItem("userPassword", password.current.value)
                 sessionStorage.setItem("userEmail", user.email)
                 sessionStorage.setItem("userPhone", user.telefono)
                 sessionStorage.setItem("isLogged", true)
