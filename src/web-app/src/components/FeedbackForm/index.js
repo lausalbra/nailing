@@ -1,4 +1,3 @@
-/*import React, { Component, Fragment } from 'react'*/
 import React, {Fragment } from 'react'
 import Select from 'react-select';
 import emailjs from 'emailjs-com';
@@ -24,7 +23,6 @@ export function FeedbackForm() {
     }
 
     return (
-       
         <form className='grid border-2 border-pink-300 p-5 rounded-md w-1/2' onSubmit={enviaEmail} >
             <label className='text-lg' htmlFor="name"> Nombre:</label>
             <input className="border-black border-2  rounded-sm mb-4" name="name" type="text" id="name" required minlength="2" maxlength="20"/>
@@ -39,11 +37,13 @@ export function FeedbackForm() {
             <label className='text-lg' htmlFor="name">¿Te ha resuldado intuitivo?</label>
             <Fragment><Select name="Q1" options={options}/></Fragment>
 
-            <label className='text-lg' htmlFor="name">¿Crees que es fácil de manejar?</label>
-            <Fragment><Select name="Q2" options={options}/></Fragment>
+            <label className='text-lg' htmlFor="Q2"> ¿Que es lo que más te ha gustado?</label>
+            <input className="border-black border-2  rounded-sm mb-4 h-10 break-normal" name="Q2" type="text" id="Q2"required minlength="10"/>
+            <label className='text-lg' htmlFor="Q3"> ¿Que es lo que menos te ha gustado?</label>
+            <input className="border-black border-2  rounded-sm mb-4 h-10 break-normal" name="Q3" type="text" id="Q3"required minlength="10"/>
 
             <label className='text-lg' htmlFor="name">¿Has encontrado fallos? </label>
-            <Fragment><Select name="Q3" options={options}/></Fragment>
+            <Fragment><Select name="Q4" options={options}/></Fragment>
 
             <label className='text-lg' htmlFor="error"> Cuáles:</label>
             <input className="border-black border-2  rounded-sm mb-4 h-10 break-normal" name="error" type="text" id="error"/>
