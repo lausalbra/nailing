@@ -227,14 +227,16 @@ class PropertyPanel extends Component {
                         </svg>
                     </div>
                 </header>
+                <div class= "bg-NATURAL bg-ESCULPIDA bg-DUAL_SYSTEM bg-GEL bg-ACRILICO bg-ACRYGEL bg-SEMIPERMANENTE bg-SEMIPERMANENTE_REFUERZO bg-JAPONESA bg-SQUARE bg-ROUND bg-SQUOVAL bg-ALMOND bg-STILETTO bg-BALLERINA bg-XXS bg-XS bg-S bg-M bg-L bg-XL bg-XXL bg-RELLENO bg-FRANCESA_REVERSA bg-BABY_BOOMER bg-DEGRADADO_COLOR bg-ENCAPSULADO bg-LISAS bg-DIBUJO bg-DISNEY_COLOR bg-DISNEY_BOCETO bg-TRANSFER_FOIL bg-PIEDRAS bg-PIERCING bg-PEGATINAS bg-STANPING bg-PAN_DE_ANGEL bg-EFECTO_HUEVO bg-EFECTO_PIEDRA bg-FRANCESA bg-BURBUJAS bg-SUGAR bg-EFECTO_RELIEVE bg-ESPEJO bg-HOLOGRAFICO bg-MARMOL bg-MATE bg-BRILLO"></div>
                 <div class="tab-content flex justify-center flex-wrap">
                     {this.state.buttons.map((element,i) => {
                         console.log(element.nombre);
                         var id = element.id
-                        var img = element.nombre.replace(" ", "-");
+                        var nameToShow = element.nombre.replace("_", " ");
+                        nameToShow = nameToShow.replace("ny", "ñ");
                         return(
                             <>
-                            <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + img + " h-20 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center">{element.nombre}</p></div>
+                            <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + element.nombre + " h-20 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center">{nameToShow}</p></div>
                             </>
                         )
                     })}
