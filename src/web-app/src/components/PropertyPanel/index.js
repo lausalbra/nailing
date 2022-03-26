@@ -12,6 +12,7 @@ class PropertyPanel extends Component {
 
     handleClick(e, self){
         //Obtiene el boton pulsado
+        console.log("click en opción")
         var id = e.target.id;
         var option = this.state.buttons.find(b => b.id.toString() === id)
         //Se debe guardar la opción en el contexto
@@ -33,102 +34,79 @@ class PropertyPanel extends Component {
         //Si es una caja anterior se borran las variables anteriores
         switch(this.state.name){
             case("Tipo"):
-                sessionStorage.removeItem("Base");
-                sessionStorage.removeItem("BaseCost");
-                sessionStorage.removeItem("BaseTime");
-                sessionStorage.removeItem("Material");
-                sessionStorage.removeItem("MaterialCost");
-                sessionStorage.removeItem("MaterialTime");
-                sessionStorage.removeItem("Forma");
-                sessionStorage.removeItem("FormaCost");
-                sessionStorage.removeItem("FormaTime");
-                sessionStorage.removeItem("Tamaño");
-                sessionStorage.removeItem("TamañoCost");
-                sessionStorage.removeItem("TamañoTime");
-                sessionStorage.removeItem("Diseño");
-                sessionStorage.removeItem("DiseñoCost");
-                sessionStorage.removeItem("DiseñoTime");
-                sessionStorage.removeItem("Decoracion");
-                sessionStorage.removeItem("DecoracionCost");
-                sessionStorage.removeItem("DecoracionTime");
-                sessionStorage.removeItem("Acabado");
-                sessionStorage.removeItem("AcabadoCost");
-                sessionStorage.removeItem("AcabadoTime");
+                sessionStorage.removeItem("Bases");
+                sessionStorage.removeItem("BasesCost");
+                sessionStorage.removeItem("BasesTime");
+                sessionStorage.removeItem("Formas");
+                sessionStorage.removeItem("FormasCost");
+                sessionStorage.removeItem("FormasTime");
+                sessionStorage.removeItem("Tamaños");
+                sessionStorage.removeItem("TamañosCost");
+                sessionStorage.removeItem("TamañosTime");
+                sessionStorage.removeItem("Diseños");
+                sessionStorage.removeItem("DiseñosCost");
+                sessionStorage.removeItem("DiseñosTime");
+                sessionStorage.removeItem("Decoraciones");
+                sessionStorage.removeItem("DecoracionesCost");
+                sessionStorage.removeItem("DecoracionesTime");
+                sessionStorage.removeItem("Acabados");
+                sessionStorage.removeItem("AcabadosCost");
+                sessionStorage.removeItem("AcabadosTime");
                 break;
-            case("Base"):
-                sessionStorage.removeItem("Material");
-                sessionStorage.removeItem("MaterialCost");
-                sessionStorage.removeItem("MaterialTime");
-                sessionStorage.removeItem("Forma");
-                sessionStorage.removeItem("FormaCost");
-                sessionStorage.removeItem("FormaTime");
-                sessionStorage.removeItem("Tamaño");
-                sessionStorage.removeItem("TamañoCost");
-                sessionStorage.removeItem("TamañoTime");
-                sessionStorage.removeItem("Diseño");
-                sessionStorage.removeItem("DiseñoCost");
-                sessionStorage.removeItem("DiseñoTime");
-                sessionStorage.removeItem("Decoracion");
-                sessionStorage.removeItem("DecoracionCost");
-                sessionStorage.removeItem("DecoracionTime");
-                sessionStorage.removeItem("Acabado");
-                sessionStorage.removeItem("AcabadoCost");
-                sessionStorage.removeItem("AcabadoTime");
+            case("Bases"):
+                sessionStorage.removeItem("Formas");
+                sessionStorage.removeItem("FormasCost");
+                sessionStorage.removeItem("FormasTime");
+                sessionStorage.removeItem("Tamaños");
+                sessionStorage.removeItem("TamañosCost");
+                sessionStorage.removeItem("TamañosTime");
+                sessionStorage.removeItem("Diseños");
+                sessionStorage.removeItem("DiseñosCost");
+                sessionStorage.removeItem("DiseñosTime");
+                sessionStorage.removeItem("Decoraciones");
+                sessionStorage.removeItem("DecoracionesCost");
+                sessionStorage.removeItem("DecoracionesTime");
+                sessionStorage.removeItem("Acabados");
+                sessionStorage.removeItem("AcabadosCost");
+                sessionStorage.removeItem("AcabadosTime");
                 break;
-            case("Material"):
-                sessionStorage.removeItem("Forma");
-                sessionStorage.removeItem("FormaCost");
-                sessionStorage.removeItem("FormaTime");
-                sessionStorage.removeItem("Tamaño");
-                sessionStorage.removeItem("TamañoCost");
-                sessionStorage.removeItem("TamañoTime");
-                sessionStorage.removeItem("Diseño");
-                sessionStorage.removeItem("DiseñoCost");
-                sessionStorage.removeItem("DiseñoTime");
-                sessionStorage.removeItem("Decoracion");
-                sessionStorage.removeItem("DecoracionCost");
-                sessionStorage.removeItem("DecoracionTime");
-                sessionStorage.removeItem("Acabado");
-                sessionStorage.removeItem("AcabadoCost");
-                sessionStorage.removeItem("AcabadoTime");
+            case("Formas"):
+                sessionStorage.removeItem("Tamaños");
+                sessionStorage.removeItem("TamañosCost");
+                sessionStorage.removeItem("TamañosTime");
+                sessionStorage.removeItem("Diseños");
+                sessionStorage.removeItem("DiseñosCost");
+                sessionStorage.removeItem("DiseñosTime");
+                sessionStorage.removeItem("Decoraciones");
+                sessionStorage.removeItem("DecoracionesCost");
+                sessionStorage.removeItem("DecoracionesTime");
+                sessionStorage.removeItem("Acabados");
+                sessionStorage.removeItem("AcabadosCost");
+                sessionStorage.removeItem("AcabadosTime");
                 break;
-            case("Forma"):
-                sessionStorage.removeItem("Tamaño");
-                sessionStorage.removeItem("TamañoCost");
-                sessionStorage.removeItem("TamañoTime");
-                sessionStorage.removeItem("Diseño");
-                sessionStorage.removeItem("DiseñoCost");
-                sessionStorage.removeItem("DiseñoTime");
-                sessionStorage.removeItem("Decoracion");
-                sessionStorage.removeItem("DecoracionCost");
-                sessionStorage.removeItem("DecoracionTime");
-                sessionStorage.removeItem("Acabado");
-                sessionStorage.removeItem("AcabadoCost");
-                sessionStorage.removeItem("AcabadoTime");
+            case("Tamaños"):
+                sessionStorage.removeItem("Diseños");
+                sessionStorage.removeItem("DiseñosCost");
+                sessionStorage.removeItem("DiseñosTime");
+                sessionStorage.removeItem("Decoraciones");
+                sessionStorage.removeItem("DecoracionesCost");
+                sessionStorage.removeItem("DecoracionesTime");
+                sessionStorage.removeItem("Acabados");
+                sessionStorage.removeItem("AcabadosCost");
+                sessionStorage.removeItem("AcabadosTime");
                 break;
-            case("Tamaño"):
-                sessionStorage.removeItem("Diseño");
-                sessionStorage.removeItem("DiseñoCost");
-                sessionStorage.removeItem("DiseñoTime");
-                sessionStorage.removeItem("Decoracion");
-                sessionStorage.removeItem("DecoracionCost");
-                sessionStorage.removeItem("DecoracionTime");
-                sessionStorage.removeItem("Acabado");
-                sessionStorage.removeItem("AcabadoCost");
-                sessionStorage.removeItem("AcabadoTime");
+            case("Diseños"):
+                sessionStorage.removeItem("Decoraciones");
+                sessionStorage.removeItem("DecoracionesCost");
+                sessionStorage.removeItem("DecoracionesTime");
+                sessionStorage.removeItem("Acabados");
+                sessionStorage.removeItem("AcabadosCost");
+                sessionStorage.removeItem("AcabadosTime");
                 break;
-            case("Diseño"):
-                sessionStorage.removeItem("Decoracion");
-                sessionStorage.removeItem("DecoracionCost");
-                sessionStorage.removeItem("DecoracionTime");
-                sessionStorage.removeItem("Acabado");
-                sessionStorage.removeItem("AcabadoCost");
-                sessionStorage.removeItem("AcabadoTime");
-                break;
-            case("Decoracion"):
-                sessionStorage.removeItem("Acabado");
-                sessionStorage.removeItem("AcabadoCost");
-                sessionStorage.removeItem("AcabadoTime");
+            case("Decoraciones"):
+                sessionStorage.removeItem("Acabados");
+                sessionStorage.removeItem("AcabadosCost");
+                sessionStorage.removeItem("AcabadosTime");
                 break;
             default:
                 break;
@@ -147,33 +125,29 @@ class PropertyPanel extends Component {
                 time += parseInt(sessionStorage.getItem("TipoTime"));
                 price += parseFloat(sessionStorage.getItem("TipoCost"));
             }
-            if(sessionStorage.getItem("Base") != null){
-                time += parseInt(sessionStorage.getItem("BaseTime"));
-                price += parseFloat(sessionStorage.getItem("BaseCost"));
+            if(sessionStorage.getItem("Bases") != null){
+                time += parseInt(sessionStorage.getItem("BasesTime"));
+                price += parseFloat(sessionStorage.getItem("BasesCost"));
             }
-            if(sessionStorage.getItem("Material") != null){
-                time += parseInt(sessionStorage.getItem("MaterialTime"));
-                price += parseFloat(sessionStorage.getItem("MaterialCost"));
+            if(sessionStorage.getItem("Formas") != null){
+                time += parseInt(sessionStorage.getItem("FormasTime"));
+                price += parseFloat(sessionStorage.getItem("FormasCost"));
             }
-            if(sessionStorage.getItem("Forma") != null){
-                time += parseInt(sessionStorage.getItem("FormaTime"));
-                price += parseFloat(sessionStorage.getItem("FormaCost"));
+            if(sessionStorage.getItem("Tamaños") != null){
+                time += parseInt(sessionStorage.getItem("TamañosTime"));
+                price += parseFloat(sessionStorage.getItem("TamañosCost"));
             }
-            if(sessionStorage.getItem("Tamaño") != null){
-                time += parseInt(sessionStorage.getItem("TamañoTime"));
-                price += parseFloat(sessionStorage.getItem("TamañoCost"));
+            if(sessionStorage.getItem("Diseños") != null){
+                time += parseInt(sessionStorage.getItem("DiseñosTime"));
+                price += parseFloat(sessionStorage.getItem("DiseñosCost"));
             }
-            if(sessionStorage.getItem("Diseño") != null){
-                time += parseInt(sessionStorage.getItem("DiseñoTime"));
-                price += parseFloat(sessionStorage.getItem("DiseñoCost"));
+            if(sessionStorage.getItem("Decoraciones") != null){
+                time += parseInt(sessionStorage.getItem("DecoracionesTime"));
+                price += parseFloat(sessionStorage.getItem("DecoracionesCost"));
             }
-            if(sessionStorage.getItem("Decoracion") != null){
-                time += parseInt(sessionStorage.getItem("DecoracionTime"));
-                price += parseFloat(sessionStorage.getItem("DecoracionCost"));
-            }
-            if(sessionStorage.getItem("Acabado") != null){
-                time += parseInt(sessionStorage.getItem("AcabadoTime"));
-                price += parseFloat(sessionStorage.getItem("AcabadoCost"));
+            if(sessionStorage.getItem("Acabados") != null){
+                time += parseInt(sessionStorage.getItem("AcabadosTime"));
+                price += parseFloat(sessionStorage.getItem("AcabadosCost"));
             }
             var priceElement = document.createTextNode("Coste: " + price.toString() + " ");
             var timeElement = document.createTextNode("Tiempo: " + time.toString() + " ");
@@ -183,13 +157,12 @@ class PropertyPanel extends Component {
                 precio: price.toString(),
                 tiempo: time.toString(),
                 tipo: sessionStorage.getItem("Tipo"),
-                base: sessionStorage.getItem("Base"),
-                material: sessionStorage.getItem("Material"),
-                forma: sessionStorage.getItem("Forma"),
-                tamanyo: sessionStorage.getItem("Tamaño"),
-                disenyo: sessionStorage.getItem("Diseño"),
-                decoracion: sessionStorage.getItem("Decoracion"),
-                acabado: sessionStorage.getItem("Acabado")
+                base: sessionStorage.getItem("Bases"),
+                forma: sessionStorage.getItem("Formas"),
+                tamanyo: sessionStorage.getItem("Tamaños"),
+                disenyo: sessionStorage.getItem("Diseños"),
+                decoracion: sessionStorage.getItem("Decoraciones"),
+                acabado: sessionStorage.getItem("Acabados")
             };
             var json = JSON.stringify(postData);
             var buttonReserve = document.createElement("button");
@@ -254,14 +227,16 @@ class PropertyPanel extends Component {
                         </svg>
                     </div>
                 </header>
+                <div class= "bg-NATURAL bg-ESCULPIDA bg-DUAL_SYSTEM bg-GEL bg-ACRILICO bg-ACRYGEL bg-SEMIPERMANENTE bg-SEMIPERMANENTE_REFUERZO bg-JAPONESA bg-SQUARE bg-ROUND bg-SQUOVAL bg-ALMOND bg-STILETTO bg-BALLERINA bg-XXS bg-XS bg-S bg-M bg-L bg-XL bg-XXL bg-RELLENO bg-FRANCESA_REVERSA bg-BABY_BOOMER bg-DEGRADADO_COLOR bg-ENCAPSULADO bg-LISAS bg-DIBUJO bg-DISNEY_COLOR bg-DISNEY_BOCETO bg-TRANSFER_FOIL bg-PIEDRAS bg-PIERCING bg-PEGATINAS bg-STANPING bg-PAN_DE_ANGEL bg-EFECTO_HUEVO bg-EFECTO_PIEDRA bg-FRANCESA bg-BURBUJAS bg-SUGAR bg-EFECTO_RELIEVE bg-ESPEJO bg-HOLOGRAFICO bg-MARMOL bg-MATE bg-BRILLO"></div>
                 <div class="tab-content flex justify-center flex-wrap">
                     {this.state.buttons.map((element,i) => {
                         console.log(element.nombre);
                         var id = element.id
-                        var img = element.nombre.replace(" ", "-");
+                        var nameToShow = element.nombre.replace("_", " ");
+                        nameToShow = nameToShow.replace("ny", "ñ");
                         return(
                             <>
-                            <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + img + " h-20 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center">{element.nombre}</p></div>
+                            <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + element.nombre + " h-20 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center">{nameToShow}</p></div>
                             </>
                         )
                     })}
