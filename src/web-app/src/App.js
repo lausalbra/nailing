@@ -1,5 +1,6 @@
 import './App.css'
 import { Landing } from './views/Landing'
+import { Login } from './views/Login'
 import { Feedback } from './views/Feedback'
 import { Route } from 'wouter'
 import { BookingsList } from './views/BookingsList'

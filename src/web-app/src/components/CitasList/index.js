@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography'
 
 export function CitasList () {
   const id = sessionStorage.getItem('userId')
-  const url = API_URL
+  const [resObj, setObj] = useState([])
   // eslint-disable-next-line no-unused-vars
   const [locationPath, locationPush] = useLocation()
   const ImageButton = styled(ButtonBase)(({ theme }) => ({
@@ -75,8 +75,7 @@ export function CitasList () {
     transition: theme.transitions.create('opacity')
   }))
 
-  const [resObj, setObj] = useState([])
-  const url_get = url + '/cita/user/' + id
+  const url_get = API_URL + '/cita/user/' + id
   useEffect(() => {
     function callback(citas) {
       setObj(citas)
@@ -87,24 +86,26 @@ export function CitasList () {
 
   function cancelarCita (obj) {
     // eslint-disable-next-line no-restricted-globals
-    const accepted = confirm('¿Está seguro de que quiere cancelar su cita en ' + obj.centro + '?')
+    const accepted = confirm('¿Está seguro de que quiere cancelar su cita en ' + obj.centro.nombre + '?')
     if (accepted) {
-      const url_del = url + '/cita/delete/' + obj.id
+      const url_del = API_URL + '/cita/delete/' + obj.id
+      locationPush('/delete')
       RequestManager(url_del, 'DELETE', 'CitasList (delete)', '/miscitas', locationPush, null, null)
     }
   }
 
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%' }}>
-      {resObj.map((image) => (
+      {resObj.map((center) => (
         <ImageButton
+          onClick={() => cancelarCita(center)}
           focusRipple
-          key={image.id}
+          key={center.id}
           style={{
             width: '30%'
           }}
-        >
-          <ImageSrc style={{ backgroundImage: `url(${image.imagen})` }} />
+        > 
+          <ImageSrc style={{ backgroundImage: `url(${center.imagen})` }} />
           <ImageBackdrop className='MuiImageBackdrop-root' />
           <Image>
             <Typography
@@ -116,11 +117,8 @@ export function CitasList () {
                 p: 4,
                 pt: 2,
                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
-              }}
-            >
-              <button onClick={() => cancelarCita(image)}>
-                {image.hora_inicio} - {image.hora_fin} <br /> {image.centro}
-              </button>
+              }} 
+            > {center.horaInicio} - {center.horaFin} <br /> {center.centro.nombre}
               <ImageMarked className='MuiImageMarked-root' />
             </Typography>
           </Image>
