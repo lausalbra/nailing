@@ -10,7 +10,7 @@ export function Header() {
     <>
       <nav className='flex justify-evenly items-center bg-logo-completo bg-white border-pink-200 border-b-2 bg-no-repeat bg-center  text-black sticky top-0 z-10'>
         <Link className='hover:text-red-400' to='/conocenos'>Conócenos</Link>
-        <Link className='hover:text-red-400' to='/feedback'>Feedback</Link>
+        <Link className='hover:text-red-400' to='/feedback'>Feedbackssss</Link>
         <Link className='block w-64 h-20' to='/' />
         <Link className='hover:text-red-400' to='/centro'>Pide Cita</Link>
         <Link className='hover:text-red-400' to='/usuario'>Mi perfil</Link>
