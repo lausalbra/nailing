@@ -1,7 +1,6 @@
 import './App.css'
 import { Landing } from './views/Landing'
 import { Feedback } from './views/Feedback'
-import { Login } from './views/Login'
 import { Route } from 'wouter'
 import { BookingsList } from './views/BookingsList'
 import { Usuario } from './views/Usuario'
@@ -29,6 +28,7 @@ function App () {
           <Route path='/error' component={Error} />
           <Route path='/' component={Landing} />
         </div>
+
       </div>
     </div>
   )

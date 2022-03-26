@@ -1,7 +1,7 @@
 import { Link } from 'wouter'
 export function Header() {
-
   const isLogged = sessionStorage.getItem("isLogged")
+
 
   console.log(isLogged)
 
