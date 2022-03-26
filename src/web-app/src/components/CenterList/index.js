@@ -5,7 +5,6 @@ import { API_URL, RequestManager } from '../../components/RestUtils'
 import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
 import Typography from '@mui/material/Typography'
-import { Link } from 'wouter'
 
 // npm install @mui/material @emotion/react @emotion/styled
 export function CenterList ({ provincia }) {
@@ -96,6 +95,7 @@ export function CenterList ({ provincia }) {
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%' }}>
       {filtrado.map((image) => (
         <ImageButton
+          onClick={() => locationPush('/centrodetalle/' + image.id)}
           focusRipple
           key={image.nombre}
           style={{
@@ -115,10 +115,7 @@ export function CenterList ({ provincia }) {
                 pt: 2,
                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
               }}
-            >
-              <Link to={'/centrodetalle/' + image.id}>
-                {image.nombre}
-              </Link>
+            > {image.nombre}
               <ImageMarked className='MuiImageMarked-root' />
             </Typography>
           </Image>
