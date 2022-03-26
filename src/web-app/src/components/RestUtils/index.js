@@ -12,11 +12,11 @@ export const API_URL = 'https://nailingtest.herokuapp.com'
  * @param  {Object} post Objeto a enviar en la petición
  */
 export function RequestManager(url, method, origin, destiny, locationPush, callback, post) {
-    
+
     const xhr = new XMLHttpRequest()
     const isLogged = sessionStorage.getItem("isLogged")
     xhr.open(method, url)
-    if (isLogged) {
+    if (isLogged === 'true') {
         xhr.setRequestHeader("Authorization", "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword")))
     }
     xhr.send(post)
