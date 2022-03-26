@@ -3,14 +3,51 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import { useLocation } from 'wouter'
+import { postData } from '../../services/common/common';
 
 
 export function UserDetails({ image, email, phone }) {
   const [locationPath, locationPush] = useLocation()
 
-  function handleClick() {
+  async function handleClick() {
+
+    const url = "https://nailingtest.herokuapp.com/logout"
+
+    const body = {
+      "id": sessionStorage.getItem("userId"),
+      "usuario": sessionStorage.getItem("userName"),
+      "contrasenya": sessionStorage.getItem("userPassword"),
+      "email": sessionStorage.getItem("userEmail"),
+      "telefono": sessionStorage.getItem("userPhone"),
+      "rol": sessionStorage.getItem("userRole")
+    }
+
+    console.log(body)
+
+    const headers = {
+      "Content-Type": "application/json",
+      "Authorization": "Basic dXN1YXJpbzE6dXN1YXJpbzE="
+    }
+
+
+    // await postData(url, body, headers)
+    //   .then(function (data) {
+
+    // console.log(data)
+
+    sessionStorage.setItem("userId", null)
+    sessionStorage.setItem("userName", null)
+    sessionStorage.setItem("userPassword", null)
+    sessionStorage.setItem("userEmail", null)
+    sessionStorage.setItem("userPhone", null)
     sessionStorage.setItem("isLogged", false)
-    locationPush("/")
+
+    locationPush('/')
+    // }
+    // ).catch((error) => {
+    //   console.log(error)
+    // }
+    // );
   }
 
   return (
