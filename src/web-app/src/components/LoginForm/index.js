@@ -1,5 +1,4 @@
-import { data } from 'autoprefixer'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useLocation } from 'wouter'
 import { postData } from '../../services/common/common'
 
@@ -7,13 +6,19 @@ export function LoginForm() {
 
     const user = useRef()
     const password = useRef()
-    let isLogged = null
     const [state, changeState] = useState(true)
     const [locationPath, locationPush] = useLocation()
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Basic dXN1YXJpbzE6dXN1YXJpbzE='
     }
+
+    useEffect(() => {
+        if (sessionStorage.getItem("isLogged")) {
+            locationPush("/")
+        }
+    })
+
     async function handleSubmit(evt) {
         evt.preventDefault()
 
@@ -23,7 +28,7 @@ export function LoginForm() {
             "password": password.current.value
         }
 
-        const call = await postData(url, body, {
+        await postData(url, body, {
             'Content-Type': 'application/json',
         })
             .then(async function (data) {
@@ -47,7 +52,7 @@ export function LoginForm() {
             ).catch(
                 setTimeout(() => {
                     changeState(false)
-                }, 500)
+                }, 750)
             );
 
 
