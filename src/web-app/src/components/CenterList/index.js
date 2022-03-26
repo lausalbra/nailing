@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
+import { useLocation } from 'wouter'
 import { styled } from '@mui/material/styles'
+import { API_URL, RequestManager } from '../../components/RestUtils'
 import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
 import Typography from '@mui/material/Typography'
 import { Link } from 'wouter'
 
-// Images será al fin y al cabo lo que consumamos de la api, para eso usaremos Axios, ver componente ApiConsum
 // npm install @mui/material @emotion/react @emotion/styled
-export function List ({ provincia }) {
-  // const url = 'https://my.api.mockaroo.com/centros.json?key=64324960'
-  const url = 'https://nailingtest.herokuapp.com/centros'
-  const xhr = new XMLHttpRequest()
+export function CenterList ({ provincia }) {
+  const [resObj, setObj] = useState([])
+  // eslint-disable-next-line no-unused-vars
+  const [locationPath, locationPush] = useLocation()
+  const url = API_URL + '/centros'
   const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
     height: 200,
@@ -75,40 +77,26 @@ export function List ({ provincia }) {
     transition: theme.transitions.create('opacity')
   }))
 
-  const [resObj, setObj] = useState([])
-
   useEffect(() => {
-    xhr.open('get', url)
-    xhr.send()
-    xhr.onload = function () {
-      if (this.status === 200) {
-        try {
-          setObj(JSON.parse(this.responseText))
-          console.log('LLAMADA A LA API EXITOSA')
-        } catch (e) {
-          console.warn('No se pudo parsear. Hit.')
-        }
-      } else {
-        console.warn('No se recive un 200. Hit.')
-      }
+    function callback(centros) {
+      setObj(centros)
     }
+    RequestManager(url, 'GET', 'CenterList', null, locationPush, callback, null)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  // NO meter xhr en el array de dependencias
 
-  let filtrado
+  let filtrado = []
   if (!provincia || provincia === 'ninguna') {
     filtrado = resObj
   } else {
     filtrado = resObj.filter(c => c.provincia === provincia)
   }
-  console.log(resObj)
-  const enlace = Link({ className: 'block w-64 h-20', to: '/' })
+
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%' }}>
       {filtrado.map((image) => (
         <ImageButton
           focusRipple
-          LinkComponent={enlace}
           key={image.nombre}
           style={{
             width: '30%'
