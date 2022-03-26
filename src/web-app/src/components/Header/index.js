@@ -12,7 +12,7 @@ export function Header() {
         <Link className='hover:text-red-400' to='/conocenos'>Conócenos</Link>
         <Link className='hover:text-red-400' to='/feedback'>Feedback</Link>
         <Link className='block w-64 h-20' to='/' />
-        <Link className='hover:text-red-400' to='/centro'>Pide Cita</Link>
+        <Link className='hover:text-red-400' to='/cita'>Pide Cita</Link>
         <Link className='hover:text-red-400' to='/usuario'>Mi perfil</Link>
       </nav>
     </>

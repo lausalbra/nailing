@@ -1,7 +1,8 @@
 import React from 'react'
 import Select from 'react-select';
-import { List } from '../../components/List'
+import { CenterList } from '../../components/CenterList'
 import {json_provincias} from './provincias'
+
 //npm install react-select --save
 class Filter extends React.Component {
 
@@ -18,11 +19,9 @@ class Filter extends React.Component {
     }
 
     render() {
-      
       let { selected } = this.state
       if (!selected)
         selected = {value : 'ninguna'}
-      console.log('Render de Filter: ' + selected.value)
 
         return (
           <>
@@ -39,7 +38,7 @@ class Filter extends React.Component {
                       colors: {
                         ...theme.colors,
                         primary25: '#E9BEEE', //HOVER
-                        primary50: '#F39EEC', // CLIC
+                        primary50: '#F39EEC', //CLICK
                         primary: '#F39EEC',   //BORDE, SELECCIONADO
                       },
                     })}
@@ -48,7 +47,7 @@ class Filter extends React.Component {
                 <div className='col-md-4'></div>
               </div>
             </div>
-            <List provincia={selected.value}/>
+            <CenterList provincia={selected.value}/>
           </>
         );
       }

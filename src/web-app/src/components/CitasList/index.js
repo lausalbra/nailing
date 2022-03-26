@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation, Link } from 'wouter'
+import { useLocation } from 'wouter'
+import { API_URL, RequestManager } from '../../components/RestUtils'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
 import Typography from '@mui/material/Typography'
 
 export function CitasList () {
-  
   const id = sessionStorage.getItem('userId')
-  const endpoint = 'https://nailingtest.herokuapp.com'
-  const url_get = endpoint + '/cita/user/' + id
-  const xhr_get = new XMLHttpRequest()
+  const url = API_URL
+  // eslint-disable-next-line no-unused-vars
   const [locationPath, locationPush] = useLocation()
   const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
@@ -77,58 +76,24 @@ export function CitasList () {
   }))
 
   const [resObj, setObj] = useState([])
-
+  const url_get = url + '/cita/user/' + id
   useEffect(() => {
-    xhr_get.open('get', url_get)
-    xhr_get.setRequestHeader("Authorization", "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword")));
-    xhr_get.send()
-    xhr_get.onload = function () {
-      if (this.status === 200) {
-        try {
-          setObj(JSON.parse(this.responseText))
-          console.log('Petición Rest exitosa (getCitas)')
-        } catch (e) {
-          console.warn('Excepción capturada en la petición REST')
-          sessionStorage.setItem('errorMessage', e)
-          locationPush('/error')
-        }
-      } else {
-        console.warn('Error en la petición REST')
-        sessionStorage.setItem('errorMessage', 'La API Rest (' + url_get + ') ha devuelto error ' + this.status)
-        locationPush('/error')
-
-      }
+    function callback(citas) {
+      setObj(citas)
     }
+    RequestManager(url_get, 'GET', 'CitasList (get)', null, locationPush, callback, null)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  // NO meter xhr en el array de dependencias
 
-  console.log(resObj)
   function cancelarCita (obj) {
     // eslint-disable-next-line no-restricted-globals
     const accepted = confirm('¿Está seguro de que quiere cancelar su cita en ' + obj.centro + '?')
     if (accepted) {
-      const url_del = endpoint + '/cita/delete/' + obj.id
-      const xhr_del = new XMLHttpRequest()
-      xhr_del.open('delete', url_del)
-      xhr_del.send()
-      xhr_del.onload = function () {
-        if (this.status === 200) {
-          try {
-            console.log('Petición Rest exitosa (delete cita)')
-            locationPush('/miscitas')
-          } catch (e) {
-            console.warn('Excepción capturada en la petición REST')
-            sessionStorage.setItem('errorMessage', e)
-            locationPush('/error')
-          }
-        } else {
-          console.warn('Error en la petición REST')
-          sessionStorage.setItem('errorMessage', 'La API Rest (' + url_del + ') ha devuelto error ' + this.status)
-          locationPush('/error')
-        }
-      }
+      const url_del = url + '/cita/delete/' + obj.id
+      RequestManager(url_del, 'DELETE', 'CitasList (delete)', '/miscitas', locationPush, null, null)
     }
   }
+
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%' }}>
       {resObj.map((image) => (
