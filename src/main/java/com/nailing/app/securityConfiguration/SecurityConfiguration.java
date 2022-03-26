@@ -51,11 +51,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         http.csrf().disable().cors().and().authorizeRequests()
             //.antMatchers("/**").authenticated()
             //.antMatchers("/**/**").authenticated()
-            .antMatchers("/login").permitAll()
+            .antMatchers("/login").not().authenticated()
             .antMatchers("/centros").permitAll()
             .antMatchers("/centros/details/**").permitAll()
             .anyRequest().authenticated()
-            .and()
+            .and().logout().and()
             .httpBasic();
         
     }
