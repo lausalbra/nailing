@@ -10,7 +10,7 @@ export function LoginForm() {
     const [locationPath, locationPush] = useLocation()
     const headers = {
         "Content-Type": "application/json",
-        "Authorization": "Basic dXN1YXJpbzE6dXN1YXJpbzE="
+        "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
     }
 
     useEffect(() => {

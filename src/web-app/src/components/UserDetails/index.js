@@ -26,7 +26,7 @@ export function UserDetails({ image, email, phone }) {
 
     const headers = {
       "Content-Type": "application/json",
-      "Authorization": "Basic dXN1YXJpbzE6dXN1YXJpbzE="
+      "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
     }
 
 
@@ -35,12 +35,13 @@ export function UserDetails({ image, email, phone }) {
 
 
       }
+        //Tiene que ir al catch porque devuelve 204 y lo pilla como error
       ).catch((error) => {
-        sessionStorage.setItem("userId", null)
-        sessionStorage.setItem("userName", null)
-        sessionStorage.setItem("userPassword", null)
-        sessionStorage.setItem("userEmail", null)
-        sessionStorage.setItem("userPhone", null)
+        sessionStorage.setItem("userId", "")
+        sessionStorage.setItem("userName", "")
+        sessionStorage.setItem("userPassword", "")
+        sessionStorage.setItem("userEmail", "")
+        sessionStorage.setItem("userPhone", "")
         sessionStorage.setItem("isLogged", false)
 
         locationPush('/')
