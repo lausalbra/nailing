@@ -17,6 +17,7 @@ export function Centro({ params }) {
         xhr.onload = function () {
           if (this.status === 200) {
             try {
+              setObj(JSON.parse(this.responseText))
               console.log('Petición Rest exitosa')
             } catch (e) {
               console.warn('Excepción capturada en la petición REST')
