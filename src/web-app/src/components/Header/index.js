@@ -2,10 +2,6 @@ import { Link } from 'wouter'
 export function Header() {
   const isLogged = sessionStorage.getItem("isLogged")
 
-
-  console.log(isLogged)
-
-
   return isLogged === 'true' ? (
     <>
       <nav className='flex justify-evenly items-center bg-logo-completo bg-white border-pink-200 border-b-2 bg-no-repeat bg-center  text-black sticky top-0 z-10'>

@@ -3,14 +3,50 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import { useLocation } from 'wouter'
+import { postData } from '../../services/common/common';
 
 
 export function UserDetails({ image, email, phone }) {
   const [locationPath, locationPush] = useLocation()
 
-  function handleClick() {
-    sessionStorage.setItem("isLogged", false)
-    locationPush("/")
+  async function handleClick() {
+
+    const url = "https://nailingtest.herokuapp.com/logout"
+
+    const body = {
+      "id": sessionStorage.getItem("userId"),
+      "usuario": sessionStorage.getItem("userName"),
+      "contrasenya": sessionStorage.getItem("userPassword"),
+      "email": sessionStorage.getItem("userEmail"),
+      "telefono": sessionStorage.getItem("userPhone"),
+      "rol": sessionStorage.getItem("userRole")
+    }
+
+    console.log(body)
+
+    const headers = {
+      "Content-Type": "application/json",
+      "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+    }
+
+
+    await postData(url, body, headers)
+      .then(function (data) {
+
+
+      }
+        //Tiene que ir al catch porque devuelve 204 y lo pilla como error
+      ).catch((error) => {
+        sessionStorage.setItem("userId", "")
+        sessionStorage.setItem("userName", "")
+        sessionStorage.setItem("userPassword", "")
+        sessionStorage.setItem("userEmail", "")
+        sessionStorage.setItem("userPhone", "")
+        sessionStorage.setItem("isLogged", false)
+
+        locationPush('/')
+      }
+      );
   }
 
   return (
@@ -28,7 +64,7 @@ export function UserDetails({ image, email, phone }) {
         <button onClick={() => locationPush('/miscitas')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Mis reservas</button>
       </CardActions>
       <CardActions>
-        <button onClick={() => handleClick()} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Cerrar Sesión</button>
+        <button onClick={handleClick} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Cerrar Sesión</button>
       </CardActions>
     </Card>
 
