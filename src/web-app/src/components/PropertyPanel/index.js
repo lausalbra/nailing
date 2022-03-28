@@ -151,11 +151,75 @@ class PropertyPanel extends Component {
             }
             var priceElement = document.createTextNode("Coste: " + price.toString() + " ");
             var timeElement = document.createTextNode("Tiempo: " + time.toString() + " ");
+
+            var dateSelector = document.createElement("INPUT");
+            dateSelector.setAttribute("type", "date");
+            var tomorrow = new Date();
+            var day = tomorrow.getDate()+1;
+            if (day < 10) day = '0' + day;
+            var month = tomorrow.getMonth() + 1;
+            if (month <10) month = '0' + month;
+            tomorrow = tomorrow.getFullYear() + '-' + month + '-' + day;
+            dateSelector.setAttribute("min", tomorrow);
+
+            var horaAperturaAM = parseInt(option.centro.aperturaAM.split(":")[0]);
+            var horaCierreAM = parseInt(option.centro.cierreAM.split(":")[0]);
+            var horaAperturaPM = parseInt(option.centro.aperturaPM.split(":")[0])
+            var horaCierrePM = parseInt(option.centro.cierrePM.split(":")[0])
+            var hourOptions = [];
+            while (horaAperturaAM<horaCierreAM)
+            {
+                hourOptions.push(horaAperturaAM.toString());
+                horaAperturaAM++;
+            }
+            while (horaAperturaPM<horaCierrePM)
+            {
+                hourOptions.push(horaAperturaPM.toString());
+                horaAperturaPM++;
+            }
+            var hourSelector = document.createElement("select");
+            hourOptions.forEach(element => {
+                var selectOption = document.createElement("option");
+                selectOption.value = element;
+                selectOption.text = element;
+                hourSelector.appendChild(selectOption);
+            });
+
+            var minuteSelector = document.createElement("select");
+            var buttonReserve = document.createElement("button");
+            hourSelector.onchange = function(){
+                $.ajax({
+                    method: "GET",
+                    contentType: "application/json",
+                    headers: {
+                        "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                    },
+                    data: ({fecha: dateSelector.value + " " + this.value, duracion: time}).stringify(),
+                    url: "https://nailingtest.herokuapp.com/cita/hora",
+                    success: function (data) {
+                        console.log("Hora seleccionada");
+                        var i, L = minuteSelector.options.length - 1;
+                        for(i = L; i >= 0; i--)
+                        {
+                            minuteSelector.remove(i);
+                        }
+                        data.forEach(element => {
+                            var selectOption = document.createElement("option");
+                            selectOption.value = element;
+                            selectOption.text = element;
+                            minuteSelector.appendChild(selectOption);
+                        });
+                        buttonReserve.disabled = false;
+                    }
+                });
+            };
+
             const postData = {
                 usuario: sessionStorage.getItem("userId"),
                 centro: sessionStorage.getItem("centreId"),
                 precio: price.toString(),
                 tiempo: time.toString(),
+                fecha: dateSelector.value + " " + hourSelector.value + ":" + minuteSelector.value,
                 tipo: sessionStorage.getItem("Tipo"),
                 base: sessionStorage.getItem("Bases"),
                 forma: sessionStorage.getItem("Formas"),
@@ -165,7 +229,8 @@ class PropertyPanel extends Component {
                 acabado: sessionStorage.getItem("Acabados")
             };
             var json = JSON.stringify(postData);
-            var buttonReserve = document.createElement("button");
+
+            buttonReserve.disabled = true;
             buttonReserve.innerText = "Reservar cita"
             buttonReserve.onclick = function() {
                 $.ajax({
@@ -180,6 +245,9 @@ class PropertyPanel extends Component {
             };
             finisherDiv.appendChild(priceElement);
             finisherDiv.appendChild(timeElement);
+            finisherDiv.appendChild(dateSelector);
+            finisherDiv.appendChild(hourSelector);
+            finisherDiv.appendChild(minuteSelector);
             finisherDiv.appendChild(buttonReserve);
             mainPanel.append(finisherDiv);
         }
