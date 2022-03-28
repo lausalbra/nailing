@@ -4,6 +4,13 @@
  */
 package com.nailing.app.cita;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.nailing.app.acabado.Acabado;
 import com.nailing.app.acabado.AcabadoService;
 import com.nailing.app.base.Base;
@@ -22,11 +29,6 @@ import com.nailing.app.tipo.Tipo;
 import com.nailing.app.tipo.TipoService;
 import com.nailing.app.usuario.Usuario;
 import com.nailing.app.usuario.UsuarioService;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -66,7 +68,7 @@ public class CitaService {
     private UsuarioService usuarioService;
     
     
-    public Cita addCita(Map<String,String> ids){
+    public Cita addCita(Map<String,String> ids) throws IllegalArgumentException{
         Decoracion decoracion = null;
         Disenyo disenyo = null;
         Base base = null;
@@ -74,12 +76,14 @@ public class CitaService {
         Tamanyo tamanyo = null;
         Forma forma = null;
         Tipo tipo = null;
-        Usuario usuario = null;
-        Centro centro = null;
-        Double precio = null;
+        Usuario usuario;
+        Centro centro;
+        Double precio;
         Integer tiempo;
-        LocalTime horaInicio = null;
-        LocalTime horaFin = null;
+        LocalDateTime horaInicio;
+        LocalDateTime horaFin;
+        
+        
         
         if(ids.get("decoracion")!=null){
             decoracion = decoracionService.findById(Long.parseLong(ids.get("decoracion")));
@@ -108,7 +112,7 @@ public class CitaService {
         if(ids.get("centro")!=null && ids.get("tiempo")!=null){
             centro = centroService.findById(Long.parseLong(ids.get("centro"))).get();
             tiempo = Integer.valueOf(ids.get("tiempo"));
-            horaInicio = centro.getHoraApertura();
+            horaInicio = null;
             horaFin = horaInicio.plusMinutes(tiempo);
         }
         if(ids.get("precio")!=null){

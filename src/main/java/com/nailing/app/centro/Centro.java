@@ -44,117 +44,120 @@ public class Centro {
 	private String imagen;
 
 	private String provincia;
-        
-        private LocalTime horaApertura;
-        
-        private LocalTime horaCierre;
 
-    public Centro() {
-    }
+	private LocalTime aperturaAM;
 
-    public Centro(String nombre, String imagen, String provincia, LocalTime horaApertura, LocalTime horaCierre) {
-        this.nombre = nombre;
-        this.imagen = imagen;
-        this.provincia = provincia;
-        this.horaApertura = horaApertura;
-        this.horaCierre = horaCierre;
-    }
+	private LocalTime cierreAM;
 
-    public Long getId() {
-        return id;
-    }
+	private LocalTime aperturaPM;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	private LocalTime cierrePM;
 
-    public String getNombre() {
-        return nombre;
-    }
+	public Centro() {
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	public Centro(Long id, @Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
+			String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM, LocalTime cierrePM) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.imagen = imagen;
+		this.provincia = provincia;
+		this.aperturaAM = aperturaAM;
+		this.cierreAM = cierreAM;
+		this.aperturaPM = aperturaPM;
+		this.cierrePM = cierrePM;
+	}
 
-    public String getImagen() {
-        return imagen;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getProvincia() {
-        return provincia;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public LocalTime getHoraApertura() {
-        return horaApertura;
-    }
+	public String getImagen() {
+		return imagen;
+	}
 
-    public void setHoraApertura(LocalTime horaApertura) {
-        this.horaApertura = horaApertura;
-    }
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
 
-    public LocalTime getHoraCierre() {
-        return horaCierre;
-    }
+	public String getProvincia() {
+		return provincia;
+	}
 
-    public void setHoraCierre(LocalTime horaCierre) {
-        this.horaCierre = horaCierre;
-    }
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 73 * hash + Objects.hashCode(this.id);
-        hash = 73 * hash + Objects.hashCode(this.nombre);
-        hash = 73 * hash + Objects.hashCode(this.imagen);
-        hash = 73 * hash + Objects.hashCode(this.provincia);
-        hash = 73 * hash + Objects.hashCode(this.horaApertura);
-        hash = 73 * hash + Objects.hashCode(this.horaCierre);
-        return hash;
-    }
+	public LocalTime getAperturaAM() {
+		return aperturaAM;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Centro other = (Centro) obj;
-        if (!Objects.equals(this.nombre, other.nombre)) {
-            return false;
-        }
-        if (!Objects.equals(this.imagen, other.imagen)) {
-            return false;
-        }
-        if (!Objects.equals(this.provincia, other.provincia)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.horaApertura, other.horaApertura)) {
-            return false;
-        }
-        return Objects.equals(this.horaCierre, other.horaCierre);
-    }
+	public void setAperturaAM(LocalTime aperturaAM) {
+		this.aperturaAM = aperturaAM;
+	}
 
-    @Override
-    public String toString() {
-        return "Centro{" + "id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", provincia=" + provincia + ", horaApertura=" + horaApertura + ", horaCierre=" + horaCierre + '}';
-    }
-        
-    
-    
+	public LocalTime getCierreAM() {
+		return cierreAM;
+	}
+
+	public void setCierreAM(LocalTime cierreAM) {
+		this.cierreAM = cierreAM;
+	}
+
+	public LocalTime getAperturaPM() {
+		return aperturaPM;
+	}
+
+	public void setAperturaPM(LocalTime aperturaPM) {
+		this.aperturaPM = aperturaPM;
+	}
+
+	public LocalTime getCierrePM() {
+		return cierrePM;
+	}
+
+	public void setCierrePM(LocalTime cierrePM) {
+		this.cierrePM = cierrePM;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(aperturaAM, aperturaPM, cierreAM, cierrePM, id, imagen, nombre, provincia);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Centro other = (Centro) obj;
+		return Objects.equals(aperturaAM, other.aperturaAM) && Objects.equals(aperturaPM, other.aperturaPM)
+				&& Objects.equals(cierreAM, other.cierreAM) && Objects.equals(cierrePM, other.cierrePM)
+				&& Objects.equals(id, other.id) && Objects.equals(imagen, other.imagen)
+				&& Objects.equals(nombre, other.nombre) && Objects.equals(provincia, other.provincia);
+	}
+
+	@Override
+	public String toString() {
+		return "Centro [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", provincia=" + provincia
+				+ ", aperturaAM=" + aperturaAM + ", cierreAM=" + cierreAM + ", aperturaPM=" + aperturaPM + ", cierrePM="
+				+ cierrePM + "]";
+	}
+
 }
