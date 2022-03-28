@@ -77,4 +77,7 @@ public class CitaController {
 			return new ResponseEntity<>(cita, HttpStatus.BAD_REQUEST);
 		}
     }
+    
+//    @GetMapping("/check/{centroId}")
+//    public ResponseEntity<List<>>
 }

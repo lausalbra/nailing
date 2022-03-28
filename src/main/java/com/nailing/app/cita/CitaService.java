@@ -116,7 +116,7 @@ public class CitaService {
 		centro = centroService.findById(Long.parseLong(ids.get("centro"))).get();
 		precio = Double.valueOf(ids.get("precio"));
 		
-		DateTimeFormatter dt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
+		DateTimeFormatter dt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		horaInicio = LocalDateTime.parse(ids.get("fecha"), dt);
 
 		tiempo = Integer.valueOf(ids.get("tiempo"));
@@ -128,6 +128,15 @@ public class CitaService {
 
 		return citaRepository.save(cita);
 
+	}
+	
+	public void findDisponibles(LocalDateTime inicio, Integer tiempo, Long centroId) {
+		int i = 1;
+		List<Cita> citas = citaRepository.findPendientes(centroId);
+		while (i<13) {
+			
+			i++;
+		}
 	}
 
 	public Cita findById(Long id) {
