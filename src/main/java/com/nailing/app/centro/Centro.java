@@ -45,9 +45,9 @@ public class Centro {
 
 	private String provincia;
         
-        private LocalTime horaApertura;
-        
-        private LocalTime horaCierre;
+    private LocalTime horaApertura;
+    
+    private LocalTime horaCierre;
 
     public Centro() {
     }
