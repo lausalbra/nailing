@@ -69,10 +69,12 @@ public class CitaController {
 
     @PostMapping("/add")
     public ResponseEntity<Cita> addCita(@RequestBody Map<String,String> ids){
-        Cita cita = citaService.addCita(ids);
-        if(cita == null){
-            return new ResponseEntity<>(cita, HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(cita, HttpStatus.CREATED);
+       Cita cita = null;
+    	try {
+        	cita = citaService.addCita(ids);	
+        	return new ResponseEntity<>(cita, HttpStatus.CREATED);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(cita, HttpStatus.BAD_REQUEST);
+		}
     }
 }
