@@ -9,11 +9,11 @@ DELETE FROM disenyo;
 DELETE FROM decoracion;
 DELETE FROM acabado;
 DELETE FROM centro;
-
----------------------------------------------CENTROS---------------------------------------------
-INSERT INTO centro (id, aperturaAM, cierreAM, aperturaPM, cierrePM, imagen, nombre, provincia) VALUES (1, '09:00:00','13:00:00','16:00:00','21:00:00', 'https://dummyimage.com/600x400/b061cf/ffffff.png&text=U%C3%B1as+Pepa', 'Uñas Pepa', 'Málaga');
-INSERT INTO centro (id, aperturaAM, cierreAM, aperturaPM, cierrePM, imagen, nombre, provincia) VALUES (2, '08:30:00','13:00:00','16:00:00','20:30:00', 'https://dummyimage.com/600x400/b061cf/ffffff.png&text=Nails+Factory', 'Nails Factory', 'Sevilla');
-INSERT INTO centro (id, aperturaAM, cierreAM, aperturaPM, cierrePM, imagen, nombre, provincia) VALUES (3, '09:30:00','13:00:00','16:00:00','21:30:00', 'https://dummyimage.com/600x400/b061cf/ffffff.png&text=Mafalda', 'Mafalda Salón de Belleza', 'Cádiz');
+ 
+------------------------------------------CENTROS---------------------------------------------
+INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia) VALUES (1, '09:00:00','13:00:00','16:00:00','21:00:00', 'https://dummyimage.com/600x400/b061cf/ffffff.png&text=U%C3%B1as+Pepa', 'Uñas Pepa', 'Málaga');
+INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia) VALUES (2, '08:30:00','13:00:00','16:00:00','20:30:00', 'https://dummyimage.com/600x400/b061cf/ffffff.png&text=Nails+Factory', 'Nails Factory', 'Sevilla');
+INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia) VALUES (3, '09:30:00','13:00:00','16:00:00','21:30:00', 'https://dummyimage.com/600x400/b061cf/ffffff.png&text=Mafalda', 'Mafalda Salón de Belleza', 'Cádiz');
 
 ----------------------------------------------TIPOS----------------------------------------------
 --CENTRO 1--

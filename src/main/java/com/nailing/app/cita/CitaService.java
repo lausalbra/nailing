@@ -4,10 +4,14 @@
  */
 package com.nailing.app.cita;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -115,13 +119,12 @@ public class CitaService {
 		usuario = usuarioService.findById(Long.parseLong(ids.get("usuario"))).get();
 		centro = centroService.findById(Long.parseLong(ids.get("centro"))).get();
 		precio = Double.valueOf(ids.get("precio"));
-		
+
 		DateTimeFormatter dt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		horaInicio = LocalDateTime.parse(ids.get("fecha"), dt);
 
 		tiempo = Integer.valueOf(ids.get("tiempo"));
 		horaFin = horaInicio.plusMinutes(tiempo);
-
 
 		Cita cita = new Cita(precio, horaInicio, horaFin, decoracion, acabado, base, tipo, disenyo, tamanyo, forma,
 				usuario, centro);
@@ -129,14 +132,61 @@ public class CitaService {
 		return citaRepository.save(cita);
 
 	}
-	
-	public void findDisponibles(LocalDateTime inicio, Integer tiempo, Long centroId) {
-		int i = 1;
-		List<Cita> citas = citaRepository.findPendientes(centroId);
-		while (i<13) {
-			
-			i++;
+
+	public List<String> findDisponibles(String fecha, Integer tiempo, Long centroId) {
+		DateTimeFormatter dt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
+		LocalDateTime inicio = LocalDateTime.parse(fecha, dt);
+
+		List<Cita> citas = this.findCitasPendientes(centroId, inicio);
+		List<Integer> tramos = Arrays.asList(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55);
+		List<String> libres = new ArrayList<>();
+
+		Centro centro = centroService.findById(centroId).get();
+
+		LocalDateTime fin;
+		Boolean apto;
+
+		for (Integer tramo : tramos) {
+			fin = inicio.plusMinutes(tramo + tiempo);
+			apto = true;
+
+//				comprobar si la cita es seleccionada en el descanso del mediodia del centro si lo tiene
+			Boolean checkMediodia = centro.getCierreAM().isBefore(fin.toLocalTime())
+					&& centro.getAperturaPM().isAfter(inicio.toLocalTime());
+//				comprobar si la cita acaba o empieza despues de la hora de cierre del centro
+			Boolean checkCierre = centro.getCierrePM().isBefore(fin.toLocalTime());
+//				comprobar si cita empieza antes de la hora de apertura del centro
+			Boolean checkApertura = centro.getAperturaAM().isAfter(inicio.toLocalTime());
+
+//			si se cumple alguna condición la cita no puede empezar a esa hora y minutos
+			if (checkMediodia || checkCierre || checkApertura) {
+				apto = false;
+				continue;
+			}
+
+			for (Cita cita : citas) {
+//				comprobar si la cita ocupa el tiempo de alguna otra cita
+				Boolean checkCitas = (cita.getHoraInicio().isBefore(fin) && cita.getHoraFin().isAfter(inicio));
+
+//				si se cumple alguna condición la cita no puede empezar a esa hora y minutos
+				if (checkCitas) {
+					apto = false;
+					continue;
+				}
+			}
+
+			if (apto) {
+				String tramoString = tramo.toString();
+
+				if (tramo < 10) {
+					tramoString = "0" + tramoString;
+				}
+
+				libres.add(tramoString);
+			}
 		}
+
+		return libres;
 	}
 
 	public Cita findById(Long id) {
@@ -149,6 +199,13 @@ public class CitaService {
 
 	public Iterable<Cita> findAll() {
 		return citaRepository.findAll();
+	}
+
+	public List<Cita> findCitasPendientes(Long centroId, LocalDateTime fecha) {
+		return citaRepository.findCitasPendientes(centroId).stream()
+				.filter(cita -> cita.getHoraInicio().toLocalDate().equals(LocalDate.now()))
+				.collect(Collectors.toList());
+
 	}
 
 	public void removeUnya(Long id) {

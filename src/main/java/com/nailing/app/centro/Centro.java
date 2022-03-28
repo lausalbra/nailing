@@ -45,12 +45,16 @@ public class Centro {
 
 	private String provincia;
 
+	@Column(name="apertura_am")
 	private LocalTime aperturaAM;
 
+	@Column(name="cierre_am")
 	private LocalTime cierreAM;
 
+	@Column(name="apertura_pm")
 	private LocalTime aperturaPM;
 
+	@Column(name="cierre_pm")
 	private LocalTime cierrePM;
 
 	public Centro() {
