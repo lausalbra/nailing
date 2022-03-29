@@ -4,7 +4,6 @@
  */
 package com.nailing.app.cita;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -202,8 +201,8 @@ public class CitaService {
 	}
 
 	public List<Cita> findCitasPendientes(Long centroId, LocalDateTime fecha) {
-		return citaRepository.findCitasPendientes(centroId).stream()
-				.filter(cita -> cita.getHoraInicio().toLocalDate().equals(LocalDate.now()))
+		return citaRepository.findCitasByCentro(centroId).stream()
+				.filter(cita -> cita.getHoraInicio().toLocalDate().equals(fecha.toLocalDate()))
 				.collect(Collectors.toList());
 
 	}

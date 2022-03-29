@@ -17,6 +17,6 @@ public interface CitaRepository extends CrudRepository<Cita, Long>{
     public List<Cita> findByUsuario(Long id);
     
     @Query("SELECT cita from Cita cita where cita.centro.id = :id")
-    public List<Cita> findCitasPendientes(Long id);
+    public List<Cita> findCitasByCentro(Long id);
     
 }
