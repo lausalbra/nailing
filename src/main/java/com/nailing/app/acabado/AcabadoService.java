@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nailing.app.base.Base;
+
 /**
  *
  * @author Usuario
@@ -40,4 +42,10 @@ public class AcabadoService {
     public List<Acabado> findAcabadoByCentro( Long centroId){
         return acabadoRepository.findByCentro(centroId);        
     }
+    public void removeAcabadosbyCentro(Long centroId) {
+		List<Acabado> acabados = acabadoRepository.findByCentro(centroId);
+		for (Acabado a : acabados) {
+			removeAcabado(a.getId());
+		}
+	}
 }

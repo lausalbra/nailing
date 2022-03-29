@@ -67,42 +67,13 @@ public class CentroController {
     
     @DeleteMapping("/{id}")
     public void deleteCentro(@PathVariable Long id) {
-    	for(Acabado a : acabSer.findAll()) {
-    		System.out.println(a.toString());
-    		if(a.getCentro().getId() == id) {
-    			acabSer.removeAcabado(a.getId());
-    		}
-    	}
-    	for(Base b : basSer.findAll()) {
-    		if(b.getCentro().getId() == id) {
-    			basSer.removeBase(b.getId());
-    		}
-    	}
-    	for(Decoracion d : decSer.findAll()) {
-    		if(d.getCentro().getId() == id) {
-    			decSer.removeDecoracion(d.getId());
-    		}
-    	}
-    	for(Disenyo di : disSer.findAll()) {
-    		if(di.getCentro().getId() == id) {
-    			disSer.removeDisenyo(di.getId());
-    		}
-    	}
-    	for(Forma f : forSer.findAll()) {
-    		if(f.getCentro().getId() == id) {
-    			forSer.removeBase(f.getId());
-    		}
-    	}
-    	for(Tamanyo t : tamSer.findAll()) {
-    		if(t.getCentro().getId() == id) {
-    			tamSer.removeTamanyo(t.getId());
-    		}
-    	}
-    	for(Tipo t : tipoSer.findAll()) {
-    		if(t.getCentro().getId() == id) {
-    			tipoSer.removeTipo(t.getId());
-    		}
-    	}
+    	acabSer.removeAcabadosbyCentro(id);
+    	basSer.removeBasesbyCentro(id);
+    	decSer.removeDecoracionesbyCentro(id);
+    	disSer.removeDisenyosbyCentro(id);
+    	forSer.removeFormabyCentro(id);
+    	tamSer.removeTamanyobyCentro(id);
+    	tipoSer.removeTiposbyCentro(id);
     	centroService.delete(id);
     }
 

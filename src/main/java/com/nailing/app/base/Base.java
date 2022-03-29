@@ -51,7 +51,6 @@ public class Base {
 	private Fases siguienteFase;
 
 	@ManyToOne
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "centro_id")
 	private Centro centro;
 

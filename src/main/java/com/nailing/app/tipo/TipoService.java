@@ -9,6 +9,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nailing.app.decoracion.Decoracion;
+
 /**
  *
  * @author CANDELA
@@ -41,4 +43,10 @@ public class TipoService {
     public List<Tipo> findByCentro(Long id){
         return tiporepository.findByCentro(id);
     }
+    public void removeTiposbyCentro(Long centroId) {
+		List<Tipo> tipos = tiporepository.findByCentro(centroId);
+		for (Tipo t : tipos) {
+			removeTipo(t.getId());
+		}
+	}
 }
