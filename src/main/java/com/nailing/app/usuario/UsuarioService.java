@@ -17,6 +17,10 @@ public class UsuarioService {
     //añadir-actualizar usuario
     public Usuario addUsuario(Map<String,String> map) {
         String user = map.get("user");
+        List<Usuario> usuarios = this.findAll();
+        for(Usuario u: usuarios){
+            if(u.getUsuario().equals(user)) throw new IllegalArgumentException();
+        }
         String contrasenya = map.get("password");
         String email = map.get("email");
         String telefono = map.get("telefono");
