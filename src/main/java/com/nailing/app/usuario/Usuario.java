@@ -42,6 +42,7 @@ public class Usuario {
     private String email;
 
     @Column(name = "telefono")
+    @NotBlank
     private String telefono;
 
     @Column(name = "rol")
