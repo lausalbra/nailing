@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'wouter'
-import { styled } from '@mui/material/styles'
 import { API_URL, RequestManager } from '../../components/RestUtils'
-import Box from '@mui/material/Box'
-import ButtonBase from '@mui/material/ButtonBase'
-import Typography from '@mui/material/Typography'
+import DoubleArrowRoundedIcon from '@mui/icons-material/DoubleArrowRounded'
+import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded'
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded'
+import { Box, ButtonBase, ButtonGroup, IconButton, styled, Typography } from '@mui/material'
 
-// npm install @mui/material @emotion/react @emotion/styled
+//npm install @mui/icons-material --- npm install @mui/material
 export function CenterList ({ provincia }) {
   const [resObj, setObj] = useState([])
   // eslint-disable-next-line no-unused-vars
@@ -95,8 +95,6 @@ export function CenterList ({ provincia }) {
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%' }}>
       {filtrado.map((image) => (
         <ImageButton
-          onClick={() => locationPush('/centrodetalle/' + image.id)}
-          focusRipple
           key={image.nombre}
           style={{
             width: '30%'
@@ -115,9 +113,31 @@ export function CenterList ({ provincia }) {
                 pt: 2,
                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
               }}
-            > {image.nombre}
+            > 
+              {image.nombre}
+              
               <ImageMarked className='MuiImageMarked-root' />
             </Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 100}}
+                component="span"
+                m={1} //margin
+                className="justifyContent:flex-end alignItems:flex-end"
+              >
+                <ButtonGroup
+                  orientation="vertical"
+                  aria-label="vertical outlined button group"
+                >
+                  <IconButton onClick={() => locationPush('/centrodetalle/' + image.id)}>
+                    <DoubleArrowRoundedIcon />
+                  </IconButton>
+                  <IconButton onClick={() => console.log("Editar")}>
+                    <BorderColorRoundedIcon />
+                  </IconButton>
+                  <IconButton onClick={() => console.log("Borrar")}>
+                    <DeleteRoundedIcon />
+                  </IconButton>
+                </ButtonGroup>
+              </Box>
           </Image>
         </ImageButton>
       ))}
