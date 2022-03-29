@@ -43,20 +43,7 @@ public class CentroController {
     
     @Autowired
     private CentroService centroService;
-    @Autowired
-    private AcabadoService acabSer;
-    @Autowired
-    private BaseService basSer;
-    @Autowired
-    private DecoracionService decSer;
-    @Autowired
-    private DisenyoService disSer;
-    @Autowired 
-    private FormaService forSer;
-    @Autowired
-    private TamanyoService tamSer;
-    @Autowired
-    private TipoService tipoSer;
+  
     
     
     @GetMapping()
@@ -67,13 +54,6 @@ public class CentroController {
     
     @DeleteMapping("/{id}")
     public void deleteCentro(@PathVariable Long id) {
-    	acabSer.removeAcabadosbyCentro(id);
-    	basSer.removeBasesbyCentro(id);
-    	decSer.removeDecoracionesbyCentro(id);
-    	disSer.removeDisenyosbyCentro(id);
-    	forSer.removeFormabyCentro(id);
-    	tamSer.removeTamanyobyCentro(id);
-    	tipoSer.removeTiposbyCentro(id);
     	centroService.delete(id);
     }
 
