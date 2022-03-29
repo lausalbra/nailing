@@ -22,7 +22,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Usuario {
 	
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -42,6 +42,7 @@ public class Usuario {
     private String email;
 
     @Column(name = "telefono")
+    @NotBlank
     private String telefono;
 
     @Column(name = "rol")
