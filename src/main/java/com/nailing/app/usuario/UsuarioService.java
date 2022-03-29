@@ -1,6 +1,7 @@
 package com.nailing.app.usuario;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,17 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     //añadir-actualizar usuario
-    public Usuario addUsuario(Usuario usuario) {
+    public Usuario addUsuario(Map<String,String> map) {
+        String user = map.get("user");
+        String contrasenya = map.get("password");
+        String email = map.get("email");
+        String telefono = map.get("telefono");
+        if(user == null || contrasenya == null|| email == null|| telefono == null){
+            throw new IllegalArgumentException();
+        }
+
+        Usuario usuario = new Usuario(user,contrasenya,email,telefono,"USER");
+
         return usuarioRepository.save(usuario);
     }
     

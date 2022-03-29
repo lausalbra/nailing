@@ -26,16 +26,16 @@ public class UsuarioController {
     @Autowired
     public DbInit encoder;
 
-    @PostMapping("/usuarios")
-    public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario){
-        Usuario result = usuarioSer.addUsuario(usuario);
+    @PostMapping("/signUp")
+    public ResponseEntity<Usuario> signUsuario(@RequestBody Map<String,String> map){
+        Usuario result = usuarioSer.addUsuario(map);
         if(result != null)
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
     }
     
     @PostMapping("/login")
-    public ResponseEntity<Usuario> addUsuario(@RequestBody Map<String,String> usuario){
+    public ResponseEntity<Usuario> logUsuario(@RequestBody Map<String,String> usuario){
         Usuario result = encoder.findByUsuarioContrasenya(usuario.get("user"), usuario.get("password"));
         if(result!=null){
             return new ResponseEntity<>(result, HttpStatus.OK);
