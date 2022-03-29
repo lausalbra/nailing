@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nailing.app.decoracion.Decoracion;
+
 /**
  *
  * @author jaime
@@ -40,7 +42,12 @@ public class FormaService {
             formaRepository.delete(forma);
         }
     }
-	
+    public void removeFormabyCentro(Long centroId) {
+		List<Forma> formas = formaRepository.findByCentro(centroId);
+		for (Forma f : formas) {
+			removeBase(f.getId());
+		}
+	}
 //	encontrar las bases que posee el centro dado según el tipo seleccionado
     public List<Forma> findFormasByCentroBase(Long centroId) {	
         return formaRepository.findByCentro(centroId);

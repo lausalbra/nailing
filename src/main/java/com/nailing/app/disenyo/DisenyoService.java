@@ -6,6 +6,7 @@ package com.nailing.app.disenyo;
 
 import com.nailing.app.base.Base;
 import com.nailing.app.base.BaseRepository;
+import com.nailing.app.decoracion.Decoracion;
 import com.nailing.app.tamanyo.Tamanyo;
 import com.nailing.app.tamanyo.TamanyoRepository;
 import java.util.ArrayList;
@@ -45,7 +46,12 @@ public class DisenyoService {
             disenyorepository.delete(disenyo);
         }
     }
-    
+    public void removeDisenyosbyCentro(Long centroId) {
+		List<Disenyo> disenyos = disenyorepository.findByCentro(centroId);
+		for (Disenyo d : disenyos) {
+			removeDisenyo(d.getId());
+		}
+	}
     public List<Disenyo> findDisenyosByCentroTamanyo(Long tamanyoId, Long centroId){
         Tamanyo tamanyo = tamanyorepository.findById(tamanyoId);
         List<Disenyo> result = new ArrayList<>();
