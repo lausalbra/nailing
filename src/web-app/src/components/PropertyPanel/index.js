@@ -114,11 +114,12 @@ class PropertyPanel extends Component {
 
         //Se obtiene el panel principal para colocar la nueva caja
         var mainPanel = containerDiv.parentElement;
-        //El id del centro puede sacarse del contexto, el resto está en la opcion
-        if(option.siguienteFase === "fin")
+        //Se comrpueba el siguiente set de opciones
+        if(option.siguienteFase === "fin") //Si no hay más opciones se recopilan los datos de las opciones ya seleccionadas
         {
             //Se suman los tiempos y precios y se muestran
             var finisherDiv = document.createElement("div");
+            finisherDiv.className = "flex flex-wrap justify-center font-bold font-lucida-handwriting text-lg mt-2";
             var time = 0;
             var price = 0;
             if(sessionStorage.getItem("Tipo") != null){
@@ -149,10 +150,26 @@ class PropertyPanel extends Component {
                 time += parseInt(sessionStorage.getItem("AcabadosTime"));
                 price += parseFloat(sessionStorage.getItem("AcabadosCost"));
             }
-            var priceElement = document.createTextNode("Coste: " + price.toString() + " ");
-            var timeElement = document.createTextNode("Tiempo: " + time.toString() + " ");
-
+            var priceElement = document.createElement("a");
+            priceElement.text = "Coste: " + price.toString() + " ";
+            priceElement.className = "w-1/4 inline-block text-shadow-pink-dark text-center m-3";
+            var timeElement = document.createElement("a");
+            timeElement.text = "Tiempo: " + time.toString() + " ";
+            timeElement.className = "w-1/4 inline-block text-shadow-pink-dark text-center m-3";
+            //Se crean los selectores de dia, hora y minuto y el boton de reserva
             var dateSelector = document.createElement("INPUT");
+            dateSelector.className = "w-1/4 text-shadow-pink text-black rounded-full m-3";
+            var hourSelector = document.createElement("select");
+            hourSelector.className = "w-1/4 text-shadow-pink text-black rounded-full m-3";
+            var minuteSelector = document.createElement("select");
+            minuteSelector.className = "w-1/4 text-shadow-pink text-black rounded-full m-3";
+            minuteSelector.disabled = true;
+            var buttonReserve = document.createElement("button");
+            buttonReserve.className = "w-1/4 text-shadow-pink rounded-full hover:bg-purple-500 m-3";
+            //JSON final de datos
+            var postData = null;
+
+            //Confguración del selector de hora
             dateSelector.setAttribute("type", "date");
             var tomorrow = new Date();
             var day = tomorrow.getDate()+1;
@@ -160,8 +177,14 @@ class PropertyPanel extends Component {
             var month = tomorrow.getMonth() + 1;
             if (month <10) month = '0' + month;
             tomorrow = tomorrow.getFullYear() + '-' + month + '-' + day;
+            //La fecha mínima es mañana
             dateSelector.setAttribute("min", tomorrow);
+            //Cuando se escoja una fecha, se podra escoger hora
+            dateSelector.onchange = function(){
+                hourSelector.disabled = false;
+            }
 
+            //Se comprueba que opciones de hora tiene el centro para configurar el selector de hora
             var horaAperturaAM = parseInt(option.centro.aperturaAM.split(":")[0]);
             var horaCierreAM = parseInt(option.centro.cierreAM.split(":")[0]);
             var horaAperturaPM = parseInt(option.centro.aperturaPM.split(":")[0])
@@ -177,16 +200,22 @@ class PropertyPanel extends Component {
                 hourOptions.push(horaAperturaPM.toString());
                 horaAperturaPM++;
             }
-            var hourSelector = document.createElement("select");
+            //Se desactiva hasta tener una fecha
+            hourSelector.disabled = true;
+            //Se crea una opcion default
+            var selectDefaultOption = document.createElement("option");
+            selectDefaultOption.value = "";
+            selectDefaultOption.text = "Escoja una hora";
+            hourSelector.appendChild(selectDefaultOption);
+            //Se rellena el selector de horas
             hourOptions.forEach(element => {
                 var selectOption = document.createElement("option");
                 selectOption.value = element;
                 selectOption.text = element;
                 hourSelector.appendChild(selectOption);
-            });
-
-            var minuteSelector = document.createElement("select");
-            var buttonReserve = document.createElement("button");
+            });           
+            
+            //Al cambiar la hora en el selector se configura el selector de minutos
             hourSelector.onchange = function(){
                 $.ajax({
                     method: "GET",
@@ -194,44 +223,60 @@ class PropertyPanel extends Component {
                     headers: {
                         "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
                     },
-                    data: ({fecha: dateSelector.value + " " + this.value, duracion: time}).stringify(),
-                    url: "https://nailingtest.herokuapp.com/cita/hora",
+                    url: encodeURI("https://nailingtest.herokuapp.com/cita/check/" + option.centro.id + "?fecha=" + dateSelector.value + " " + hourSelector.value + "&duracion=" + time.toString()),
                     success: function (data) {
                         console.log("Hora seleccionada");
+                        minuteSelector.disabled = false;
+                        //Se borran opciones anteriores
                         var i, L = minuteSelector.options.length - 1;
                         for(i = L; i >= 0; i--)
                         {
                             minuteSelector.remove(i);
                         }
+                        //Se añade una opción predeterminada
+                        selectDefaultOption = document.createElement("option");
+                        selectDefaultOption.value = "";
+                        selectDefaultOption.text = "Escoja un tramo";
+                        minuteSelector.appendChild(selectDefaultOption);
+                        //Se añaden las opciones de tramos horarios
                         data.forEach(element => {
                             var selectOption = document.createElement("option");
                             selectOption.value = element;
                             selectOption.text = element;
                             minuteSelector.appendChild(selectOption);
                         });
-                        buttonReserve.disabled = false;
                     }
                 });
             };
-
-            const postData = {
-                usuario: sessionStorage.getItem("userId"),
-                centro: sessionStorage.getItem("centreId"),
-                precio: price.toString(),
-                tiempo: time.toString(),
-                fecha: dateSelector.value + " " + hourSelector.value + ":" + minuteSelector.value,
-                tipo: sessionStorage.getItem("Tipo"),
-                base: sessionStorage.getItem("Bases"),
-                forma: sessionStorage.getItem("Formas"),
-                tamanyo: sessionStorage.getItem("Tamaños"),
-                disenyo: sessionStorage.getItem("Diseños"),
-                decoracion: sessionStorage.getItem("Decoraciones"),
-                acabado: sessionStorage.getItem("Acabados")
+            //Configuración de selector de minutos
+            minuteSelector.disable = true;
+            selectDefaultOption = document.createElement("option");
+            selectDefaultOption.value = "";
+            selectDefaultOption.text = "Escoja un tramo";
+            minuteSelector.appendChild(selectDefaultOption);
+            //Cuando cambie el valor del selector de minuto se rellenan los datos de llamada y se desbloquea el boton de reserva
+            minuteSelector.onchange = function(){
+                postData = {
+                    usuario: sessionStorage.getItem("userId"),
+                    centro: sessionStorage.getItem("centreId"),
+                    precio: price.toString(),
+                    tiempo: time.toString(),
+                    fecha: dateSelector.value + " " + hourSelector.value + ":" + minuteSelector.value,
+                    tipo: sessionStorage.getItem("Tipo"),
+                    base: sessionStorage.getItem("Bases"),
+                    forma: sessionStorage.getItem("Formas"),
+                    tamanyo: sessionStorage.getItem("Tamaños"),
+                    disenyo: sessionStorage.getItem("Diseños"),
+                    decoracion: sessionStorage.getItem("Decoraciones"),
+                    acabado: sessionStorage.getItem("Acabados")
+                };
+                buttonReserve.disabled = false;
             };
-            var json = JSON.stringify(postData);
 
+            //Configuración del boton de reserva de cita
             buttonReserve.disabled = true;
             buttonReserve.innerText = "Reservar cita"
+            //Se realiza la reserva al clicar
             buttonReserve.onclick = function() {
                 $.ajax({
                     method: "POST",
@@ -239,10 +284,14 @@ class PropertyPanel extends Component {
                     headers: {
                         "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
                     },
-                    data: json,
-                    url: "https://nailingtest.herokuapp.com/cita/add"
+                    data: JSON.stringify(postData),
+                    url: "https://nailingtest.herokuapp.com/cita/add",
+                    success: function (data) {
+                        window.alert("Se ha realizado la reserva correctamente")
+                    },
                 });
             };
+            //Se añaden todos los elementos al div
             finisherDiv.appendChild(priceElement);
             finisherDiv.appendChild(timeElement);
             finisherDiv.appendChild(dateSelector);
@@ -252,11 +301,11 @@ class PropertyPanel extends Component {
             mainPanel.append(finisherDiv);
         }
         else{
+            //Se crea la url para obtener las siguientes opciones
             var url = option.siguienteFase + "/" + option.id + "/centro/" + sessionStorage.getItem("centreId"); 
             $.ajax({
                 method: "GET",
                 url: "https://nailingtest.herokuapp.com/" + url,
-                //QUITAR CUANDO FUNCIONE LOGIN
                 headers: {
                     "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
                 },
@@ -264,11 +313,14 @@ class PropertyPanel extends Component {
                     console.log("Servicios recibidos");
                     //El data que llegue debe tener 1 atributo, buttons: objeto boton con sus propiedades y carac siguiente
                     //FORMATO JSON: {"options": [{"id": 1, "name" : "Relleno", "cost": 1, "time": 3, "next": Material}, ...] }
+                    //Se crea el panel donde van a ir las opciones
                     let newPropertyPanelContainer = document.createElement("div");
+                    //Configuración del panel
                     var nextName = option.siguienteFase.charAt(0).toUpperCase() + option.siguienteFase.slice(1);
                     nextName = nextName.replace("ny","ñ");
                     newPropertyPanelContainer.id = nextName + "Container";
                     newPropertyPanelContainer.className = "propertyContainer";
+                    //Se añade y se abre el panel
                     mainPanel.append(newPropertyPanelContainer);
                     ReactDOM.render(<><PropertyPanel name={nextName} buttons={data}/></>, newPropertyPanelContainer);
                     newPropertyPanelContainer.firstChild.firstChild.firstChild.checked = true;
@@ -288,7 +340,7 @@ class PropertyPanel extends Component {
                     <span class="text-grey-darkest font-thin text-xl">
                         {this.state.name}
                     </span>
-                    <div class="rounded-full border border-grey w-7 h-7 flex items-center justify-center test">
+                    <div class="rounded-full w- border border-grey w-7 h-7 flex items-center justify-center test">
                         <svg aria-hidden="true" class="" data-reactid="266" fill="none" height="24" stroke="#606F7B" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                             <polyline points="6 9 12 15 18 9">
                             </polyline>
@@ -304,7 +356,7 @@ class PropertyPanel extends Component {
                         nameToShow = nameToShow.replace("ny", "ñ");
                         return(
                             <>
-                            <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + element.nombre + " h-20 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center">{nameToShow}</p></div>
+                            <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + element.nombre + " h-20 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center text-responsive-personalization">{nameToShow}</p></div>
                             </>
                         )
                     })}

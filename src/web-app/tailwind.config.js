@@ -3,6 +3,16 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    textShadow: {
+      'pink': '1px 2px 0 #ff9dd5',
+      'pink-dark': '1px 2px 0 #ff3395',
+    },
+    fontFamily: {
+      'lucida-handwriting' : ['Lucida Handwriting'],
+    },
+    fontSize: {
+      'responsive-personalization' : '1.7vw',
+    },
     extend: {
       backgroundImage: {
         'pintauñas': "url('./static/Landing1-1280x720.png')",
@@ -62,5 +72,7 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-textshadow')
+  ],
 }
