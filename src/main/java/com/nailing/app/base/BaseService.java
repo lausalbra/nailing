@@ -41,7 +41,12 @@ public class BaseService {
 		if(base!=null)
 			baseRepository.delete(base);
 	}
-	
+	public void removeBasesbyCentro(Long centroId) {
+		List<Base> bases = baseRepository.findByCentro(centroId);
+		for (Base b : bases) {
+			removeBase(b.getId());
+		}
+	}
 //	encontrar las bases que posee el centro dado según el tipo seleccionado
 	public List<Base> findBasesByCentroTipo(Long tipoId, Long centroId) {
 		Optional<Tipo> tipo = tipoRepository.findById(tipoId);

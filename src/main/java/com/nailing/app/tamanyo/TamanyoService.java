@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nailing.app.decoracion.Decoracion;
 import com.nailing.app.forma.Forma;
 import com.nailing.app.forma.FormaRepository;
 
@@ -40,7 +41,12 @@ public class TamanyoService {
 		if(tam!=null)
 			tamRepository.delete(tam);
 	}
-	
+	public void removeTamanyobyCentro(Long centroId) {
+		List<Tamanyo> tamanyos = tamRepository.findByCentro(centroId);
+		for (Tamanyo t : tamanyos) {
+			removeTamanyo(t.getId());
+		}
+	}
 //	encontrar los tamanyos que posee el centro dado según la forma seleccionada
 	public List<Tamanyo> findTamanyosByCentroForma(Long formaId, Long centroId) {
 		Forma forma = formaRepository.findById(formaId).get();

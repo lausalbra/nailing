@@ -4,6 +4,7 @@
  */
 package com.nailing.app.decoracion;
 
+import com.nailing.app.base.Base;
 import com.nailing.app.disenyo.Disenyo;
 import com.nailing.app.disenyo.DisenyoRepository;
 import com.nailing.app.disenyo.NombreDisenyo;
@@ -45,7 +46,12 @@ public class DecoracionService {
     public Iterable<Decoracion> findAll(){
         return decoracionRepository.findAll();
     }
-    
+    public void removeDecoracionesbyCentro(Long centroId) {
+		List<Decoracion> decoraciones = decoracionRepository.findByCentro(centroId);
+		for (Decoracion d : decoraciones) {
+			removeDecoracion(d.getId());
+		}
+	}
     public List<Decoracion> findDecoracionByCentroDisenyo(Long disenyoId, Long centroId){
         Optional<Disenyo> disenyo = disenyoRepository.findById(disenyoId);
         List<Decoracion> result = new ArrayList<>();
