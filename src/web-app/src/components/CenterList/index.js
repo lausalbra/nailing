@@ -4,7 +4,7 @@ import { API_URL, RequestManager } from '../../components/RestUtils'
 import DoubleArrowRoundedIcon from '@mui/icons-material/DoubleArrowRounded'
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded'
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded'
-import { Box, ButtonBase, ButtonGroup, IconButton, styled, Typography } from '@mui/material'
+import { Box, ButtonBase, ButtonGroup, styled, Typography } from '@mui/material'
 
 //npm install @mui/icons-material --- npm install @mui/material
 export function CenterList ({ provincia }) {
@@ -92,7 +92,7 @@ export function CenterList ({ provincia }) {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%' }}>
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%'}}>
       {filtrado.map((image) => (
         <ImageButton
           key={image.nombre}
@@ -102,7 +102,10 @@ export function CenterList ({ provincia }) {
         >
           <ImageSrc style={{ backgroundImage: `url(${image.imagen})` }} />
           <ImageBackdrop className='MuiImageBackdrop-root' />
-          <Image>
+          <Image
+            style={{
+              justifyContent: "space-between", alignItems: "center"
+            }}>
             <Typography
               component='span'
               variant='subtitle1'
@@ -125,17 +128,14 @@ export function CenterList ({ provincia }) {
               >
                 <ButtonGroup
                   orientation="vertical"
-                  aria-label="vertical outlined button group"
+                  aria-label="vertical secondary contained button group"
                 >
-                  <IconButton onClick={() => locationPush('/centrodetalle/' + image.id)}>
-                    <DoubleArrowRoundedIcon />
-                  </IconButton>
-                  <IconButton onClick={() => console.log("Editar")}>
-                    <BorderColorRoundedIcon />
-                  </IconButton>
-                  <IconButton onClick={() => console.log("Borrar")}>
-                    <DeleteRoundedIcon />
-                  </IconButton>
+                  <DoubleArrowRoundedIcon onClick={() => locationPush('/centrodetalle/' + image.id)}
+                    sx={{ fontSize: 30 }}/>
+                  <BorderColorRoundedIcon onClick={() => console.log("Editar")}
+                    sx={{ fontSize: 30 }}/>
+                  <DeleteRoundedIcon onClick={() => console.log("Borrar")}
+                    sx={{ fontSize: 30 }}/>
                 </ButtonGroup>
               </Box>
           </Image>
