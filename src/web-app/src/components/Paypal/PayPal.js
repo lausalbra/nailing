@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import $ from 'jquery'; 
 
 export default function Paypal({json}) {
-  
+ 
   const paypal = useRef();
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function Paypal({json}) {
             data: json,
             url: "https://nailingtest.herokuapp.com/cita/add",
             success: function (data) {
-              console.log("Se ha realizado la reserva correctamente")
+              console.log("Se ha realizado la reserva correctamente",order)
           },
           });
         },
@@ -49,4 +49,5 @@ export default function Paypal({json}) {
       <div ref={paypal}></div>
     </div>
   );
+ 
 }

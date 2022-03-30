@@ -1,17 +1,13 @@
-import React, {Fragment, useState  } from 'react';
+import React, {Fragment } from 'react';
 import Select from 'react-select';
 import emailjs from 'emailjs-com';
 import { init } from '@emailjs/browser';
-import PayPalButton from "../Paypal/PayPalButton";
 import { useLocation } from 'wouter'
 init("SSSEYnY7yNub2grYD");
 
 
 export function FeedbackForm() {
     const [locationPath, locationPush] = useLocation()
-    const [checkout, setCheckOut] = useState(false);
-
-
 
     const options = [
         { value: "no", label: "No" },
@@ -31,9 +27,7 @@ export function FeedbackForm() {
     return (
         
         <form className='grid border-2 border-pink-300 p-5 rounded-md w-1/2' onSubmit={enviaEmail} >
-             < PayPalButton/>
-           
-            
+         
             <label className='text-lg' htmlFor="name"> Nombre:</label>
             <input className="border-black border-2  rounded-sm mb-4" name="name" type="text" id="name" required minlength="2" maxlength="20" />
 
