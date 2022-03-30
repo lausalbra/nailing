@@ -1,13 +1,16 @@
-import React, {Fragment } from 'react'
+import React, {Fragment, useState  } from 'react';
 import Select from 'react-select';
 import emailjs from 'emailjs-com';
 import { init } from '@emailjs/browser';
+import PayPalButton from "../Paypal/PayPalButton";
 import { useLocation } from 'wouter'
 init("SSSEYnY7yNub2grYD");
 
-export function FeedbackForm() {
 
+export function FeedbackForm() {
     const [locationPath, locationPush] = useLocation()
+    const [checkout, setCheckOut] = useState(false);
+
 
 
     const options = [
@@ -25,10 +28,12 @@ export function FeedbackForm() {
         })
 
     }
-
     return (
-
+        
         <form className='grid border-2 border-pink-300 p-5 rounded-md w-1/2' onSubmit={enviaEmail} >
+             < PayPalButton/>
+           
+            
             <label className='text-lg' htmlFor="name"> Nombre:</label>
             <input className="border-black border-2  rounded-sm mb-4" name="name" type="text" id="name" required minlength="2" maxlength="20" />
 
@@ -42,9 +47,9 @@ export function FeedbackForm() {
             <label className='text-lg' htmlFor="name">¿Crees que el diseño de la web resulta intuitivo?</label>
             <Fragment><Select name="Q1" options={options} /></Fragment>
 
-            <label className='text-lg' htmlFor="Q2"> ¿Que es lo que más te ha gustado?</label>
+            <label className='text-lg' htmlFor="Q2">¿Qué es lo que más te ha gustado?</label>
             <input className="border-black border-2  rounded-sm mb-4 h-10 break-normal" name="Q2" type="text" id="Q2"required minlength="10"/>
-            <label className='text-lg' htmlFor="Q3"> ¿Que es lo que menos te ha gustado?</label>
+            <label className='text-lg' htmlFor="Q3">¿Qué es lo que menos te ha gustado?</label>
             <input className="border-black border-2  rounded-sm mb-4 h-10 break-normal" name="Q3" type="text" id="Q3"required minlength="10"/>
 
             <label className='text-lg' htmlFor="name">¿Has encontrado fallos? </label>
