@@ -171,7 +171,7 @@ class PropertyPanel extends Component {
             var postData = null;
             //boton final de pago
             var paybuttonDiv = document.createElement("div");
-            paybuttonDiv.className = "w-1/4 rounded-full";
+            paybuttonDiv.className = "w-1/2 rounded-full";
 
             //Confguración del selector de hora
             dateSelector.setAttribute("type", "date");
@@ -275,7 +275,7 @@ class PropertyPanel extends Component {
                     acabado: sessionStorage.getItem("Acabados")
                 };
                 var json = JSON.stringify(postData);
-                ReactDOM.render(<div class="w-1/6 ..."><Paypal json={json}/></div>,paybuttonDiv);
+                ReactDOM.render(<div class="w-full flex justify-center ..."><Paypal json={json}/></div>,paybuttonDiv);
             };
 
             //Se añaden todos los elementos al div
