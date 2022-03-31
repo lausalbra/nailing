@@ -4,8 +4,8 @@ module.exports = {
   ],
   theme: {
     textShadow: {
-      'pink': '1px 2px 0 #ff9dd5',
-      'pink-dark': '1px 2px 0 #ff3395',
+      'pink': '0.5px 0.5px 0 #ff9dd5',
+      'pink-dark': '0.5px 0.5px 0 #ff3395',
     },
     fontFamily: {
       'lucida-handwriting' : ['Lucida Handwriting'],
@@ -69,7 +69,10 @@ module.exports = {
         'MARMOL': "url('./static/MARMOL.PNG')",
         'MATE': "url('./static/MATE.PNG')",
         'BRILLO': "url('./static/BRILLO.PNG')",
-      }
+      },
+      height: {
+        'responsiveButtonHeight': '128px',
+      },
     },
   },
   plugins: [

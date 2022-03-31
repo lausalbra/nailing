@@ -165,14 +165,14 @@ class PropertyPanel extends Component {
             minuteSelector.className = "w-1/4 text-shadow-pink text-black rounded-full m-3";
             minuteSelector.disabled = true;
             var buttonReserve = document.createElement("button");
-            buttonReserve.className = "w-1/4 text-shadow-pink rounded-full hover:bg-purple-500 m-3";
+            buttonReserve.className = "w-1/4 text-shadow-pink rounded-full";
             //JSON final de datos
             var postData = null;
 
             //Confguración del selector de hora
             dateSelector.setAttribute("type", "date");
             var tomorrow = new Date();
-            var day = tomorrow.getDate()+1;
+            var day = tomorrow.getDate();
             if (day < 10) day = '0' + day;
             var month = tomorrow.getMonth() + 1;
             if (month <10) month = '0' + month;
@@ -214,7 +214,7 @@ class PropertyPanel extends Component {
                 selectOption.text = element;
                 hourSelector.appendChild(selectOption);
             });           
-            
+
             //Al cambiar la hora en el selector se configura el selector de minutos
             hourSelector.onchange = function(){
                 $.ajax({
@@ -271,11 +271,12 @@ class PropertyPanel extends Component {
                     acabado: sessionStorage.getItem("Acabados")
                 };
                 buttonReserve.disabled = false;
+                buttonReserve.className += " border-4 border-white hover:bg-purple-500 m-3"
             };
 
             //Configuración del boton de reserva de cita
             buttonReserve.disabled = true;
-            buttonReserve.innerText = "Reservar cita"
+            buttonReserve.innerText = "Reservar"
             //Se realiza la reserva al clicar
             buttonReserve.onclick = function() {
                 $.ajax({
@@ -356,7 +357,7 @@ class PropertyPanel extends Component {
                         nameToShow = nameToShow.replace("ny", "ñ");
                         return(
                             <>
-                            <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + element.nombre + " h-20 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center text-responsive-personalization">{nameToShow}</p></div>
+                            <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + element.nombre + " h-responsiveButtonHeight m-1 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center text-responsive-personalization">{nameToShow}</p></div>
                             </>
                         )
                     })}
