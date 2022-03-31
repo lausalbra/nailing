@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom'
 import "./PropertyPanel.css";
+import Paypal from '../Paypal/PayPal';
 import $ from 'jquery'; 
 
 class PropertyPanel extends Component {
+  
     constructor(props)
     {
         super(props);
@@ -156,6 +158,7 @@ class PropertyPanel extends Component {
                 centro: sessionStorage.getItem("centreId"),
                 precio: price.toString(),
                 tiempo: time.toString(),
+                fecha: "2022-03-31 10:00", 
                 tipo: sessionStorage.getItem("Tipo"),
                 base: sessionStorage.getItem("Bases"),
                 forma: sessionStorage.getItem("Formas"),
@@ -165,10 +168,11 @@ class PropertyPanel extends Component {
                 acabado: sessionStorage.getItem("Acabados")
             };
             var json = JSON.stringify(postData);
-            var buttonReserve = document.createElement("button");
-            buttonReserve.innerText = "Reservar cita"
-            buttonReserve.onclick = function() {
-                $.ajax({
+            var paybuttonDiv = document.createElement("div");
+            paybuttonDiv.className = "";
+           ReactDOM.render(<div class="w-1/6 ..."><Paypal json={json}/></div>,paybuttonDiv);
+           
+               /* $.ajax({
                     method: "POST",
                     contentType: "application/json",
                     headers: {
@@ -176,11 +180,12 @@ class PropertyPanel extends Component {
                     },
                     data: json,
                     url: "https://nailingtest.herokuapp.com/cita/add"
-                });
-            };
+                });*/
+
+ 
             finisherDiv.appendChild(priceElement);
             finisherDiv.appendChild(timeElement);
-            finisherDiv.appendChild(buttonReserve);
+            finisherDiv.appendChild(paybuttonDiv);
             mainPanel.append(finisherDiv);
         }
         else{
@@ -207,8 +212,10 @@ class PropertyPanel extends Component {
                 }
             });
         }
+        
     }
- 
+    
+       
     render()
     {
         const self = this;
@@ -234,11 +241,14 @@ class PropertyPanel extends Component {
                         var id = element.id
                         var nameToShow = element.nombre.replace("_", " ");
                         nameToShow = nameToShow.replace("ny", "ñ");
-                        return(
+                        return( 
                             <>
+                           
                             <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + element.nombre + " h-20 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center">{nameToShow}</p></div>
+                            
                             </>
                         )
+                        
                     })}
                 </div>
             </div>
