@@ -45,7 +45,7 @@ useEffect(() => {
 }, [state.id]);
 
 useEffect(() => {
-    if (state.buttons.length != 0) {
+    if (state.buttons.length !== 0) {
         sessionStorage.setItem("centreId", state.id);
         setState({ id: state.id, name: state.name, isPaneOpen: true, buttons: state.buttons });
     }
@@ -69,7 +69,7 @@ useEffect(() => {
     </CardActions>
   </Card>
   <div class="centerIdDiv" id={state.id}>
-      <SlidingPane children={<div id={"TipoContainer"} class="propertyContainer"><PropertyPanel name="Tipo" buttons={state.buttons} /></div> } title={state.name} isOpen={state.isPaneOpen} from="bottom" width="100%" onRequestClose={() => { setState({ isPaneOpen: false, id: "", name: "", buttons: [] });}}/>
+      <SlidingPane className="font-lucida-handwriting" children={<div id={"TipoContainer"} class="propertyContainer"><PropertyPanel name="Tipo" buttons={state.buttons} /></div> } title={state.name} isOpen={state.isPaneOpen} from="bottom" width="100%" onRequestClose={() => { setState({ isPaneOpen: false, id: "", name: "", buttons: [] });}}/>
   </div></>
     
   );

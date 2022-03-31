@@ -3,6 +3,16 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    textShadow: {
+      'pink': '0.5px 0.5px 0 #ff9dd5',
+      'pink-dark': '0.5px 0.5px 0 #ff3395',
+    },
+    fontFamily: {
+      'lucida-handwriting' : ['Lucida Handwriting'],
+    },
+    fontSize: {
+      'responsive-personalization' : '1.7vw',
+    },
     extend: {
       backgroundImage: {
         'pintauñas': "url('./static/Landing1-1280x720.png')",
@@ -59,8 +69,13 @@ module.exports = {
         'MARMOL': "url('./static/MARMOL.PNG')",
         'MATE': "url('./static/MATE.PNG')",
         'BRILLO': "url('./static/BRILLO.PNG')",
-      }
+      },
+      height: {
+        'responsiveButtonHeight': '128px',
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-textshadow')
+  ],
 }
