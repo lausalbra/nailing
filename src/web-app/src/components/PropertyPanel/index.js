@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom'
 import "./PropertyPanel.css";
+import Paypal from '../Paypal/PayPal';
 import $ from 'jquery'; 
 
 class PropertyPanel extends Component {
+  
     constructor(props)
     {
         super(props);
@@ -150,6 +152,7 @@ class PropertyPanel extends Component {
                 time += parseInt(sessionStorage.getItem("AcabadosTime"));
                 price += parseFloat(sessionStorage.getItem("AcabadosCost"));
             }
+
             var priceElement = document.createElement("a");
             priceElement.text = "Coste: " + price.toString() + " ";
             priceElement.className = "w-1/4 inline-block text-shadow-pink-dark text-center m-3";
@@ -164,10 +167,11 @@ class PropertyPanel extends Component {
             var minuteSelector = document.createElement("select");
             minuteSelector.className = "w-1/4 text-shadow-pink text-black rounded-full m-3";
             minuteSelector.disabled = true;
-            var buttonReserve = document.createElement("button");
-            buttonReserve.className = "w-1/4 text-shadow-pink rounded-full";
             //JSON final de datos
             var postData = null;
+            //boton final de pago
+            var paybuttonDiv = document.createElement("div");
+            paybuttonDiv.className = "w-1/4 rounded-full";
 
             //Confguración del selector de hora
             dateSelector.setAttribute("type", "date");
@@ -270,35 +274,17 @@ class PropertyPanel extends Component {
                     decoracion: sessionStorage.getItem("Decoraciones"),
                     acabado: sessionStorage.getItem("Acabados")
                 };
-                buttonReserve.disabled = false;
-                buttonReserve.className += " border-4 border-white hover:bg-purple-500 m-3"
+                var json = JSON.stringify(postData);
+                ReactDOM.render(<div class="w-1/6 ..."><Paypal json={json}/></div>,paybuttonDiv);
             };
 
-            //Configuración del boton de reserva de cita
-            buttonReserve.disabled = true;
-            buttonReserve.innerText = "Reservar"
-            //Se realiza la reserva al clicar
-            buttonReserve.onclick = function() {
-                $.ajax({
-                    method: "POST",
-                    contentType: "application/json",
-                    headers: {
-                        "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
-                    },
-                    data: JSON.stringify(postData),
-                    url: "https://nailingtest.herokuapp.com/cita/add",
-                    success: function (data) {
-                        window.alert("Se ha realizado la reserva correctamente")
-                    },
-                });
-            };
             //Se añaden todos los elementos al div
             finisherDiv.appendChild(priceElement);
             finisherDiv.appendChild(timeElement);
             finisherDiv.appendChild(dateSelector);
             finisherDiv.appendChild(hourSelector);
             finisherDiv.appendChild(minuteSelector);
-            finisherDiv.appendChild(buttonReserve);
+            finisherDiv.appendChild(paybuttonDiv);
             mainPanel.append(finisherDiv);
         }
         else{
@@ -328,8 +314,10 @@ class PropertyPanel extends Component {
                 }
             });
         }
+        
     }
- 
+    
+       
     render()
     {
         const self = this;
@@ -355,11 +343,12 @@ class PropertyPanel extends Component {
                         var id = element.id
                         var nameToShow = element.nombre.replace("_", " ");
                         nameToShow = nameToShow.replace("ny", "ñ");
-                        return(
+                        return( 
                             <>
                             <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + element.nombre + " h-responsiveButtonHeight m-1 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center text-responsive-personalization">{nameToShow}</p></div>
                             </>
                         )
+                        
                     })}
                 </div>
             </div>
