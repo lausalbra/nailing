@@ -53,6 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             //.antMatchers("/**/**").authenticated()
             .antMatchers("/login").anonymous()
             .antMatchers("/centros").permitAll()
+            .antMatchers("/signUp").anonymous()
             .antMatchers("/centros/details/**").permitAll()
             .anyRequest().authenticated()
             .and().logout().and()
