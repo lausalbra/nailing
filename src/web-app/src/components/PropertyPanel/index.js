@@ -170,9 +170,8 @@ class PropertyPanel extends Component {
             var json = JSON.stringify(postData);
             var paybuttonDiv = document.createElement("div");
             paybuttonDiv.className = "";
-            ReactDOM.render(<Paypal json={json}/>,paybuttonDiv);
+           ReactDOM.render(<div class="w-1/6 ..."><Paypal json={json}/></div>,paybuttonDiv);
            
-
                /* $.ajax({
                     method: "POST",
                     contentType: "application/json",
