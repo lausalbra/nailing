@@ -22,30 +22,22 @@ public class TamanyoController {
 
 	@Autowired
 	TamanyoService tamService;
-	
-//	Prueba del RestController
-//	
-	@GetMapping("/check")
-	public ResponseEntity<Tamanyo> checkTamanyos(){
-		Tamanyo tam = new Tamanyo(0L, NombreTamanyo.XXL, 10, 15.5, Fases.formas, null);
-		return new ResponseEntity<Tamanyo>(tam, HttpStatus.OK);
-	}
-	
+		
 //	mostrar todos los tamaños existentes en la base de datos
-	@GetMapping()
+	@GetMapping("/list")
 	public ResponseEntity<List<Tamanyo>> listTamanyos(){
 		List<Tamanyo> tams = tamService.findAll();
 		return new ResponseEntity<List<Tamanyo>>(tams, HttpStatus.OK);
 	}
 	
 //	borrar un tamaño por su ID
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public void deleteBase(@PathVariable Long id) {
 		tamService.removeTamanyo(id);
 	}
 	
 //	encontrar un tamanyo por su ID
-	@GetMapping("/{id}")
+	@GetMapping("/show/{id}")
 	public ResponseEntity<Tamanyo> showTamanyo(@PathVariable Long id){
 		return new ResponseEntity<Tamanyo>(tamService.findById(id), HttpStatus.OK);
 	}
