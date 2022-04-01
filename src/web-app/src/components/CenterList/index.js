@@ -84,6 +84,16 @@ export function CenterList ({ provincia }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  function borrarCentro (centro) {
+    // eslint-disable-next-line no-restricted-globals
+    const accepted = confirm('¿Está seguro de que quiere borrar el centro ' + centro.nombre + '?')
+    if (accepted) {
+      const url_del = API_URL + '/centros/' + centro.id
+      locationPush('/delete')
+      RequestManager(url_del, 'DELETE', 'CenterList (delete)', '/centro', locationPush, null, null)
+    }
+  }
+
   let filtrado = []
   if (!provincia || provincia === 'ninguna') {
     filtrado = resObj
@@ -134,7 +144,7 @@ export function CenterList ({ provincia }) {
                     sx={{ fontSize: 30 }}/>
                   <BorderColorRoundedIcon onClick={() => console.log("Editar")}
                     sx={{ fontSize: 30 }}/>
-                  <DeleteRoundedIcon onClick={() => console.log("Borrar")}
+                  <DeleteRoundedIcon onClick={() => borrarCentro(image)}
                     sx={{ fontSize: 30 }}/>
                 </ButtonGroup>
               </Box>
