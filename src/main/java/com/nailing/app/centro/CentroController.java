@@ -30,6 +30,8 @@ import com.nailing.app.tamanyo.Tamanyo;
 import com.nailing.app.tamanyo.TamanyoService;
 import com.nailing.app.tipo.Tipo;
 import com.nailing.app.tipo.TipoService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  *
@@ -60,4 +62,14 @@ public class CentroController {
 	return new ResponseEntity<Centro>(centroService.findById(id).get(), HttpStatus.OK);
     }
     
+    @RequestMapping(value = "/edit",method = RequestMethod.PUT)
+    public ResponseEntity<Centro> updateCentro(@RequestBody Centro centro){
+        Centro c = null;
+        try{
+            return new ResponseEntity<Centro>(centroService.addCentro(centro), HttpStatus.OK);
+        }catch(IllegalArgumentException e){
+            return new ResponseEntity<Centro>(c, HttpStatus.BAD_REQUEST);
+        }
+       
+    }
 }

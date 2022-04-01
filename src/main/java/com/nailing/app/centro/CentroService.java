@@ -79,7 +79,11 @@ public class CentroService {
     }
     
     public Centro addCentro(Centro centro) {
-	return centroRepository.save(centro);
+        if(centro != null){
+            return centroRepository.save(centro);
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
 
 }
