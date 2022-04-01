@@ -52,9 +52,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             //.antMatchers("/**").authenticated()
             //.antMatchers("/**/**").authenticated()
             .antMatchers("/login").anonymous()
-            .antMatchers("/centros").permitAll()
+            .antMatchers("/centros/list").permitAll()
             .antMatchers("/signUp").anonymous()
-            .antMatchers("/centros/details/**").permitAll()
+            .antMatchers("/centros/show/**").permitAll()
             .anyRequest().authenticated()
             .and().logout().and()
             .httpBasic();

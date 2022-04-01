@@ -79,12 +79,23 @@ public class CentroService {
         	forSer.removeFormabyCentro(id);
         	tamSer.removeTamanyobyCentro(id);
         	tipoSer.removeTiposbyCentro(id);
+        	for(Usuario u : usuarioService.findAll()) {
+        		if (u.getCentro() == centro.get()) {
+        			u.setCentro(null);
+        		}
+         	}
             centroRepository.delete(centro.get());
         }
     }
+  
     public Centro addCentro(Centro centro) {
-        	return centroRepository.save(centro);
-   }
+        if(centro != null){
+            return centroRepository.save(centro);
+        }else{
+            throw new IllegalArgumentException();
+        }
+    }
+  
     public Usuario asociarCentroUsuario(Usuario usuario, Centro centro) {
     	Centro cent = addCentro(centro);
     	usuario.setCentro(cent);

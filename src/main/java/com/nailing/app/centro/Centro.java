@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -68,9 +69,8 @@ public class Centro {
     @JoinColumn(name = "usuario")
     private Usuario usuario;*/
 
-
-
 	@Column(name = "suscripcion")
+	@NotNull
 	private Suscripcion suscripcion;
 
 	public Centro() {
