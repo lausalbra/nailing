@@ -4,8 +4,13 @@
  */
 package com.nailing.app.centro;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +51,17 @@ public class CentroService {
     }
     
     public List<Centro> findAll(){
-        return (List) centroRepository.findAll();
+        List<Centro> centros =  StreamSupport.stream(centroRepository.findAll().spliterator(), false).collect(Collectors.toList());
+        List<Centro> premium = new ArrayList<>();
+        List<Centro> noPremium = new ArrayList<>();
+        for(Centro c : centros){
+            if(c.getSuscripcion().equals(Suscripcion.PREMIUM)){
+                premium.add(c);
+            }else{
+                noPremium.add(c);
+            }
+        }
+        return Stream.concat(premium.stream(), noPremium.stream()).collect(Collectors.toList());
     }
     
     public void delete(Long id){
