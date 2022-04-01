@@ -23,38 +23,21 @@ public class BaseController {
 	@Autowired
 	BaseService baseService;
 	
-//	Prueba del RestController
-//	
-	@GetMapping("/check")
-	public ResponseEntity<Base> checkBases(){
-		Base base = new Base(0L, NombreBase.ACRILICO, 10, 15.5, Fases.formas, null);
-		return new ResponseEntity<>(base, HttpStatus.OK);
-	}
-	
-//	añadir una nueva base (No hace falta indicar el ID)
-//	@PostMapping()
-//	public ResponseEntity<Base> addBase(@RequestBody Base base){
-//		Base result = baseService.addBase(base);
-//		if(result != null)
-//			return new ResponseEntity<Base>(result, HttpStatus.CREATED);
-//		return new ResponseEntity<Base>(result, HttpStatus.BAD_REQUEST);
-//	}
-	
 //	mostrar todas las bases existentes en la base de datos
-	@GetMapping()
+	@GetMapping("/list")
 	public ResponseEntity<List<Base>> listBases(){
 		List<Base> bases = baseService.findAll();
 		return new ResponseEntity<>(bases, HttpStatus.OK);
 	}
 	
 //	borrar una base por su ID
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public void deleteBase(@PathVariable Long id) {
 		baseService.removeBase(id);
 	}
 	
 //	encontrar una base por su ID
-	@GetMapping("/{id}")
+	@GetMapping("/show/{id}")
 	public ResponseEntity<Base> showBase(@PathVariable Long id){
 		return new ResponseEntity<>(baseService.findById(id), HttpStatus.OK);
 	}
