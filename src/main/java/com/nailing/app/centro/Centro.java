@@ -11,11 +11,16 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.nailing.app.usuario.Usuario;
 
 import java.time.LocalTime;
 
@@ -42,7 +47,9 @@ public class Centro {
 	@Size(max = 1000)
 	@NotBlank
 	private String imagen;
-
+	@Column(name = "provincia")
+	@Size(max = 50)
+	@NotBlank
 	private String provincia;
 
 	@Column(name="apertura_am")
@@ -56,6 +63,12 @@ public class Centro {
 
 	@Column(name="cierre_pm")
 	private LocalTime cierrePM;
+	/*
+	@OneToOne
+    @JoinColumn(name = "usuario")
+    private Usuario usuario;*/
+
+
 
 	@Column(name = "suscripcion")
 	private Suscripcion suscripcion;
