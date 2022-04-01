@@ -12,24 +12,15 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nailing.app.acabado.Acabado;
-import com.nailing.app.acabado.AcabadoService;
-import com.nailing.app.base.Base;
-import com.nailing.app.base.BaseService;
-import com.nailing.app.decoracion.Decoracion;
-import com.nailing.app.decoracion.DecoracionService;
-import com.nailing.app.disenyo.Disenyo;
-import com.nailing.app.disenyo.DisenyoService;
-import com.nailing.app.forma.Forma;
-import com.nailing.app.forma.FormaService;
-import com.nailing.app.tamanyo.Tamanyo;
-import com.nailing.app.tamanyo.TamanyoService;
-import com.nailing.app.tipo.Tipo;
-import com.nailing.app.tipo.TipoService;
+
+import com.nailing.app.usuario.Usuario;
+import com.nailing.app.usuario.UsuarioService;
 
 /**
  *
@@ -43,8 +34,23 @@ public class CentroController {
     
     @Autowired
     private CentroService centroService;
-  
-    
+    @Autowired
+    private UsuarioService usuarioService;
+    @PostMapping("/add/{idUser}")
+    public ResponseEntity<Centro> addCentro(@RequestBody Centro centro, @PathVariable int idUser){
+    	System.out.println("Nombre centro:" + centro.getNombre());
+    	//System.out.println("Hora apertura"+ centro.getAperturaAM().toString());
+        Centro cent = centroService.addCentro(centro);
+        Usuario user = usuarioService.findById((long) idUser).get();
+        user.setCentro(cent);
+        user.setRol("OWNER");
+        usuarioService.save(user);
+        System.out.println("Usuario con centro creado:" + user.getCentro().toString());
+        if(cent == null)
+            return new ResponseEntity<Centro>(centro, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<Centro>(centro, HttpStatus.CREATED);
+    }
+
     
     @GetMapping()
     public ResponseEntity<List<Centro>> findAll(){

@@ -16,6 +16,8 @@ import com.nailing.app.disenyo.DisenyoService;
 import com.nailing.app.forma.FormaService;
 import com.nailing.app.tamanyo.TamanyoService;
 import com.nailing.app.tipo.TipoService;
+import com.nailing.app.usuario.Usuario;
+import com.nailing.app.usuario.UsuarioRepository;
 
 /**
  *
@@ -27,6 +29,8 @@ public class CentroService {
     
     @Autowired
     private CentroRepository centroRepository;
+    @Autowired
+    private UsuarioRepository usRepo;
     @Autowired
     private AcabadoService acabSer;
     @Autowired
@@ -62,9 +66,26 @@ public class CentroService {
             centroRepository.delete(centro.get());
         }
     }
-    
     public Centro addCentro(Centro centro) {
-	return centroRepository.save(centro);
+        	return centroRepository.save(centro);
+   }
+    public void cambiarRol(Usuario usuario) {
+    	usuario.setRol("OWNER");
+    } 
+    /*
+    public List<Centro> findCentrosByUsuario(Long usuarioId){
+    	List<Centro> centros = centroRepository.findByUser(usuarioId);
+    	return centros;
     }
-
+    
+    public void removeCentrosbyUsuario(Long usuarioId) {
+		List<Centro> centros = findCentrosByUsuario(usuarioId);
+		if(centros == null) {
+			System.out.println("No hay centros que borrar");
+		}else {
+			for (Centro c : centros) {
+				delete(c.getId());
+			}
+		}
+    }*/
 }

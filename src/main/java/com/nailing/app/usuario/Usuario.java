@@ -1,12 +1,16 @@
 package com.nailing.app.usuario;
 
 import java.util.Objects;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -14,7 +18,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.nailing.app.centro.Centro;
 
 @Entity
 @Table(name = "usuario")
@@ -47,11 +54,29 @@ public class Usuario {
 
     @Column(name = "rol")
     private String rol;
+    @OneToOne
+    @JoinColumn(name = "centro")
+    private Centro centro;
+    
+    public Centro getCentro() {
+		return centro;
+	}
 
-    public Usuario() {
+	public void setCentro(Centro centro) {
+		this.centro = centro;
+	}
+
+	public Usuario() {
         super();
     }
-
+	public Usuario(String usuario, String contrasenya, String email, String telefono, String rol,Centro centro) {
+        this.usuario = usuario;
+        this.contrasenya = contrasenya;
+        this.email = email;
+        this.telefono = telefono;
+        this.rol = rol;
+        this.centro =centro;
+    }
     public Usuario(String usuario, String contrasenya, String email, String telefono, String rol) {
         this.usuario = usuario;
         this.contrasenya = contrasenya;

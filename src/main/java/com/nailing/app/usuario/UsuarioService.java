@@ -7,13 +7,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nailing.app.centro.CentroService;
+
 
 @Service("usuarioService")
 public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-
+    @Autowired
+    private CentroService centroSer;
     //añadir-actualizar usuario
     public Usuario addUsuario(Map<String,String> map) {
         String user = map.get("user");
@@ -47,9 +50,12 @@ public class UsuarioService {
         Optional<Usuario> usuario = findById(id);
         if(usuario.isPresent()){
             usuarioRepository.delete(usuario.get());
+            centroSer.delete(usuario.get().getCentro().getId());
         }
     }
-
+    public Usuario save(Usuario usuario) {
+    	return usuarioRepository.save(usuario);
+    }
     public List<Usuario> findAll(){
         return (List) usuarioRepository.findAll();
     }
