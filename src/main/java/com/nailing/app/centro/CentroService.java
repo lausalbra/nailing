@@ -79,6 +79,11 @@ public class CentroService {
         	forSer.removeFormabyCentro(id);
         	tamSer.removeTamanyobyCentro(id);
         	tipoSer.removeTiposbyCentro(id);
+        	for(Usuario u : usuarioService.findAll()) {
+        		if (u.getCentro() == centro.get()) {
+        			u.setCentro(null);
+        		}
+         	}
             centroRepository.delete(centro.get());
         }
     }
