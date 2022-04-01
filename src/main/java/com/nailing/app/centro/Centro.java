@@ -11,11 +11,16 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.nailing.app.usuario.Usuario;
 
 import java.time.LocalTime;
 
@@ -42,7 +47,9 @@ public class Centro {
 	@Size(max = 1000)
 	@NotBlank
 	private String imagen;
-
+	@Column(name = "provincia")
+	@Size(max = 50)
+	@NotBlank
 	private String provincia;
 
 	@Column(name="apertura_am")
@@ -56,12 +63,21 @@ public class Centro {
 
 	@Column(name="cierre_pm")
 	private LocalTime cierrePM;
+	/*
+	@OneToOne
+    @JoinColumn(name = "usuario")
+    private Usuario usuario;*/
+
+
+
+	@Column(name = "suscripcion")
+	private Suscripcion suscripcion;
 
 	public Centro() {
 	}
 
 	public Centro(Long id, @Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
-			String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM, LocalTime cierrePM) {
+			String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM, LocalTime cierrePM, Suscripcion suscripcion) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -71,6 +87,7 @@ public class Centro {
 		this.cierreAM = cierreAM;
 		this.aperturaPM = aperturaPM;
 		this.cierrePM = cierrePM;
+		this.suscripcion = suscripcion;
 	}
 
 	public Long getId() {
@@ -137,6 +154,14 @@ public class Centro {
 		this.cierrePM = cierrePM;
 	}
 
+	public Suscripcion getSuscripcion() {
+		return suscripcion;
+	}
+
+	public void setSuscripcion(Suscripcion suscripcion) {
+		this.suscripcion = suscripcion;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(aperturaAM, aperturaPM, cierreAM, cierrePM, id, imagen, nombre, provincia);
@@ -161,7 +186,7 @@ public class Centro {
 	public String toString() {
 		return "Centro [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", provincia=" + provincia
 				+ ", aperturaAM=" + aperturaAM + ", cierreAM=" + cierreAM + ", aperturaPM=" + aperturaPM + ", cierrePM="
-				+ cierrePM + "]";
+				+ cierrePM +", suscripcion="+ suscripcion +"]";
 	}
 
 }

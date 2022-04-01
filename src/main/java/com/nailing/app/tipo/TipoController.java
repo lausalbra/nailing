@@ -28,18 +28,18 @@ public class TipoController {
     @Autowired
     TipoService tipoService;
     
-    @GetMapping()
+    @GetMapping("/list")
     public ResponseEntity<List<Tipo>> listTipos(){
         List<Tipo> tipos = (List<Tipo>) tipoService.findAll();
         return new ResponseEntity<>(tipos, HttpStatus.OK);
     }
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
 	public void deleteTipo(@PathVariable Long id) {
 		tipoService.removeTipo(id);
 	}
         
-     @GetMapping("/{id}")
+     @GetMapping("/show/{id}")
 	public ResponseEntity<Tipo> showTipo(@PathVariable Long id){
 		return new ResponseEntity<>(tipoService.findById(id), HttpStatus.OK);
 	}

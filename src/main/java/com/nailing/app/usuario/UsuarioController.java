@@ -45,18 +45,18 @@ public class UsuarioController {
         
     }
 
-    @GetMapping("/usuarios")
+    @GetMapping("/usuarios/list")
     public ResponseEntity<List<Usuario>> listUsuarios(){
         List<Usuario> usuarios = usuarioSer.findAll();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
     
-    @DeleteMapping("/usuarios/{id}")
+    @DeleteMapping("/usuarios/delete/{id}")
     public void deleteUsuario(@PathVariable Long id) {
         usuarioSer.removeUsuario(id);
     }
     
-    @GetMapping("/usuarios/{id}")
+    @GetMapping("/usuarios/show/{id}")
     public ResponseEntity<Usuario> showUsuario(@PathVariable Long id){
         return new ResponseEntity<>(usuarioSer.findById(id).get(), HttpStatus.OK);
     }
