@@ -37,7 +37,7 @@ export function CenterList ({ provincia }) {
     filtrado = resObj.filter(c => c.provincia === provincia)
   }
 
-  return isAdmin ? (
+  return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%'}}>
       {filtrado.map((center) => (
         <Center key={center.id}
@@ -46,18 +46,6 @@ export function CenterList ({ provincia }) {
           detailsFunc={() => locationPush('/centrodetalle/' + center.id)}
           editFunc={() => console.log("Editar")}
           deleteFunc={() => borrarCentro(center)}
-        />
-      ))}
-    </Box>
-  ) : (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%'}}>
-      {filtrado.map((center) => (
-        <Center key={center.id}
-          center={center}
-          isAdmin={isAdmin}
-          detailsFunc={() => locationPush('/centrodetalle/' + center.id)}
-          editFunc={null}
-          deleteFunc={null}
         />
       ))}
     </Box>
