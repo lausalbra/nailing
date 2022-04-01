@@ -36,16 +36,10 @@ public class CentroController {
     private CentroService centroService;
     @Autowired
     private UsuarioService usuarioService;
-    @PostMapping("/add/{idUser}")
-    public ResponseEntity<Centro> addCentro(@RequestBody Centro centro, @PathVariable int idUser){
-    	System.out.println("Nombre centro:" + centro.getNombre());
-    	//System.out.println("Hora apertura"+ centro.getAperturaAM().toString());
-        Centro cent = centroService.addCentro(centro);
-        Usuario user = usuarioService.findById((long) idUser).get();
-        user.setCentro(cent);
-        user.setRol("OWNER");
-        usuarioService.save(user);
-        System.out.println("Usuario con centro creado:" + user.getCentro().toString());
+    @PostMapping("/add/{idUser}/{urlimagen}")
+    public ResponseEntity<Centro> addCentro(@RequestBody Centro centro, @PathVariable int idUser, @PathVariable String urlimagen){
+        Centro cent = centroService.addCentro(centro, urlimagen);
+        usuarioService.asociarCentroUsuario(usuarioService.findById((long) idUser).get(), cent);
         if(cent == null)
             return new ResponseEntity<Centro>(centro, HttpStatus.BAD_REQUEST);
         return new ResponseEntity<Centro>(centro, HttpStatus.CREATED);

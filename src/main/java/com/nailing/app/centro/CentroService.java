@@ -30,8 +30,6 @@ public class CentroService {
     @Autowired
     private CentroRepository centroRepository;
     @Autowired
-    private UsuarioRepository usRepo;
-    @Autowired
     private AcabadoService acabSer;
     @Autowired
     private BaseService basSer;
@@ -66,12 +64,11 @@ public class CentroService {
             centroRepository.delete(centro.get());
         }
     }
-    public Centro addCentro(Centro centro) {
+    public Centro addCentro(Centro centro, String urlimagen) {
+    		centro.setImagen(urlimagen);
         	return centroRepository.save(centro);
    }
-    public void cambiarRol(Usuario usuario) {
-    	usuario.setRol("OWNER");
-    } 
+ 
     /*
     public List<Centro> findCentrosByUsuario(Long usuarioId){
     	List<Centro> centros = centroRepository.findByUser(usuarioId);

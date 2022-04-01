@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nailing.app.centro.Centro;
 import com.nailing.app.centro.CentroService;
 
 
@@ -50,10 +51,11 @@ public class UsuarioService {
         Optional<Usuario> usuario = findById(id);
         if(usuario.isPresent()){
             usuarioRepository.delete(usuario.get());
-            centroSer.delete(usuario.get().getCentro().getId());
         }
     }
-    public Usuario save(Usuario usuario) {
+    public Usuario asociarCentroUsuario(Usuario usuario, Centro centro) {
+    	usuario.setCentro(centro);
+        usuario.setRol("OWNER");
     	return usuarioRepository.save(usuario);
     }
     public List<Usuario> findAll(){
