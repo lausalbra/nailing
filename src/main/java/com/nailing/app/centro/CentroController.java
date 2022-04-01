@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.nailing.app.usuario.Usuario;
 import com.nailing.app.usuario.UsuarioService;
 
@@ -63,4 +62,14 @@ public class CentroController {
 	return new ResponseEntity<Centro>(centroService.findById(id).get(), HttpStatus.OK);
     }
     
+    @RequestMapping(value = "/edit",method = RequestMethod.PUT)
+    public ResponseEntity<Centro> updateCentro(@RequestBody Centro centro){
+        Centro c = null;
+        try{
+            return new ResponseEntity<Centro>(centroService.addCentro(centro), HttpStatus.OK);
+        }catch(IllegalArgumentException e){
+            return new ResponseEntity<Centro>(c, HttpStatus.BAD_REQUEST);
+        }
+       
+    }
 }

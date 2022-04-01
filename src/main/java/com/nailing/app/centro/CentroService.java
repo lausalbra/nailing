@@ -82,9 +82,15 @@ public class CentroService {
             centroRepository.delete(centro.get());
         }
     }
+  
     public Centro addCentro(Centro centro) {
-        	return centroRepository.save(centro);
-   }
+        if(centro != null){
+            return centroRepository.save(centro);
+        }else{
+            throw new IllegalArgumentException();
+        }
+    }
+  
     public Usuario asociarCentroUsuario(Usuario usuario, Centro centro) {
     	Centro cent = addCentro(centro);
     	usuario.setCentro(cent);
