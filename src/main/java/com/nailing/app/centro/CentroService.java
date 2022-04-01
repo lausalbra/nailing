@@ -64,8 +64,7 @@ public class CentroService {
             centroRepository.delete(centro.get());
         }
     }
-    public Centro addCentro(Centro centro, String urlimagen) {
-    		centro.setImagen(urlimagen);
+    public Centro addCentro(Centro centro) {
         	return centroRepository.save(centro);
    }
  
