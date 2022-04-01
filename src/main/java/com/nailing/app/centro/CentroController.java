@@ -45,18 +45,20 @@ public class CentroController {
     }
 
     
-    @GetMapping()
+   
+
+    @GetMapping("/list")
     public ResponseEntity<List<Centro>> findAll(){
 	List<Centro> centros = centroService.findAll();
 	return new ResponseEntity<List<Centro>>(centros, HttpStatus.OK);
     }
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteCentro(@PathVariable Long id) {
     	centroService.delete(id);
     }
 
-    @GetMapping("/details/{id}")
+    @GetMapping("/show/{id}")
     public ResponseEntity<Centro> findById(@PathVariable Long id){
 	return new ResponseEntity<Centro>(centroService.findById(id).get(), HttpStatus.OK);
     }

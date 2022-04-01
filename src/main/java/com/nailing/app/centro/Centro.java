@@ -70,11 +70,14 @@ public class Centro {
 
 
 
+	@Column(name = "suscripcion")
+	private Suscripcion suscripcion;
+
 	public Centro() {
 	}
 
 	public Centro(Long id, @Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
-			String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM, LocalTime cierrePM) {
+			String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM, LocalTime cierrePM, Suscripcion suscripcion) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -84,6 +87,7 @@ public class Centro {
 		this.cierreAM = cierreAM;
 		this.aperturaPM = aperturaPM;
 		this.cierrePM = cierrePM;
+		this.suscripcion = suscripcion;
 	}
 
 	public Long getId() {
@@ -150,6 +154,14 @@ public class Centro {
 		this.cierrePM = cierrePM;
 	}
 
+	public Suscripcion getSuscripcion() {
+		return suscripcion;
+	}
+
+	public void setSuscripcion(Suscripcion suscripcion) {
+		this.suscripcion = suscripcion;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(aperturaAM, aperturaPM, cierreAM, cierrePM, id, imagen, nombre, provincia);
@@ -174,7 +186,7 @@ public class Centro {
 	public String toString() {
 		return "Centro [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", provincia=" + provincia
 				+ ", aperturaAM=" + aperturaAM + ", cierreAM=" + cierreAM + ", aperturaPM=" + aperturaPM + ", cierrePM="
-				+ cierrePM + "]";
+				+ cierrePM +", suscripcion="+ suscripcion +"]";
 	}
 
 }

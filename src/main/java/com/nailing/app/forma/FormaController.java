@@ -29,20 +29,20 @@ public class FormaController {
     FormaService formaService;
 	
 //	mostrar todas las formas existentes en la base de datos
-    @GetMapping()
+    @GetMapping("/list")
     public ResponseEntity<List<Forma>> listFormas(){
     	List<Forma> formas = formaService.findAll();
 	return new ResponseEntity<>(formas, HttpStatus.OK);
     }
 	
 //	borrar una forma por su ID
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteForma(@PathVariable Long id) {
 	formaService.removeBase(id);
     }
 	
 //	encontrar una forma por su ID
-    @GetMapping("/{id}")
+    @GetMapping("/show/{id}")
     public ResponseEntity<Forma> showBase(@PathVariable Long id){
 	return new ResponseEntity<>(formaService.findById(id), HttpStatus.OK);
     }

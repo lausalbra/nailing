@@ -25,28 +25,29 @@ public class DisenyoController {
     @Autowired
 	DisenyoService disenyoService;
     
-@GetMapping()
+	@GetMapping("/disenyos/list")
 	public ResponseEntity<List<Disenyo>> listDisenyos(){
 		List<Disenyo> disenyos = (List<Disenyo>) disenyoService.findAll();
 		return new ResponseEntity<>(disenyos, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/disenyos/{id}")
+	@DeleteMapping("/disenyos/delete/{id}")
 	public void deleteDisenyo(@PathVariable Long id) {
 		disenyoService.removeDisenyo(id);
 	}
 	
-	@GetMapping("/disenyos/{id}")
+	@GetMapping("/disenyos/show/{id}")
 	public ResponseEntity<Disenyo> showDisenyo(@PathVariable Long id){
 		return new ResponseEntity<>(disenyoService.findById(id), HttpStatus.OK);
 	}    
         
-        @GetMapping("/disenyos/{tamanyoId}/centro/{centroId}")
+    @GetMapping("/disenyos/{tamanyoId}/centro/{centroId}")
 	public  ResponseEntity<List<Disenyo>> findDisenyosByCentroTamanyo(@PathVariable Long tamanyoId, @PathVariable Long centroId){
 		List<Disenyo> disenyos = disenyoService.findDisenyosByCentroTamanyo(tamanyoId, centroId);
 		return new ResponseEntity<>(disenyos, HttpStatus.OK);
 	}
-        @GetMapping("/disenyosNaturales/{baseId}/centro/{centroId}")
+
+    @GetMapping("/disenyosNaturales/{baseId}/centro/{centroId}")
 	public  ResponseEntity<List<Disenyo>> findDisenyosByCentroBase(@PathVariable Long baseId, @PathVariable Long centroId){
 		List<Disenyo> disenyos = disenyoService.findDisenyosByCentroBase(baseId, centroId);
 		return new ResponseEntity<>(disenyos, HttpStatus.OK);
