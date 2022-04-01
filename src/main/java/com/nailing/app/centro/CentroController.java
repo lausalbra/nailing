@@ -36,7 +36,7 @@ public class CentroController {
     private CentroService centroService;
     @Autowired
     private UsuarioService usuarioService;
-    @PostMapping("/add/{idUser}/")
+    @PostMapping("/add/{idUser}")
     public ResponseEntity<Centro> addCentro(@RequestBody Centro centro, @PathVariable int idUser){
         usuarioService.asociarCentroUsuario(usuarioService.findById((long) idUser).get(), centro);
         if(centro == null)
