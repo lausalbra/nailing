@@ -16,8 +16,6 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-    @Autowired
-    private CentroService centroSer;
     //añadir-actualizar usuario
     public Usuario addUsuario(Map<String,String> map) {
         String user = map.get("user");
@@ -53,10 +51,8 @@ public class UsuarioService {
             usuarioRepository.delete(usuario.get());
         }
     }
-    public Usuario asociarCentroUsuario(Usuario usuario, Centro centro) {
-    	Centro cent = centroSer.addCentro(centro);
-    	usuario.setCentro(cent);
-        usuario.setRol("OWNER");
+    public Usuario save(Usuario usuario) {
+ 
     	return usuarioRepository.save(usuario);
     }
     public List<Usuario> findAll(){

@@ -18,6 +18,7 @@ import com.nailing.app.tamanyo.TamanyoService;
 import com.nailing.app.tipo.TipoService;
 import com.nailing.app.usuario.Usuario;
 import com.nailing.app.usuario.UsuarioRepository;
+import com.nailing.app.usuario.UsuarioService;
 
 /**
  *
@@ -43,6 +44,8 @@ public class CentroService {
     private TamanyoService tamSer;
     @Autowired
     private TipoService tipoSer;
+    @Autowired
+    private UsuarioService usuarioService;
     public Optional<Centro> findById(Long id){
         return centroRepository.findById(id);
     }
@@ -67,6 +70,12 @@ public class CentroService {
     public Centro addCentro(Centro centro) {
         	return centroRepository.save(centro);
    }
+    public Usuario asociarCentroUsuario(Usuario usuario, Centro centro) {
+    	Centro cent = addCentro(centro);
+    	usuario.setCentro(cent);
+        usuario.setRol("OWNER");
+    	return usuarioService.save(usuario);
+    }
  
     /*
     public List<Centro> findCentrosByUsuario(Long usuarioId){
