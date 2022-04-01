@@ -53,8 +53,9 @@ public class UsuarioService {
             usuarioRepository.delete(usuario.get());
         }
     }
-    public Usuario asociarCentroUsuario(Usuario usuario, Centro centro) {
-    	usuario.setCentro(centro);
+    public Usuario asociarCentroUsuario(Usuario usuario, Centro centro, String urlimagen) {
+    	Centro cent = centroSer.addCentro(centro, urlimagen);
+    	usuario.setCentro(cent);
         usuario.setRol("OWNER");
     	return usuarioRepository.save(usuario);
     }
