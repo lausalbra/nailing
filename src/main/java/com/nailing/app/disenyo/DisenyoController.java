@@ -5,6 +5,7 @@
 package com.nailing.app.disenyo;
 
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -53,6 +56,20 @@ public class DisenyoController {
 		return new ResponseEntity<>(disenyos, HttpStatus.OK);
 	}
         
-        
+    @GetMapping("/disenyos/all")
+    public ResponseEntity<List<String>> listPosibleDisenyo(){
+        List<String> disenyos = disenyoService.listPosibleDisenyo();
+        return new ResponseEntity<>(disenyos,HttpStatus.OK);
+    }
+    
+    @PostMapping("/disenyos/add/centro")
+    public ResponseEntity<List<Disenyo>> addDisenyoCentro(@RequestBody Map<String,List<String>> disids){
+        try{
+            List<Disenyo> disenyos = disenyoService.addDisenyoCentro(disids);
+            return new ResponseEntity<>(disenyos, HttpStatus.CREATED);
+        }catch(IllegalArgumentException e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
         
 }

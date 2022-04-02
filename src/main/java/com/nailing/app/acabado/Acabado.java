@@ -8,11 +8,9 @@ import com.nailing.app.centro.Centro;
 import com.nailing.app.components.Fases;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -112,6 +110,13 @@ public class Acabado {
         this.centro = centro;
     }
 
+    public Acabado(Integer tiempo, Double coste, Fases siguienteFase, Centro centro) {
+        this.tiempo = tiempo;
+        this.coste = coste;
+        this.siguienteFase = siguienteFase;
+        this.centro = centro;
+    }
+    
     public Acabado() {
         super();
     }

@@ -65,6 +65,13 @@ public class Forma {
         this.centro = centro;
     }
 
+    public Forma(Integer tiempo, Double coste, Fases siguienteFase, Centro centro) {
+        this.tiempo = tiempo;
+        this.coste = coste;
+        this.siguienteFase = siguienteFase;
+        this.centro = centro;
+    }
+
     public Long getId() {
         return id;
     }
