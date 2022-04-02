@@ -5,6 +5,7 @@
 package com.nailing.app.tipo;
 
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,5 +51,21 @@ public class TipoController {
 	public  ResponseEntity<List<Tipo>> findByCentro(@PathVariable Long centroId){
 		List<Tipo> tipos = tipoService.findByCentro(centroId);
 		return new ResponseEntity<>(tipos, HttpStatus.OK);
-	}    
+	}
+        
+    @GetMapping("/all")
+    public ResponseEntity<List<String>> listPosibleTipo(){
+        List<String> tipos = tipoService.listPosibleTipo();
+        return new ResponseEntity<>(tipos,HttpStatus.OK);
+    }
+    
+    @PostMapping("/add/centro")
+    public ResponseEntity<List<Tipo>> addTamanyoCentro(@RequestBody Map<String,List<String>> tipids){
+        try{
+            List<Tipo> tipos = tipoService.addTipoCentro(tipids);
+            return new ResponseEntity<>(tipos, HttpStatus.CREATED);
+        }catch(IllegalArgumentException e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

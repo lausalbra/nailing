@@ -5,6 +5,7 @@
 package com.nailing.app.decoracion;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -37,8 +38,8 @@ public class DecoracionController {
     public ResponseEntity<Decoracion> addDecoracion(@RequestBody Decoracion decoracion){
         Decoracion deco = decoracionService.addDecoracion(decoracion);
         if(deco == null)
-            return new ResponseEntity<Decoracion>(deco, HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<Decoracion>(deco, HttpStatus.CREATED);
+            return new ResponseEntity<>(deco, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(deco, HttpStatus.CREATED);
     }
     
     @DeleteMapping("/delete/{id}")
@@ -50,9 +51,9 @@ public class DecoracionController {
     public ResponseEntity<Decoracion> showDecoracion(@PathVariable Long id){
         try{
             Decoracion deco = decoracionService.findById(id);
-            return new ResponseEntity<Decoracion>(deco,HttpStatus.OK);
+            return new ResponseEntity<>(deco,HttpStatus.OK);
         }catch(NoSuchElementException e){
-            return new ResponseEntity<Decoracion>(decoracionService.findById(id),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(decoracionService.findById(id),HttpStatus.BAD_REQUEST);
         }       
     }
     
@@ -60,12 +61,28 @@ public class DecoracionController {
     public ResponseEntity<List<Decoracion>> listDecoraciones(){
         List<Decoracion> decos = StreamSupport.stream(decoracionService.findAll()
                 .spliterator(), false).collect(Collectors.toList());
-        return new ResponseEntity<List<Decoracion>>(decos,HttpStatus.OK);
+        return new ResponseEntity<>(decos,HttpStatus.OK);
     }
     
     @GetMapping("{disenyoId}/centro/{centroId}")
     public ResponseEntity<List<Decoracion>> decoracionesByCentroDisenyo(@PathVariable Long disenyoId, @PathVariable Long centroId){
         List<Decoracion> decoraciones = decoracionService.findDecoracionByCentroDisenyo(disenyoId, centroId);
-        return new ResponseEntity<List<Decoracion>>(decoraciones, HttpStatus.OK);
+        return new ResponseEntity<>(decoraciones, HttpStatus.OK);
+    }
+    
+    @GetMapping("/all")
+    public ResponseEntity<List<String>> listPosibleDecoracion(){
+        List<String> decoraciones = decoracionService.listPosibleDecoracion();
+        return new ResponseEntity<>(decoraciones,HttpStatus.OK);
+    }
+    
+    @PostMapping("/add/centro")
+    public ResponseEntity<List<Decoracion>> addDecoracionCentro(@RequestBody Map<String,List<String>> decids){
+        try{
+            List<Decoracion> decoraciones = decoracionService.addDecoracionCentro(decids);
+            return new ResponseEntity<>(decoraciones, HttpStatus.CREATED);
+        }catch(IllegalArgumentException e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 }

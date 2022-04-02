@@ -1,6 +1,7 @@
 package com.nailing.app.base;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,8 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nailing.app.components.Fases;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
@@ -48,4 +50,20 @@ public class BaseController {
 		return new ResponseEntity<>(bases, HttpStatus.OK);
 	}
 	
+            
+    @GetMapping("/all")
+    public ResponseEntity<List<String>> listPosibleBase(){
+        List<String> bases = baseService.listPosibleBase();
+        return new ResponseEntity<>(bases,HttpStatus.OK);
+    }
+    
+    @PostMapping("/add/centro")
+    public ResponseEntity<List<Base>> addBaseCentro(@RequestBody Map<String,List<String>> basids){
+        try{
+            List<Base> bases = baseService.addBaseCentro(basids);
+            return new ResponseEntity<>(bases, HttpStatus.CREATED);
+        }catch(IllegalArgumentException e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
