@@ -68,6 +68,14 @@ public class Tipo {
         this.centro = centro;
     }
 
+    public Tipo(Integer tiempo, Double coste, Fases siguienteFase, Centro centro) {
+        this.tiempo = tiempo;
+        this.coste = coste;
+        this.siguienteFase = siguienteFase;
+        this.centro = centro;
+    }
+    
+
     public Long getId() {
         return id;
     }
