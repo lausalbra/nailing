@@ -51,10 +51,7 @@ public class UsuarioService {
             usuarioRepository.delete(usuario.get());
         }
     }
-    public Usuario save(Usuario usuario) {
- 
-    	return usuarioRepository.save(usuario);
-    }
+    
     public List<Usuario> findAll(){
         return (List) usuarioRepository.findAll();
     }
