@@ -10,6 +10,8 @@ import { Cita } from './views/Cita'
 import { MisCitasList } from './views/MisCitasList'
 import { Error } from './views/Error'
 import { Centro } from './views/Centro'
+import { CentroEdit } from './views/CentroEdit'
+import { CentroAdd } from './views/CentroAdd'
 function App () {
   return (
 
@@ -20,6 +22,8 @@ function App () {
           <Route path='/login' component={Login} />
           <Route path='/usuario' component={Usuario} />
           <Route path='/centrodetalle/:id' component={Centro} />
+          <Route path='/centroedit/:id' component={CentroEdit} />
+          <Route path='/centroadd' component={CentroAdd} />
           <Route path='/centro' component={BookingsList} />
           <Route path='/conocenos' component={Conocenos} />
           <Route path='/cita' component={BookingsList} />
