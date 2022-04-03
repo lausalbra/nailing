@@ -44,7 +44,7 @@ export function CenterList ({ provincia }) {
           center={center}
           isAdmin={isAdmin}
           detailsFunc={() => locationPush('/centrodetalle/' + center.id)}
-          editFunc={() => console.log("Editar")}
+          editFunc={() => locationPush('/centroedit/' + center.id)}
           deleteFunc={() => borrarCentro(center)}
         />
       ))}
