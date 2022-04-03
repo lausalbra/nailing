@@ -66,9 +66,9 @@ public class UsuarioController {
     public ResponseEntity<Usuario> updateUsuario(@RequestBody Usuario usuario){
         Usuario u = null;
         try{
-            return new ResponseEntity<Usuario>(usuarioSer.save(usuario), HttpStatus.OK);
+            return new ResponseEntity<>(encoder.save(usuario), HttpStatus.OK);
         }catch(IllegalArgumentException e){
-            return new ResponseEntity<Usuario>(u, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(u, HttpStatus.BAD_REQUEST);
         }
 
     }	
