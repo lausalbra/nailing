@@ -4,7 +4,7 @@
  */
 package com.nailing.app.securityConfiguration;
 
-import com.nailing.app.centro.CentroService;
+import com.nailing.app.centro.CentroRepository;
 import com.nailing.app.usuario.Usuario;
 import com.nailing.app.usuario.UsuarioRepository;
 import com.nailing.app.usuario.UsuarioService;
@@ -28,10 +28,11 @@ public class DbInit implements CommandLineRunner {
     private UsuarioRepository usuarioRepository;
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private CentroService centroSer;
 
+    private CentroRepository centroRep;
     @Autowired
     private UsuarioService usuarioService;
+
     public DbInit(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
@@ -45,9 +46,9 @@ public class DbInit implements CommandLineRunner {
         // Crete users
         Usuario usuario1 = new Usuario("usuario1",passwordEncoder.encode("usuario1"),"email@email.com","555555555","USER");
         Usuario usuario2 = new Usuario("usuario2",passwordEncoder.encode("usuario2"),"email2@email.com","55556555","ADMIN");
-        Usuario usuario3 = new Usuario("usuario3",passwordEncoder.encode("usuario3"),"email3@email.com","555565585","OWNER",centroSer.findById((long)1).get());
-        Usuario usuario4 = new Usuario("usuario4",passwordEncoder.encode("usuario4"),"email4@email.com","555565589","OWNER",centroSer.findById((long)2).get());
-        Usuario usuario5 = new Usuario("usuario5",passwordEncoder.encode("usuario5"),"email5@email.com","655565589","OWNER",centroSer.findById((long)3).get());
+        Usuario usuario3 = new Usuario("usuario3",passwordEncoder.encode("usuario3"),"email3@email.com","555565585","OWNER",centroRep.findById((long)1).get());
+        Usuario usuario4 = new Usuario("usuario4",passwordEncoder.encode("usuario4"),"email4@email.com","555565589","OWNER",centroRep.findById((long)2).get());
+        Usuario usuario5 = new Usuario("usuario5",passwordEncoder.encode("usuario5"),"email5@email.com","655565589","OWNER",centroRep.findById((long)3).get());
         List<Usuario> users = Arrays.asList(usuario1,usuario2,usuario3,usuario4,usuario5);
 
         // Save to db
