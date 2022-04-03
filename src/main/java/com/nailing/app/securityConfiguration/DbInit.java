@@ -7,8 +7,11 @@ package com.nailing.app.securityConfiguration;
 import com.nailing.app.centro.CentroService;
 import com.nailing.app.usuario.Usuario;
 import com.nailing.app.usuario.UsuarioRepository;
+import com.nailing.app.usuario.UsuarioService;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -26,6 +29,9 @@ public class DbInit implements CommandLineRunner {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private CentroService centroSer;
+
+    @Autowired
+    private UsuarioService usuarioService;
     public DbInit(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
@@ -46,6 +52,25 @@ public class DbInit implements CommandLineRunner {
 
         // Save to db
         this.usuarioRepository.saveAll(users);
+    }
+
+    //añadir-actualizar usuario
+    public Usuario addUsuario(Map<String,String> map) {
+        String user = map.get("user");
+        List<Usuario> usuarios = usuarioService.findAll();
+        for(Usuario u: usuarios){
+            if(u.getUsuario().equals(user)) throw new IllegalArgumentException();
+        }
+        String contrasenya = map.get("password");
+        String email = map.get("email");
+        String telefono = map.get("telefono");
+        if(user == null || contrasenya == null|| email == null|| telefono == null){
+            throw new IllegalArgumentException();
+        }
+
+        Usuario usuario = new Usuario(user,passwordEncoder.encode(contrasenya),email,telefono,"USER");
+
+        return usuarioRepository.save(usuario);
     }
     
     //encontrar usuario por usuario contrasenya
