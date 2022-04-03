@@ -1,5 +1,6 @@
 import { useRef, useState } from "react"
-import { putData } from "../../services/common/common"
+import { putData, postData } from "../../services/common/common"
+import { useLocation } from "wouter"
 export function EditarUsuarioForm() {
 
     const user = useRef()
@@ -9,6 +10,8 @@ export function EditarUsuarioForm() {
     const passwordConfirm = useRef()
 
     const [state, changeState] = useState("")
+    const [locationPath, locationPush] = useLocation()
+
 
     async function handleSubmit(evt) {
         evt.preventDefault()
@@ -17,10 +20,13 @@ export function EditarUsuarioForm() {
         if (isConfirmed) {
 
             const body = {
-                'user': user.current.value,
-                'password': password.current.value,
+                'id': sessionStorage.getItem('userId'),
+                'usuario': user.current.value,
+                'contrasenya': password.current.value,
                 'email': email.current.value,
                 'telefono': telefono.current.value,
+                'rol': 'USER',
+                'centro': null
             }
 
             const url = "https://nailingtest.herokuapp.com/usuarios/edit"
@@ -30,8 +36,22 @@ export function EditarUsuarioForm() {
             }
 
             await putData(url, body, headers)
-                .then((response) => {
-                    console.log(response)
+                .then(async function (response) {
+                    await postData(url, body, headers)
+                        .then(function (data) {
+                        }
+                            //Tiene que ir al catch porque devuelve 204 y lo pilla como error
+                        ).catch((error) => {
+                            sessionStorage.setItem("userId", "")
+                            sessionStorage.setItem("userName", "")
+                            sessionStorage.setItem("userPassword", "")
+                            sessionStorage.setItem("userEmail", "")
+                            sessionStorage.setItem("userPhone", "")
+                            sessionStorage.setItem("isLogged", false)
+                            alert("Usuario actualizado con éxito, es necesario reiniciar la sesión")
+                            locationPush('/')
+                        }
+                        );
                 })
                 .catch((e) => {
                     console.log(e)
@@ -63,17 +83,17 @@ export function EditarUsuarioForm() {
         <>
             <form className='grid border-2 border-pink-300 p-5 rounded-md' onSubmit={handleSubmit} >
                 <label className='text-lg' htmlFor="user"> Nombre de Usuario:</label>
-                <input className="border-black border-2  rounded-sm mb-4" name="user" type="text" ref={user} required maxLength="100" value={sessionStorage.getItem("userName")} />
+                <input className="border-black border-2  rounded-sm mb-4" name="user" type="text" ref={user} required maxLength="100" placeholder={sessionStorage.getItem("userName")} />
                 <label className='text-lg' htmlFor="password"> Nueva Contraseña:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="password" type="password" ref={password} required minLength="8" maxLength="100" />
                 <label className='text-lg' htmlFor="passwordConfirm">  Confirmar Nueva Contraseña:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="passwordConfirm" type="password" ref={passwordConfirm} required minLength="8" maxLength="100" />
                 <label className='text-lg' htmlFor="email">   Email:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="email" type="email" ref={email} required value={sessionStorage.getItem("userEmail")} />
+                <input className="border-black border-2 mb-4 rounded-sm" name="email" type="email" ref={email} required placeholder={sessionStorage.getItem("userEmail")} />
                 <label className='text-lg' htmlFor="telefono">  Telefono:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" ref={telefono} value={sessionStorage.getItem("userPhone")} />
+                <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" ref={telefono} placeholder={sessionStorage.getItem("userPhone")} />
                 <p className="text-sm text-red-600" >{state}</p>
-                <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
+                <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" placeholder="Enviar" />
             </form>
         </>
     )
