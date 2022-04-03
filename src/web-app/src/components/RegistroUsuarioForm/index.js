@@ -1,5 +1,6 @@
 import { useRef, useState } from "react"
-
+import { postData } from "../../services/common/common"
+import { useLocation } from "wouter"
 export function RegistroUsuarioForm() {
 
     const user = useRef()
@@ -9,11 +10,14 @@ export function RegistroUsuarioForm() {
     const passwordConfirm = useRef()
 
     const [state, changeState] = useState("")
-
-    function handleSubmit(evt) {
+    const [locationPath, locationPush] = useLocation()
+    async function handleSubmit(evt) {
         evt.preventDefault()
 
-        const isConfirmed = confirmPassword(password.current.value, passwordConfirm.current.value)
+        const url = "https://nailingtest.herokuapp.com/signUp"
+        const header = {
+            "Content-Type": "application/json"
+        }
 
         const body = {
             'user': user.current.value,
@@ -22,12 +26,34 @@ export function RegistroUsuarioForm() {
             'telefono': telefono.current.value,
         }
 
+        const isConfirmed = confirmPassword(password.current.value, passwordConfirm.current.value)
+
+        if (isConfirmed) {
+            await postData(url, body, header)
+                .then((response) => {
+
+                    console.log(response.status)
+                    if (response.status === 500) {
+                        changeState("El usuario ya existe. Pruebe con uno nuevo")
+                    } else {
+                        alert("Usuario creado con éxito")
+                        locationPush("/login")
+                        console.log(response)
+                        changeState("")
+                    }
+
+                }).catch((e) => {
+                    console.log(e)
+                })
+        }
+
+
+
         // console.log(user.current.value, password.current.value, passwordConfirm.current.value, email.current.value, telefono.current.value)
-        console.log(body)
     }
 
-    function confirmPassword(password, passwordConfirm) {
-        const result = password === passwordConfirm
+    function confirmPassword(password1, password2) {
+        const result = password1 === password2
 
         if (!result) {
             changeState("Las contraseñas no coinciden")
@@ -58,7 +84,7 @@ export function RegistroUsuarioForm() {
                 <label className='text-lg' htmlFor="email">   Email:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="email" type="email" ref={email} required />
                 <label className='text-lg' htmlFor="telefono">  Telefono:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" ref={telefono} />
+                <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" ref={telefono} pattern="[0-9]{9}" required />
                 <p className="text-sm text-red-600" >{state}</p>
                 <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
             </form>
