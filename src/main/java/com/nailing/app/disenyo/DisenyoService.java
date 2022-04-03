@@ -163,4 +163,8 @@ public class DisenyoService {
         }
         return result;
     }
+
+    public List<Disenyo> findByCentro(Long centroId){
+        return disenyorepository.findByCentro(centroId);
+    }
 }

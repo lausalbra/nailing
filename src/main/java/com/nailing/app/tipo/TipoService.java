@@ -112,4 +112,8 @@ public class TipoService {
         }
         return result;
     }
+
+    public List<Tipo> listByCentro(Long centroId){
+        return tiporepository.findByCentro(centroId);
+    }
 }

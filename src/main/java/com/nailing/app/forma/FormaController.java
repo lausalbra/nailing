@@ -61,6 +61,12 @@ public class FormaController {
         List<String> formas = formaService.listPosibleForma();
         return new ResponseEntity<>(formas,HttpStatus.OK);
     }
+
+    @GetMapping("/centro/{centroId}/list")
+    public ResponseEntity<List<Forma>> listByCentro(@PathVariable Long centroId){
+        List<Forma> formas = formaService.findByCentro(centroId);
+        return new ResponseEntity<>(formas,HttpStatus.OK);
+    }
     
     @PostMapping("/add/centro")
     public ResponseEntity<List<Forma>> addFormaCentro(@RequestBody Map<String,List<String>> forids){

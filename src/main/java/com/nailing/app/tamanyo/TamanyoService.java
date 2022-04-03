@@ -163,4 +163,8 @@ public class TamanyoService {
         }
         return result;
     }
+
+    public List<Tamanyo> findByCentro(Long centroId){
+        return tamRepository.findByCentro(centroId);
+    }
 }

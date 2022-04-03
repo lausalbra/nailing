@@ -201,4 +201,8 @@ public class DecoracionService {
         }
         return result;
     }
+
+    public List<Decoracion> findByCentro(Long centroId){
+        return decoracionRepository.findByCentro(centroId);
+    }
 }

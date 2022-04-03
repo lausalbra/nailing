@@ -58,6 +58,12 @@ public class TipoController {
         List<String> tipos = tipoService.listPosibleTipo();
         return new ResponseEntity<>(tipos,HttpStatus.OK);
     }
+
+    @GetMapping("/centro/{centroId}/list")
+    public ResponseEntity<List<Tipo>> listByCentro(@PathVariable Long centroId){
+        List<Tipo> tipos = tipoService.listByCentro(centroId);
+        return new ResponseEntity<>(tipos, HttpStatus.OK);
+    }
     
     @PostMapping("/add/centro")
     public ResponseEntity<List<Tipo>> addTamanyoCentro(@RequestBody Map<String,List<String>> tipids){
