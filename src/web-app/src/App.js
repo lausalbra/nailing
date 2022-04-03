@@ -13,6 +13,9 @@ import { Centro } from './views/Centro'
 import { EditarUsuario } from './views/EditarUsuario'
 import { RegistroUsuario } from './views/RegistroUsuario'
 function App() {
+import { CentroEdit } from './views/CentroEdit'
+import { CentroAdd } from './views/CentroAdd'
+function App () {
   return (
 
     <div className='overflow-auto'>
@@ -22,6 +25,8 @@ function App() {
           <Route path='/login' component={Login} />
           <Route path='/usuario' component={Usuario} />
           <Route path='/centrodetalle/:id' component={Centro} />
+          <Route path='/centroedit/:id' component={CentroEdit} />
+          <Route path='/centroadd' component={CentroAdd} />
           <Route path='/centro' component={BookingsList} />
           <Route path='/conocenos' component={Conocenos} />
           <Route path='/cita' component={BookingsList} />
