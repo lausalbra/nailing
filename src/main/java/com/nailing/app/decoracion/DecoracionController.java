@@ -75,6 +75,12 @@ public class DecoracionController {
         List<String> decoraciones = decoracionService.listPosibleDecoracion();
         return new ResponseEntity<>(decoraciones,HttpStatus.OK);
     }
+
+    @GetMapping("/centro/{centroId}/list")
+    public ResponseEntity<List<Decoracion>> listByCentro(@PathVariable Long centroId){
+        List<Decoracion> decoraciones = decoracionService.findByCentro(centroId);
+        return new ResponseEntity<>(decoraciones,HttpStatus.OK);
+    }
     
     @PostMapping("/add/centro")
     public ResponseEntity<List<Decoracion>> addDecoracionCentro(@RequestBody Map<String,List<String>> decids){
