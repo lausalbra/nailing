@@ -10,6 +10,7 @@ import { Cita } from './views/Cita'
 import { MisCitasList } from './views/MisCitasList'
 import { Error } from './views/Error'
 import { Centro } from './views/Centro'
+import { EditarUsuario } from './views/EditarUsuario'
 import { RegistroUsuario } from './views/RegistroUsuario'
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path='/miscitas' component={MisCitasList} />
           <Route path='/personalizacion' component={Cita} />
           <Route path='/error' component={Error} />
+          <Route path='/usuario/edit' component={EditarUsuario} />
           <Route path='/register' component={RegistroUsuario} />
           <Route path='/' component={Landing} />
         </div>
