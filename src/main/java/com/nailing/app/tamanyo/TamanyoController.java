@@ -54,6 +54,12 @@ public class TamanyoController {
         List<String> tamanyos = tamService.listPosibleTamanyo();
         return new ResponseEntity<>(tamanyos,HttpStatus.OK);
     }
+
+	@GetMapping("/centro/{centroId}/list")
+	public ResponseEntity<List<Tamanyo>> listByCentro(@PathVariable Long centroId){
+		List<Tamanyo> tamanyos = tamService.findByCentro(centroId);
+		return new ResponseEntity<>(tamanyos, HttpStatus.OK);
+	}
     
     @PostMapping("/add/centro")
     public ResponseEntity<List<Tamanyo>> addTamanyoCentro(@RequestBody Map<String,List<String>> tamids){

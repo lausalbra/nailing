@@ -105,6 +105,10 @@ public class AcabadoService {
     public List<Acabado> findAcabadoByCentro(Long centroId){
         return acabadoRepository.findByCentro(centroId);        
     }
+
+    public List<Acabado> findByCentro(Long centroId){
+        return acabadoRepository.findByCentro(centroId);        
+    }
     
     public void removeAcabadosbyCentro(Long centroId) {
 		List<Acabado> acabados = acabadoRepository.findByCentro(centroId);

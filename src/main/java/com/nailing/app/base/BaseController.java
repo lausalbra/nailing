@@ -56,6 +56,12 @@ public class BaseController {
         List<String> bases = baseService.listPosibleBase();
         return new ResponseEntity<>(bases,HttpStatus.OK);
     }
+
+	@GetMapping("/centro/{centroId}/list")
+	public ResponseEntity<List<Base>> listByCentro(@PathVariable Long centroId){
+		List<Base> bases = baseService.findByCentro(centroId);
+		return new ResponseEntity<>(bases, HttpStatus.OK);
+	}
     
     @PostMapping("/add/centro")
     public ResponseEntity<List<Base>> addBaseCentro(@RequestBody Map<String,List<String>> basids){
