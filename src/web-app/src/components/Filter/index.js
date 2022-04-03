@@ -20,37 +20,39 @@ class Filter extends React.Component {
 
     render() {
       let { selected } = this.state
-      if (!selected)
+      if (!selected) {
         selected = {value : 'ninguna'}
-
-        return (
-          <>
-            <div className='container px-8 py-8 max-w-none'>
-              <div className='row'>
-                <div className='col-md-3'></div>
-                <div className='col-md-6'>
-                  <Select options={this.provincias} 
-                    value={this.selected}
-                    onChange={this.handleChange}
-                    theme={(theme) => ({
-                      ...theme,
-                      borderRadius: 3,
-                      colors: {
-                        ...theme.colors,
-                        primary25: '#E9BEEE', //HOVER
-                        primary50: '#F39EEC', //CLICK
-                        primary: '#F39EEC',   //BORDE, SELECCIONADO
-                      },
-                    })}
-                    placeholder='Seleccione una provincia'/>
-                </div>
-                <div className='col-md-4'></div>
-              </div>
-            </div>
-            <CenterList provincia={selected.value}/>
-          </>
-        );
       }
+        
+
+      return (
+        <>
+          <div className='container px-8 py-8 max-w-none'>
+            <div className='row'>
+              <div className='col-md-3'></div>
+              <div className='col-md-6'>
+                <Select options={this.provincias} 
+                  value={this.selected}
+                  onChange={this.handleChange}
+                  theme={(theme) => ({
+                    ...theme,
+                    borderRadius: 3,
+                    colors: {
+                      ...theme.colors,
+                      primary25: '#E9BEEE', //HOVER
+                      primary50: '#F39EEC', //CLICK
+                      primary: '#F39EEC',   //BORDE, SELECCIONADO
+                    },
+                  })}
+                  placeholder='Seleccione una provincia'/>
+              </div>
+              <div className='col-md-4'></div>
+            </div>
+          </div>
+          <CenterList provincia={selected.value}/>
+        </>
+      )
+    }
 }
 
 export {Filter}

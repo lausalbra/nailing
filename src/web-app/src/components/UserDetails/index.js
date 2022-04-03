@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import { useLocation } from 'wouter'
+import { Link, useLocation } from 'wouter'
 import { postData } from '../../services/common/common';
 
 
@@ -57,6 +57,10 @@ export function UserDetails({ image, email, phone }) {
           <div className="ml-5 items-center">
             <p><strong>Email:</strong> {email}</p>
             <p><strong>Teléfono:</strong> {phone}</p>
+            <div className='text-xl text-left hover:underline'>
+              <Link className="text-xl text-pink-400" to='/usuario/edit'>Editar mis datos</Link>
+            </div>
+
           </div>
         </div>
       </CardContent>
