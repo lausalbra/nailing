@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-
+import { putData } from "../../services/common/common"
 export function EditarUsuarioForm() {
 
     const user = useRef()
@@ -10,25 +10,37 @@ export function EditarUsuarioForm() {
 
     const [state, changeState] = useState("")
 
-    function handleSubmit(evt) {
+    async function handleSubmit(evt) {
         evt.preventDefault()
         const isConfirmed = confirmPassword(password.current.value, passwordConfirm.current.value)
 
-        const body = {
-            'user': user.current.value,
-            'password': password.current.value,
-            'email': email.current.value,
-            'telefono': telefono.current.value,
+        if (isConfirmed) {
+
+            const body = {
+                'user': user.current.value,
+                'password': password.current.value,
+                'email': email.current.value,
+                'telefono': telefono.current.value,
+            }
+
+            const url = "https://nailingtest.herokuapp.com/usuarios/edit"
+            const headers = {
+                "Content-Type": "application/json",
+                "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+            }
+
+            await putData(url, body, headers)
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch((e) => {
+                    console.log(e)
+                })
         }
-
-        console.log(body)
-
-        // console.log(user.current.value, password.current.value, passwordConfirm.current.value, email.current.value, telefono.current.value)
-        console.log(isConfirmed)
     }
 
-    function confirmPassword(password, passwordConfirm) {
-        const result = password === passwordConfirm
+    function confirmPassword(password1, password2) {
+        const result = password1 === password2
         if (!result) {
             changeState("Las contraseñas no coinciden")
         } else {
