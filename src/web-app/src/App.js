@@ -9,6 +9,7 @@ import { Conocenos } from './views/Conocenos'
 import { Cita } from './views/Cita'
 import { MisCitasList } from './views/MisCitasList'
 import { Error } from './views/Error'
+import { ServiciosCentro } from './views/ServiciosCentro'
 import { Centro } from './views/Centro'
 import { DemoServiciosCentro } from './views/DemoServiciosCentro'
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path='/feedback' component={Feedback} />
           <Route path='/miscitas' component={MisCitasList} />
           <Route path='/personalizacion' component={Cita} />
+          <Route path='/servicios' component={ServiciosCentro} />
           <Route path='/error' component={Error} />
           <Route path='/demoservicioscentro' component={DemoServiciosCentro} />
           <Route path='/' component={Landing} />

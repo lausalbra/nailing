@@ -1,7 +1,9 @@
 import { useRef, useState } from "react";
 import Select from 'react-select';
 
-export function RegistroServiciosCentroForm() {
+export function RegistroServiciosCentroForm({ updater }) {
+
+    //Al añadir personalizaciones de tamaño: updater['tamanyo']()
 
     const optionsPersonalizacion = [
         { value: "esculpidas", label: "Uñas Esculpidas" },

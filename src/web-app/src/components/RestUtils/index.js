@@ -25,7 +25,6 @@ export function RequestManager(url, method, origin, destiny, locationPush, callb
             try {
                 console.log(origin + ': Petición Rest exitosa')
                 if (method === 'GET') {
-                    console.log('GET: ' + this.responseText)
                     callback(JSON.parse(this.responseText))
                 } else if (destiny !== null) {
                     locationPush(destiny)
