@@ -130,4 +130,8 @@ public class FormaService {
         }
         return result;
     }
+
+    public List<Forma> findByCentro(Long centroId) {	
+        return formaRepository.findByCentro(centroId);
+    }
 }

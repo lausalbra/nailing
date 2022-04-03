@@ -74,6 +74,12 @@ public class AcabadoController {
         List<String> acabados = acabadoService.listPosibleAcabado();
         return new ResponseEntity<>(acabados,HttpStatus.OK);
     }
+
+    @GetMapping("/centro/{centroId}/list")
+    public ResponseEntity<List<Acabado>> listByCentro(@PathVariable Long centroId){
+        List<Acabado> acabados = acabadoService.findByCentro(centroId);
+        return new ResponseEntity<>(acabados, HttpStatus.OK);
+    }
     
     @PostMapping("/add/centro")
     public ResponseEntity<List<Acabado>> addAcabadoCentro(@RequestBody Map<String,List<String>> acabids){

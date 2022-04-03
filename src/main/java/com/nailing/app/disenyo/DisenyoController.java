@@ -61,6 +61,12 @@ public class DisenyoController {
         List<String> disenyos = disenyoService.listPosibleDisenyo();
         return new ResponseEntity<>(disenyos,HttpStatus.OK);
     }
+
+	@GetMapping("/disenyos/centro/{centroId}/list")
+	public ResponseEntity<List<Disenyo>> findByCentro(@PathVariable Long centroId){
+		List<Disenyo> disenyos = disenyoService.findByCentro(centroId);
+		return new ResponseEntity<>(disenyos,HttpStatus.OK);
+	}
     
     @PostMapping("/disenyos/add/centro")
     public ResponseEntity<List<Disenyo>> addDisenyoCentro(@RequestBody Map<String,List<String>> disids){

@@ -29,7 +29,7 @@ public class UsuarioController {
 
     @PostMapping("/signUp")
     public ResponseEntity<Usuario> signUsuario(@RequestBody Map<String,String> map){
-        Usuario result = usuarioSer.addUsuario(map);
+        Usuario result = encoder.addUsuario(map);
         if(result != null)
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);

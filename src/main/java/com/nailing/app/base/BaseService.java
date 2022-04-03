@@ -170,4 +170,8 @@ public class BaseService {
         }
         return result;
     }
+
+    public List<Base> findByCentro(Long centroId){
+        return baseRepository.findByCentro(centroId);
+    }
 }
