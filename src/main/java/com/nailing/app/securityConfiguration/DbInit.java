@@ -73,6 +73,12 @@ public class DbInit implements CommandLineRunner {
         return usuarioRepository.save(usuario);
     }
     
+    public Usuario save(Usuario usuarioo) {
+        
+        Usuario usuario = new Usuario(usuarioo.getId(),usuarioo.getUsuario(), passwordEncoder.encode(usuarioo.getContrasenya()),usuarioo.getEmail(),usuarioo.getTelefono(),usuarioo.getRol());
+    	return usuarioRepository.save(usuario);
+    }
+    
     //encontrar usuario por usuario contrasenya
     public Usuario findByUsuarioContrasenya(String usuario, String contrasenya) {
         Usuario usuario2 = usuarioRepository.findByUsername(usuario);
