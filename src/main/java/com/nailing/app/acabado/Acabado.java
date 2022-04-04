@@ -17,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -35,7 +34,6 @@ public class Acabado {
     private Long id;
     
     @Column(name = "nombre")
-    @NotBlank
     private NombreAcabado nombre;
     
     @Column(name = "tiempo")

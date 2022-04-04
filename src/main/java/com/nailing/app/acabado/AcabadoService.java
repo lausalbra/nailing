@@ -84,7 +84,7 @@ public class AcabadoService {
                     case "MATE":
                         acabado.setNombre(NombreAcabado.MATE);
                         break;
-                    case "BRILO":
+                    case "BRILLO":
                         acabado.setNombre(NombreAcabado.BRILLO);
                         break;
                 }
