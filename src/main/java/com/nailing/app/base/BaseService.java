@@ -120,7 +120,7 @@ public class BaseService {
         if(!(datos.get("tiempo") == null || datos.get("tiempo").isEmpty() || datos.get("tiempo").get(0) == null)){
             duracion = Integer.valueOf(datos.get("tiempo").get(0));
         }else{
-            throw new IllegalArgumentException("tiempo: " + datos.get("tiempo"));
+            throw new IllegalArgumentException("tiempo: " + datos.get("coste"));
         }
         
         if(!(datos.get("personalizaciones") == null || datos.get("personalizaciones").isEmpty() || datos.get("personalizaciones").get(0) == null)){
