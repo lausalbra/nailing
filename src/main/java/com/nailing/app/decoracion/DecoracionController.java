@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 /**
  *
  * @author Usuario
@@ -34,6 +36,7 @@ public class DecoracionController {
     @Autowired
     DecoracionService decoracionService;
     
+    @Operation(summary = "Añade una Decoracion")
     @PostMapping("/add")
     public ResponseEntity<Decoracion> addDecoracion(@RequestBody Decoracion decoracion){
         Decoracion deco = decoracionService.addDecoracion(decoracion);
@@ -42,11 +45,13 @@ public class DecoracionController {
         return new ResponseEntity<>(deco, HttpStatus.CREATED);
     }
     
+    @Operation(summary = "Borra una Decoracion")
     @DeleteMapping("/delete/{id}")
     public void deleteDecoracion(@PathVariable Long id){
         decoracionService.removeDecoracion(id);
     }
     
+    @Operation(summary = "Muestra una Decoracion")
     @GetMapping("/show/{id}")
     public ResponseEntity<Decoracion> showDecoracion(@PathVariable Long id){
         try{
@@ -57,6 +62,7 @@ public class DecoracionController {
         }       
     }
     
+    @Operation(summary = "Lista todas las Decoraciones")
     @GetMapping("/list")
     public ResponseEntity<List<Decoracion>> listDecoraciones(){
         List<Decoracion> decos = StreamSupport.stream(decoracionService.findAll()
@@ -64,24 +70,28 @@ public class DecoracionController {
         return new ResponseEntity<>(decos,HttpStatus.OK);
     }
     
+    @Operation(summary = "Muestra Decoraciones en funcion de Centro y Diseño")
     @GetMapping("{disenyoId}/centro/{centroId}")
     public ResponseEntity<List<Decoracion>> decoracionesByCentroDisenyo(@PathVariable Long disenyoId, @PathVariable Long centroId){
         List<Decoracion> decoraciones = decoracionService.findDecoracionByCentroDisenyo(disenyoId, centroId);
         return new ResponseEntity<>(decoraciones, HttpStatus.OK);
     }
     
+    @Operation(summary = "Muestra las posibles Decoraciones")
     @GetMapping("/all")
     public ResponseEntity<List<String>> listPosibleDecoracion(){
         List<String> decoraciones = decoracionService.listPosibleDecoracion();
         return new ResponseEntity<>(decoraciones,HttpStatus.OK);
     }
 
+    @Operation(summary = "Lista todas las Decoraciones de un Centro")
     @GetMapping("/centro/{centroId}/list")
     public ResponseEntity<List<Decoracion>> listByCentro(@PathVariable Long centroId){
         List<Decoracion> decoraciones = decoracionService.findByCentro(centroId);
         return new ResponseEntity<>(decoraciones,HttpStatus.OK);
     }
-    
+
+    @Operation(summary = "Añade una Decoracion a un Centro")
     @PostMapping("/add/centro")
     public ResponseEntity<List<Decoracion>> addDecoracionCentro(@RequestBody Map<String,List<String>> decids){
         try{
