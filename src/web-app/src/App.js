@@ -12,7 +12,6 @@ import { Error } from './views/Error'
 import { Centro } from './views/Centro'
 import { EditarUsuario } from './views/EditarUsuario'
 import { RegistroUsuario } from './views/RegistroUsuario'
-function App() {
 import { CentroEdit } from './views/CentroEdit'
 import { CentroAdd } from './views/CentroAdd'
 function App () {

@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from "react"
-import Select from 'react-select';
 import {json_provincias} from '../Filter/provincias'
 import { putData, postData } from '../../services/common/common'
 import { useLocation } from 'wouter'
@@ -78,13 +77,10 @@ export function CentroEditForm({id}) {
                 .then(async function (response) {
                     await postData(url2, body, headers)
                         .then(function (data) {
+                            locationPush('/cita');
+                            alert("Centro actualizado con éxito")
                         }
-                            //Tiene que ir al catch porque devuelve 204 y lo pilla como error
-                        ).catch((error) => {
-                            alert("Centro actualizado con éxito, es necesario reiniciar la sesión")
-                            locationPush('/')
-                        }
-                        );
+                        )
                 })
                 .catch((e) => {
                     console.log(e)
@@ -95,9 +91,9 @@ export function CentroEditForm({id}) {
         console.log(body)
     }
 
-    function confirmProvincia(provincia, provincias) {
-        var array = provincias.filter(x => x.label === provincia)
-        const result = array.length!=0 || provincia==""
+    function confirmProvincia(provincia2, provincias) {
+        var array = provincias.filter(x => x.label === provincia2)
+        const result = array.length!=0 || provincia2==""
         if (!result) {
             changeStateProvincia("Provincia no válida")
         } else {
@@ -107,7 +103,7 @@ export function CentroEditForm({id}) {
       }
   
         function confirmHoras(hora) {
-          let regex = new RegExp(/[0-2][0-9]:[0-5][0-9]:[0-5][0-9]/)
+          let regex = new RegExp(/[0-2]\d:[0-5]\d:[0-5]\d/)
           const result = hora.match(regex) || hora==""
           if (!result) {
               changeStateHora("Formato de hora no válido")

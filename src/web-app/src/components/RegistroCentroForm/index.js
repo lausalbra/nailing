@@ -1,5 +1,4 @@
-import { useRef, useState, useEffect } from "react"
-import Select from 'react-select';
+import { useRef, useState } from "react"
 import {json_provincias} from '../Filter/provincias'
 import { postData } from '../../services/common/common'
 import { useLocation } from 'wouter'
@@ -13,6 +12,8 @@ export function RegistroCentroForm() {
     const cierream = useRef()
     const aperturapm = useRef()
     const cierrepm = useRef()
+    
+    const [locationPath, locationPush] = useLocation()
 
     const [stateProvincia, changeStateProvincia] = useState("")
     const [stateHoras, changeStateHora] = useState("")
@@ -38,14 +39,16 @@ export function RegistroCentroForm() {
             "Content-Type": "application/json",
             "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
           })
+          locationPush("/");
+
         }
         
 
         console.log(body)
     }
 
-    function confirmProvincia(provincia, provincias) {
-      var array = provincias.filter(x => x.label === provincia)
+    function confirmProvincia(provincia2, provincias) {
+      var array = provincias.filter(x => x.label === provincia2)
       const result = array.length!=0
       if (!result) {
           changeStateProvincia("Provincia no válida")
@@ -56,7 +59,7 @@ export function RegistroCentroForm() {
     }
 
       function confirmHoras(hora) {
-        let regex = new RegExp(/[0-2][0-9]:[0-5][0-9]:[0-5][0-9]/)
+        let regex = new RegExp(/[0-2]\d:[0-5]\d:[0-5]\d/)
         const result = hora.match(regex)
         if (!result) {
             changeStateHora("Formato de hora no válido")
