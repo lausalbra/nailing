@@ -33,8 +33,9 @@ export default function Paypal({json}) {
             data: json,
             url: "https://nailingtest.herokuapp.com/cita/add",
             success: function (data) {
-              console.log("Se ha realizado la reserva correctamente",order)
-          },
+              console.log("Se ha realizado la reserva correctamente",order);
+              window.location.href = '/cita';
+            },
           });
         },
         onError: (err) => {
