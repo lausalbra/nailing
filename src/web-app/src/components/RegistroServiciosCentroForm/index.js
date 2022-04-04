@@ -1,81 +1,140 @@
 import { useRef, useState } from "react";
 import Select from 'react-select';
-
+import { postData, getData } from "../../services/common/common";
 export function RegistroServiciosCentroForm({ updater }) {
 
-    //Al añadir personalizaciones de tamaño: updater['tamanyo']()
+    //Al añadir personalizaciones de tamaño: updater['tamanyos']()
 
-    const optionsPersonalizacion = [
-        { value: "esculpidas", label: "Uñas Esculpidas" },
-        { value: "naturales", label: "Uñas Naturales" },
+    // Fases a seleccionar
+    const optionsFases = [
+        { value: "tipos", label: "Tipo de Manicura" },
+        { value: "bases", label: "Material / Base" },
+        { value: "formas", label: "Formas" },
+        { value: "disenyos", label: "Diseños" },
+        { value: "decoraciones", label: "Decoraciones" },
+        { value: "acabados", label: "Acabados" },
     ]
 
-    const optionsEsculpidas = [
-        { value: "relleno", label: "Relleno" },
-        { value: "nueva", label: "Puesta Nueva" },
-    ]
-
-    const optionsNaturales = [
-        { value: "semipermanente", label: "Semipermanente" },
-        { value: "refuerzo", label: "Semipermanente con Refuerzo" },
-        { value: "japonesa", label: "Manicura Japonesa" }
-    ]
-
+    // Capturo el precio y el tiempo indicados en formulario
     const precio = useRef()
     const tiempo = useRef()
 
+    // Estados del componente 
     const [selectedType, setSelectedType] = useState();
     const [selectedOptions, setSelectedOptions] = useState();
     const [availableOptions, setAvailableOptions] = useState()
     const [formState, setFormState] = useState(true)
 
+    // Auxiliares para la llamada
+    const headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+    }
 
-    const onDropDownChangeType = (value) => {
-        checkFormState()
-        console.log(value)
+    const url = "https://nailingtest.herokuapp.com/"
+    let suffix = ""
+
+    async function onDropDownChangeType(value) {
         setSelectedType(value)
-        value.value === 'esculpidas' ? setSelectedOptions(optionsEsculpidas) : setSelectedOptions(optionsNaturales)
+
+        switch (value.value) {
+            case "tipos":
+                suffix = "tipos/all"
+                break
+            case "bases":
+                suffix = "bases/all"
+                break
+            case "formas":
+                suffix = "formas/all"
+                break
+            case "disenyos":
+                suffix = "disenyos/all"
+                break
+            case "decoraciones":
+                suffix = "decoraciones/all"
+                break
+            case "acabados":
+                suffix = "acabados/all"
+                break
+            default:
+                break
+        }
+
+        await getData(url + suffix, headers)
+            .then((res) => {
+                const options = res.map(op => { return { "value": op, "label": op } })
+                setAvailableOptions(options)
+                setSelectedOptions(options)
+            }).catch((ex) => {
+            })
+
     }
 
     const onDropDownChangeOptions = (value) => {
-        console.log("Valores seleccionados", value)
-        console.log("Valores Disponibles", availableOptions)
-        switch (selectedType.value) {
-            case "naturales":
-                setAvailableOptions(optionsNaturales)
-                break
-            case "esculpidas":
-                setAvailableOptions(optionsEsculpidas)
-                break
-            default:
-        }
-
-        checkFormState()
         setSelectedOptions(value)
     }
 
-    function checkFormState() {
+    const handleSubmit = async (evt) => {
+        evt.preventDefault()
+
+        console.log(selectedType, selectedOptions)
 
         if (selectedType === undefined || selectedOptions === undefined || selectedOptions.length === 0) {
             setFormState(false)
         } else {
             setFormState(true)
-        }
-    }
+            switch (selectedType.value) {
+                case "tipos":
+                    suffix = "tipos/add/centro"
+                    break
+                case "bases":
+                    suffix = "bases/add/centro"
+                    break
+                case "formas":
+                    suffix = "formas/add/centro"
+                    break
+                case "disenyos":
+                    suffix = "disenyos/add/centro"
+                    break
+                case "decoraciones":
+                    suffix = "decoraciones/add/centro"
+                    break
+                case "acabados":
+                    suffix = "acabados/add/centro"
+                    break
+                default:
+                    break
+            }
 
-    const handleSubmit = (evt) => {
-        evt.preventDefault()
-        checkFormState()
-        console.log(selectedType, selectedOptions, precio.current.value, tiempo.current.value)
+            const arrayOptions = []
+            selectedOptions.map(op => { return arrayOptions.push(op.value) })
+            const body = {
+                "personalizaciones": arrayOptions,
+                "tiempo": [precio.current.value],
+                "coste": [tiempo.current.value],
+                "centro": [sessionStorage.getItem("userCenter")]
+            }
+
+            console.log(body)
+
+            await postData(url + suffix, body, headers)
+                .then((res) => {
+                    console.log(res)
+                    updater[selectedOptions.value]()
+                }).catch((ex) => {
+                    console.log(ex)
+                })
+        }
+
     }
 
     return (
         <>
-            <form className="grid border-2 border-pink-300 p-5 rounded-md" onSubmit={handleSubmit}>
+            <form className="grid border-2 border-pink-300 p-5 rounded-md max-w-xl" onSubmit={handleSubmit}>
                 <label className='text-lg' htmlFor="name">Selecciona una personalizacion</label>
                 <Select className="p-3"
                     value={selectedType}
-                    options={optionsPersonalizacion}
+                    options={optionsFases}
                     onChange={onDropDownChangeType}
                 />
 
@@ -97,11 +156,11 @@ export function RegistroServiciosCentroForm({ updater }) {
                         <input className="border-black border-2  rounded-sm mb-4 w-1/2 text-right" name="tiempo" type="text" id="tiempo" ref={tiempo} required /> min
                     </div>
                 </div>
-                <div className="center">
-                    <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl w-1/2" type="submit" value="Añadir" />
+                <div >
+                    <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl w-full" type="submit" value="Añadir" />
                 </div>
 
-                {formState ? <p></p> : <p className="text-sm text-red-500">Seleccione un tipo y una o varias opciones de personalizacion</p>}
+                {formState ? <p></p> : <p className="text-sm text-red-500 text-center">¡Debes escoger al menos una opción!</p>}
 
             </form>
 
