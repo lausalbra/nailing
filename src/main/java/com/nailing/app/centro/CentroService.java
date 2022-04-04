@@ -103,7 +103,7 @@ public class CentroService {
     	Centro cent = addCentro(centro);
     	usuario.setCentro(cent);
         usuario.setRol("OWNER");
-    	return encoder.save(usuario);
+    	return usuarioService.save(usuario);
     }
  
     /*
