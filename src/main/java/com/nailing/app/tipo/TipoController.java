@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 /**
  *
  * @author CANDELA
@@ -31,40 +33,47 @@ public class TipoController {
     @Autowired
     TipoService tipoService;
     
+    @Operation(summary = "Lista todos los Tipos")
     @GetMapping("/list")
     public ResponseEntity<List<Tipo>> listTipos(){
         List<Tipo> tipos = (List<Tipo>) tipoService.findAll();
         return new ResponseEntity<>(tipos, HttpStatus.OK);
     }
     
+    @Operation(summary = "Borra un Tipo")
     @DeleteMapping("/delete/{id}")
 	public void deleteTipo(@PathVariable Long id) {
 		tipoService.removeTipo(id);
 	}
-        
-     @GetMapping("/show/{id}")
+    
+    @Operation(summary = "Muestra un Tipo")
+    @GetMapping("/show/{id}")
 	public ResponseEntity<Tipo> showTipo(@PathVariable Long id){
 		return new ResponseEntity<>(tipoService.findById(id), HttpStatus.OK);
 	}
-        
+
+    @Operation(summary = "Lista Tipos en funcion de Centro")
     @GetMapping("/centro/{centroId}")
 	public  ResponseEntity<List<Tipo>> findByCentro(@PathVariable Long centroId){
 		List<Tipo> tipos = tipoService.findByCentro(centroId);
 		return new ResponseEntity<>(tipos, HttpStatus.OK);
 	}
-        
+
+    @Operation(summary = "Lista todos los posibles Tipos")
     @GetMapping("/all")
     public ResponseEntity<List<String>> listPosibleTipo(){
         List<String> tipos = tipoService.listPosibleTipo();
         return new ResponseEntity<>(tipos,HttpStatus.OK);
     }
 
+    @Operation(summary = "Lista Todos los Tipos de un Centro")
     @GetMapping("/centro/{centroId}/list")
     public ResponseEntity<List<Tipo>> listByCentro(@PathVariable Long centroId){
         List<Tipo> tipos = tipoService.listByCentro(centroId);
         return new ResponseEntity<>(tipos, HttpStatus.OK);
     }
     
+    @Operation(summary = "Añade un Tipo a un Centro")
     @PostMapping("/add/centro")
     public ResponseEntity<List<Tipo>> addTamanyoCentro(@RequestBody Map<String,List<String>> tipids){
         try{
