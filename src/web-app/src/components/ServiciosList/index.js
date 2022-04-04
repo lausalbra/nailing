@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'wouter'
 import { API_URL, RequestManager } from '../../components/RestUtils'
 import { Servicio } from '../../components/Servicio'
-import { RegistroServiciosCentroForm } from "../RegistroServiciosCentroForm"
+import { ServiciosBox } from '../../components/ServiciosBox'
+import { RegistroServiciosCentroForm } from '../RegistroServiciosCentroForm'
 
 export function ServiciosList() {
 
@@ -25,14 +27,18 @@ export function ServiciosList() {
     // eslint-disable-next-line no-unused-vars
     const [locationPath, locationPush] = useLocation()
 
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     const updater = {
-        'tipos' : function() { updateTipos(updaterTipos + 1) },
-        'bases' : function() { updateBases(updaterBases + 1) },
-        'disenyos' : function() { updateDisenos(updaterDisenos + 1) },
-        'formas' : function() { updateFormas(updaterFormas + 1) },
-        'tamanyos' : function() { updateTamanos(updaterTamanos + 1) },
-        'decoraciones' : function() { updateDecoraciones(updaterDecoraciones + 1) },
-        'acabados' : function() { updateAcabados(updaterAcabados + 1) }
+        'tipos' : async function() { await sleep(500); updateTipos(updaterTipos + 1) },
+        'bases' : async function() { await sleep(500); updateBases(updaterBases + 1) },
+        'disenyos' : async function() { await sleep(500); updateDisenos(updaterDisenos + 1) },
+        'formas' : async function() { await sleep(500); updateFormas(updaterFormas + 1) },
+        'tamanyos' : async function() { await sleep(500); updateTamanos(updaterTamanos + 1) },
+        'decoraciones' : async function() { await sleep(500); updateDecoraciones(updaterDecoraciones + 1) },
+        'acabados' : async function() { await sleep(500); updateAcabados(updaterAcabados + 1) }
     }
 
     const url_tipos = API_URL + '/tipos/centro/' + centerId + '/list'
@@ -101,20 +107,13 @@ export function ServiciosList() {
 
     return (
         <>
-            <h1><strong>TIPOS</strong></h1>
-            {getForms(listTipos, 'tipos')}
-            <h1><strong>BASES</strong></h1>
-            {getForms(listBases, 'bases')}
-            <h1><strong>DISEÑOS</strong></h1>
-            {getForms(listDisenos, 'disenyos')}
-            <h1><strong>FORMAS</strong></h1>
-            {getForms(listFormas, 'formas')}
-            <h1><strong>TAMAÑOS</strong></h1>
-            {getForms(listTamanos, 'tamanyos')}
-            <h1><strong>DECORACIONES</strong></h1>
-            {getForms(listDecoraciones, 'decoraciones')}
-            <h1><strong>ACABADOS</strong></h1>
-            {getForms(listAcabados, 'acabados')}
+            <ServiciosBox title="TIPOS" pers={getForms(listTipos, 'tipos')}/>
+            <ServiciosBox title="BASES" pers={getForms(listBases, 'bases')}/>
+            <ServiciosBox title="DISEÑOS" pers={getForms(listDisenos, 'disenyos')}/>
+            <ServiciosBox title="FORMAS" pers={getForms(listFormas, 'formas')}/>
+            <ServiciosBox title="TAMAÑOS" pers={getForms(listTamanos, 'tamanyos')}/>
+            <ServiciosBox title="DECORACIONES" pers={getForms(listDecoraciones, 'decoraciones')}/>
+            <ServiciosBox title="ACABADOS" pers={getForms(listAcabados, 'acabados')}/>
             <RegistroServiciosCentroForm updater={updater}/>
         </>
     )

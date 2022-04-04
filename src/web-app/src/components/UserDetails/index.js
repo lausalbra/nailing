@@ -19,8 +19,7 @@ export function UserDetails({ image, email, phone }) {
       "contrasenya": sessionStorage.getItem("userPassword"),
       "email": sessionStorage.getItem("userEmail"),
       "telefono": sessionStorage.getItem("userPhone"),
-      "rol": sessionStorage.getItem("userRole"),
-      "centro": sessionStorage.getItem("userCenter")
+      "rol": sessionStorage.getItem("userRole")
     }
 
     console.log(body)

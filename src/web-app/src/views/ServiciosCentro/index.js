@@ -6,7 +6,7 @@ export function ServiciosCentro() {
     return (
         <>
             <Header />
-            <Card title={"Registro Servicio"} component={<ServiciosList />} />
+            <Card title={"Registro Servicios"} component={<ServiciosList />} />
 
         </>
     )
