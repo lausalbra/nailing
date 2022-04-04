@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 /**
  *
  * @author Usuario
@@ -35,6 +37,7 @@ public class CitaController {
 	@Autowired
 	CitaService citaService;
 
+	@Operation(summary = "Lista todas las Citas")
 	@GetMapping("/list")
 	public ResponseEntity<List<Cita>> listUnyas() {
 		List<Cita> unyas = StreamSupport.stream(citaService.findAll().spliterator(), false)
@@ -42,6 +45,7 @@ public class CitaController {
 		return new ResponseEntity<List<Cita>>(unyas, HttpStatus.OK);
 	}
 
+	@Operation(summary = "Muestra una Cita")
 	@GetMapping("/show/{id}")
 	public ResponseEntity<Cita> showUnya(@PathVariable Long id) {
 		try {
@@ -52,22 +56,26 @@ public class CitaController {
 		}
 	}
 
+	@Operation(summary = "Muesta una Cita asociada a un Usuario")
 	@GetMapping("/user/{userId}")
 	public ResponseEntity<List<Cita>> citaByUser(@PathVariable Long userId) {
 		List<Cita> citas = citaService.findByUsuario(userId);
 		return new ResponseEntity<>(citas, HttpStatus.OK);
 	}
 
+	@Operation(summary = "Borra una Cita")
 	@DeleteMapping("/delete/{id}")
 	public void deleteUnya(@PathVariable Long id) {
 		citaService.removeUnya(id);
 	}
 
+	@Operation(summary = "Borra una Cita asociada a un usuario")
 	@DeleteMapping("/user/{userId}/delete/{citaId}")
 	public void deleteUnya(@PathVariable Long userId, @PathVariable Long citaId) {
 		citaService.removeCitaByUser(userId, citaId);
 	}
 
+	@Operation(summary = "Añade una Cita")
 	@PostMapping("/add")
 	public ResponseEntity<Cita> addCita(@RequestBody Map<String, String> ids) {
 		Cita cita = null;
@@ -79,6 +87,7 @@ public class CitaController {
 		}
 	}
 
+	@Operation(summary = "Devuelve la hora de una Cita")
 	@GetMapping("/check/{centroId}")
 	public ResponseEntity<List<String>> checkDisponibles(@PathVariable Long centroId,
 														@RequestParam(name = "fecha", required = true) String fecha,

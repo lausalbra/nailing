@@ -28,7 +28,7 @@ import javax.validation.constraints.PositiveOrZero;
 @EntityListeners(AuditingEntityListener.class)
 public class Disenyo {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name="id")
     private Long id;
 

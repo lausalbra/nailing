@@ -15,13 +15,14 @@ import javax.validation.constraints.PositiveOrZero;
 
 import com.nailing.app.centro.Centro;
 import com.nailing.app.components.Fases;
+import javax.persistence.GenerationType;
 
 @Entity
 @Table(name = "tamanyo")
 public class Tamanyo {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 

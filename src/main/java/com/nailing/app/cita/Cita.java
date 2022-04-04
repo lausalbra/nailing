@@ -41,7 +41,7 @@ import com.nailing.app.usuario.Usuario;
 public class Cita {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @Column(name = "coste")

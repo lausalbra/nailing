@@ -55,6 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             .antMatchers("/centros/list").permitAll()
             .antMatchers("/signUp").anonymous()
             .antMatchers("/centros/show/**").permitAll()
+            .antMatchers("/swagger-ui/**").permitAll()
             .anyRequest().authenticated()
             .and().logout().and()
             .httpBasic();
