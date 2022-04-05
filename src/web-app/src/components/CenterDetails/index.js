@@ -7,7 +7,8 @@ import PropertyPanel from "../../components/PropertyPanel/index.js";
 import { BasicRating } from "../Rating";
 import $ from 'jquery';
 
-export function CenterDetails({name, image, provincia, rating}) {
+export function CenterDetails({name, imagen, provincia, rating}) {
+  
 
   const [state, setState] = useState({
     isPaneOpen: false,
@@ -55,7 +56,7 @@ useEffect(() => {
     <><Card style={{backgroundColor: 'rgb(248, 225, 228)'}} sx={{ minWidth: 275 }}>
     <CardContent>
     <div className="flex items-center">
-          <img src={image} alt="img" className="w-52 aspect-square rounded-md shadow-md max-w-full float-left bg-white" />
+      <img src={imagen} alt={name} className="object-cover rounded-md shadow-md max-w-full float-left bg-white" />
           <div className="ml-5 items-center">
               <p><strong>Provincia:</strong> {provincia}</p>
               <p><BasicRating value={rating} readOnly /></p>

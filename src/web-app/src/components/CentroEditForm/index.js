@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react"
 import {json_provincias} from '../Filter/provincias'
 import { putData, postData } from '../../services/common/common'
 import { useLocation } from 'wouter'
+import Select from 'react-select';
 
 export function CentroEditForm({id}) {
 
@@ -102,17 +103,17 @@ export function CentroEditForm({id}) {
         return result
       }
   
-        function confirmHoras(hora) {
-          let regex = new RegExp(/[0-2]\d:[0-5]\d:[0-5]\d/)
-          const result = hora.match(regex) || hora==""
-          if (!result) {
-              changeStateHora("Formato de hora no válido")
-          } else {
-              changeStateHora("")
-          }
-          return result
-  
+    function confirmHoras(hora) {
+        let regex = new RegExp(/[0-2]\d:[0-5]\d:[0-5]\d/)
+        const result = hora.match(regex) || hora==""
+        if (!result) {
+          changeStateHora("Formato de hora no válido")
+        } else {
+          changeStateHora("")
         }
+        return result
+  
+    }
 
     return (
         <>
@@ -123,14 +124,30 @@ export function CentroEditForm({id}) {
                 <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} placeholder={oldImagen}/>
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="provincia" type="text" ref={provincia} placeholder={oldProvincia}/>
+                <Select options={json_provincias} 
+                    value={this.selected}
+                    onChange={this.handleChange}
+                    ref={provincia}
+                    
+                    theme={(theme) => ({
+                    ...theme,
+                    borderRadius: 3,
+                    colors: {
+                        ...theme.colors,
+                        primary25: '#E9BEEE', //HOVER
+                        primary50: '#F39EEC', //CLICK
+                        primary: '#F39EEC',   //BORDE, SELECCIONADO
+                    },
+                    })}
+                    placeholder='Seleccione una provincia'/>
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
                 <label className='text-lg' htmlFor="aperturaam">   Hora de apertura horario de mañana:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="aperturaAM" type="text" ref={aperturaam} placeholder={oldAperturaAM}/>
                 <label className='text-lg' htmlFor="cierream">  Hora de cierre horario de mañana:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="cierreAM" type="text" ref={cierream} placeholder={oldCierreAM}/>
-                <label className='text-lg' htmlFor="aperturapm">   Hora de apertura horario de mañana:</label>
+                <label className='text-lg' htmlFor="aperturapm">   Hora de apertura horario de tarde:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="aperturaPM" type="text" ref={aperturapm} placeholder={oldAperturaPM}/>
-                <label className='text-lg' htmlFor="cierrepm">  Hora de cierre horario de mañana:</label>
+                <label className='text-lg' htmlFor="cierrepm">  Hora de cierre horario de tarde:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="cierrePM" type="text" ref={cierrepm} placeholder={oldCierrePM}/>
                 <p className="text-sm text-red-600" >{stateHoras}</p>
                 <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
