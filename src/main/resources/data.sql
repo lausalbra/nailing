@@ -11,6 +11,7 @@ ALTER SEQUENCE decoracion_id_seq RESTART WITH 55;
 ALTER SEQUENCE acabado_id_seq RESTART WITH 7;
 ALTER SEQUENCE centro_id_seq RESTART WITH 4;
 
+DELETE FROM usuario;
 DELETE FROM cita;
 DELETE FROM usuario;
 DELETE FROM tipo;
