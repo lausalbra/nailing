@@ -2,6 +2,7 @@
 
 ALTER SEQUENCE usuario_id_seq RESTART WITH 1;
 
+DELETE FROM usuario;
 DELETE FROM cita;
 DELETE FROM tipo;
 DELETE FROM base;

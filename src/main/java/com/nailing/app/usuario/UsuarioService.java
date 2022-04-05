@@ -30,7 +30,7 @@ public class UsuarioService {
             throw new IllegalArgumentException();
         }
 
-        Usuario usuario = new Usuario(user,contrasenya,email,telefono,"USER");
+        Usuario usuario = new Usuario(user,contrasenya,email,telefono,Authorities.USER);
 
         return usuarioRepository.save(usuario);
     }

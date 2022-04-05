@@ -5,13 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nailing.app.components.Fases;
+import com.nailing.app.usuario.AuthoritiesConstants;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -24,6 +26,7 @@ public class BaseController {
 	BaseService baseService;
 	
 //	mostrar todas las bases existentes en la base de datos
+	@PreAuthorize("hasAuthority('"+ AuthoritiesConstants.ADMIN +"')")
 	@GetMapping("/list")
 	public ResponseEntity<List<Base>> listBases(){
 		List<Base> bases = baseService.findAll();
