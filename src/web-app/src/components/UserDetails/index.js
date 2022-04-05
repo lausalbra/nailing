@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import { useLocation } from 'wouter'
+import { Link, useLocation } from 'wouter'
 import { postData } from '../../services/common/common';
 
 
@@ -59,11 +59,18 @@ export function UserDetails({ image, email, phone }) {
           <div className="ml-5 items-center">
             <p><strong>Email:</strong> {email}</p>
             <p><strong>Teléfono:</strong> {phone}</p>
+            <div className='text-xl text-left hover:underline'>
+              <Link className="text-xl text-pink-400" to='/usuario/edit'>Editar mis datos</Link>
+            </div>
+
           </div>
         </div>
       </CardContent>
       <CardActions>
         <button onClick={() => locationPush('/miscitas')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Mis reservas</button>
+      </CardActions>
+      <CardActions>
+        <button onClick={() => locationPush('/centroadd')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Añadir centro</button>
       </CardActions>
       <CardActions>
         <button onClick={handleClick} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Cerrar Sesión</button>

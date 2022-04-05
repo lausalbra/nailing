@@ -11,6 +11,10 @@ import { MisCitasList } from './views/MisCitasList'
 import { Error } from './views/Error'
 import { ServiciosCentro } from './views/ServiciosCentro'
 import { Centro } from './views/Centro'
+import { EditarUsuario } from './views/EditarUsuario'
+import { RegistroUsuario } from './views/RegistroUsuario'
+import { CentroEdit } from './views/CentroEdit'
+import { CentroAdd } from './views/CentroAdd'
 import { DemoServiciosCentro } from './views/DemoServiciosCentro'
 function App() {
   return (
@@ -22,6 +26,8 @@ function App() {
           <Route path='/login' component={Login} />
           <Route path='/usuario' component={Usuario} />
           <Route path='/centrodetalle/:id' component={Centro} />
+          <Route path='/centroedit/:id' component={CentroEdit} />
+          <Route path='/centroadd' component={CentroAdd} />
           <Route path='/centro' component={BookingsList} />
           <Route path='/conocenos' component={Conocenos} />
           <Route path='/cita' component={BookingsList} />
@@ -30,6 +36,8 @@ function App() {
           <Route path='/personalizacion' component={Cita} />
           <Route path='/servicios' component={ServiciosCentro} />
           <Route path='/error' component={Error} />
+          <Route path='/usuario/edit' component={EditarUsuario} />
+          <Route path='/register' component={RegistroUsuario} />
           <Route path='/demoservicioscentro' component={DemoServiciosCentro} />
           <Route path='/' component={Landing} />
         </div>

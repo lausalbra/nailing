@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import { useLocation } from 'wouter'
+import { Link, useLocation } from 'wouter'
 import { postData } from '../../services/common/common'
 
 export function LoginForm() {
@@ -68,6 +68,7 @@ export function LoginForm() {
             <label className='text-lg' htmlFor="password">   Contraseña:</label>
             <input className="border-black border-2 mb-4 rounded-sm" name="password" type="password" ref={password} required minLength="2" maxLength="100" />
             <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
+            <p> ¿No tienes un usuario? <Link className='hover:text-red-400' to='/register'>Registrate</Link></p>
         </form>
     )
         :
@@ -78,6 +79,7 @@ export function LoginForm() {
             <label className='text-lg' htmlFor="password">   Contraseña:</label>
             <input className="border-black border-2 mb-4 rounded-sm" name="password" type="password" ref={password} />
             < p className='text-sm text-red-600' > Usuario o Contraseña No Válidos</p>
+            <p> ¿No tienes un usuario? <Link className='hover:text-red-400' to='/register'>Registrate</Link></p>
             <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
 
         </form >)

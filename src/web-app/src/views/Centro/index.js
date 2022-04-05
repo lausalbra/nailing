@@ -7,7 +7,7 @@ import { useLocation } from 'wouter'
 export function Centro({ params }) {
 
     const { id } = params
-    const url = "https://nailingtest.herokuapp.com/centros/details/"+id;
+    const url = "https://nailingtest.herokuapp.com/centros/show/"+id;
     const xhr = new XMLHttpRequest()
     const [resObj, setObj] = useState([])
     const [locationPath, locationPush] = useLocation()
@@ -36,7 +36,7 @@ export function Centro({ params }) {
         <>
             <Header />
             <Nombre name={resObj.nombre} ></Nombre>
-            <CenterDetails name={resObj.nombre} image={resObj.imagen} provincia={resObj.provincia} rating={'3'}  ></CenterDetails>
+            <CenterDetails name={resObj.nombre} image={resObj.imagen} provincia={resObj.provincia} aperturaAM={resObj.aperturaAM} cierreAM={resObj.cierreAM} aperturaPM={resObj.aperturaPM} cierrePM={resObj.cierrePM} rating={'3'}  ></CenterDetails>
 
         </>
     )

@@ -7,7 +7,7 @@ import PropertyPanel from "../../components/PropertyPanel/index.js";
 import { BasicRating } from "../Rating";
 import $ from 'jquery';
 
-export function CenterDetails({name, image, provincia, rating}) {
+export function CenterDetails({name, image, provincia, rating, aperturaAM, cierreAM, aperturaPM, cierrePM}) {
 
   const [state, setState] = useState({
     isPaneOpen: false,
@@ -58,7 +58,9 @@ useEffect(() => {
           <img src={image} alt="img" className="w-52 aspect-square rounded-md shadow-md max-w-full float-left bg-white" />
           <div className="ml-5 items-center">
               <p><strong>Provincia:</strong> {provincia}</p>
-              <p><BasicRating value={rating} readOnly /></p>
+              <p><strong>Horario de mañana:</strong> {aperturaAM} - {cierreAM}</p>
+              <p><strong>Horario de tarde:</strong> {aperturaPM} - {cierrePM}</p>
+              {/* <p><BasicRating value={rating} readOnly /></p> */}
           </div>
       </div>
     </CardContent>
