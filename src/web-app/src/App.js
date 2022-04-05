@@ -9,12 +9,14 @@ import { Conocenos } from './views/Conocenos'
 import { Cita } from './views/Cita'
 import { MisCitasList } from './views/MisCitasList'
 import { Error } from './views/Error'
+import { ServiciosCentro } from './views/ServiciosCentro'
 import { Centro } from './views/Centro'
 import { EditarUsuario } from './views/EditarUsuario'
 import { RegistroUsuario } from './views/RegistroUsuario'
 import { CentroEdit } from './views/CentroEdit'
 import { CentroAdd } from './views/CentroAdd'
-function App () {
+import { DemoServiciosCentro } from './views/DemoServiciosCentro'
+function App() {
   return (
 
     <div className='overflow-auto'>
@@ -32,9 +34,11 @@ function App () {
           <Route path='/feedback' component={Feedback} />
           <Route path='/miscitas' component={MisCitasList} />
           <Route path='/personalizacion' component={Cita} />
+          <Route path='/servicios' component={ServiciosCentro} />
           <Route path='/error' component={Error} />
           <Route path='/usuario/edit' component={EditarUsuario} />
           <Route path='/register' component={RegistroUsuario} />
+          <Route path='/demoservicioscentro' component={DemoServiciosCentro} />
           <Route path='/' component={Landing} />
         </div>
 
