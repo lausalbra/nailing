@@ -78,16 +78,16 @@ export function RegistroCentroForm() {
                 <label className='text-lg' htmlFor="imagen">   Imagen:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} />
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="provincia" type="text" ref={provincia} required/>
+                <select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} required/>
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
                 <label className='text-lg' htmlFor="aperturaam">   Hora de apertura horario de mañana:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaam" type="text" ref={aperturaam}/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaam" type="text" ref={aperturaam} placeholder="00:00:00"/>
                 <label className='text-lg' htmlFor="cierream">  Hora de cierre horario de mañana:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="cierream" type="text" ref={cierream} />
-                <label className='text-lg' htmlFor="aperturapm">   Hora de apertura horario de mañana:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="aperturapm" type="text" ref={aperturapm} />
-                <label className='text-lg' htmlFor="cierrepm">  Hora de cierre horario de mañana:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="cierrepm" type="text" ref={cierrepm} />
+                <input className="border-black border-2 mb-4 rounded-sm" name="cierream" type="text" ref={cierream} placeholder="00:00:00"/>
+                <label className='text-lg' htmlFor="aperturapm">   Hora de apertura horario de tarde:</label>
+                <input className="border-black border-2 mb-4 rounded-sm" name="aperturapm" type="text" ref={aperturapm} placeholder="00:00:00"/>
+                <label className='text-lg' htmlFor="cierrepm">  Hora de cierre horario de tarde:</label>
+                <input className="border-black border-2 mb-4 rounded-sm" name="cierrepm" type="text" ref={cierrepm} placeholder="00:00:00"/>
                 <p className="text-sm text-red-600" >{stateHoras}</p>
                 <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
             </form>

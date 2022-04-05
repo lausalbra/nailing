@@ -55,7 +55,7 @@ useEffect(() => {
     <><Card style={{backgroundColor: 'rgb(248, 225, 228)'}} sx={{ minWidth: 275 }}>
     <CardContent>
     <div className="flex items-center">
-          <img src={image} alt="img" className="w-52 aspect-square rounded-md shadow-md max-w-full float-left bg-white" />
+      <img src={imagen} alt={name} className="object-cover rounded-md shadow-md max-w-full float-left bg-white" />
           <div className="ml-5 items-center">
               <p><strong>Provincia:</strong> {provincia}</p>
               <p><strong>Horario de mañana:</strong> {aperturaAM} - {cierreAM}</p>

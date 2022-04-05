@@ -49,8 +49,8 @@ export function UserDetails({ image, email, phone }) {
       }
       );
   }
-  
-  const centro = sessionStorage.getItem("userCenter")
+  const isAdmin = sessionStorage.getItem("userRole") === 'ADMIN'
+
   return (
     <Card style={{ backgroundColor: 'rgb(248, 225, 228)' }} sx={{ minWidth: 275 }}>
       <CardContent>
@@ -70,7 +70,13 @@ export function UserDetails({ image, email, phone }) {
         <button onClick={() => locationPush('/miscitas')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Mis reservas</button>
       </CardActions>
       <CardActions>
-        <button onClick={() => locationPush('/centroadd')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Añadir centro</button>
+      {isAdmin ?
+                <>
+                  <button onClick={() => locationPush('/centroadd')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Añadir centro</button>
+                </>
+                :    
+                <></>
+            }  
       </CardActions>
       <CardActions>
         <button onClick={handleClick} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Cerrar Sesión</button>
