@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nailing.app.usuario.AuthoritiesConstants;
+import io.swagger.v3.oas.annotations.Operation;
+
 import com.nailing.app.usuario.Usuario;
 import com.nailing.app.usuario.UsuarioService;
 
@@ -37,6 +39,8 @@ public class CentroController {
     private CentroService centroService;
     @Autowired
     private UsuarioService usuarioService;
+
+    @Operation(summary = "Añade un Centro asociado a un Usuario")
     @PostMapping("/add/{idUser}")
     public ResponseEntity<Centro> addCentro(@RequestBody Centro centro, @PathVariable int idUser){
         centroService.asociarCentroUsuario(usuarioService.findById((long) idUser).get(), centro);
@@ -47,6 +51,7 @@ public class CentroController {
 
     
    
+    @Operation(summary = "Lista todos los Centros")
     @PreAuthorize("hasAuthority('"+AuthoritiesConstants.ADMIN+"')")
     @GetMapping("/list")
     public ResponseEntity<List<Centro>> findAll(){
@@ -54,14 +59,27 @@ public class CentroController {
 	return new ResponseEntity<List<Centro>>(centros, HttpStatus.OK);
     }
     
+    @Operation(summary = "Borra un Centro")
     @DeleteMapping("/delete/{id}")
     public void deleteCentro(@PathVariable Long id) {
     	centroService.delete(id);
     }
 
+    @Operation(summary = "Muestra un Centro")
     @GetMapping("/show/{id}")
     public ResponseEntity<Centro> findById(@PathVariable Long id){
 	return new ResponseEntity<Centro>(centroService.findById(id).get(), HttpStatus.OK);
     }
     
+    @Operation(summary = "Edita un Centro")
+    @RequestMapping(value = "/edit",method = RequestMethod.PUT)
+    public ResponseEntity<Centro> updateCentro(@RequestBody Centro centro){
+        Centro c = null;
+        try{
+            return new ResponseEntity<Centro>(centroService.addCentro(centro), HttpStatus.OK);
+        }catch(IllegalArgumentException e){
+            return new ResponseEntity<Centro>(c, HttpStatus.BAD_REQUEST);
+        }
+       
+    }
 }

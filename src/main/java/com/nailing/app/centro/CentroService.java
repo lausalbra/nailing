@@ -19,6 +19,7 @@ import com.nailing.app.base.BaseService;
 import com.nailing.app.decoracion.DecoracionService;
 import com.nailing.app.disenyo.DisenyoService;
 import com.nailing.app.forma.FormaService;
+import com.nailing.app.securityConfiguration.DbInit;
 import com.nailing.app.tamanyo.TamanyoService;
 import com.nailing.app.tipo.TipoService;
 import com.nailing.app.usuario.Authorities;
@@ -52,6 +53,8 @@ public class CentroService {
     private TipoService tipoSer;
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    public DbInit encoder;
     public Optional<Centro> findById(Long id){
         return centroRepository.findById(id);
     }
@@ -80,12 +83,23 @@ public class CentroService {
         	forSer.removeFormabyCentro(id);
         	tamSer.removeTamanyobyCentro(id);
         	tipoSer.removeTiposbyCentro(id);
+        	for(Usuario u : usuarioService.findAll()) {
+        		if (u.getCentro() == centro.get()) {
+        			u.setCentro(null);
+        		}
+         	}
             centroRepository.delete(centro.get());
         }
     }
+  
     public Centro addCentro(Centro centro) {
-        	return centroRepository.save(centro);
-   }
+        if(centro != null){
+            return centroRepository.save(centro);
+        }else{
+            throw new IllegalArgumentException();
+        }
+    }
+  
     public Usuario asociarCentroUsuario(Usuario usuario, Centro centro) {
     	Centro cent = addCentro(centro);
     	usuario.setCentro(cent);

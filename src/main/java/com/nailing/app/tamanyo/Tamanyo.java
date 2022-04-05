@@ -15,13 +15,14 @@ import javax.validation.constraints.PositiveOrZero;
 
 import com.nailing.app.centro.Centro;
 import com.nailing.app.components.Fases;
+import javax.persistence.GenerationType;
 
 @Entity
 @Table(name = "tamanyo")
 public class Tamanyo {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 
@@ -61,6 +62,13 @@ public class Tamanyo {
 		this.siguienteFase = siguienteFase;
 		this.centro = centro;
 	}
+
+    public Tamanyo(Integer tiempo, Double coste, Fases siguienteFase, Centro centro) {
+        this.tiempo = tiempo;
+        this.coste = coste;
+        this.siguienteFase = siguienteFase;
+        this.centro = centro;
+    }
 
 	public Long getId() {
 		return id;

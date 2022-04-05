@@ -2,10 +2,8 @@ package com.nailing.app.base;
 
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -17,18 +15,16 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import com.nailing.app.centro.Centro;
 import com.nailing.app.components.Fases;
+import javax.persistence.GenerationType;
 
 @Entity
 @Table(name = "base")
 public class Base {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 
@@ -68,6 +64,13 @@ public class Base {
 		this.siguienteFase = fases;
 		this.centro = centro;
 	}
+
+    public Base(Integer tiempo, Double coste, Centro centro) {
+        this.tiempo = tiempo;
+        this.coste = coste;
+        this.centro = centro;
+    }
+        
 
 	public Long getId() {
 		return id;

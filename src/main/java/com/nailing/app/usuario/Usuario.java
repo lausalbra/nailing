@@ -66,9 +66,10 @@ public class Usuario {
 		this.centro = centro;
 	}
 
-	public Usuario() {
+    public Usuario() {
         super();
     }
+    
 	public Usuario(String usuario, String contrasenya, String email, String telefono, Authorities rol,Centro centro) {
         this.usuario = usuario;
         this.contrasenya = contrasenya;
@@ -77,7 +78,17 @@ public class Usuario {
         this.rol = rol;
         this.centro =centro;
     }
-    public Usuario(String usuario, String contrasenya, String email, String telefono, Authorities rol) {
+
+	public Usuario(String usuario, String contrasenya, String email, String telefono, Authorities rol) {
+        this.usuario = usuario;
+        this.contrasenya = contrasenya;
+        this.email = email;
+        this.telefono = telefono;
+        this.rol = rol;
+    }
+
+    public Usuario(Long id, String usuario, String contrasenya, String email, String telefono, Authorities rol) {
+        this.id = id;
         this.usuario = usuario;
         this.contrasenya = contrasenya;
         this.email = email;
