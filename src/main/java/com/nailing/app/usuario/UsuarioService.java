@@ -2,6 +2,8 @@ package com.nailing.app.usuario;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +14,6 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-
-    //añadir-actualizar usuario
-    public Usuario addUsuario(Usuario usuario) {
-        return usuarioRepository.save(usuario);
-    }
     
     //encontrar usuario por su id
     public Optional<Usuario> findById(Long id) {
@@ -34,8 +31,12 @@ public class UsuarioService {
             usuarioRepository.delete(usuario.get());
         }
     }
-
+    
     public List<Usuario> findAll(){
-        return (List) usuarioRepository.findAll();
+        return StreamSupport.stream(usuarioRepository.findAll().spliterator(), false).collect(Collectors.toList());
+    }
+    
+    public Usuario save(Usuario usuario){
+        return usuarioRepository.save(usuario);
     }
 }

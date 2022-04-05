@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -25,6 +26,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     
     
@@ -33,13 +35,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     public SecurityConfiguration(UserPrincipalDetailsService userPrincipalDetailsService) {
         this.userPrincipalDetailsService = userPrincipalDetailsService;
     }
-
-    /*@Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-          .withUser("usuario1").password(passwordEncoder().encode("usuario1"))
-          .roles("USER");
-    }*/
     
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
@@ -51,11 +46,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         http.csrf().disable().cors().and().authorizeRequests()
             //.antMatchers("/**").authenticated()
             //.antMatchers("/**/**").authenticated()
-            .antMatchers("/login").permitAll()
-            .antMatchers("/centros").permitAll()
-            .antMatchers("/centros/details/**").permitAll()
+            .antMatchers("/login").anonymous()
+            .antMatchers("/centros/list").permitAll()
+            .antMatchers("/signUp").anonymous()
+            .antMatchers("/centros/show/**").permitAll()
+            .antMatchers("/swagger-ui/**").permitAll()
+            .antMatchers("http://localhost:8080/swagger-ui/**").permitAll()
             .anyRequest().authenticated()
-            .and()
+            .and().logout().and()
             .httpBasic();
         
     }

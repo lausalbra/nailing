@@ -4,6 +4,8 @@
  */
 package com.nailing.app.centro;
 
+import java.io.Serializable;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * @author jaime
  */
 @Repository
-public interface CentroRepository extends CrudRepository<Centro, Long>{
-    
+public interface CentroRepository extends CrudRepository<Centro, Serializable>{
+
+
 }
