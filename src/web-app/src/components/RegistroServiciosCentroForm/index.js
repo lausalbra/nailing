@@ -10,6 +10,7 @@ export function RegistroServiciosCentroForm({ updater }) {
         { value: "tipos", label: "Tipo de Manicura" },
         { value: "bases", label: "Material / Base" },
         { value: "formas", label: "Formas" },
+        { value: "tamanyos", label: "Tamaños" },
         { value: "disenyos", label: "Diseños" },
         { value: "decoraciones", label: "Decoraciones" },
         { value: "acabados", label: "Acabados" },
@@ -47,6 +48,9 @@ export function RegistroServiciosCentroForm({ updater }) {
             case "formas":
                 suffix = "formas/all"
                 break
+            case "tamanyos":
+                suffix = "tamanyos/all"
+                break
             case "disenyos":
                 suffix = "disenyos/all"
                 break
@@ -66,6 +70,7 @@ export function RegistroServiciosCentroForm({ updater }) {
                 setAvailableOptions(options)
                 setSelectedOptions(options)
             }).catch((ex) => {
+                console.log(ex)
             })
 
     }
@@ -92,6 +97,9 @@ export function RegistroServiciosCentroForm({ updater }) {
                     break
                 case "formas":
                     suffix = "formas/add/centro"
+                    break
+                case "tamanyos":
+                    suffix = "tamanyos/add/centro"
                     break
                 case "disenyos":
                     suffix = "disenyos/add/centro"
@@ -120,7 +128,8 @@ export function RegistroServiciosCentroForm({ updater }) {
             await postData(url + suffix, body, headers)
                 .then((res) => {
                     console.log(res)
-                    updater[selectedOptions.value]()
+                    alert(`${selectedType.label} añadido con éxito`)
+                    updater[selectedType.value]()
                 }).catch((ex) => {
                     console.log(ex)
                 })
