@@ -172,6 +172,8 @@ class PropertyPanel extends Component {
             //boton final de pago
             var paybuttonDiv = document.createElement("div");
             paybuttonDiv.className = "w-1/2 rounded-full";
+            var paypalDiv = document.createElement("div");
+            paypalDiv.className = "w-full flex justify-center";
 
             //Confguración del selector de hora
             dateSelector.setAttribute("type", "date");
@@ -275,7 +277,12 @@ class PropertyPanel extends Component {
                     acabado: sessionStorage.getItem("Acabados")
                 };
                 var json = JSON.stringify(postData);
-                ReactDOM.render(<div class="w-full flex justify-center ..."><Paypal json={json}/></div>,paybuttonDiv);
+                paybuttonDiv.innerHTML = '';
+                var newDiv = document.createElement("div");
+                newDiv.className = "w-full flex justify-center";
+                paybuttonDiv.appendChild(newDiv);
+
+                ReactDOM.render(<Paypal json={json}/>,newDiv);
             };
 
             //Se añaden todos los elementos al div
@@ -285,6 +292,7 @@ class PropertyPanel extends Component {
             finisherDiv.appendChild(hourSelector);
             finisherDiv.appendChild(minuteSelector);
             finisherDiv.appendChild(paybuttonDiv);
+            paybuttonDiv.appendChild(paypalDiv);
             mainPanel.append(finisherDiv);
         }
         else{

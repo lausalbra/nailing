@@ -43,6 +43,7 @@ export function UserDetails({ image, email, phone }) {
         sessionStorage.setItem("userEmail", "")
         sessionStorage.setItem("userPhone", "")
         sessionStorage.setItem("isLogged", false)
+        sessionStorage.setItem("userCenter", "")
 
         locationPush('/')
       }
@@ -80,6 +81,13 @@ export function UserDetails({ image, email, phone }) {
       <CardActions>
         <button onClick={handleClick} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Cerrar Sesión</button>
       </CardActions>
+      {centro !== "" ?
+      <CardActions>
+        <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Servicios de centro</button>
+      </CardActions>
+      :
+      <></>
+      }
     </Card>
 
   );

@@ -42,6 +42,7 @@ export function LoginForm() {
                 sessionStorage.setItem("userEmail", user.email)
                 sessionStorage.setItem("userPhone", user.telefono)
                 sessionStorage.setItem("userRole", user.rol)
+                sessionStorage.setItem("userCenter", user.rol === "OWNER" ? user.centro.id : "")
                 sessionStorage.setItem("isLogged", true)
 
                 //Hago la llamada con oauth
