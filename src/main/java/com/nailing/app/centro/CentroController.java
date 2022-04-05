@@ -4,6 +4,8 @@
  */
 package com.nailing.app.centro;
 
+import static com.nailing.app.usuario.AuthoritiesConstants.*;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nailing.app.usuario.AuthoritiesConstants;
 import io.swagger.v3.oas.annotations.Operation;
 
-import com.nailing.app.usuario.Usuario;
 import com.nailing.app.usuario.UsuarioService;
 
 /**
@@ -41,6 +41,7 @@ public class CentroController {
     private UsuarioService usuarioService;
 
     @Operation(summary = "Añade un Centro asociado a un Usuario")
+    @PreAuthorize("hasAuthority('"+ ADMIN +"')")
     @PostMapping("/add/{idUser}")
     public ResponseEntity<Centro> addCentro(@RequestBody Centro centro, @PathVariable int idUser){
         centroService.asociarCentroUsuario(usuarioService.findById((long) idUser).get(), centro);
@@ -52,7 +53,6 @@ public class CentroController {
     
    
     @Operation(summary = "Lista todos los Centros")
-    @PreAuthorize("hasAuthority('"+AuthoritiesConstants.ADMIN+"')")
     @GetMapping("/list")
     public ResponseEntity<List<Centro>> findAll(){
 	List<Centro> centros = centroService.findAll();
@@ -60,6 +60,7 @@ public class CentroController {
     }
     
     @Operation(summary = "Borra un Centro")
+    @PreAuthorize("hasAuthority('"+ ADMIN +"')")
     @DeleteMapping("/delete/{id}")
     public void deleteCentro(@PathVariable Long id) {
     	centroService.delete(id);
@@ -72,6 +73,7 @@ public class CentroController {
     }
     
     @Operation(summary = "Edita un Centro")
+    @PreAuthorize("hasAuthority('"+ ADMIN +"')")
     @RequestMapping(value = "/edit",method = RequestMethod.PUT)
     public ResponseEntity<Centro> updateCentro(@RequestBody Centro centro){
         Centro c = null;

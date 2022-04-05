@@ -4,7 +4,6 @@
  */
 package com.nailing.app.securityConfiguration;
 
-import com.nailing.app.centro.CentroService;
 import com.nailing.app.usuario.Authorities;
 import com.nailing.app.centro.CentroRepository;
 import com.nailing.app.usuario.Usuario;

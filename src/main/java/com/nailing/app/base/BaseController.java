@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nailing.app.usuario.AuthoritiesConstants;
+import static com.nailing.app.usuario.AuthoritiesConstants.*;
 import io.swagger.v3.oas.annotations.Operation;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,7 +31,7 @@ public class BaseController {
 	
 //	mostrar todas las bases existentes en la base de datos
 	@Operation(summary = "Lista todas las Bases")
-	@PreAuthorize("hasAuthority('"+ AuthoritiesConstants.ADMIN +"')")
+	@PreAuthorize("hasAuthority('"+ ADMIN +"')")
 	@GetMapping("/list")
 	public ResponseEntity<List<Base>> listBases(){
 		List<Base> bases = baseService.findAll();
@@ -40,6 +40,7 @@ public class BaseController {
 	
 //	borrar una base por su ID
 	@Operation(summary = "Borra una Base")
+	@PreAuthorize("hasAuthority('"+ ADMIN +"') or hasAuthority('"+ OWNER +"')")
 	@DeleteMapping("/delete/{id}")
 	public void deleteBase(@PathVariable Long id) {
 		baseService.removeBase(id);
@@ -47,12 +48,14 @@ public class BaseController {
 	
 //	encontrar una base por su ID
 	@Operation(summary = "Muestra una Base")
+	@PreAuthorize("hasAuthority('"+ ADMIN +"') or hasAuthority('"+ OWNER +"')")
 	@GetMapping("/show/{id}")
 	public ResponseEntity<Base> showBase(@PathVariable Long id){
 		return new ResponseEntity<>(baseService.findById(id), HttpStatus.OK);
 	}
 	
 	@Operation(summary = "Muestra Bases en funcion de Tipo y Centro")
+	@PreAuthorize("hasAuthority('"+ ADMIN +"') or hasAuthority('"+ USER +"')")
 	@GetMapping("/{tipoId}/centro/{centroId}")
 	public  ResponseEntity<List<Base>> basesByCentroTipo(@PathVariable Long tipoId, @PathVariable Long centroId){
 		List<Base> bases = baseService.findBasesByCentroTipo(tipoId, centroId);
@@ -60,6 +63,7 @@ public class BaseController {
 	}
 	
 	@Operation(summary = "Muestra todas las posibles Bases")
+	@PreAuthorize("hasAuthority('"+ ADMIN +"') or hasAuthority('"+ OWNER +"')")
     @GetMapping("/all")
     public ResponseEntity<List<String>> listPosibleBase(){
         List<String> bases = baseService.listPosibleBase();
@@ -67,6 +71,7 @@ public class BaseController {
     }
 
 	@Operation(summary = "Muestra las Bases asociadas a un Centro")
+	@PreAuthorize("hasAuthority('"+ ADMIN +"') or hasAuthority('"+ OWNER +"')")
 	@GetMapping("/centro/{centroId}/list")
 	public ResponseEntity<List<Base>> listByCentro(@PathVariable Long centroId){
 		List<Base> bases = baseService.findByCentro(centroId);
@@ -74,6 +79,7 @@ public class BaseController {
 	}
     
 	@Operation(summary = "Añade una Base a un Centro")
+	@PreAuthorize("hasAuthority('"+ OWNER +"')")
     @PostMapping("/add/centro")
     public ResponseEntity<List<Base>> addBaseCentro(@RequestBody Map<String,List<String>> basids){
         try{
