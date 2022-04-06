@@ -118,8 +118,8 @@ export function RegistroServiciosCentroForm({ updater }) {
             selectedOptions.map(op => { return arrayOptions.push(op.value) })
             const body = {
                 "personalizaciones": arrayOptions,
-                "tiempo": [precio.current.value],
-                "coste": [tiempo.current.value],
+                "tiempo": [tiempo.current.value],
+                "coste": [precio.current.value],
                 "centro": [sessionStorage.getItem("userCenter")]
             }
 
