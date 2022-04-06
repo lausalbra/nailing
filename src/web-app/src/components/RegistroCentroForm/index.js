@@ -44,8 +44,10 @@ export function RegistroCentroForm() {
       }
 
       const isConfirmed = confirmPassword(password.current.value, passwordConfirm.current.value)
+      const provinciaConfirmada = confirmProvincia(provincia.current.getValue()[0].value, json_provincias)
+      const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
 
-      if (isConfirmed) {
+      if (isConfirmed && horasConfirmadas && provinciaConfirmada) {
           await postData(urlUser, bodyUser, header)
               .then((response) => {
 
@@ -53,10 +55,6 @@ export function RegistroCentroForm() {
                   if (response.status === 500) {
                       changeState("El usuario ya existe. Pruebe con uno nuevo")
                   } else {
-                      alert("Usuario creado con éxito")
-                      /*locationPush("/login")
-                      console.log(response)
-                      changeState("")*/
                       const urlCentre = "https://nailingtest.herokuapp.com/centros/add/"+response.id;
                       const bodyCentre = {
                         "nombre": nombre.current.value,
@@ -68,8 +66,7 @@ export function RegistroCentroForm() {
                         "cierrePM": cierrepm.current.value,
                         "suscripcion": "BASIC"
                       }
-                      const provinciaConfirmada = confirmProvincia(provincia.current.getValue()[0].value, json_provincias)
-                      const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
+                      
                       if(horasConfirmadas && provinciaConfirmada){
                         postData(urlCentre, bodyCentre, {
                           "Content-Type": "application/json",
@@ -100,7 +97,7 @@ export function RegistroCentroForm() {
 
     function confirmProvincia(provincia2, provincias) {
       var array = provincias.filter(x => x.label === provincia2)
-      const result = array.length!=0
+      const result = array.length!==0
       if (!result) {
           changeStateProvincia("Provincia no válida")
       } else {
@@ -139,7 +136,7 @@ export function RegistroCentroForm() {
                 <label className='text-lg' htmlFor="nombre"> Nombre centro:</label>
                 <input className="border-black border-2  rounded-sm mb-4" name="nombre" type="text" ref={nombre}  required/>
                 <label className='text-lg' htmlFor="imagen">   Imagen:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} />
+                <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} required/>
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
                 <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} required/>
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
