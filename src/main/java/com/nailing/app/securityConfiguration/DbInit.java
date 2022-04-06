@@ -6,6 +6,7 @@ package com.nailing.app.securityConfiguration;
 
 import com.nailing.app.usuario.Authorities;
 import com.nailing.app.centro.CentroRepository;
+import com.nailing.app.cita.CitaRepository;
 import com.nailing.app.usuario.Usuario;
 import com.nailing.app.usuario.UsuarioRepository;
 import com.nailing.app.usuario.UsuarioService;
@@ -27,9 +28,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class DbInit implements CommandLineRunner {
     private UsuarioRepository usuarioRepository;
+    private CitaRepository citaRepository;
     private PasswordEncoder passwordEncoder;
     @Autowired
-
     private CentroRepository centroRep;
     @Autowired
     private UsuarioService usuarioService;
@@ -42,6 +43,7 @@ public class DbInit implements CommandLineRunner {
     @Override
     public void run(String... args) {
         // Delete all
+        this.citaRepository.deleteAll();
         this.usuarioRepository.deleteAll();
 
         // Crete users
