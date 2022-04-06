@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DbInit implements CommandLineRunner {
     private UsuarioRepository usuarioRepository;
+    @Autowired
     private CitaRepository citaRepository;
     private PasswordEncoder passwordEncoder;
     @Autowired
