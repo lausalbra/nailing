@@ -48,7 +48,7 @@ const json_provincias = [
   { label: 'Valladolid', value: 'Valladolid' },
   { label: 'Vizcaya', value: 'Vizcaya' },
   { label: 'Zamora', value: 'Zamora' },
-  { label: 'Zaragoza', value: 'Zaragoza' }
+  { label: 'Zaragoza', value: 'Zaragoza' },
 ]
 
 export { json_provincias }
