@@ -32,7 +32,7 @@ export function RegistroServiciosCentroForm({ updater }) {
         "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
     }
 
-    const url = "https://nailingtest.herokuapp.com/"
+    const url = "https://nailing-sprint2.herokuapp.com/"
     let suffix = ""
 
     async function onDropDownChangeType(value) {

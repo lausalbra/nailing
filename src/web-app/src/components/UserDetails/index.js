@@ -11,7 +11,7 @@ export function UserDetails({ image, email, phone }) {
 
   async function handleClick() {
 
-    const url = "https://nailingtest.herokuapp.com/logout"
+    const url = "https://nailing-sprint2.herokuapp.com/logout"
 
     const body = {
       "id": sessionStorage.getItem("userId"),

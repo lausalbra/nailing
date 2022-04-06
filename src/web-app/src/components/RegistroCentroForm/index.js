@@ -31,7 +31,7 @@ export function RegistroCentroForm() {
     async function handleSubmit(evt) {
       evt.preventDefault()
 
-      const urlUser = "https://nailingtest.herokuapp.com/signUp"
+      const urlUser = "https://nailing-sprint2.herokuapp.com/signUp"
       const header = {
           "Content-Type": "application/json"
       }
@@ -55,7 +55,7 @@ export function RegistroCentroForm() {
                   if (response.status === 500) {
                       changeState("El usuario ya existe. Pruebe con uno nuevo")
                   } else {
-                      const urlCentre = "https://nailingtest.herokuapp.com/centros/add/"+response.id;
+                      const urlCentre = "https://nailing-sprint2.herokuapp.com/centros/add/"+response.id;
                       const bodyCentre = {
                         "nombre": nombre.current.value,
                         "imagen": imagen.current.value,

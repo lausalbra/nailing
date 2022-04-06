@@ -229,7 +229,7 @@ class PropertyPanel extends Component {
                     headers: {
                         "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
                     },
-                    url: encodeURI("https://nailingtest.herokuapp.com/cita/check/" + option.centro.id + "?fecha=" + dateSelector.value + " " + hourSelector.value + "&duracion=" + time.toString()),
+                    url: encodeURI("https://nailing-sprint2.herokuapp.com/cita/check/" + option.centro.id + "?fecha=" + dateSelector.value + " " + hourSelector.value + "&duracion=" + time.toString()),
                     success: function (data) {
                         console.log("Hora seleccionada");
                         minuteSelector.disabled = false;
@@ -300,7 +300,7 @@ class PropertyPanel extends Component {
             var url = option.siguienteFase + "/" + option.id + "/centro/" + sessionStorage.getItem("centreId"); 
             $.ajax({
                 method: "GET",
-                url: "https://nailingtest.herokuapp.com/" + url,
+                url: "https://nailing-sprint2.herokuapp.com/" + url,
                 headers: {
                     "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
                 },

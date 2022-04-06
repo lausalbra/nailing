@@ -31,7 +31,7 @@ export function CenterDetails({name, image, provincia, rating, aperturaAM, cierr
           headers: {
               "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
           },
-          url: "https://nailingtest.herokuapp.com/tipos/centro/" + state.id.toString(),
+          url: "https://nailing-sprint2.herokuapp.com/tipos/centro/" + state.id.toString(),
           success: function (data) {
               console.log("Servicios recibidos");
               console.log(data);

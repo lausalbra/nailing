@@ -8,7 +8,7 @@ export function CentroEditForm({id}) {
 
     
 
-    const url = "https://nailingtest.herokuapp.com/centros/show/"+id;
+    const url = "https://nailing-sprint2.herokuapp.com/centros/show/"+id;
     const xhr = new XMLHttpRequest()
     const [resObj, setObj] = useState([])
     const [locationPath, locationPush] = useLocation()
@@ -55,7 +55,7 @@ export function CentroEditForm({id}) {
     async function handleSubmit(evt) {
         evt.preventDefault()
 
-        const url2 = "https://nailingtest.herokuapp.com/centros/edit"
+        const url2 = "https://nailing-sprint2.herokuapp.com/centros/edit"
         const body = {
             "id": id,
             "nombre": nombre.current.value=="" ? (oldNombre):(nombre.current.value),

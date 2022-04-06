@@ -31,7 +31,7 @@ export default function Paypal({json}) {
                 "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
             },
             data: json,
-            url: "https://nailingtest.herokuapp.com/cita/add",
+            url: "https://nailing-sprint2.herokuapp.com/cita/add",
             success: function (data) {
               console.log("Se ha realizado la reserva correctamente",order);
               window.location.href = '/cita';
