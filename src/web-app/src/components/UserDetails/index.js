@@ -41,6 +41,7 @@ export function UserDetails({ image, email, phone }) {
         sessionStorage.setItem("userName", "")
         sessionStorage.setItem("userPassword", "")
         sessionStorage.setItem("userEmail", "")
+        sessionStorage.setItem("userRole", "")
         sessionStorage.setItem("userPhone", "")
         sessionStorage.setItem("isLogged", false)
         sessionStorage.setItem("userCenter", "")
