@@ -124,7 +124,7 @@ export function CentroEditForm({id}) {
                 <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} placeholder={oldImagen}/>
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="provincia" type="text" ref={provincia} placeholder={oldProvincia}/>
-                <Select options={json_provincias} 
+                {/* <Select options={json_provincias} 
                     value={this.selected}
                     onChange={this.handleChange}
                     ref={provincia}
@@ -139,7 +139,7 @@ export function CentroEditForm({id}) {
                         primary: '#F39EEC',   //BORDE, SELECCIONADO
                     },
                     })}
-                    placeholder='Seleccione una provincia'/>
+                    placeholder='Seleccione una provincia'/> */}
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
                 <label className='text-lg' htmlFor="aperturaam">   Hora de apertura horario de mañana:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="aperturaAM" type="text" ref={aperturaam} placeholder={oldAperturaAM}/>
