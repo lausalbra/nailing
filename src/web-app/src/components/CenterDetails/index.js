@@ -14,9 +14,11 @@ export function CenterDetails({name, image, provincia, rating, aperturaAM, cierr
     id: "",
     name: "",
     buttons: [],
-})
+  })
 
-useEffect(() => {
+  const centreId = window.location.pathname.split('/')[2];
+
+  useEffect(() => {
     if (state.id !== "" && state.buttons.length === 0) {
       if(sessionStorage.getItem("userName") == null){
         alert("Debe estar logeado")
@@ -65,7 +67,7 @@ useEffect(() => {
       </div>
     </CardContent>
     <CardActions>
-          <button id="1" className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300"
+          <button id={centreId} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300"
               onClick={(event) => setState({ isPaneOpen: false, id: event.target.id, name: name, buttons: []})}>Realizar reserva</button>
     </CardActions>
   </Card>

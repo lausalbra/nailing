@@ -49,6 +49,7 @@ export function UserDetails({ image, email, phone }) {
       }
       );
   }
+  const centro = sessionStorage.getItem("userCenter")
   const isAdmin = sessionStorage.getItem("userRole") === 'ADMIN'
 
   return (
