@@ -7,8 +7,7 @@ import Box from '@mui/material/Box'
 export function CitasList () {
   const userId = sessionStorage.getItem('userId')
   const [listCitas, setCitas] = useState([])
-  // eslint-disable-next-line no-unused-vars
-  const [locationPath, locationPush] = useLocation()
+  const locationPush = useLocation()[1]
   const url_get = API_URL + '/cita/user/' + userId
 
   useEffect(() => {
@@ -29,8 +28,18 @@ export function CitasList () {
     }
   }
 
-  return (
+  return ( listCitas.length === 0 ?
+    <>
+      <h3 className="text-center m-3 text-3xl">¡Vaya! Parece que no ha reservado ninguna cita.</h3>
+      <div className="text-center m-2"><button
+        onClick={() => locationPush('/cita')}>
+        <p className="text-2xl hover:text-red-400">
+          Realizar una reserva</p></button>
+      </div>
+    </>
+    :
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%'}}>
+      {console.log()}
       {listCitas.map((cita) => (
         <Cita key={cita.id}
           cita={cita}

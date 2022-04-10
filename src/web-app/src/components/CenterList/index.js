@@ -7,8 +7,7 @@ import { Box} from '@mui/material'
 //npm install @mui/icons-material --- npm install @mui/material
 export function CenterList ({ provincia }) {
   const [resObj, setObj] = useState([])
-  // eslint-disable-next-line no-unused-vars
-  const [locationPath, locationPush] = useLocation()
+  const locationPush = useLocation()[1]
   const isAdmin = sessionStorage.getItem("userRole") === 'ADMIN'
   const url = API_URL + '/centros/list'
 

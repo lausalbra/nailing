@@ -24,8 +24,7 @@ export function ServiciosList() {
     const [updaterDecoraciones, updateDecoraciones] = useState(0)
     const [listAcabados, setAcabados] = useState([])
     const [updaterAcabados, updateAcabados] = useState(0)
-    // eslint-disable-next-line no-unused-vars
-    const [locationPath, locationPush] = useLocation()
+    const locationPush = useLocation()[1]
 
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
