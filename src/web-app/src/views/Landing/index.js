@@ -8,7 +8,7 @@ export function Landing() {
         <>
             <Header />
             <Picture image={botes} />
-            <div className="flex ">
+            <div className="flex">
                 <img src={logoInicial} alt="img" className="max-w-full float-left" />
                 <div className='text-xl'>
                     <p className="ml-5 m-5">Gracias por visitar Nailing . Aquí vas a poder reservar citas de forma autónoma de una manera sencilla e intuitiva conociendo en todo momento del proceso el coste y duración de la reserva. </p>
