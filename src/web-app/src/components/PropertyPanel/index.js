@@ -329,7 +329,7 @@ class PropertyPanel extends Component {
                 <div class="border-l-2 border-transparent relative">
                     <input class="w-full absolute z-10 cursor-pointer opacity-0 h-5 top-6" type="checkbox" id="chck1"></input>
                     <header class="flex justify-between items-center p-5 pl-8 pr-8 cursor-pointer select-none tab-label" for="chck1">
-                        <span class="text-grey-darkest font-thin text-xl">
+                        <span class="text-grey-darkest font-thin">
                             {this.state.name}
                         </span>
                         <div class="rounded-full w- border border-grey w-7 h-7 flex items-center justify-center test">
@@ -348,7 +348,7 @@ class PropertyPanel extends Component {
                             nameToShow = nameToShow.replace("ny", "ñ");
                             return (
                                 <>
-                                    <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + element.nombre + " h-responsiveButtonHeight m-1 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center text-{1.1.7_vw}">{nameToShow}</p></div>
+                                    <div class="flex flex-wrap justify-center w-min" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + element.nombre + " h-responsiveButtonHeight max-w-xs max-h-28 m-1 bg-cover font-bold rounded-full p-2 border-2 w-56"}></button><p class="text-center w-fit max-w-md">{nameToShow}</p></div>
                                 </>
                             )
 

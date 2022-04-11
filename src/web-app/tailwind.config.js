@@ -69,7 +69,7 @@ module.exports = {
         'BRILLO': "url('./static/BRILLO.PNG')",
       },
       height: {
-        'responsiveButtonHeight': '128px',
+        'responsiveButtonHeight': '45vw',
       },
     },
   },
