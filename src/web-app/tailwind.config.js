@@ -9,6 +9,7 @@ module.exports = {
     },
     fontFamily: {
       'lucida-handwriting' : ['Lucida Handwriting'],
+      'josefin-sans': ['Josefin Sans', 'sans-serif'],
     },
     fontSize: {
       'responsive-personalization' : '1.7vw',
@@ -76,6 +77,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('tailwindcss-textshadow')
+    require('tailwindcss-textshadow'),
   ],
 }
