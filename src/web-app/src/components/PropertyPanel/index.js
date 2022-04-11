@@ -121,7 +121,7 @@ class PropertyPanel extends Component {
         {
             //Se suman los tiempos y precios y se muestran
             var finisherDiv = document.createElement("div");
-            finisherDiv.className = "flex flex-wrap justify-center font-bold font-lucida-handwriting text-lg mt-2";
+            finisherDiv.className = "flex flex-wrap justify-center font-bold font-josefin-sans text-lg mt-2";
             var time = 0;
             var price = 0;
             if(sessionStorage.getItem("Tipo") != null){
@@ -155,17 +155,17 @@ class PropertyPanel extends Component {
 
             var priceElement = document.createElement("a");
             priceElement.text = "Coste: " + price.toString() + " ";
-            priceElement.className = "w-1/4 inline-block text-shadow-pink-dark text-center m-3";
+            priceElement.className = "w-1/4 inline-block text-center m-3";
             var timeElement = document.createElement("a");
             timeElement.text = "Tiempo: " + time.toString() + " ";
-            timeElement.className = "w-1/4 inline-block text-shadow-pink-dark text-center m-3";
+            timeElement.className = "w-1/4 inline-block text-center m-3";
             //Se crean los selectores de dia, hora y minuto y el boton de reserva
             var dateSelector = document.createElement("INPUT");
-            dateSelector.className = "w-1/4 text-shadow-pink text-black rounded-full m-3";
+            dateSelector.className = "w-1/4 text-black rounded-full m-3";
             var hourSelector = document.createElement("select");
-            hourSelector.className = "w-1/4 text-shadow-pink text-black rounded-full m-3";
+            hourSelector.className = "w-1/4 text-black rounded-full m-3";
             var minuteSelector = document.createElement("select");
-            minuteSelector.className = "w-1/4 text-shadow-pink text-black rounded-full m-3";
+            minuteSelector.className = "w-1/4 text-black rounded-full m-3";
             minuteSelector.disabled = true;
             //JSON final de datos
             var postData = null;
