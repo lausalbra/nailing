@@ -73,7 +73,7 @@
     min-width: 0;
   }
   .slide-pane .slide-pane__title {
-    font-size: 18px;
+    font-size: 3vh;
     font-weight: normal;
     max-width: 80%;
     white-space: nowrap;
@@ -99,7 +99,7 @@
     flex: 1 1 auto;
     background: #ffe2ef;
     color: black;
-    font-size: 1.7vw;
+    font-size: 3vh;
   }
   .slide-pane__subtitle {
     font-size: 12px;
