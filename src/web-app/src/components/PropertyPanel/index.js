@@ -1,18 +1,17 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import "./PropertyPanel.css";
 import Paypal from '../Paypal/PayPal';
-import $ from 'jquery'; 
+import $ from 'jquery';
 
 class PropertyPanel extends Component {
-  
-    constructor(props)
-    {
+
+    constructor(props) {
         super(props);
-        this.state = { name : props.name, buttons: props.buttons };
+        this.state = { name: props.name, buttons: props.buttons };
     }
 
-    handleClick(e, self){
+    handleClick(e, self) {
         //Obtiene el boton pulsado
         console.log("click en opción")
         var id = e.target.id;
@@ -24,18 +23,18 @@ class PropertyPanel extends Component {
         //Si se ha pulsado una caja anterior se eliminan las cajas posteriores
         var containerDiv = checkbox.parentElement.parentElement.parentElement;
         let nextSibling = containerDiv.nextElementSibling;
-        while(nextSibling) {
+        while (nextSibling) {
             var toDelete = nextSibling;
             nextSibling = nextSibling.nextElementSibling;
             toDelete.remove();
         }
         //Se guarda esta opcion
         sessionStorage.setItem(this.state.name, id);
-        sessionStorage.setItem(this.state.name+"Cost", option.coste);
-        sessionStorage.setItem(this.state.name+"Time", option.tiempo);
+        sessionStorage.setItem(this.state.name + "Cost", option.coste);
+        sessionStorage.setItem(this.state.name + "Time", option.tiempo);
         //Si es una caja anterior se borran las variables anteriores
-        switch(this.state.name){
-            case("Tipo"):
+        switch (this.state.name) {
+            case ("Tipo"):
                 sessionStorage.removeItem("Bases");
                 sessionStorage.removeItem("BasesCost");
                 sessionStorage.removeItem("BasesTime");
@@ -55,7 +54,7 @@ class PropertyPanel extends Component {
                 sessionStorage.removeItem("AcabadosCost");
                 sessionStorage.removeItem("AcabadosTime");
                 break;
-            case("Bases"):
+            case ("Bases"):
                 sessionStorage.removeItem("Formas");
                 sessionStorage.removeItem("FormasCost");
                 sessionStorage.removeItem("FormasTime");
@@ -72,7 +71,7 @@ class PropertyPanel extends Component {
                 sessionStorage.removeItem("AcabadosCost");
                 sessionStorage.removeItem("AcabadosTime");
                 break;
-            case("Formas"):
+            case ("Formas"):
                 sessionStorage.removeItem("Tamaños");
                 sessionStorage.removeItem("TamañosCost");
                 sessionStorage.removeItem("TamañosTime");
@@ -86,7 +85,7 @@ class PropertyPanel extends Component {
                 sessionStorage.removeItem("AcabadosCost");
                 sessionStorage.removeItem("AcabadosTime");
                 break;
-            case("Tamaños"):
+            case ("Tamaños"):
                 sessionStorage.removeItem("Diseños");
                 sessionStorage.removeItem("DiseñosCost");
                 sessionStorage.removeItem("DiseñosTime");
@@ -97,7 +96,7 @@ class PropertyPanel extends Component {
                 sessionStorage.removeItem("AcabadosCost");
                 sessionStorage.removeItem("AcabadosTime");
                 break;
-            case("Diseños"):
+            case ("Diseños"):
                 sessionStorage.removeItem("Decoraciones");
                 sessionStorage.removeItem("DecoracionesCost");
                 sessionStorage.removeItem("DecoracionesTime");
@@ -105,7 +104,7 @@ class PropertyPanel extends Component {
                 sessionStorage.removeItem("AcabadosCost");
                 sessionStorage.removeItem("AcabadosTime");
                 break;
-            case("Decoraciones"):
+            case ("Decoraciones"):
                 sessionStorage.removeItem("Acabados");
                 sessionStorage.removeItem("AcabadosCost");
                 sessionStorage.removeItem("AcabadosTime");
@@ -117,38 +116,38 @@ class PropertyPanel extends Component {
         //Se obtiene el panel principal para colocar la nueva caja
         var mainPanel = containerDiv.parentElement;
         //Se comrpueba el siguiente set de opciones
-        if(option.siguienteFase === "fin") //Si no hay más opciones se recopilan los datos de las opciones ya seleccionadas
+        if (option.siguienteFase === "fin") //Si no hay más opciones se recopilan los datos de las opciones ya seleccionadas
         {
             //Se suman los tiempos y precios y se muestran
             var finisherDiv = document.createElement("div");
             finisherDiv.className = "flex flex-wrap justify-center font-bold font-josefin-sans text-lg mt-2";
             var time = 0;
             var price = 0;
-            if(sessionStorage.getItem("Tipo") != null){
+            if (sessionStorage.getItem("Tipo") != null) {
                 time += parseInt(sessionStorage.getItem("TipoTime"));
                 price += parseFloat(sessionStorage.getItem("TipoCost"));
             }
-            if(sessionStorage.getItem("Bases") != null){
+            if (sessionStorage.getItem("Bases") != null) {
                 time += parseInt(sessionStorage.getItem("BasesTime"));
                 price += parseFloat(sessionStorage.getItem("BasesCost"));
             }
-            if(sessionStorage.getItem("Formas") != null){
+            if (sessionStorage.getItem("Formas") != null) {
                 time += parseInt(sessionStorage.getItem("FormasTime"));
                 price += parseFloat(sessionStorage.getItem("FormasCost"));
             }
-            if(sessionStorage.getItem("Tamaños") != null){
+            if (sessionStorage.getItem("Tamaños") != null) {
                 time += parseInt(sessionStorage.getItem("TamañosTime"));
                 price += parseFloat(sessionStorage.getItem("TamañosCost"));
             }
-            if(sessionStorage.getItem("Diseños") != null){
+            if (sessionStorage.getItem("Diseños") != null) {
                 time += parseInt(sessionStorage.getItem("DiseñosTime"));
                 price += parseFloat(sessionStorage.getItem("DiseñosCost"));
             }
-            if(sessionStorage.getItem("Decoraciones") != null){
+            if (sessionStorage.getItem("Decoraciones") != null) {
                 time += parseInt(sessionStorage.getItem("DecoracionesTime"));
                 price += parseFloat(sessionStorage.getItem("DecoracionesCost"));
             }
-            if(sessionStorage.getItem("Acabados") != null){
+            if (sessionStorage.getItem("Acabados") != null) {
                 time += parseInt(sessionStorage.getItem("AcabadosTime"));
                 price += parseFloat(sessionStorage.getItem("AcabadosCost"));
             }
@@ -181,12 +180,12 @@ class PropertyPanel extends Component {
             var day = tomorrow.getDate();
             if (day < 10) day = '0' + day;
             var month = tomorrow.getMonth() + 1;
-            if (month <10) month = '0' + month;
+            if (month < 10) month = '0' + month;
             tomorrow = tomorrow.getFullYear() + '-' + month + '-' + day;
             //La fecha mínima es mañana
             dateSelector.setAttribute("min", tomorrow);
             //Cuando se escoja una fecha, se podra escoger hora
-            dateSelector.onchange = function(){
+            dateSelector.onchange = function () {
                 hourSelector.disabled = false;
             }
 
@@ -196,13 +195,11 @@ class PropertyPanel extends Component {
             var horaAperturaPM = parseInt(option.centro.aperturaPM.split(":")[0])
             var horaCierrePM = parseInt(option.centro.cierrePM.split(":")[0])
             var hourOptions = [];
-            while (horaAperturaAM<horaCierreAM)
-            {
+            while (horaAperturaAM < horaCierreAM) {
                 hourOptions.push(horaAperturaAM.toString());
                 horaAperturaAM++;
             }
-            while (horaAperturaPM<horaCierrePM)
-            {
+            while (horaAperturaPM < horaCierrePM) {
                 hourOptions.push(horaAperturaPM.toString());
                 horaAperturaPM++;
             }
@@ -219,10 +216,10 @@ class PropertyPanel extends Component {
                 selectOption.value = element;
                 selectOption.text = element;
                 hourSelector.appendChild(selectOption);
-            });           
+            });
 
             //Al cambiar la hora en el selector se configura el selector de minutos
-            hourSelector.onchange = function(){
+            hourSelector.onchange = function () {
                 $.ajax({
                     method: "GET",
                     contentType: "application/json",
@@ -235,8 +232,7 @@ class PropertyPanel extends Component {
                         minuteSelector.disabled = false;
                         //Se borran opciones anteriores
                         var i, L = minuteSelector.options.length - 1;
-                        for(i = L; i >= 0; i--)
-                        {
+                        for (i = L; i >= 0; i--) {
                             minuteSelector.remove(i);
                         }
                         //Se añade una opción predeterminada
@@ -261,7 +257,7 @@ class PropertyPanel extends Component {
             selectDefaultOption.text = "Escoja un tramo";
             minuteSelector.appendChild(selectDefaultOption);
             //Cuando cambie el valor del selector de minuto se rellenan los datos de llamada y se desbloquea el boton de reserva
-            minuteSelector.onchange = function(){
+            minuteSelector.onchange = function () {
                 postData = {
                     usuario: sessionStorage.getItem("userId"),
                     centro: sessionStorage.getItem("centreId"),
@@ -282,7 +278,7 @@ class PropertyPanel extends Component {
                 newDiv.className = "w-full flex justify-center";
                 paybuttonDiv.appendChild(newDiv);
 
-                ReactDOM.render(<Paypal json={json}/>,newDiv);
+                ReactDOM.render(<Paypal json={json} />, newDiv);
             };
 
             //Se añaden todos los elementos al div
@@ -295,9 +291,9 @@ class PropertyPanel extends Component {
             paybuttonDiv.appendChild(paypalDiv);
             mainPanel.append(finisherDiv);
         }
-        else{
+        else {
             //Se crea la url para obtener las siguientes opciones
-            var url = option.siguienteFase + "/" + option.id + "/centro/" + sessionStorage.getItem("centreId"); 
+            var url = option.siguienteFase + "/" + option.id + "/centro/" + sessionStorage.getItem("centreId");
             $.ajax({
                 method: "GET",
                 url: "https://nailingtest.herokuapp.com/" + url,
@@ -312,56 +308,55 @@ class PropertyPanel extends Component {
                     let newPropertyPanelContainer = document.createElement("div");
                     //Configuración del panel
                     var nextName = option.siguienteFase.charAt(0).toUpperCase() + option.siguienteFase.slice(1);
-                    nextName = nextName.replace("ny","ñ");
+                    nextName = nextName.replace("ny", "ñ");
                     newPropertyPanelContainer.id = nextName + "Container";
                     newPropertyPanelContainer.className = "propertyContainer";
                     //Se añade y se abre el panel
                     mainPanel.append(newPropertyPanelContainer);
-                    ReactDOM.render(<><PropertyPanel name={nextName} buttons={data}/></>, newPropertyPanelContainer);
+                    ReactDOM.render(<><PropertyPanel name={nextName} buttons={data} /></>, newPropertyPanelContainer);
                     newPropertyPanelContainer.firstChild.firstChild.firstChild.checked = true;
                 }
             });
         }
-        
+
     }
-    
-       
-    render()
-    {
+
+
+    render() {
         const self = this;
-        return(
-        <div class="border-b overflow-hidden tab">
-            <div class="border-l-2 border-transparent relative">
-                <input class="w-full absolute z-10 cursor-pointer opacity-0 h-5 top-6" type="checkbox" id="chck1"></input>
-                <header class="flex justify-between items-center p-5 pl-8 pr-8 cursor-pointer select-none tab-label" for="chck1">
-                    <span class="text-grey-darkest font-thin text-xl">
-                        {this.state.name}
-                    </span>
-                    <div class="rounded-full w- border border-grey w-7 h-7 flex items-center justify-center test">
-                        <svg aria-hidden="true" class="" data-reactid="266" fill="none" height="24" stroke="#606F7B" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                            <polyline points="6 9 12 15 18 9">
-                            </polyline>
-                        </svg>
+        return (
+            <div class="border-b overflow-hidden tab">
+                <div class="border-l-2 border-transparent relative">
+                    <input class="w-full absolute z-10 cursor-pointer opacity-0 h-5 top-6" type="checkbox" id="chck1"></input>
+                    <header class="flex justify-between items-center p-5 pl-8 pr-8 cursor-pointer select-none tab-label" for="chck1">
+                        <span class="text-grey-darkest font-thin text-xl">
+                            {this.state.name}
+                        </span>
+                        <div class="rounded-full w- border border-grey w-7 h-7 flex items-center justify-center test">
+                            <svg aria-hidden="true" class="" data-reactid="266" fill="none" height="24" stroke="#606F7B" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                <polyline points="6 9 12 15 18 9">
+                                </polyline>
+                            </svg>
+                        </div>
+                    </header>
+                    <div class="bg-NATURAL bg-ESCULPIDA bg-DUAL_SYSTEM bg-GEL bg-ACRILICO bg-ACRYGEL bg-SEMIPERMANENTE bg-SEMIPERMANENTE_REFUERZO bg-JAPONESA bg-SQUARE bg-ROUND bg-SQUOVAL bg-ALMOND bg-STILETTO bg-BALLERINA bg-XXS bg-XS bg-S bg-M bg-L bg-XL bg-XXL bg-RELLENO bg-FRANCESA_REVERSA bg-BABY_BOOMER bg-DEGRADADO_COLOR bg-ENCAPSULADO bg-LISAS bg-DIBUJO bg-DISNEY_COLOR bg-DISNEY_BOCETO bg-TRANSFER_FOIL bg-PIEDRAS bg-PIERCING bg-PEGATINAS bg-STANPING bg-PAN_DE_ANGEL bg-EFECTO_HUEVO bg-EFECTO_PIEDRA bg-FRANCESA bg-BURBUJAS bg-SUGAR bg-EFECTO_RELIEVE bg-ESPEJO bg-HOLOGRAFICO bg-MARMOL bg-MATE bg-BRILLO"></div>
+                    <div class="tab-content flex justify-center flex-wrap">
+                        {this.state.buttons.map((element, i) => {
+                            console.log(element.nombre);
+                            var id = element.id
+                            var nameToShow = element.nombre.replace("_", " ");
+                            nameToShow = nameToShow.replace("ny", "ñ");
+                            return (
+                                <>
+                                    <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + element.nombre + " h-responsiveButtonHeight m-1 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center text-{1.1.7_vw}">{nameToShow}</p></div>
+                                </>
+                            )
+
+                        })}
                     </div>
-                </header>
-                <div class= "bg-NATURAL bg-ESCULPIDA bg-DUAL_SYSTEM bg-GEL bg-ACRILICO bg-ACRYGEL bg-SEMIPERMANENTE bg-SEMIPERMANENTE_REFUERZO bg-JAPONESA bg-SQUARE bg-ROUND bg-SQUOVAL bg-ALMOND bg-STILETTO bg-BALLERINA bg-XXS bg-XS bg-S bg-M bg-L bg-XL bg-XXL bg-RELLENO bg-FRANCESA_REVERSA bg-BABY_BOOMER bg-DEGRADADO_COLOR bg-ENCAPSULADO bg-LISAS bg-DIBUJO bg-DISNEY_COLOR bg-DISNEY_BOCETO bg-TRANSFER_FOIL bg-PIEDRAS bg-PIERCING bg-PEGATINAS bg-STANPING bg-PAN_DE_ANGEL bg-EFECTO_HUEVO bg-EFECTO_PIEDRA bg-FRANCESA bg-BURBUJAS bg-SUGAR bg-EFECTO_RELIEVE bg-ESPEJO bg-HOLOGRAFICO bg-MARMOL bg-MATE bg-BRILLO"></div>
-                <div class="tab-content flex justify-center flex-wrap">
-                    {this.state.buttons.map((element,i) => {
-                        console.log(element.nombre);
-                        var id = element.id
-                        var nameToShow = element.nombre.replace("_", " ");
-                        nameToShow = nameToShow.replace("ny", "ñ");
-                        return( 
-                            <>
-                            <div class="justify-center w-1/5" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + element.nombre + " h-responsiveButtonHeight m-1 bg-cover font-bold rounded-full p-2 border-2 w-full"}></button><p class="text-center text-responsive-personalization">{nameToShow}</p></div>
-                            </>
-                        )
-                        
-                    })}
                 </div>
-            </div>
-        </div>)
+            </div>)
     }
-} 
+}
 
 export default PropertyPanel;

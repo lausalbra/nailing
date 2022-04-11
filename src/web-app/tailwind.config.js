@@ -8,11 +8,8 @@ module.exports = {
       'pink-dark': '0.5px 0.5px 0 #ff3395',
     },
     fontFamily: {
-      'lucida-handwriting' : ['Lucida Handwriting'],
+      'lucida-handwriting': ['Lucida Handwriting'],
       'josefin-sans': ['Josefin Sans', 'sans-serif'],
-    },
-    fontSize: {
-      'responsive-personalization' : '1.7vw',
     },
     extend: {
       backgroundImage: {
