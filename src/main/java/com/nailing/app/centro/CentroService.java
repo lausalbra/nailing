@@ -4,6 +4,7 @@
  */
 package com.nailing.app.centro;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -93,10 +94,35 @@ public class CentroService {
   
     public Centro addCentro(Centro centro) {
         if(centro != null){
+        	if(centro.getSuscripcion() == Suscripcion.BASIC){
+        		centro.setCreditosrestantes(150);
+        	}
+        	else if(centro.getSuscripcion() == Suscripcion.MEDIUM){
+        		centro.setCreditosrestantes(200);
+        	}
+        	else if(centro.getSuscripcion() == Suscripcion.ADVANCED){
+        		centro.setCreditosrestantes(300);
+        	}
+        	else if(centro.getSuscripcion() == Suscripcion.PREMIUM){
+        		centro.setCreditosrestantes(400);
+        	}
+        	centro.setCitasconcreditos(0);
+        	centro.setCitassincreditos(0);
             return centroRepository.save(centro);
         }else{
             throw new IllegalArgumentException();
         }
+    }
+    public Boolean fechacumplida(Centro centro) {
+    	Boolean result = null;
+    	LocalDate fechaActual = LocalDate.now();
+    	int dia = fechaActual.getDayOfMonth();
+    	LocalDate fechaSuscripcion = centro.getUltimaSuscripcion();
+    	int diaSuscripcion = fechaSuscripcion.getDayOfMonth();
+    	if(dia == diaSuscripcion) {
+    		
+    	}
+    	return result;
     }
   
     public Usuario asociarCentroUsuario(Usuario usuario, Centro centro) {

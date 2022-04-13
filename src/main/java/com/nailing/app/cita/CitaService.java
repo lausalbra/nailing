@@ -136,6 +136,15 @@ public class CitaService {
 		return citaRepository.save(cita);
 
 	}
+	public void restaruncredito(Cita cita) {
+		Centro citacentro = cita.getCentro();
+		if(citacentro.getCreditosrestantes()>0) {
+			citacentro.setCreditosrestantes(citacentro.getCreditosrestantes()-1);
+			citacentro.setCitasconcreditos(citacentro.getCitasconcreditos()+1);
+		}else {
+			citacentro.setCitassincreditos(citacentro.getCitassincreditos()+1);
+		}
+	}
 
 	public List<String> findDisponibles(String fecha, Integer tiempo, Long centroId) {
 		DateTimeFormatter dt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");

@@ -90,6 +90,7 @@ public class CitaController {
 		Cita cita = null;
 		try {
 			cita = citaService.addCita(ids);
+			citaService.restaruncredito(cita);
 			return new ResponseEntity<>(cita, HttpStatus.CREATED);
 		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<>(cita, HttpStatus.BAD_REQUEST);

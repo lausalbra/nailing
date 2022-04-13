@@ -18,6 +18,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
@@ -63,6 +64,69 @@ public class Centro {
 	@Column(name = "suscripcion")
 	@NotNull
 	private Suscripcion suscripcion;
+	@Column(name = "ultimasuscripcion")
+	@NotNull
+	private LocalDate ultimaSuscripcion;
+	@Column(name = "creditosrestantes")
+	@NotNull
+	private Integer creditosrestantes;
+	@Column(name = "citascreditos")
+	@NotNull
+	private Integer citasconcreditos;
+	@Column(name = "citassincreditos")
+	@NotNull
+	private Integer citassincreditos;
+	public LocalDate getUltimaSuscripcion() {
+		return ultimaSuscripcion;
+	}
+
+	public void setUltimaSuscripcion(LocalDate ultimaSuscripcion) {
+		this.ultimaSuscripcion = ultimaSuscripcion;
+	}
+
+	public Integer getCreditosrestantes() {
+		return creditosrestantes;
+	}
+
+	public void setCreditosrestantes(Integer creditosrestantes) {
+		this.creditosrestantes = creditosrestantes;
+	}
+
+	public Integer getCitasconcreditos() {
+		return citasconcreditos;
+	}
+
+	public void setCitasconcreditos(Integer citasconcreditos) {
+		this.citasconcreditos = citasconcreditos;
+	}
+
+	public Integer getCitassincreditos() {
+		return citassincreditos;
+	}
+
+	public void setCitassincreditos(Integer citassincreditos) {
+		this.citassincreditos = citassincreditos;
+	}
+
+	public Centro(Long id, @Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
+			@Size(max = 50) @NotBlank String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM,
+			LocalTime cierrePM, @NotNull Suscripcion suscripcion, @NotNull LocalDate ultimaSuscripcion,
+			@NotNull Integer creditosrestantes, @NotNull Integer citasconcreditos, @NotNull Integer citassincreditos) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.imagen = imagen;
+		this.provincia = provincia;
+		this.aperturaAM = aperturaAM;
+		this.cierreAM = cierreAM;
+		this.aperturaPM = aperturaPM;
+		this.cierrePM = cierrePM;
+		this.suscripcion = suscripcion;
+		this.ultimaSuscripcion = ultimaSuscripcion;
+		this.creditosrestantes = creditosrestantes;
+		this.citasconcreditos = citasconcreditos;
+		this.citassincreditos = citassincreditos;
+	}
 
 	public Centro() {
 	}
