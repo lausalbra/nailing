@@ -70,7 +70,7 @@ public class DecoracionService {
         }else{
             decoraciones = Arrays.asList(NombreDecoracion.DIBUJO,NombreDecoracion.DISNEY_COLOR,
                     NombreDecoracion.DISNEY_BOCETO,NombreDecoracion.TRANSFER_FOIL,NombreDecoracion.PIEDRAS,
-                    NombreDecoracion.PIERCING,NombreDecoracion.PEGATINAS,NombreDecoracion.STANPING,NombreDecoracion.PAN_DE_ANGEL);
+                    NombreDecoracion.PIERCING,NombreDecoracion.PEGATINAS,NombreDecoracion.STANPING,NombreDecoracion.PAN_DE_ANGEL,NombreDecoracion.NO_DECORACION);
             decoracionesCentro = decoracionRepository.findByCentro(centroId);
             for(Decoracion d: decoracionesCentro){
                 if(decoraciones.contains(d.getNombre())){
@@ -101,6 +101,7 @@ public class DecoracionService {
         decoraciones.add(NombreDecoracion.ESPEJO.toString());
         decoraciones.add(NombreDecoracion.HOLOGRAFICO.toString());
         decoraciones.add(NombreDecoracion.MARMOL.toString());
+        decoraciones.add(NombreDecoracion.NO_DECORACION.toString());
         return decoraciones;
     }
     
@@ -187,6 +188,9 @@ public class DecoracionService {
                         break;
                     case "MARMOL":
                         decoracion.setNombre(NombreDecoracion.MARMOL);
+                        break;
+                    case "NO_DECORACION":
+                        decoracion.setNombre(NombreDecoracion.NO_DECORACION);
                         break;
                     default:
                         break;
