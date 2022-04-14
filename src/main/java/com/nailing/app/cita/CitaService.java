@@ -132,19 +132,11 @@ public class CitaService {
 
 		Cita cita = new Cita(precio, horaInicio, horaFin, decoracion, acabado, base, tipo, disenyo, tamanyo, forma,
 				usuario, centro);
-
-		return citaRepository.save(cita);
-
-	}
-	public void restaruncredito(Cita cita) {
 		Centro citacentro = cita.getCentro();
-		if(citacentro.getCreditosrestantes()>0) {
-			citacentro.setCreditosrestantes(citacentro.getCreditosrestantes()-1);
-			citacentro.setCitasconcreditos(citacentro.getCitasconcreditos()+1);
-		}else {
-			citacentro.setCitassincreditos(citacentro.getCitassincreditos()+1);
-		}
+		citacentro.setCreditosrestantes(citacentro.getCreditosrestantes()-1);
+		return citaRepository.save(cita);
 	}
+	
 
 	public List<String> findDisponibles(String fecha, Integer tiempo, Long centroId) {
 		DateTimeFormatter dt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");

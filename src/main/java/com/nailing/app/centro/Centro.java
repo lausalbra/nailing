@@ -70,12 +70,39 @@ public class Centro {
 	@Column(name = "creditosrestantes")
 	@NotNull
 	private Integer creditosrestantes;
-	@Column(name = "citascreditos")
+	@Column(name = "pagado")
 	@NotNull
-	private Integer citasconcreditos;
-	@Column(name = "citassincreditos")
-	@NotNull
-	private Integer citassincreditos;
+	private Boolean pagado;
+
+	
+
+	public Centro(Long id, @Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
+			@Size(max = 50) @NotBlank String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM,
+			LocalTime cierrePM, @NotNull Suscripcion suscripcion, @NotNull LocalDate ultimaSuscripcion,
+			@NotNull Integer creditosrestantes, @NotNull Boolean pagado) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.imagen = imagen;
+		this.provincia = provincia;
+		this.aperturaAM = aperturaAM;
+		this.cierreAM = cierreAM;
+		this.aperturaPM = aperturaPM;
+		this.cierrePM = cierrePM;
+		this.suscripcion = suscripcion;
+		this.ultimaSuscripcion = ultimaSuscripcion;
+		this.creditosrestantes = creditosrestantes;
+		this.pagado = pagado;
+	}
+
+	public Boolean getPagado() {
+		return pagado;
+	}
+
+	public void setPagado(Boolean pagado) {
+		this.pagado = pagado;
+	}
+
 	public LocalDate getUltimaSuscripcion() {
 		return ultimaSuscripcion;
 	}
@@ -92,59 +119,12 @@ public class Centro {
 		this.creditosrestantes = creditosrestantes;
 	}
 
-	public Integer getCitasconcreditos() {
-		return citasconcreditos;
-	}
-
-	public void setCitasconcreditos(Integer citasconcreditos) {
-		this.citasconcreditos = citasconcreditos;
-	}
-
-	public Integer getCitassincreditos() {
-		return citassincreditos;
-	}
-
-	public void setCitassincreditos(Integer citassincreditos) {
-		this.citassincreditos = citassincreditos;
-	}
-
-	public Centro(Long id, @Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
-			@Size(max = 50) @NotBlank String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM,
-			LocalTime cierrePM, @NotNull Suscripcion suscripcion, @NotNull LocalDate ultimaSuscripcion,
-			@NotNull Integer creditosrestantes, @NotNull Integer citasconcreditos, @NotNull Integer citassincreditos) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.imagen = imagen;
-		this.provincia = provincia;
-		this.aperturaAM = aperturaAM;
-		this.cierreAM = cierreAM;
-		this.aperturaPM = aperturaPM;
-		this.cierrePM = cierrePM;
-		this.suscripcion = suscripcion;
-		this.ultimaSuscripcion = ultimaSuscripcion;
-		this.creditosrestantes = creditosrestantes;
-		this.citasconcreditos = citasconcreditos;
-		this.citassincreditos = citassincreditos;
-	}
+	
 
 	public Centro() {
 	}
 
-	public Centro(Long id, @Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
-			String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM, LocalTime cierrePM, Suscripcion suscripcion) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.imagen = imagen;
-		this.provincia = provincia;
-		this.aperturaAM = aperturaAM;
-		this.cierreAM = cierreAM;
-		this.aperturaPM = aperturaPM;
-		this.cierrePM = cierrePM;
-		this.suscripcion = suscripcion;
-	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -241,7 +221,8 @@ public class Centro {
 	public String toString() {
 		return "Centro [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", provincia=" + provincia
 				+ ", aperturaAM=" + aperturaAM + ", cierreAM=" + cierreAM + ", aperturaPM=" + aperturaPM + ", cierrePM="
-				+ cierrePM +", suscripcion="+ suscripcion +"]";
+				+ cierrePM + ", suscripcion=" + suscripcion + ", ultimaSuscripcion=" + ultimaSuscripcion
+				+ ", creditosrestantes=" + creditosrestantes + ", pagado=" + pagado + "]";
 	}
 
 }
