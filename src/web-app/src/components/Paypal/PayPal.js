@@ -25,7 +25,7 @@ export default function Paypal({json, money, paymentType}) {
         },
         onApprove: async (_data, actions) => {
           const order = await actions.order.capture();
-          switch({paymentType}){
+          switch(paymentType){
             case "Reserve":
               $.ajax({
                 method: "POST",
@@ -37,7 +37,7 @@ export default function Paypal({json, money, paymentType}) {
                 url: "https://nailingtest.herokuapp.com/cita/add",
                 success: function (_data) {
                   console.log("Se ha realizado la reserva correctamente",order);
-                  window.location.href = '/cita';
+                  window.location.href = '/miscitas';
                 },
               });
               break;
@@ -47,6 +47,7 @@ export default function Paypal({json, money, paymentType}) {
                 "Content-Type": "application/json",
                 "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
               });
+              window.location.href = '/usuario';
               break;
             default:
               break;
