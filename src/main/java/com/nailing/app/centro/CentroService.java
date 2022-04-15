@@ -122,7 +122,7 @@ public class CentroService {
     public void fechacumplida(Centro centro) {
     	LocalDate fechaActual = LocalDate.now();
     	LocalDate fechaSuscripcion = centro.getUltimaSuscripcion();
-    	if(fechaSuscripcion.plusMonths(1) == fechaActual) {
+    	if(fechaSuscripcion.plusMonths(1).isAfter(fechaActual) ) {
     		centro.setPagado(false);
     	}
     }
