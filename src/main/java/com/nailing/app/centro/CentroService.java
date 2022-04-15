@@ -94,7 +94,9 @@ public class CentroService {
   
     public Centro addCentro(Centro centro) {
         if(centro != null){
-		        if(!(centro.getPagado()== false)) {
+        	if(!(centroTieneCambios(centro)==true)) {
+        		if(!(centro.getPagado()== false)) {
+		        	centro.setUltimaSuscripcion(LocalDate.now());
 		        	if(centro.getSuscripcion() == Suscripcion.BASIC){
 		        		centro.setCreditosrestantes(150);
 		        	}
@@ -107,10 +109,11 @@ public class CentroService {
 		        	else if(centro.getSuscripcion() == Suscripcion.PREMIUM){
 		        		centro.setCreditosrestantes(400);
 		        	}
-		            
+        	}     
 		        }else {
 		        	
 		        }
+		    
 	        return centroRepository.save(centro);
         }else{
             throw new IllegalArgumentException();
@@ -118,10 +121,8 @@ public class CentroService {
     }
     public void fechacumplida(Centro centro) {
     	LocalDate fechaActual = LocalDate.now();
-    	int dia = fechaActual.getDayOfMonth();
     	LocalDate fechaSuscripcion = centro.getUltimaSuscripcion();
-    	int diaSuscripcion = fechaSuscripcion.getDayOfMonth();
-    	if(dia == diaSuscripcion) {
+    	if(fechaSuscripcion.plusMonths(1) == fechaActual) {
     		centro.setPagado(false);
     	}
     }
@@ -137,5 +138,34 @@ public class CentroService {
         usuario.setRol(Authorities.OWNER);
     	return usuarioService.save(usuario);
     }
-   
+   private Boolean centroTieneCambios(Centro centro) {
+	   List<Centro> centros = findAll();
+	   Boolean result = false;
+	   for(Centro c: centros) {
+		   if(c.getId() == centro.getId()) {
+			   if(c.getNombre() != c.getNombre()) {
+				   result = true;
+				   
+			   }
+			   else if(c.getImagen() != centro.getImagen()) {
+				   result = true;
+				  
+			   }
+			   else if(c.getAperturaAM() != centro.getAperturaAM()) {
+				   result = true;
+				 
+			   }
+			   else if(c.getAperturaPM() != centro.getAperturaPM()) {
+				   result = true;
+			   }
+			   else if(c.getCierreAM() != centro.getCierreAM()) {
+				   result = true;
+			   }
+			   else if(c.getCierrePM() != centro.getCierrePM()) {
+				   result = true;
+			   }
+		   }
+	   }
+	   return result;
+   }
 }
