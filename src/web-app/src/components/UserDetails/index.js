@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from "react"
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -52,6 +53,35 @@ export function UserDetails({ image, email, phone }) {
   }
   const centro = sessionStorage.getItem("userCenter")
   const isAdmin = sessionStorage.getItem("userRole") === 'ADMIN'
+  let pagado = null
+  let restantesPositivo = null
+  const [resObj, setObj] = useState([])
+  const url = "https://nailingtest.herokuapp.com/centros/show/"+centro;
+  const xhr = new XMLHttpRequest()
+  useEffect(() => {
+    xhr.open('get', url)
+    xhr.send()
+    xhr.onload = function () {
+      if (this.status === 200) {
+        try {
+          setObj(JSON.parse(this.responseText))
+          console.log('Petición Rest exitosa')
+        } catch (e) {
+          console.warn('Excepción capturada en la petición REST')
+          sessionStorage.setItem(e)
+          locationPush('/error')
+        }
+      } else {
+        console.warn('Error en la petición REST')
+        sessionStorage.setItem("La API Rest (" + url + ") ha devuelto el error " + this.status)
+        locationPush('/error')
+      }
+    }
+  }, [])
+  if (centro != ""){
+    restantesPositivo = resObj.creditosrestantes>=0
+    pagado = resObj.pagado
+  }
 
   return (
     <Card style={{ backgroundColor: 'rgb(248, 225, 228)' }} sx={{ minWidth: 275 }}>
@@ -72,13 +102,7 @@ export function UserDetails({ image, email, phone }) {
         <button onClick={() => locationPush('/miscitas')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Mis reservas</button>
       </CardActions>
       <CardActions>
-      {isAdmin ?
-                <>
-                  <button onClick={() => locationPush('/centroadd')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Añadir centro</button>
-                </>
-                :    
-                <></>
-            }  
+        <button onClick={() => locationPush('/centroadd')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Añadir centro</button>
       </CardActions>
       <CardActions>
         <button onClick={handleClick} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Cerrar Sesión</button>
@@ -86,6 +110,19 @@ export function UserDetails({ image, email, phone }) {
       {centro !== "" ?
       <CardActions>
         <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Servicios de centro</button>
+      </CardActions>
+      :
+      <></>
+      }
+      {restantesPositivo==false ?
+      <CardActions>
+        <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Pagar créditos atrasados</button>
+      </CardActions>
+      :
+      <></>
+      }{pagado==false && restantesPositivo==true ?
+      <CardActions>
+        <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Pagar suscripción</button>
       </CardActions>
       :
       <></>
