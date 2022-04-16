@@ -10,6 +10,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,6 +36,7 @@ import com.nailing.app.usuario.UsuarioService;
 @RestController
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE })
 @RequestMapping("/centros")
+@EnableScheduling
 public class CentroController {
     
     @Autowired
@@ -85,4 +88,11 @@ public class CentroController {
         }
        
     }
+    @Operation(summary = "Llamada automatica para comprobación de centros")
+    @Scheduled(fixedRate = 86400000)
+    @GetMapping("/comprobacionCentros")
+    public void comprobacionCentros() {
+    	centroService.comprobacionCentros();
+    }
+    
 }

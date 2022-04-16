@@ -132,10 +132,11 @@ public class CitaService {
 
 		Cita cita = new Cita(precio, horaInicio, horaFin, decoracion, acabado, base, tipo, disenyo, tamanyo, forma,
 				usuario, centro);
-
+		Centro citacentro = cita.getCentro();
+		citacentro.setCreditosrestantes(citacentro.getCreditosrestantes()-1);
 		return citaRepository.save(cita);
-
 	}
+	
 
 	public List<String> findDisponibles(String fecha, Integer tiempo, Long centroId) {
 		DateTimeFormatter dt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
