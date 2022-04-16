@@ -24,9 +24,9 @@ DELETE FROM acabado;
 DELETE FROM centro;
  
 ------------------------------------------CENTROS---------------------------------------------
-INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia, suscripcion) VALUES (1, '09:00:00','13:00:00','16:00:00','21:00:00', 'https://i.ibb.co/qkFKLsm/F253-E9-DA-6780-4-A9-D-9-EAB-804784-BBEE21.jpg', 'Nails by Claudia', 'Málaga',0);
-INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia, suscripcion) VALUES (2, '08:30:00','13:00:00','16:00:00','20:30:00', 'https://i.ibb.co/WP2MvVS/867-F548-A-5074-4-C98-AE6-D-F48083-CEE8-E9.jpg', 'Más guapa que la novia', 'Sevilla',2);
-INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia, suscripcion) VALUES (3, '09:30:00','13:00:00','16:00:00','21:30:00', 'https://i.ibb.co/wdhjNNf/8-DF66-CD3-3-E2-D-4-C37-B96-A-247-E3-D5-B221-B.png', 'Nails by Verónica', 'Cádiz',3);
+INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia, suscripcion,ultimasuscripcion, creditosRestantes, pagado) VALUES (1, '09:00:00','13:00:00','16:00:00','21:00:00', 'https://i.ibb.co/qkFKLsm/F253-E9-DA-6780-4-A9-D-9-EAB-804784-BBEE21.jpg', 'Nails by Claudia', 'Málaga',0, '07/04/2022',150,true);
+INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia, suscripcion,ultimasuscripcion, creditosRestantes, pagado) VALUES (2, '08:30:00','13:00:00','16:00:00','20:30:00', 'https://i.ibb.co/WP2MvVS/867-F548-A-5074-4-C98-AE6-D-F48083-CEE8-E9.jpg', 'Más guapa que la novia', 'Sevilla',2,'14/04/2022',300, true);
+INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia, suscripcion,ultimasuscripcion, creditosRestantes, pagado) VALUES (3, '09:30:00','13:00:00','16:00:00','21:30:00', 'https://i.ibb.co/wdhjNNf/8-DF66-CD3-3-E2-D-4-C37-B96-A-247-E3-D5-B221-B.png', 'Nails by Verónica', 'Cádiz',3,'17/03/2022',400,true);
 
 ----------------------------------------------TIPOS----------------------------------------------
 --CENTRO 1--
@@ -173,6 +173,7 @@ INSERT INTO decoracion (id, coste, nombre, siguiente_fase, tiempo, centro_id) VA
 INSERT INTO decoracion (id, coste, nombre, siguiente_fase, tiempo, centro_id) VALUES (16, 35, 15, 7, 40, 1);
 INSERT INTO decoracion (id, coste, nombre, siguiente_fase, tiempo, centro_id) VALUES (17, 37, 16, 7, 42, 1);
 INSERT INTO decoracion (id, coste, nombre, siguiente_fase, tiempo, centro_id) VALUES (18, 39, 17, 7, 44, 1);
+INSERT INTO decoracion (id, coste, nombre, siguiente_fase, tiempo, centro_id) VALUES (55, 0, 18, 7, 0, 1);
 
 --CENTRO 2--
 INSERT INTO decoracion (id, coste, nombre, siguiente_fase, tiempo, centro_id) VALUES (19, 5, 0, 7, 10, 2);

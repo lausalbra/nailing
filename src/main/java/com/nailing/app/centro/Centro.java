@@ -18,6 +18,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
@@ -63,12 +64,22 @@ public class Centro {
 	@Column(name = "suscripcion")
 	@NotNull
 	private Suscripcion suscripcion;
+	@Column(name = "ultimasuscripcion")
+	@NotNull
+	private LocalDate ultimaSuscripcion;
+	@Column(name = "creditosrestantes")
+	@NotNull
+	private Integer creditosrestantes;
+	@Column(name = "pagado")
+	@NotNull
+	private Boolean pagado;
 
-	public Centro() {
-	}
+	
 
 	public Centro(Long id, @Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
-			String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM, LocalTime cierrePM, Suscripcion suscripcion) {
+			@Size(max = 50) @NotBlank String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM,
+			LocalTime cierrePM, @NotNull Suscripcion suscripcion, @NotNull LocalDate ultimaSuscripcion,
+			@NotNull Integer creditosrestantes, @NotNull Boolean pagado) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -79,8 +90,41 @@ public class Centro {
 		this.aperturaPM = aperturaPM;
 		this.cierrePM = cierrePM;
 		this.suscripcion = suscripcion;
+		this.ultimaSuscripcion = ultimaSuscripcion;
+		this.creditosrestantes = creditosrestantes;
+		this.pagado = pagado;
 	}
 
+	public Boolean getPagado() {
+		return pagado;
+	}
+
+	public void setPagado(Boolean pagado) {
+		this.pagado = pagado;
+	}
+
+	public LocalDate getUltimaSuscripcion() {
+		return ultimaSuscripcion;
+	}
+
+	public void setUltimaSuscripcion(LocalDate ultimaSuscripcion) {
+		this.ultimaSuscripcion = ultimaSuscripcion;
+	}
+
+	public Integer getCreditosrestantes() {
+		return creditosrestantes;
+	}
+
+	public void setCreditosrestantes(Integer creditosrestantes) {
+		this.creditosrestantes = creditosrestantes;
+	}
+
+	
+
+	public Centro() {
+	}
+
+	
 	public Long getId() {
 		return id;
 	}
@@ -177,7 +221,8 @@ public class Centro {
 	public String toString() {
 		return "Centro [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", provincia=" + provincia
 				+ ", aperturaAM=" + aperturaAM + ", cierreAM=" + cierreAM + ", aperturaPM=" + aperturaPM + ", cierrePM="
-				+ cierrePM +", suscripcion="+ suscripcion +"]";
+				+ cierrePM + ", suscripcion=" + suscripcion + ", ultimaSuscripcion=" + ultimaSuscripcion
+				+ ", creditosrestantes=" + creditosrestantes + ", pagado=" + pagado + "]";
 	}
 
 }

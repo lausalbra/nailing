@@ -4,6 +4,7 @@
  */
 package com.nailing.app.centro;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -93,10 +94,42 @@ public class CentroService {
   
     public Centro addCentro(Centro centro) {
         if(centro != null){
-            return centroRepository.save(centro);
+        	if(!(centroTieneCambios(centro)==true)) {
+        		if(!(centro.getPagado()== false)) {
+		        	centro.setUltimaSuscripcion(LocalDate.now());
+		        	if(centro.getSuscripcion() == Suscripcion.BASIC){
+		        		centro.setCreditosrestantes(150);
+		        	}
+		        	else if(centro.getSuscripcion() == Suscripcion.MEDIUM){
+		        		centro.setCreditosrestantes(200);
+		        	}
+		        	else if(centro.getSuscripcion() == Suscripcion.ADVANCED){
+		        		centro.setCreditosrestantes(300);
+		        	}
+		        	else if(centro.getSuscripcion() == Suscripcion.PREMIUM){
+		        		centro.setCreditosrestantes(400);
+		        	}
+        	}     
+		        }else {
+		        	
+		        }
+		    
+	        return centroRepository.save(centro);
         }else{
             throw new IllegalArgumentException();
         }
+    }
+    public void fechacumplida(Centro centro) {
+    	LocalDate fechaActual = LocalDate.now();
+    	LocalDate fechaSuscripcion = centro.getUltimaSuscripcion();
+    	if(fechaSuscripcion.plusMonths(1).isAfter(fechaActual) ) {
+    		centro.setPagado(false);
+    	}
+    }
+    public void comprobacionCentros() {
+    	for(Centro c : findAll()) {
+    		fechacumplida(c);
+    	}
     }
   
     public Usuario asociarCentroUsuario(Usuario usuario, Centro centro) {
@@ -105,4 +138,34 @@ public class CentroService {
         usuario.setRol(Authorities.OWNER);
     	return usuarioService.save(usuario);
     }
+   private Boolean centroTieneCambios(Centro centro) {
+	   List<Centro> centros = findAll();
+	   Boolean result = false;
+	   for(Centro c: centros) {
+		   if(c.getId() == centro.getId()) {
+			   if(c.getNombre() != c.getNombre()) {
+				   result = true;
+				   
+			   }
+			   else if(c.getImagen() != centro.getImagen()) {
+				   result = true;
+				  
+			   }
+			   else if(c.getAperturaAM() != centro.getAperturaAM()) {
+				   result = true;
+				 
+			   }
+			   else if(c.getAperturaPM() != centro.getAperturaPM()) {
+				   result = true;
+			   }
+			   else if(c.getCierreAM() != centro.getCierreAM()) {
+				   result = true;
+			   }
+			   else if(c.getCierrePM() != centro.getCierrePM()) {
+				   result = true;
+			   }
+		   }
+	   }
+	   return result;
+   }
 }
