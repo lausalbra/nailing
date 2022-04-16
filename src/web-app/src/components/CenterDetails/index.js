@@ -54,7 +54,7 @@ useEffect(() => {
 }, [state.buttons]);
 
   return (
-    <><Card style={{backgroundColor: 'rgb(248, 225, 228)'}} sx={{ minWidth: 275 }}>
+    <><Card style={{backgroundColor: '#d9ebff'}} sx={{ minWidth: 275 }} className="ml-5 mr-5">
     <CardContent>
     <div className="flex items-center">
       <img src={image} alt={name} className="object-cover rounded-md shadow-md max-w-full float-left bg-white" />
@@ -67,7 +67,7 @@ useEffect(() => {
       </div>
     </CardContent>
     <CardActions>
-          <button id={centreId} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300"
+          <button id={centreId} className="border-2 border-purple-300 bg-[#ffe2ef] text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300"
               onClick={(event) => setState({ isPaneOpen: false, id: event.target.id, name: name, buttons: []})}>Realizar reserva</button>
     </CardActions>
   </Card>

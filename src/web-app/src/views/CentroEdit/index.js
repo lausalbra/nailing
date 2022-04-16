@@ -8,7 +8,7 @@ export function CentroEdit({ params }) {
     return (
         <>
             <Header />
-            <Card title="Editar detalles del centro" component={<CentroEditForm id={id} />}>
+            <Card title="Editar detalles del centro" component={<CentroEditForm id={id}/>} className="font-josefin-sans">
             </Card>
         </>
 

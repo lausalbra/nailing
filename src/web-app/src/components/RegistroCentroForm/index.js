@@ -149,7 +149,7 @@ export function RegistroCentroForm() {
                 <label className='text-lg' htmlFor="cierrepm">  Hora de cierre horario de tarde:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="cierrepm" type="text" ref={cierrepm} placeholder="00:00:00"/>
                 <p className="text-sm text-red-600" >{stateHoras}</p>
-                <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
+                <input className="border-black border-2 mb-4 cursor-pointer hover:bg-[#d9ebff] duration-300 rounded-3xl" type="submit" value="Enviar" />
             </form>
         </>
     )

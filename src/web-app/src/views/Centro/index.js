@@ -36,7 +36,7 @@ export function Centro({ params }) {
         <>
             <Header />
             <Nombre name={resObj.nombre} ></Nombre>
-            <CenterDetails name={resObj.nombre} image={resObj.imagen} provincia={resObj.provincia} aperturaAM={resObj.aperturaAM} cierreAM={resObj.cierreAM} aperturaPM={resObj.aperturaPM} cierrePM={resObj.cierrePM} rating={'3'}  ></CenterDetails>
+            <CenterDetails className="font-josefin-sans" name={resObj.nombre} image={resObj.imagen} provincia={resObj.provincia} aperturaAM={resObj.aperturaAM} cierreAM={resObj.cierreAM} aperturaPM={resObj.aperturaPM} cierrePM={resObj.cierrePM} rating={'3'}  ></CenterDetails>
 
         </>
     )

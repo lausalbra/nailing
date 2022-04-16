@@ -54,7 +54,7 @@ export function UserDetails({ image, email, phone }) {
   const isAdmin = sessionStorage.getItem("userRole") === 'ADMIN'
 
   return (
-    <Card style={{ backgroundColor: 'rgb(248, 225, 228)' }} sx={{ minWidth: 275 }}>
+    <Card style={{backgroundColor: '#d9ebff'}} sx={{ minWidth: 275 }} className="ml-5 mr-5">
       <CardContent>
         <div className="flex items-center">
           <img src={image} alt="img" className="w-52 aspect-square rounded-md shadow-md max-w-full float-left bg-white" />
@@ -69,23 +69,23 @@ export function UserDetails({ image, email, phone }) {
         </div>
       </CardContent>
       <CardActions>
-        <button onClick={() => locationPush('/miscitas')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Mis reservas</button>
+        <button onClick={() => locationPush('/miscitas')} className="border-2 border-purple-300 bg-[#ffe2ef] text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Mis reservas</button>
       </CardActions>
       <CardActions>
       {isAdmin ?
                 <>
-                  <button onClick={() => locationPush('/centroadd')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Añadir centro</button>
+                  <button onClick={() => locationPush('/centroadd')} className="border-2 border-purple-300 bg-[#ffe2ef] text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Añadir centro</button>
                 </>
                 :    
                 <></>
             }  
       </CardActions>
       <CardActions>
-        <button onClick={handleClick} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Cerrar Sesión</button>
+        <button onClick={handleClick} className="border-2 border-purple-300 bg-[#ffe2ef] text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Cerrar Sesión</button>
       </CardActions>
       {centro !== "" ?
       <CardActions>
-        <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Servicios de centro</button>
+        <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-[#ffe2ef] text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Servicios de centro</button>
       </CardActions>
       :
       <></>

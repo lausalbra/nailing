@@ -10,8 +10,8 @@ export function Usuario() {
     return (
         <>
             <Header />
-            <Nombre name={name} ></Nombre>
-            <UserDetails image={fotoPerfil} email={email} phone={phone}  ></UserDetails>
+            <Nombre className="font-josefin-sans" name={name} ></Nombre>
+            <UserDetails className="font-josefin-sans" image={fotoPerfil} email={email} phone={phone}  ></UserDetails>
 
         </>
 
