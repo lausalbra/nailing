@@ -21,7 +21,7 @@ export function RegistroCentroForm() {
     const cierream = useRef()
     const aperturapm = useRef()
     const cierrepm = useRef()
-    
+
     const [state, changeState] = useState("")
     const [locationPath, locationPush] = useLocation()
 
@@ -29,84 +29,96 @@ export function RegistroCentroForm() {
     const [stateHoras, changeStateHora] = useState("")
 
     async function handleSubmit(evt) {
-      evt.preventDefault()
+        evt.preventDefault()
 
-      const urlUser = "https://nailingtest.herokuapp.com/signUp"
-      const header = {
-          "Content-Type": "application/json"
-      }
+        const urlUser = "https://nailingtest.herokuapp.com/signUp"
+        const header = {
+            "Content-Type": "application/json"
+        }
 
-      const bodyUser = {
-          'user': user.current.value,
-          'password': password.current.value,
-          'email': email.current.value,
-          'telefono': telefono.current.value,
-      }
+        const bodyUser = {
+            'user': user.current.value,
+            'password': password.current.value,
+            'email': email.current.value,
+            'telefono': telefono.current.value,
+        }
 
-      const isConfirmed = confirmPassword(password.current.value, passwordConfirm.current.value)
-      const provinciaConfirmada = confirmProvincia(provincia.current.getValue()[0].value, json_provincias)
-      const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
+        const isConfirmed = confirmPassword(password.current.value, passwordConfirm.current.value)
+        const provinciaConfirmada = confirmProvincia(provincia.current.getValue()[0].value, json_provincias)
+        const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
 
-      if (isConfirmed && horasConfirmadas && provinciaConfirmada) {
-          await postData(urlUser, bodyUser, header)
-              .then((response) => {
+        if (isConfirmed && horasConfirmadas && provinciaConfirmada) {
+            await postData(urlUser, bodyUser, header)
+                .then((response) => {
 
-                  console.log(response.status)
-                  if (response.status === 500) {
-                      changeState("El usuario ya existe. Pruebe con uno nuevo")
-                  } else {
-                      const urlCentre = "https://nailingtest.herokuapp.com/centros/add/"+response.id;
-                      const bodyCentre = {
-                        "nombre": nombre.current.value,
-                        "imagen": imagen.current.value,
-                        "provincia": provincia.current.getValue()[0].value,
-                        "aperturaAM": aperturaam.current.value,
-                        "cierreAM": cierream.current.value,
-                        "aperturaPM": aperturapm.current.value,
-                        "cierrePM": cierrepm.current.value,
-                        "suscripcion": "BASIC"
-                      }
-                      
-                      if(horasConfirmadas && provinciaConfirmada){
-                        postData(urlCentre, bodyCentre, {
-                          "Content-Type": "application/json",
-                          "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
-                        })
-                        locationPush("/");
+                    console.log(response.status)
+                    if (response.status === 500) {
+                        changeState("El usuario ya existe. Pruebe con uno nuevo")
+                    } else {
+                        const urlCentre = "https://nailingtest.herokuapp.com/centros/add/" + response.id;
+                        const bodyCentre = {
+                            "nombre": nombre.current.value,
+                            "imagen": imagen.current.value,
+                            "provincia": provincia.current.getValue()[0].value,
+                            "aperturaAM": aperturaam.current.value,
+                            "cierreAM": cierream.current.value,
+                            "aperturaPM": aperturapm.current.value,
+                            "cierrePM": cierrepm.current.value,
+                            "suscripcion": "BASIC"
+                        }
 
-                      }
-                  }
+                        if (horasConfirmadas && provinciaConfirmada) {
+                            postData(urlCentre, bodyCentre, {
+                                "Content-Type": "application/json",
+                                "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                            })
+                            locationPush("/");
 
-              }).catch((e) => {
-                  console.log(e)
-              })
-      }
+                        }
+                    }
+
+                }).catch((e) => {
+                    console.log(e)
+                })
+        }
     }
+
+    const optionsDias = [
+        { value: "lunes", label: "Lunes" },
+        { value: "martes", label: "Martes" },
+        { value: "miercoles", label: "Miércoles" },
+        { value: "jueves", label: "Jueves" },
+        { value: "viernes", label: "Viernes" },
+        { value: "sabado", label: "Sábado" },
+        { value: "domingo", label: "Domingo" },
+    ]
+
+    const [stateDiasApertura, changeStateDiasApertura] = useState(optionsDias)
 
     function confirmPassword(password1, password2) {
-      const result = password1 === password2
+        const result = password1 === password2
 
-      if (!result) {
-          changeState("Las contraseñas no coinciden")
-      } else {
-          changeState("")
-      }
-      return result
+        if (!result) {
+            changeState("Las contraseñas no coinciden")
+        } else {
+            changeState("")
+        }
+        return result
 
-  }
-
-    function confirmProvincia(provincia2, provincias) {
-      var array = provincias.filter(x => x.label === provincia2)
-      const result = array.length!==0
-      if (!result) {
-          changeStateProvincia("Provincia no válida")
-      } else {
-          changeStateProvincia("")
-      }
-      return result
     }
 
-      function confirmHoras(hora) {
+    function confirmProvincia(provincia2, provincias) {
+        var array = provincias.filter(x => x.label === provincia2)
+        const result = array.length !== 0
+        if (!result) {
+            changeStateProvincia("Provincia no válida")
+        } else {
+            changeStateProvincia("")
+        }
+        return result
+    }
+
+    function confirmHoras(hora) {
         let regex = new RegExp(/[0-2]\d:[0-5]\d:[0-5]\d/)
         const result = hora.match(regex)
         if (!result) {
@@ -116,8 +128,12 @@ export function RegistroCentroForm() {
         }
         return result
 
-      }
+    }
 
+    const handleChangeDiasApertura = (value) => {
+        changeStateDiasApertura(value)
+        console.log(value)
+    }
     return (
         <>
             <form className='grid border-2 border-pink-300 p-5 rounded-md' onSubmit={handleSubmit} >
@@ -132,22 +148,29 @@ export function RegistroCentroForm() {
                 <label className='text-lg' htmlFor="telefono">  Telefono:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" ref={telefono} pattern="[0-9]{9}" required />
                 <p className="text-sm text-red-600" >{state}</p>
-            
+
                 <label className='text-lg' htmlFor="nombre"> Nombre centro:</label>
-                <input className="border-black border-2  rounded-sm mb-4" name="nombre" type="text" ref={nombre}  required/>
+                <input className="border-black border-2  rounded-sm mb-4" name="nombre" type="text" ref={nombre} required />
                 <label className='text-lg' htmlFor="imagen">   Imagen:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} required/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} required />
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
-                <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} required/>
+                <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} required />
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
+                <label className='text-lg' htmlFor="name">Días de apertura:</label>
+                <Select className="p-3"
+                    isMulti
+                    value={stateDiasApertura}
+                    options={optionsDias}
+                    onChange={handleChangeDiasApertura}
+                />
                 <label className='text-lg' htmlFor="aperturaam">   Hora de apertura horario de mañana:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaam" type="text" ref={aperturaam} placeholder="00:00:00"/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaam" type="text" ref={aperturaam} placeholder="00:00:00" />
                 <label className='text-lg' htmlFor="cierream">  Hora de cierre horario de mañana:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="cierream" type="text" ref={cierream} placeholder="00:00:00"/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="cierream" type="text" ref={cierream} placeholder="00:00:00" />
                 <label className='text-lg' htmlFor="aperturapm">   Hora de apertura horario de tarde:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="aperturapm" type="text" ref={aperturapm} placeholder="00:00:00"/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="aperturapm" type="text" ref={aperturapm} placeholder="00:00:00" />
                 <label className='text-lg' htmlFor="cierrepm">  Hora de cierre horario de tarde:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="cierrepm" type="text" ref={cierrepm} placeholder="00:00:00"/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="cierrepm" type="text" ref={cierrepm} placeholder="00:00:00" />
                 <p className="text-sm text-red-600" >{stateHoras}</p>
                 <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
             </form>
