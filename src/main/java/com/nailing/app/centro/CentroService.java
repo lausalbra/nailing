@@ -168,4 +168,18 @@ public class CentroService {
 	   }
 	   return result;
    }
+   
+   public Centro updateCentroImage(long idCentro, String uri) {
+	   Optional<Centro> centro = findById(idCentro);
+	   if(centro.isEmpty())
+		   return null;
+	   else 
+	   {
+		   Centro result = centro.get();
+		   result.setImagen(uri);
+		   centroRepository.save(result);
+		   return result;
+		   
+	   }
+   }
 }
