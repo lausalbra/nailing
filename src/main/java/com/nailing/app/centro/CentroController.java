@@ -88,6 +88,16 @@ public class CentroController {
         }
        
     }
+    
+    @PutMapping("/edit/{idCentro}/image/{uri}")
+    public ResponseEntity<Centro> updateCentroImage(@PathVariable long idCentro, @PathVariable String uri){
+    	Centro centro = centroService.updateCentroImage(idCentro, uri);
+    	if(centro == null)
+    		return new ResponseEntity<>(centro, HttpStatus.BAD_REQUEST);
+    	else
+    		return new ResponseEntity<>(centro, HttpStatus.OK);
+    }
+    
     @Operation(summary = "Llamada automatica para comprobación de centros")
     @Scheduled(fixedRate = 86400000)
     @GetMapping("/comprobacionCentros")
