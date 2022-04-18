@@ -11,7 +11,6 @@ ALTER SEQUENCE decoracion_id_seq RESTART WITH 55;
 ALTER SEQUENCE acabado_id_seq RESTART WITH 7;
 ALTER SEQUENCE centro_id_seq RESTART WITH 4;
 
-DELETE FROM usuario;
 DELETE FROM cita;
 DELETE FROM usuario;
 DELETE FROM tipo;
@@ -24,9 +23,9 @@ DELETE FROM acabado;
 DELETE FROM centro;
  
 ------------------------------------------CENTROS---------------------------------------------
-INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia, suscripcion,ultimasuscripcion, creditosRestantes, pagado) VALUES (1, '09:00:00','13:00:00','16:00:00','21:00:00', 'https://i.ibb.co/qkFKLsm/F253-E9-DA-6780-4-A9-D-9-EAB-804784-BBEE21.jpg', 'Nails by Claudia', 'Málaga',0, '07/04/2022',150,true);
-INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia, suscripcion,ultimasuscripcion, creditosRestantes, pagado) VALUES (2, '08:30:00','13:00:00','16:00:00','20:30:00', 'https://i.ibb.co/WP2MvVS/867-F548-A-5074-4-C98-AE6-D-F48083-CEE8-E9.jpg', 'Más guapa que la novia', 'Sevilla',2,'04/14/2022',300, true);
-INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia, suscripcion,ultimasuscripcion, creditosRestantes, pagado) VALUES (3, '09:30:00','13:00:00','16:00:00','21:30:00', 'https://i.ibb.co/wdhjNNf/8-DF66-CD3-3-E2-D-4-C37-B96-A-247-E3-D5-B221-B.png', 'Nails by Verónica', 'Cádiz',3,'03/17/2022',400,true);
+INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia, suscripcion, ultimasuscripcion, creditosRestantes, pagado) VALUES (1, '09:00:00','13:00:00','16:00:00','21:00:00', 'https://i.ibb.co/qkFKLsm/F253-E9-DA-6780-4-A9-D-9-EAB-804784-BBEE21.jpg', 'Nails by Claudia', 'Málaga',0, NOW(),150,true);
+INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia, suscripcion, ultimasuscripcion, creditosRestantes, pagado) VALUES (2, '08:30:00','13:00:00','16:00:00','20:30:00', 'https://i.ibb.co/WP2MvVS/867-F548-A-5074-4-C98-AE6-D-F48083-CEE8-E9.jpg', 'Más guapa que la novia', 'Sevilla',2, NOW(),300, true);
+INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, imagen, nombre, provincia, suscripcion, ultimasuscripcion, creditosRestantes, pagado) VALUES (3, '09:30:00','13:00:00','16:00:00','21:30:00', 'https://i.ibb.co/wdhjNNf/8-DF66-CD3-3-E2-D-4-C37-B96-A-247-E3-D5-B221-B.png', 'Nails by Verónica', 'Cádiz',3, NOW(),400,true);
 
 ----------------------------------------------TIPOS----------------------------------------------
 --CENTRO 1--
