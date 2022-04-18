@@ -6,6 +6,7 @@ import { Route } from 'wouter'
 import { BookingsList } from './views/BookingsList'
 import { Usuario } from './views/Usuario'
 import { Conocenos } from './views/Conocenos'
+import { TerminosCondiciones } from './views/TerminosCondiciones'
 import { Cita } from './views/Cita'
 import { MisCitasList } from './views/MisCitasList'
 import { Error } from './views/Error'
@@ -31,6 +32,7 @@ function App() {
           <Route path='/centroadd' component={CentroAdd} />
           <Route path='/centro' component={BookingsList} />
           <Route path='/conocenos' component={Conocenos} />
+          <Route path='/terminoscondiciones' component={TerminosCondiciones} />
           <Route path='/cita' component={BookingsList} />
           <Route path='/feedback' component={Feedback} />
           <Route path='/miscitas' component={MisCitasList} />

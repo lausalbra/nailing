@@ -38,6 +38,7 @@ export function Conocenos() {
                 <CardWorker photo={guille} name="Guillermo" role="Programador" mail="guillelrosado @gmail.com" />
 
             </div>
+            <h1 className='p-5 text-2xl underline'><a href="/terminoscondiciones">Términos y Condiciones</a></h1>
         </>
 
     )
