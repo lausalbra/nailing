@@ -4,6 +4,8 @@
  */
 package com.nailing.app.centro;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,11 +15,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -61,15 +67,22 @@ public class Centro {
 	@Column(name="cierre_pm")
 	private LocalTime cierrePM;
 
+	@Column(name="dias_disponible")
+	@NotEmpty
+	private String diasDisponible;
+	
 	@Column(name = "suscripcion")
 	@NotNull
 	private Suscripcion suscripcion;
+	
 	@Column(name = "ultimasuscripcion")
 	@NotNull
 	private LocalDate ultimaSuscripcion;
+	
 	@Column(name = "creditosrestantes")
 	@NotNull
 	private Integer creditosrestantes;
+	
 	@Column(name = "pagado")
 	@NotNull
 	private Boolean pagado;
@@ -79,7 +92,7 @@ public class Centro {
 	public Centro(Long id, @Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
 			@Size(max = 50) @NotBlank String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM,
 			LocalTime cierrePM, @NotNull Suscripcion suscripcion, @NotNull LocalDate ultimaSuscripcion,
-			@NotNull Integer creditosrestantes, @NotNull Boolean pagado) {
+			@NotNull Integer creditosrestantes, @NotNull Boolean pagado, @NotEmpty String diasDisponible) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -93,6 +106,7 @@ public class Centro {
 		this.ultimaSuscripcion = ultimaSuscripcion;
 		this.creditosrestantes = creditosrestantes;
 		this.pagado = pagado;
+		this.diasDisponible = diasDisponible;
 	}
 
 	public Boolean getPagado() {
@@ -197,9 +211,27 @@ public class Centro {
 		this.suscripcion = suscripcion;
 	}
 
+	public String getDiasDisponible(){
+		return diasDisponible;
+	}
+	
+	@JsonIgnore
+	public List<DayOfWeek> getListadoDiasDisponible(){
+		List<DayOfWeek> result = new ArrayList<>();
+		for(String dia: diasDisponible.trim().split(","))
+		{
+			result.add(DayOfWeek.valueOf(dia));
+		}
+		return result;
+	}
+	
+	public void setDiasDisponible(String diasDisponible) {
+		this.diasDisponible = diasDisponible;
+	}
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(aperturaAM, aperturaPM, cierreAM, cierrePM, id, imagen, nombre, provincia);
+		return Objects.hash(aperturaAM, aperturaPM, cierreAM, cierrePM, diasDisponible, id, imagen, nombre, provincia);
 	}
 
 	@Override
@@ -214,13 +246,14 @@ public class Centro {
 		return Objects.equals(aperturaAM, other.aperturaAM) && Objects.equals(aperturaPM, other.aperturaPM)
 				&& Objects.equals(cierreAM, other.cierreAM) && Objects.equals(cierrePM, other.cierrePM)
 				&& Objects.equals(id, other.id) && Objects.equals(imagen, other.imagen)
-				&& Objects.equals(nombre, other.nombre) && Objects.equals(provincia, other.provincia);
+				&& Objects.equals(nombre, other.nombre) && Objects.equals(provincia, other.provincia)
+				&& Objects.equals(diasDisponible, other.diasDisponible);
 	}
 
 	@Override
 	public String toString() {
 		return "Centro [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", provincia=" + provincia
-				+ ", aperturaAM=" + aperturaAM + ", cierreAM=" + cierreAM + ", aperturaPM=" + aperturaPM + ", cierrePM="
+				+ ", aperturaAM=" + aperturaAM + ", cierreAM=" + cierreAM + ", diasDisponible=" + diasDisponible + ", aperturaPM=" + aperturaPM + ", cierrePM="
 				+ cierrePM + ", suscripcion=" + suscripcion + ", ultimaSuscripcion=" + ultimaSuscripcion
 				+ ", creditosrestantes=" + creditosrestantes + ", pagado=" + pagado + "]";
 	}
