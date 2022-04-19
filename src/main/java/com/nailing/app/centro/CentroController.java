@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -88,6 +89,18 @@ public class CentroController {
         }
        
     }
+    
+    @Operation(summary = "Cambia la imagen de un centro")
+    @PreAuthorize("hasAuthority('"+ ADMIN +"') or hasAuthority('"+ OWNER +"')")
+    @PutMapping("/edit/{idCentro}/image")
+    public ResponseEntity<Centro> updateCentroImage(@PathVariable long idCentro, @RequestParam(value = "uri", required = true) String uri){
+    	Centro centro = centroService.updateCentroImage(idCentro, uri);
+    	if(centro == null)
+    		return new ResponseEntity<>(centro, HttpStatus.BAD_REQUEST);
+    	else
+    		return new ResponseEntity<>(centro, HttpStatus.OK);
+    }
+    
     @Operation(summary = "Llamada automatica para comprobación de centros")
     @Scheduled(fixedRate = 86400000)
     @GetMapping("/comprobacionCentros")
