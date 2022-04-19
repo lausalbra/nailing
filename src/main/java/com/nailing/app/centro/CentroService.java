@@ -4,6 +4,7 @@
  */
 package com.nailing.app.centro;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,8 +93,22 @@ public class CentroService {
         }
     }
   
-    public Centro addCentro(Centro centro) {
-        if(centro != null){
+    public Centro addCentro(Centro centro) {    	
+        if(centro != null && centro.getDiasDisponible() != null){
+    		try
+    		{
+	        	String[] dias = centro.getDiasDisponible().replaceAll("\\s+","").toUpperCase().split(",");
+	    		for(String d: dias) 
+	    		{
+	    			DayOfWeek.valueOf(d);
+	    		}
+	    		centro.setDiasDisponible(centro.getDiasDisponible().replaceAll("\\s+","").toUpperCase());
+    		}
+    		catch(Exception e)
+    		{
+    			throw new IllegalArgumentException();
+    		}
+	    		
         	if(!(centroTieneCambios(centro)==true)) {
         		if(!(centro.getPagado()== false)) {
 		        	centro.setUltimaSuscripcion(LocalDate.now());
@@ -109,11 +124,8 @@ public class CentroService {
 		        	else if(centro.getSuscripcion() == Suscripcion.PREMIUM){
 		        		centro.setCreditosrestantes(400);
 		        	}
-        	}     
-		        }else {
-		        	
-		        }
-		    
+        		}    
+        	}        	
 	        return centroRepository.save(centro);
         }else{
             throw new IllegalArgumentException();

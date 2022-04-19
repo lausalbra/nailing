@@ -4,6 +4,7 @@
  */
 package com.nailing.app.cita;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -85,7 +86,7 @@ public class CitaService {
 		Integer tiempo;
 		LocalDateTime horaInicio;
 		LocalDateTime horaFin;
-
+		
 		final String usuarioKey = "usuario";
 		final String centroKey = "centro";
 		final String tiempoKey = "tiempo";
@@ -139,6 +140,11 @@ public class CitaService {
 	
 
 	public List<String> findDisponibles(String fecha, Integer tiempo, Long centroId) {
+		LocalDateTime fin;
+		Boolean apto;
+
+		Centro centro = centroService.findById(centroId).get();
+		
 		DateTimeFormatter dt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
 		LocalDateTime inicio = LocalDateTime.parse(fecha, dt);
 
@@ -146,25 +152,26 @@ public class CitaService {
 		List<Integer> tramos = Arrays.asList(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55);
 		List<String> libres = new ArrayList<>();
 
-		Centro centro = centroService.findById(centroId).get();
-
-		LocalDateTime fin;
-		Boolean apto;
+		
 
 		for (Integer tramo : tramos) {
 			fin = inicio.plusMinutes(Long.valueOf(tramo) +  tiempo);
 			apto = true;
 
 //				comprobar si la cita es seleccionada en el descanso del mediodia del centro si lo tiene
-			Boolean checkMediodia = centro.getCierreAM().isBefore(fin.toLocalTime())
+			boolean checkMediodia = centro.getCierreAM().isBefore(fin.toLocalTime())
 					&& centro.getAperturaPM().isAfter(inicio.toLocalTime());
 //				comprobar si la cita acaba o empieza despues de la hora de cierre del centro
-			Boolean checkCierre = centro.getCierrePM().isBefore(fin.toLocalTime());
+			boolean checkCierre = centro.getCierrePM().isBefore(fin.toLocalTime());
 //				comprobar si cita empieza antes de la hora de apertura del centro
-			Boolean checkApertura = centro.getAperturaAM().isAfter(inicio.toLocalTime());
+			boolean checkApertura = centro.getAperturaAM().isAfter(inicio.toLocalTime());
+//				comprobar si la cita es para un día disponible para el centro
+			boolean checkDia = !centro.getListadoDiasDisponible().contains(inicio.getDayOfWeek());
+			
+			
 
-//			si se cumple alguna condición la cita no puede empezar a esa hora y minutos
-			if (checkMediodia || checkCierre || Boolean.TRUE.equals(checkApertura)) {
+//			si se cumple alguna condición la cita no puede empezar ese día a esa hora y minutos
+			if (checkMediodia || checkCierre || checkApertura || checkDia) {
 				apto = false;
 				continue;
 			}
