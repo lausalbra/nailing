@@ -1,30 +1,9 @@
 import Select from 'react-select';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SuscripciónComponent } from '../SuscripcionComponent';
+import { getData } from '../../services/common/common'
 
 export function ComprarPaqueteComponent() {
-
-
-    const subscripciones = {
-
-        "basico": {
-            "citas": 50,
-            "precio": 20
-        },
-        "medio": {
-            "citas": 100,
-            "precio": 40
-        },
-        "avanzado": {
-            "citas": 150,
-            "precio": 60
-        },
-        "premium": {
-            "citas": 200,
-            "precio": 100
-        },
-
-    }
 
     const options = [
         { value: "basico", label: "Suscripción Básica" },
@@ -61,6 +40,8 @@ export function ComprarPaqueteComponent() {
                         }}
                     />
                 </form>
+
+
 
                 {selectedSub === "" ?
                     <div className='pt-2'>¡Seleccione una Suscripción!</div> : <SuscripciónComponent tipo={selectedSub.value} />}
