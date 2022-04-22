@@ -14,15 +14,41 @@ export function RegistroCentroForm() {
     const cierream = useRef()
     const aperturapm = useRef()
     const cierrepm = useRef()
+    const suscripcion = useRef()
 
     const [stateProvincia, changeStateProvincia] = useState("")
     const [stateHoras, changeStateHora] = useState("")
+
+    const planes = [{ label: 'Básico', value: 'BASIC' },
+      { label: 'Intermedio', value: 'MEDIUM' },
+      { label: 'Avanzado', value: 'ADVANCED' },
+      { label: 'Premium', value: 'PREMIUM' }]
+    
+    const optionsDias = [
+        { value: "MONDAY", label: "Lunes" },
+        { value: "TUESDAY", label: "Martes" },
+        { value: "WEDNESDAY", label: "Miércoles" },
+        { value: "THURSDAY", label: "Jueves" },
+        { value: "FRIDAY", label: "Viernes" },
+        { value: "SATURDAY", label: "Sábado" },
+        { value: "SUNDAY", label: "Domingo" },
+    ]
+
+    const [stateDiasApertura, changeStateDiasApertura] = useState(optionsDias)
 
     async function handleSubmit(evt) {
       evt.preventDefault()
       const provinciaConfirmada = confirmProvincia(provincia.current.getValue()[0].value, json_provincias)
       const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
-
+      const planValidated = planes.includes(suscripcion.current.value)
+      
+      let diasString
+      stateDiasApertura.map((dia) => {
+          return diasString += `,${dia.value}`
+      })
+      diasString = diasString.slice(10, diasString.length)
+      console.log(diasString)
+      
       if (horasConfirmadas && provinciaConfirmada) {
         const bodyCentre = {
           "nombre": nombre.current.value,
@@ -32,7 +58,7 @@ export function RegistroCentroForm() {
           "cierreAM": cierream.current.value,
           "aperturaPM": aperturapm.current.value,
           "cierrePM": cierrepm.current.value,
-          "suscripcion": "BASIC"
+          "suscripcion": suscripcion.current.value
         }
         var money = 0;
         switch (bodyCentre.suscripcion)
@@ -62,14 +88,14 @@ export function RegistroCentroForm() {
     }
 
     function confirmProvincia(provincia2, provincias) {
-      var array = provincias.filter(x => x.label === provincia2)
-      const result = array.length!==0
-      if (!result) {
-          changeStateProvincia("Provincia no válida")
-      } else {
-          changeStateProvincia("")
-      }
-      return result
+        var array = provincias.filter(x => x.label === provincia2)
+        const result = array.length !== 0
+        if (!result) {
+            changeStateProvincia("Provincia no válida")
+        } else {
+            changeStateProvincia("")
+        }
+        return result
     }
 
     function confirmHoras(hora) {
@@ -84,26 +110,40 @@ export function RegistroCentroForm() {
 
     }
 
+    const handleChangeDiasApertura = (value) => {
+        changeStateDiasApertura(value)
+        console.log(value)
+    }
     return (
         <>
             <form className='grid border-2 border-pink-300 p-5 rounded-md' onSubmit={handleSubmit} >
-            
                 <label className='text-lg' htmlFor="nombre"> Nombre centro:</label>
-                <input className="border-black border-2  rounded-sm mb-4" name="nombre" type="text" ref={nombre}  required/>
+                <input className="border-black border-2  rounded-sm mb-4" name="nombre" type="text" ref={nombre} required />
                 <label className='text-lg' htmlFor="imagen">   Imagen:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} required/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} required />
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
-                <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} required/>
+                <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} required />
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
+                <label className='text-lg' htmlFor="suscripcion">   Plan de suscripción:</label>
+                <Select className="border-black border-2 mb-4 rounded-sm" name="suscripcion" options={planes} ref={suscripcion} required/>
+                <label className='text-lg' htmlFor="name">Días de apertura:</label>
+                <Select className="p-3"
+                    required
+                    isMulti
+                    value={stateDiasApertura}
+                    options={optionsDias}
+                    onChange={handleChangeDiasApertura}
+                />
                 <label className='text-lg' htmlFor="aperturaam">   Hora de apertura horario de mañana:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaam" type="text" ref={aperturaam} placeholder="00:00:00"/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaam" type="text" ref={aperturaam} placeholder="00:00:00" />
                 <label className='text-lg' htmlFor="cierream">  Hora de cierre horario de mañana:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="cierream" type="text" ref={cierream} placeholder="00:00:00"/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="cierream" type="text" ref={cierream} placeholder="00:00:00" />
                 <label className='text-lg' htmlFor="aperturapm">   Hora de apertura horario de tarde:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="aperturapm" type="text" ref={aperturapm} placeholder="00:00:00"/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="aperturapm" type="text" ref={aperturapm} placeholder="00:00:00" />
                 <label className='text-lg' htmlFor="cierrepm">  Hora de cierre horario de tarde:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="cierrepm" type="text" ref={cierrepm} placeholder="00:00:00"/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="cierrepm" type="text" ref={cierrepm} placeholder="00:00:00" />
                 <p className="text-sm text-red-600" >{stateHoras}</p>
+                <p className="text-sm text-red-600" >{stateDiasApertura.length === 0 ? "Debe seleccionar al menos un día de apertura" : ""}</p>
                 <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Comprobar formulario" />
                 <div id="paypalDiv" className="w-full flex justify-center"></div>
             </form>
