@@ -14,10 +14,16 @@ export function RegistroCentroForm() {
     const cierream = useRef()
     const aperturapm = useRef()
     const cierrepm = useRef()
+    const suscripcion = useRef()
 
     const [stateProvincia, changeStateProvincia] = useState("")
     const [stateHoras, changeStateHora] = useState("")
 
+    const planes = [{ label: 'Básico', value: 'BASIC' },
+      { label: 'Intermedio', value: 'MEDIUM' },
+      { label: 'Avanzado', value: 'ADVANCED' },
+      { label: 'Premium', value: 'PREMIUM' }]
+    
     const optionsDias = [
         { value: "MONDAY", label: "Lunes" },
         { value: "TUESDAY", label: "Martes" },
@@ -34,8 +40,9 @@ export function RegistroCentroForm() {
       evt.preventDefault()
       const provinciaConfirmada = confirmProvincia(provincia.current.getValue()[0].value, json_provincias)
       const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
+      const planValidated = planes.includes(suscripcion.current.value)
+      
       let diasString
-
       stateDiasApertura.map((dia) => {
           return diasString += `,${dia.value}`
       })
@@ -51,7 +58,7 @@ export function RegistroCentroForm() {
           "cierreAM": cierream.current.value,
           "aperturaPM": aperturapm.current.value,
           "cierrePM": cierrepm.current.value,
-          "suscripcion": "BASIC"
+          "suscripcion": suscripcion.current.value
         }
         var money = 0;
         switch (bodyCentre.suscripcion)
@@ -117,6 +124,8 @@ export function RegistroCentroForm() {
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
                 <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} required />
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
+                <label className='text-lg' htmlFor="suscripcion">   Plan de suscripción:</label>
+                <Select className="border-black border-2 mb-4 rounded-sm" name="suscripcion" options={planes} ref={suscripcion} required/>
                 <label className='text-lg' htmlFor="name">Días de apertura:</label>
                 <Select className="p-3"
                     required
