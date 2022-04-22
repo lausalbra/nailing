@@ -28,6 +28,18 @@ export function RegistroCentroForm() {
     const [stateProvincia, changeStateProvincia] = useState("")
     const [stateHoras, changeStateHora] = useState("")
 
+    const optionsDias = [
+        { value: "MONDAY", label: "Lunes" },
+        { value: "TUESDAY", label: "Martes" },
+        { value: "WEDNESDAY", label: "Miércoles" },
+        { value: "THURSDAY", label: "Jueves" },
+        { value: "FRIDAY", label: "Viernes" },
+        { value: "SATURDAY", label: "Sábado" },
+        { value: "SUNDAY", label: "Domingo" },
+    ]
+
+    const [stateDiasApertura, changeStateDiasApertura] = useState(optionsDias)
+
     async function handleSubmit(evt) {
         evt.preventDefault()
 
@@ -46,6 +58,18 @@ export function RegistroCentroForm() {
         const isConfirmed = confirmPassword(password.current.value, passwordConfirm.current.value)
         const provinciaConfirmada = confirmProvincia(provincia.current.getValue()[0].value, json_provincias)
         const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
+
+        let diasString
+
+        stateDiasApertura.map((dia) => {
+
+            return diasString += `,${dia.value}`
+
+        })
+
+        diasString = diasString.slice(10, diasString.length)
+
+        console.log(diasString)
 
         if (isConfirmed && horasConfirmadas && provinciaConfirmada) {
             await postData(urlUser, bodyUser, header)
@@ -83,17 +107,7 @@ export function RegistroCentroForm() {
         }
     }
 
-    const optionsDias = [
-        { value: "lunes", label: "Lunes" },
-        { value: "martes", label: "Martes" },
-        { value: "miercoles", label: "Miércoles" },
-        { value: "jueves", label: "Jueves" },
-        { value: "viernes", label: "Viernes" },
-        { value: "sabado", label: "Sábado" },
-        { value: "domingo", label: "Domingo" },
-    ]
 
-    const [stateDiasApertura, changeStateDiasApertura] = useState(optionsDias)
 
     function confirmPassword(password1, password2) {
         const result = password1 === password2
@@ -133,6 +147,7 @@ export function RegistroCentroForm() {
     const handleChangeDiasApertura = (value) => {
         changeStateDiasApertura(value)
         console.log(value)
+
     }
     return (
         <>
@@ -158,6 +173,7 @@ export function RegistroCentroForm() {
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
                 <label className='text-lg' htmlFor="name">Días de apertura:</label>
                 <Select className="p-3"
+                    required
                     isMulti
                     value={stateDiasApertura}
                     options={optionsDias}
@@ -172,6 +188,7 @@ export function RegistroCentroForm() {
                 <label className='text-lg' htmlFor="cierrepm">  Hora de cierre horario de tarde:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="cierrepm" type="text" ref={cierrepm} placeholder="00:00:00" />
                 <p className="text-sm text-red-600" >{stateHoras}</p>
+                <p className="text-sm text-red-600" >{stateDiasApertura.length === 0 ? "Debe seleccionar al menos un día de apertura" : ""}</p>
                 <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
             </form>
         </>
