@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { Link, useLocation } from 'wouter'
 import { postData } from '../../services/common/common'
+var cryptoJS = require("crypto-js");
 
 export function LoginForm() {
 
@@ -28,21 +29,32 @@ export function LoginForm() {
             "password": password.current.value
         }
 
+
+
         await postData(url, body, {
             "Content-Type": "application/json",
         })
             .then(async function (data) {
 
                 const user = data
+                user.contrasenya = password.current.value
 
-                sessionStorage.setItem("userId", user.id)
-                sessionStorage.setItem("userName", user.usuario)
-                sessionStorage.setItem("userPassword", password.current.value)
-                sessionStorage.setItem("userPasswordCoded", user.password)
-                sessionStorage.setItem("userEmail", user.email)
-                sessionStorage.setItem("userPhone", user.telefono)
-                sessionStorage.setItem("userRole", user.rol)
-                sessionStorage.setItem("userCenter", user.rol === "OWNER" ? user.centro.id : "")
+                let result = cryptoJS.AES.encrypt(JSON.stringify(user), "NAILING");
+
+                sessionStorage.setItem("userEncriptado", result)
+
+                // const userDesencriptado = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
+                // console.log('TEXTO DESENCRIPTADO: ' + userDesencriptado.usuario);
+
+                // sessionStorage.setItem("userId", user.id)
+                // sessionStorage.setItem("userName", user.usuario)
+                // sessionStorage.setItem("userPassword", password.current.value)
+                // sessionStorage.setItem("userPasswordCoded", user.password)
+                // sessionStorage.setItem("userEmail", user.email)
+                // sessionStorage.setItem("userPhone", user.telefono)
+                // sessionStorage.setItem("userRole", user.rol)
+                // sessionStorage.setItem("userCenter", user.rol === "OWNER" ? user.centro.id : "")
                 sessionStorage.setItem("isLogged", true)
 
                 //Hago la llamada con oauth

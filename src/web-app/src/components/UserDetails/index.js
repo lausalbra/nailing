@@ -5,7 +5,11 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import { Link, useLocation } from 'wouter'
 import { postData } from '../../services/common/common';
+var cryptoJS = require("crypto-js");
 
+const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
+console.log("USUARIO", user)
 
 export function UserDetails({ image, email, phone }) {
   const [locationPath, locationPush] = useLocation()
@@ -15,19 +19,19 @@ export function UserDetails({ image, email, phone }) {
     const url = "https://nailingtest.herokuapp.com/logout"
 
     const body = {
-      "id": sessionStorage.getItem("userId"),
-      "usuario": sessionStorage.getItem("userName"),
-      "contrasenya": sessionStorage.getItem("userPassword"),
-      "email": sessionStorage.getItem("userEmail"),
-      "telefono": sessionStorage.getItem("userPhone"),
-      "rol": sessionStorage.getItem("userRole")
+      "id": user.id,
+      "usuario": user.usuario,
+      "contrasenya": user.contrasenya,
+      "email": user.email,
+      "telefono": user.telefono,
+      "rol": user.rol
     }
 
     console.log(body)
 
     const headers = {
       "Content-Type": "application/json",
-      "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+      "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
     }
 
 
@@ -52,11 +56,11 @@ export function UserDetails({ image, email, phone }) {
       );
   }
   const centro = sessionStorage.getItem("userCenter")
-  const isAdmin = sessionStorage.getItem("userRole") === 'ADMIN'
+  const isAdmin = user.role === 'ADMIN'
   let pagado = null
   let restantesPositivo = null
   const [resObj, setObj] = useState([])
-  const url = "https://nailingtest.herokuapp.com/centros/show/"+centro;
+  const url = "https://nailingtest.herokuapp.com/centros/show/" + centro;
   const xhr = new XMLHttpRequest()
   useEffect(() => {
     xhr.open('get', url)
@@ -78,8 +82,8 @@ export function UserDetails({ image, email, phone }) {
       }
     }
   }, [])
-  if (centro != ""){
-    restantesPositivo = resObj.creditosrestantes>=0
+  if (centro != "") {
+    restantesPositivo = resObj.creditosrestantes >= 0
     pagado = resObj.pagado
   }
 
@@ -89,8 +93,8 @@ export function UserDetails({ image, email, phone }) {
         <div className="flex items-center">
           <img src={image} alt="img" className="w-52 aspect-square rounded-md shadow-md max-w-full float-left bg-white" />
           <div className="ml-5 items-center">
-            <p><strong>Email:</strong> {email}</p>
-            <p><strong>Teléfono:</strong> {phone}</p>
+            <p><strong>Email:</strong> {user.email}</p>
+            <p><strong>Teléfono:</strong> {user.telefono}</p>
             <div className='text-xl text-left hover:underline'>
               <Link className="text-xl text-pink-400" to='/usuario/edit'>Editar mis datos</Link>
             </div>
@@ -108,24 +112,24 @@ export function UserDetails({ image, email, phone }) {
         <button onClick={handleClick} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Cerrar Sesión</button>
       </CardActions>
       {centro !== "" ?
-      <CardActions>
-        <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Servicios de centro</button>
-      </CardActions>
-      :
-      <></>
+        <CardActions>
+          <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Servicios de centro</button>
+        </CardActions>
+        :
+        <></>
       }
-      {restantesPositivo==false ?
-      <CardActions>
-        <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Pagar créditos atrasados</button>
-      </CardActions>
-      :
-      <></>
-      }{pagado==false && restantesPositivo==true ?
-      <CardActions>
-        <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Pagar suscripción</button>
-      </CardActions>
-      :
-      <></>
+      {restantesPositivo == false ?
+        <CardActions>
+          <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Pagar créditos atrasados</button>
+        </CardActions>
+        :
+        <></>
+      }{pagado == false && restantesPositivo == true ?
+        <CardActions>
+          <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Pagar suscripción</button>
+        </CardActions>
+        :
+        <></>
       }
     </Card>
 
