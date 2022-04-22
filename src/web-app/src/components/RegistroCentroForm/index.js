@@ -21,12 +21,18 @@ export function RegistroCentroForm() {
     const cierream = useRef()
     const aperturapm = useRef()
     const cierrepm = useRef()
+    const suscripcion = useRef()
     
     const [state, changeState] = useState("")
     const [locationPath, locationPush] = useLocation()
 
     const [stateProvincia, changeStateProvincia] = useState("")
     const [stateHoras, changeStateHora] = useState("")
+
+    const planes = [{ label: 'Básico', value: 'BASIC' },
+      { label: 'Intermedio', value: 'MEDIUM' },
+      { label: 'Avanzado', value: 'ADVANCED' },
+      { label: 'Premium', value: 'PREMIUM' }]
 
     async function handleSubmit(evt) {
       evt.preventDefault()
@@ -46,8 +52,8 @@ export function RegistroCentroForm() {
       const isConfirmed = confirmPassword(password.current.value, passwordConfirm.current.value)
       const provinciaConfirmada = confirmProvincia(provincia.current.getValue()[0].value, json_provincias)
       const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
-
-      if (isConfirmed && horasConfirmadas && provinciaConfirmada) {
+      const planValidated = planes.includes(suscripcion.current.value)
+      if (isConfirmed && horasConfirmadas && provinciaConfirmada && planValidated) {
           await postData(urlUser, bodyUser, header)
               .then((response) => {
 
@@ -64,7 +70,7 @@ export function RegistroCentroForm() {
                         "cierreAM": cierream.current.value,
                         "aperturaPM": aperturapm.current.value,
                         "cierrePM": cierrepm.current.value,
-                        "suscripcion": "BASIC"
+                        "suscripcion": suscripcion.current.value
                       }
                       
                       if(horasConfirmadas && provinciaConfirmada){
@@ -140,6 +146,8 @@ export function RegistroCentroForm() {
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
                 <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} required/>
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
+                <label className='text-lg' htmlFor="suscripcion">   Plan de suscripción:</label>
+                <Select className="border-black border-2 mb-4 rounded-sm" name="suscripcion" options={planes} ref={suscripcion} required/>
                 <label className='text-lg' htmlFor="aperturaam">   Hora de apertura horario de mañana:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="aperturaam" type="text" ref={aperturaam} placeholder="00:00:00"/>
                 <label className='text-lg' htmlFor="cierream">  Hora de cierre horario de mañana:</label>
