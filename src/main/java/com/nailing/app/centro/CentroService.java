@@ -171,7 +171,7 @@ public class CentroService {
    
    public Centro updateCentroImage(long idCentro, String uri) {
 	   Optional<Centro> centro = findById(idCentro);
-	   if(centro.isEmpty())
+	   if(centro.get()==null)
 		   return null;
 	   else 
 	   {
