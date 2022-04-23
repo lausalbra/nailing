@@ -43,21 +43,14 @@ export function EditarUsuarioForm() {
 
             await putData(url, body, headers)
                 .then(async function (response) {
-                    await postData(url, body, headers)
-                        .then(function (data) {
-                        }
-                            //Tiene que ir al catch porque devuelve 204 y lo pilla como error
-                        ).catch((error) => {
-                            sessionStorage.setItem("userId", "")
-                            sessionStorage.setItem("userName", "")
-                            sessionStorage.setItem("userPassword", "")
-                            sessionStorage.setItem("userEmail", "")
-                            sessionStorage.setItem("userPhone", "")
-                            sessionStorage.setItem("isLogged", false)
-                            alert("Usuario actualizado con éxito, es necesario reiniciar la sesión")
-                            locationPush('/')
-                        }
-                        );
+                    sessionStorage.setItem("userId", "")
+                    sessionStorage.setItem("userName", "")
+                    sessionStorage.setItem("userPassword", "")
+                    sessionStorage.setItem("userEmail", "")
+                    sessionStorage.setItem("userPhone", "")
+                    sessionStorage.setItem("isLogged", false)
+                    alert("Usuario actualizado con éxito, es necesario reiniciar la sesión")
+                    locationPush('/')
                 })
                 .catch((e) => {
                     console.log(e)
@@ -89,15 +82,15 @@ export function EditarUsuarioForm() {
         <>
             <form className='grid border-2 border-pink-300 p-5 rounded-md' onSubmit={handleSubmit} >
                 <label className='text-lg' htmlFor="user"> Nombre de Usuario:</label>
-                <input className="border-black border-2  rounded-sm mb-4" name="user" type="text" ref={user} required maxLength="100" placeholder={user.usuario} />
+                <input className="border-black border-2  rounded-sm mb-4" name="user" type="text" ref={user} required maxLength="100" placeholder={userDecrypt.usuario} />
                 <label className='text-lg' htmlFor="password"> Nueva Contraseña:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="password" type="password" ref={password} required minLength="8" maxLength="100" />
                 <label className='text-lg' htmlFor="passwordConfirm">  Confirmar Nueva Contraseña:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="passwordConfirm" type="password" ref={passwordConfirm} required minLength="8" maxLength="100" />
                 <label className='text-lg' htmlFor="email">   Email:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="email" type="email" ref={email} required placeholder={user.email} />
+                <input className="border-black border-2 mb-4 rounded-sm" name="email" type="email" ref={email} required placeholder={userDecrypt.email} />
                 <label className='text-lg' htmlFor="telefono">  Telefono:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" ref={telefono} placeholder={user.telefono} />
+                <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" ref={telefono} pattern="[0-9]{9}" placeholder={userDecrypt.telefono} />
                 <p className="text-sm text-red-600" >{state}</p>
                 <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" placeholder="Enviar" />
             </form>
