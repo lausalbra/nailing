@@ -19,6 +19,7 @@ import com.nailing.app.centro.Centro;
 import com.nailing.app.components.Fases;
 import javax.persistence.GenerationType;
 
+
 @Entity
 @Table(name = "base")
 public class Base {
