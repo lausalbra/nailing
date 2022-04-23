@@ -1,7 +1,13 @@
 import { useRef, useState } from "react"
 import { putData, postData } from "../../services/common/common"
 import { useLocation } from "wouter"
+
+
 export function EditarUsuarioForm() {
+
+    //Obtengo usuario desencriptado
+    var cryptoJS = require("crypto-js");
+    const userDecrypt = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
 
     const user = useRef()
     const password = useRef()
@@ -20,7 +26,7 @@ export function EditarUsuarioForm() {
         if (isConfirmed) {
 
             const body = {
-                'id': sessionStorage.getItem('userId'),
+                'id': userDecrypt.id,
                 'usuario': user.current.value,
                 'contrasenya': password.current.value,
                 'email': email.current.value,
@@ -32,7 +38,7 @@ export function EditarUsuarioForm() {
             const url = "https://nailingtest.herokuapp.com/usuarios/edit"
             const headers = {
                 "Content-Type": "application/json",
-                "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                "Authorization": "Basic " + btoa(userDecrypt.usuario + ":" + userDecrypt.contrasenya)
             }
 
             await putData(url, body, headers)
@@ -83,15 +89,15 @@ export function EditarUsuarioForm() {
         <>
             <form className='grid border-2 border-pink-300 p-5 rounded-md' onSubmit={handleSubmit} >
                 <label className='text-lg' htmlFor="user"> Nombre de Usuario:</label>
-                <input className="border-black border-2  rounded-sm mb-4" name="user" type="text" ref={user} required maxLength="100" placeholder={sessionStorage.getItem("userName")} />
+                <input className="border-black border-2  rounded-sm mb-4" name="user" type="text" ref={user} required maxLength="100" placeholder={user.usuario} />
                 <label className='text-lg' htmlFor="password"> Nueva Contraseña:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="password" type="password" ref={password} required minLength="8" maxLength="100" />
                 <label className='text-lg' htmlFor="passwordConfirm">  Confirmar Nueva Contraseña:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="passwordConfirm" type="password" ref={passwordConfirm} required minLength="8" maxLength="100" />
                 <label className='text-lg' htmlFor="email">   Email:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="email" type="email" ref={email} required placeholder={sessionStorage.getItem("userEmail")} />
+                <input className="border-black border-2 mb-4 rounded-sm" name="email" type="email" ref={email} required placeholder={user.email} />
                 <label className='text-lg' htmlFor="telefono">  Telefono:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" ref={telefono} placeholder={sessionStorage.getItem("userPhone")} />
+                <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" ref={telefono} placeholder={user.telefono} />
                 <p className="text-sm text-red-600" >{state}</p>
                 <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" placeholder="Enviar" />
             </form>

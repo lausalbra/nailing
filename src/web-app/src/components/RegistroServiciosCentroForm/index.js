@@ -1,7 +1,13 @@
 import { useRef, useState } from "react";
 import Select from 'react-select';
 import { postData, getData } from "../../services/common/common";
+
+
 export function RegistroServiciosCentroForm({ updater }) {
+
+    //Obtengo usuario desencriptado
+    var cryptoJS = require("crypto-js");
+    const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
 
     //Al añadir personalizaciones de tamaño: updater['tamanyos']()
 
@@ -29,7 +35,7 @@ export function RegistroServiciosCentroForm({ updater }) {
     // Auxiliares para la llamada
     const headers = {
         "Content-Type": "application/json",
-        "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+        "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
     }
 
     const url = "https://nailingtest.herokuapp.com/"
@@ -120,7 +126,8 @@ export function RegistroServiciosCentroForm({ updater }) {
                 "personalizaciones": arrayOptions,
                 "tiempo": [tiempo.current.value],
                 "coste": [precio.current.value],
-                "centro": [sessionStorage.getItem("userCenter")]
+                //TODO Comprobar este concretamente no se si es user.centro o user.center y está back caido para comprobarlo
+                "centro": [user.centro]
             }
 
             console.log(body)

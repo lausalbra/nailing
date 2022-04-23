@@ -5,14 +5,14 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import { Link, useLocation } from 'wouter'
 import { postData } from '../../services/common/common';
-var cryptoJS = require("crypto-js");
 
-const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
-
-console.log("USUARIO", user)
 
 export function UserDetails({ image, email, phone }) {
   const [locationPath, locationPush] = useLocation()
+
+  //Obtengo usuario desencriptado
+  var cryptoJS = require("crypto-js");
+  const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
 
   async function handleClick() {
 
@@ -55,8 +55,8 @@ export function UserDetails({ image, email, phone }) {
       }
       );
   }
-  const centro = sessionStorage.getItem("userCenter")
-  const isAdmin = user.role === 'ADMIN'
+  const centro = user.centro
+  const isAdmin = user.rol === 'ADMIN'
   let pagado = null
   let restantesPositivo = null
   const [resObj, setObj] = useState([])
@@ -93,8 +93,8 @@ export function UserDetails({ image, email, phone }) {
         <div className="flex items-center">
           <img src={image} alt="img" className="w-52 aspect-square rounded-md shadow-md max-w-full float-left bg-white" />
           <div className="ml-5 items-center">
-            <p><strong>Email:</strong> {user.email}</p>
-            <p><strong>Teléfono:</strong> {user.telefono}</p>
+            <p><strong>Email:</strong> {email}</p>
+            <p><strong>Teléfono:</strong> {phone}</p>
             <div className='text-xl text-left hover:underline'>
               <Link className="text-xl text-pink-400" to='/usuario/edit'>Editar mis datos</Link>
             </div>

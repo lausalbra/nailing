@@ -7,7 +7,13 @@ import PropertyPanel from "../../components/PropertyPanel/index.js";
 import { BasicRating } from "../Rating";
 import $ from 'jquery';
 
+
+
 export function CenterDetails({ name, image, provincia, rating, aperturaAM, cierreAM, aperturaPM, cierrePM }) {
+
+  //Obtengo usuario desencriptado
+  var cryptoJS = require("crypto-js");
+  const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
 
   const [state, setState] = useState({
     isPaneOpen: false,
@@ -20,7 +26,7 @@ export function CenterDetails({ name, image, provincia, rating, aperturaAM, cier
 
   useEffect(() => {
     if (state.id !== "" && state.buttons.length === 0) {
-      if (sessionStorage.getItem("userName") == null) {
+      if (user.usuario == null) {
         alert("Debe estar logeado")
         setState({ isPaneOpen: false, id: '', name: name, buttons: [] })
       }
@@ -29,7 +35,7 @@ export function CenterDetails({ name, image, provincia, rating, aperturaAM, cier
         $.ajax({
           method: "GET",
           headers: {
-            "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+            "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
           },
           url: "https://nailingtest.herokuapp.com/tipos/centro/" + state.id.toString(),
           success: function (data) {

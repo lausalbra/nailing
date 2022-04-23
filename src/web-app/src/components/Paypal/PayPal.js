@@ -1,8 +1,14 @@
 import React, { useRef, useEffect } from "react";
-import $ from 'jquery'; 
+import $ from 'jquery';
 
-export default function Paypal({json}) {
- 
+
+
+export default function Paypal({ json }) {
+
+  //Obtengo usuario desencriptado
+  var cryptoJS = require("crypto-js");
+  const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
   const paypal = useRef();
 
   useEffect(() => {
@@ -16,7 +22,7 @@ export default function Paypal({json}) {
                 description: "Cool looking table",
                 amount: {
                   currency_code: "EUR",
-                  value:parseInt(JSON.parse(json).precio),
+                  value: parseInt(JSON.parse(json).precio),
                 },
               },
             ],
@@ -28,12 +34,12 @@ export default function Paypal({json}) {
             method: "POST",
             contentType: "application/json",
             headers: {
-                "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+              "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
             },
             data: json,
             url: "https://nailingtest.herokuapp.com/cita/add",
             success: function (data) {
-              console.log("Se ha realizado la reserva correctamente",order);
+              console.log("Se ha realizado la reserva correctamente", order);
               window.location.href = '/cita';
             },
           });
@@ -50,5 +56,5 @@ export default function Paypal({json}) {
       <div ref={paypal}></div>
     </div>
   );
- 
+
 }
