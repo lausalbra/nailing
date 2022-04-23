@@ -86,8 +86,18 @@ public class Centro {
 	@Column(name = "pagado")
 	@NotNull
 	private Boolean pagado;
+        
+        @Column(name = "valoracionmedia")
+	@NotNull
+	private Boolean valoracionMedia;
 
-	
+	@Column(name = "valoraciontotal")
+	@NotNull
+	private Boolean valoracionTotal;
+
+        @Column(name = "numvaloraciones")
+	@NotNull
+	private Boolean numValoraciones;
 
 	public Centro(Long id, @Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
 			@Size(max = 50) @NotBlank String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM,
@@ -214,7 +224,33 @@ public class Centro {
 	public String getDiasDisponible(){
 		return diasDisponible;
 	}
+
+    public Boolean getValoracionMedia() {
+        return valoracionMedia;
+    }
+
+    public void setValoracionMedia(Boolean valoracionMedia) {
+        this.valoracionMedia = valoracionMedia;
+    }
+
+    public Boolean getValoracionTotal() {
+        return valoracionTotal;
+    }
+
+    public void setValoracionTotal(Boolean valoracionTotal) {
+        this.valoracionTotal = valoracionTotal;
+    }
+
+    public Boolean getNumValoraciones() {
+        return numValoraciones;
+    }
+
+    public void setNumValoraciones(Boolean numValoraciones) {
+        this.numValoraciones = numValoraciones;
+    }
 	
+        
+        
 	@JsonIgnore
 	public List<DayOfWeek> getListadoDiasDisponible(){
 		List<DayOfWeek> result = new ArrayList<>();
@@ -231,7 +267,7 @@ public class Centro {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(aperturaAM, aperturaPM, cierreAM, cierrePM, diasDisponible, id, imagen, nombre, provincia);
+		return Objects.hash(aperturaAM, aperturaPM, cierreAM, cierrePM, diasDisponible, id, imagen, nombre, provincia, valoracionMedia, valoracionTotal, numValoraciones);
 	}
 
 	@Override
@@ -247,15 +283,13 @@ public class Centro {
 				&& Objects.equals(cierreAM, other.cierreAM) && Objects.equals(cierrePM, other.cierrePM)
 				&& Objects.equals(id, other.id) && Objects.equals(imagen, other.imagen)
 				&& Objects.equals(nombre, other.nombre) && Objects.equals(provincia, other.provincia)
-				&& Objects.equals(diasDisponible, other.diasDisponible);
+				&& Objects.equals(diasDisponible, other.diasDisponible)&& Objects.equals(valoracionMedia, other.valoracionMedia)
+                                && Objects.equals(valoracionTotal, other.valoracionTotal)&& Objects.equals(numValoraciones, other.numValoraciones);
 	}
 
-	@Override
-	public String toString() {
-		return "Centro [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", provincia=" + provincia
-				+ ", aperturaAM=" + aperturaAM + ", cierreAM=" + cierreAM + ", diasDisponible=" + diasDisponible + ", aperturaPM=" + aperturaPM + ", cierrePM="
-				+ cierrePM + ", suscripcion=" + suscripcion + ", ultimaSuscripcion=" + ultimaSuscripcion
-				+ ", creditosrestantes=" + creditosrestantes + ", pagado=" + pagado + "]";
-	}
+    @Override
+    public String toString() {
+        return "Centro [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", provincia=" + provincia + ", aperturaAM=" + aperturaAM + ", cierreAM=" + cierreAM + ", aperturaPM=" + aperturaPM + ", cierrePM=" + cierrePM + ", diasDisponible=" + diasDisponible + ", suscripcion=" + suscripcion + ", ultimaSuscripcion=" + ultimaSuscripcion + ", creditosrestantes=" + creditosrestantes + ", pagado=" + pagado + ", valoracionMedia=" + valoracionMedia + ", valoracionTotal=" + valoracionTotal + ", numValoraciones=" + numValoraciones + "]";
+    }
 
 }
