@@ -54,10 +54,10 @@ useEffect(() => {
 }, [state.buttons]);
 
   return (
-    <><Card style={{backgroundColor: 'rgb(248, 225, 228)'}} sx={{ minWidth: 275 }}>
+    <><Card className="ml-3 mr-3" style={{backgroundColor: 'rgb(248, 225, 228)'}} sx={{ minWidth: 275 }}>
     <CardContent>
-    <div className="flex items-center">
-      <img src={image} alt={name} className="object-cover rounded-md shadow-md max-w-full float-left bg-white" />
+    <div className="md:flex">
+      <img src={image} alt={name} className="object-cover rounded-md shadow-md w-full md:h-full md:w-1/4 float-left bg-white mb-2" />
           <div className="ml-5 items-center">
               <p><strong>Provincia:</strong> {provincia}</p>
               <p><strong>Horario de mañana:</strong> {aperturaAM} - {cierreAM}</p>
