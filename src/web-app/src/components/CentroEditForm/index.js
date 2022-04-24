@@ -1,17 +1,21 @@
 import { useRef, useState, useEffect } from "react"
-import {json_provincias} from '../Filter/provincias'
+import { json_provincias } from '../Filter/provincias'
 import { putData, postData } from '../../services/common/common'
 import { useLocation } from 'wouter'
 import Select from 'react-select';
 
 export function CentroEditForm({id}) {
-
-    
-
     const url = "https://nailingtest.herokuapp.com/centros/show/"+id;
     const xhr = new XMLHttpRequest()
     const [resObj, setObj] = useState([])
     const [locationPath, locationPush] = useLocation()
+
+    if (sessionStorage.getItem("userRole") === "OWNER"){
+      if(id !== sessionStorage.getItem("userCenter")){
+        locationPush('/error');
+      }
+    }
+
     useEffect(() => {
         xhr.open('get', url)
         xhr.send()
@@ -33,6 +37,8 @@ export function CentroEditForm({id}) {
         }
       }, [])
 
+    
+
     const oldNombre=resObj.nombre
     const oldImagen=resObj.imagen
     const oldProvincia=resObj.provincia
@@ -40,6 +46,7 @@ export function CentroEditForm({id}) {
     const oldCierreAM=resObj.cierreAM
     const oldAperturaPM=resObj.aperturaPM
     const oldCierrePM=resObj.cierrePM
+    
 
     const nombre = useRef()
     const imagen = useRef()
@@ -48,48 +55,72 @@ export function CentroEditForm({id}) {
     const cierream = useRef()
     const aperturapm = useRef()
     const cierrepm = useRef()
+    const optionsDias = [
+      { value: "MONDAY", label: "Lunes" },
+      { value: "TUESDAY", label: "Martes" },
+      { value: "WEDNESDAY", label: "Miércoles" },
+      { value: "THURSDAY", label: "Jueves" },
+      { value: "FRIDAY", label: "Viernes" },
+      { value: "SATURDAY", label: "Sábado" },
+      { value: "SUNDAY", label: "Domingo" },
+  ]
 
     const [stateProvincia, changeStateProvincia] = useState("")
     const [stateHoras, changeStateHora] = useState("")
+    const [stateDiasApertura, changeStateDiasApertura] = useState(optionsDias)
 
     async function handleSubmit(evt) {
-        evt.preventDefault()
+      evt.preventDefault()
 
-        const url2 = "https://nailingtest.herokuapp.com/centros/edit"
-        const body = {
-            "id": id,
-            "nombre": nombre.current.value=="" ? (oldNombre):(nombre.current.value),
-            "imagen": imagen.current.value=="" ? (oldImagen):(imagen.current.value),
-            "provincia": provincia.current.value=="" ? (oldProvincia):(provincia.current.value),
-            "aperturaAM": aperturaam.current.value=="" ? (oldAperturaAM):(aperturaam.current.value),
-            "cierreAM": cierream.current.value=="" ? (oldCierreAM):(cierream.current.value),
-            "aperturaPM": aperturapm.current.value=="" ? (oldAperturaPM):(aperturapm.current.value),
-            "cierrePM": cierrepm.current.value=="" ? (oldCierrePM):(cierrepm.current.value),
-            "suscripcion": resObj.suscripcion,
-        }
-        const headers = {
-            "Content-Type": "application/json",
-            "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
-        }
-        const provinciaConfirmada = confirmProvincia(provincia.current.value, json_provincias)
-        const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
-        if(horasConfirmadas && provinciaConfirmada){
-            await putData(url2, body, headers)
-                .then(async function (response) {
-                    await postData(url2, body, headers)
-                        .then(function (data) {
-                            locationPush('/cita');
-                            alert("Centro actualizado con éxito")
-                        }
-                        )
-                })
-                .catch((e) => {
-                    console.log(e)
-                })
-        }
-        
+      let diasString
+      stateDiasApertura.map((dia) => {
+          return diasString += `,${dia.value}`
+      })
+      diasString = diasString.slice(10, diasString.length)
+      console.log(diasString)
 
-        console.log(body)
+      const url2 = "https://nailingtest.herokuapp.com/centros/edit"
+      const body = {
+          "id": id,
+          "nombre": nombre.current.value==="" ? (oldNombre):(nombre.current.value),
+          "imagen": imagen.current.value==="" ? (oldImagen):(imagen.current.value),
+          "provincia": provincia.current.value==="" ? (oldProvincia):(provincia.current.getValue()[0].value),
+          "aperturaAM": aperturaam.current.value==="" ? (oldAperturaAM):(aperturaam.current.value),
+          "cierreAM": cierream.current.value==="" ? (oldCierreAM):(cierream.current.value),
+          "aperturaPM": aperturapm.current.value==="" ? (oldAperturaPM):(aperturapm.current.value),
+          "cierrePM": cierrepm.current.value==="" ? (oldCierrePM):(cierrepm.current.value),
+          "diasDisponible": diasString,
+          "suscripcion": resObj.suscripcion,
+          "creditosrestantes": resObj.creditosrestantes,
+          "ultimaSuscripcion": resObj.ultimaSuscripcion,
+          "pagado": resObj.pagado,
+          "valoracionMedia": resObj.valoracionMedia,
+          "valoracionTotal": resObj.valoracionTotal,
+          "numValoraciones": resObj.numValoraciones
+      }
+      const headers = {
+          "Content-Type": "application/json",
+          "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+      }
+      const provinciaConfirmada = confirmProvincia(provincia.current.getValue()[0].value, json_provincias)
+      const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
+      if(horasConfirmadas && provinciaConfirmada){
+          await putData(url2, body, headers)
+              .then(async function (response) {
+                  await postData(url2, body, headers)
+                      .then(function (data) {
+                          locationPush('/cita');
+                          alert("Centro actualizado con éxito")
+                      }
+                      )
+              })
+              .catch((e) => {
+                  console.log(e)
+              })
+      }
+      
+
+      console.log(body)
     }
 
     function confirmProvincia(provincia2, provincias) {
@@ -115,6 +146,11 @@ export function CentroEditForm({id}) {
   
     }
 
+  const handleChangeDiasApertura = (value) => {
+    changeStateDiasApertura(value);
+    console.log(value);
+  }
+
     return (
         <>
             <form className='grid border-2 border-pink-300 p-5 rounded-md' onSubmit={handleSubmit} >
@@ -123,24 +159,16 @@ export function CentroEditForm({id}) {
                 <label className='text-lg' htmlFor="imagen">   Imagen:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} placeholder={oldImagen}/>
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="provincia" type="text" ref={provincia} placeholder={oldProvincia}/>
-                {/* <Select options={json_provincias} 
-                    value={this.selected}
-                    onChange={this.handleChange}
-                    ref={provincia}
-                    
-                    theme={(theme) => ({
-                    ...theme,
-                    borderRadius: 3,
-                    colors: {
-                        ...theme.colors,
-                        primary25: '#E9BEEE', //HOVER
-                        primary50: '#F39EEC', //CLICK
-                        primary: '#F39EEC',   //BORDE, SELECCIONADO
-                    },
-                    })}
-                    placeholder='Seleccione una provincia'/> */}
+                <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} required />
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
+                <label className='text-lg' htmlFor="name">Días de apertura:</label>
+                <Select className="p-3"
+                    required
+                    isMulti
+                    value={stateDiasApertura}
+                    options={optionsDias}
+                    onChange={handleChangeDiasApertura}
+                />
                 <label className='text-lg' htmlFor="aperturaam">   Hora de apertura horario de mañana:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="aperturaAM" type="text" ref={aperturaam} placeholder={oldAperturaAM}/>
                 <label className='text-lg' htmlFor="cierream">  Hora de cierre horario de mañana:</label>
@@ -150,6 +178,7 @@ export function CentroEditForm({id}) {
                 <label className='text-lg' htmlFor="cierrepm">  Hora de cierre horario de tarde:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="cierrePM" type="text" ref={cierrepm} placeholder={oldCierrePM}/>
                 <p className="text-sm text-red-600" >{stateHoras}</p>
+                <p className="text-sm text-red-600" >{stateDiasApertura.length === 0 ? "Debe seleccionar al menos un día de apertura" : ""}</p>
                 <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
             </form>
         </>

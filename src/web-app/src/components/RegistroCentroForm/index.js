@@ -92,7 +92,7 @@ export function RegistroCentroForm() {
           "cierrePM": cierrepm.current.value,
           "diasDisponible": diasString,
           "suscripcion": suscripcion.current.getValue()[0].value,
-          "creditosRestantes": credits,
+          "creditosrestantes": credits,
           "ultimaSuscripcion": new Date(),
           "pagado": true,
           "valoracionMedia": 0,
