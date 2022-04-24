@@ -78,7 +78,7 @@ public class CentroController {
     }
     
     @Operation(summary = "Edita un Centro")
-    @PreAuthorize("hasAuthority('"+ ADMIN +"')")
+    @PreAuthorize("hasAuthority('"+ ADMIN +"') or hasAuthority('"+ OWNER +"')")
     @PutMapping("/edit")
     public ResponseEntity<Centro> updateCentro(@RequestBody Centro centro){
         Centro c = null;
