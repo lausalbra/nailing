@@ -172,7 +172,6 @@ INSERT INTO decoracion (id, coste, nombre, siguiente_fase, tiempo, centro_id) VA
 INSERT INTO decoracion (id, coste, nombre, siguiente_fase, tiempo, centro_id) VALUES (16, 35, 15, 7, 40, 1);
 INSERT INTO decoracion (id, coste, nombre, siguiente_fase, tiempo, centro_id) VALUES (17, 37, 16, 7, 42, 1);
 INSERT INTO decoracion (id, coste, nombre, siguiente_fase, tiempo, centro_id) VALUES (18, 39, 17, 7, 44, 1);
-INSERT INTO decoracion (id, coste, nombre, siguiente_fase, tiempo, centro_id) VALUES (55, 0, 18, 7, 0, 1);
 
 --CENTRO 2--
 INSERT INTO decoracion (id, coste, nombre, siguiente_fase, tiempo, centro_id) VALUES (19, 5, 0, 7, 10, 2);
