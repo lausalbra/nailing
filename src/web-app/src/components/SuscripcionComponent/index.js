@@ -4,6 +4,12 @@ import { putData, getData } from '../../services/common/common'
 
 export function SuscripciónComponent(props) {
 
+    //Obtengo usuario desencriptado
+    var cryptoJS = require("crypto-js");
+    const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
+    let centro = user.centro
+
     const [stateSub, changeStateSub] = useState("")
 
     useEffect(() => {
@@ -53,20 +59,14 @@ export function SuscripciónComponent(props) {
 
         const headers = {
             "Content-Type": "application/json",
-            "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+            "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
         }
-        const urlShowCentro = "https://nailingtest.herokuapp.com/centros/show/" + sessionStorage.getItem("userCenter");
-        let centro = await getData(urlShowCentro, headers)
-            .then(res => {
-                return res
-            }).catch(ex => {
-                console.log(ex)
-            })
-        console.log(centro)
-
 
         centro.creditosrestantes = stateSub.citas
         centro.suscripcion = stateSub.tipo
+        centro.pagado = true
+
+        console.log(centro)
 
         const urlEditCentro = "https://nailingtest.herokuapp.com/centros/edit"
         const res = await putData(urlEditCentro, centro, headers)
