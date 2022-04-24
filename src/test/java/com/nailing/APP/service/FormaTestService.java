@@ -7,6 +7,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeEach;
@@ -68,6 +70,16 @@ public class FormaTestService {
 		assertEquals(forma.getNombre(), formaAnadida.getNombre());
 		assertEquals(forma.getSiguienteFase(), formaAnadida.getSiguienteFase());
 		assertEquals(forma.getTiempo(), formaAnadida.getTiempo());
+	}
+	//Se comprueba que los datos seteados previamente con los datos de la forma una vez añadida a la base de datos
+	@Test
+	public void addFormaNull() {
+		forma = new Forma();
+		forma.setCentro(centroAnadido);
+		forma.setCoste(20.0);
+		forma.setNombre(NombreForma.STILETTO);
+		forma.setSiguienteFase(Fases.tamanyos);
+		assertThrows(ConstraintViolationException.class, formaSer.addForma(forma));
 	}
 	//Se comprueba que los datos de la forma que se obtiene son los mismos que los datos de la forma recientemente añadida
 	@Test

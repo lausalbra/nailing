@@ -143,14 +143,14 @@ public class TamayoTestService {
 	}
 	@Test
 	public void removeTamanyobyCentroTest() {
-		forma = new Forma();
-		forma.setCentro(centroAnadido);
-		forma.setCoste(20.0);
-		forma.setNombre(NombreForma.STILETTO);
-		forma.setSiguienteFase(Fases.tamanyos);
-		forma.setTiempo(30);
-		Forma formaAnadida = formaSer.addForma(forma);
-		this.formaSer.removeFormabyCentro(centroAnadido.getId());
-		assertFalse(formaSer.findAll().contains(formaAnadida));
+		tamanyo = new Tamanyo();
+		tamanyo.setCentro(centroAnadido);
+		tamanyo.setCoste(20.0);
+		tamanyo.setNombre(NombreTamanyo.S);
+		tamanyo.setSiguienteFase(Fases.disenyos);
+		tamanyo.setTiempo(30);
+		Tamanyo tamanyoAnadido = tamanyoSer.addTamanyo(tamanyo);
+		this.tamanyoSer.removeTamanyobyCentro(centroAnadido.getId());
+		assertFalse(tamanyoSer.findAll().contains(tamanyoAnadido));
 	}
 }
