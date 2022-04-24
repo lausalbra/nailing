@@ -3,7 +3,10 @@ import { postData } from '../../services/common/common'
 import $ from 'jquery'; 
 
 export default function Paypal({json, money, paymentType}) {
- 
+ //Obtengo usuario desencriptado
+  var cryptoJS = require("crypto-js");
+  const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
   const paypal = useRef();
 
   useEffect(() => {
@@ -25,13 +28,25 @@ export default function Paypal({json, money, paymentType}) {
         },
         onApprove: async (_data, actions) => {
           const order = await actions.order.capture();
-          switch(paymentType){
+          $.ajax({
+            method: "POST",
+            contentType: "application/json",
+            headers: {
+              "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
+            },
+            data: json,
+            url: "https://nailingtest.herokuapp.com/cita/add",
+            success: function (data) {
+              console.log("Se ha realizado la reserva correctamente", order);
+              window.location.href = '/cita';
+            },
+          });
             case "Reserve":
               $.ajax({
                 method: "POST",
                 contentType: "application/json",
                 headers: {
-                    "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                    "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
                 },
                 data: json,
                 url: "https://nailingtest.herokuapp.com/cita/add",
@@ -42,17 +57,16 @@ export default function Paypal({json, money, paymentType}) {
               });
               break;
             case "NewCentre":
-              const urlCentre = "https://nailingtest.herokuapp.com/centros/add/" + sessionStorage("userId");
+              const urlCentre = "https://nailingtest.herokuapp.com/centros/add/" + user.id;
               postData(urlCentre, json, {
                 "Content-Type": "application/json",
-                "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
               });
               window.location.href = '/usuario';
               break;
             default:
               break;
           }
-          
         },
         onError: (err) => {
           console.log(err);
@@ -66,5 +80,5 @@ export default function Paypal({json, money, paymentType}) {
       <div ref={paypal}></div>
     </div>
   );
- 
+
 }
