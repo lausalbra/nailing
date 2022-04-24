@@ -10,7 +10,15 @@ export function CenterList({ provincia }) {
 
   //Obtengo usuario desencriptado
   var cryptoJS = require("crypto-js");
-  const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
+  let user = {}
+
+  if (sessionStorage.getItem("userEncriptado") !== null && sessionStorage.getItem("userEncriptado") !== "") {
+    console.log(sessionStorage.getItem("userEncriptado"))
+    user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+  } else {
+    user.rol = "empty"
+  }
 
   const [resObj, setObj] = useState([])
   const locationPush = useLocation()[1]
