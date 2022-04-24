@@ -30,35 +30,29 @@ export function LoginForm() {
 
         await postData(url, body, {
             "Content-Type": "application/json",
-        })
-            .then(async function (data) {
+        }).then(async function (data) {
+            const user = data
 
-                const user = data
+            sessionStorage.setItem("userId", user.id)
+            sessionStorage.setItem("userName", user.usuario)
+            sessionStorage.setItem("userPassword", password.current.value)
+            sessionStorage.setItem("userPasswordCoded", user.password)
+            sessionStorage.setItem("userEmail", user.email)
+            sessionStorage.setItem("userPhone", user.telefono)
+            sessionStorage.setItem("userRole", user.rol)
+            sessionStorage.setItem("userCenter", user.rol === "OWNER" ? user.centro.id : "")
+            sessionStorage.setItem("isLogged", true)
 
-                sessionStorage.setItem("userId", user.id)
-                sessionStorage.setItem("userName", user.usuario)
-                sessionStorage.setItem("userPassword", password.current.value)
-                sessionStorage.setItem("userPasswordCoded", user.password)
-                sessionStorage.setItem("userEmail", user.email)
-                sessionStorage.setItem("userPhone", user.telefono)
-                sessionStorage.setItem("userRole", user.rol)
-                sessionStorage.setItem("userCenter", user.rol === "OWNER" ? user.centro.id : "")
-                sessionStorage.setItem("isLogged", true)
+            //Hago la llamada con oauth
 
-                //Hago la llamada con oauth
+            await postData(url, body, headers)
 
-                await postData(url, body, headers)
-
-                locationPush('/')
-            }
-            ).catch(
-                setTimeout(() => {
-                    changeState(false)
-                }, 750)
-            );
-
-
-
+            locationPush('/')
+        }).catch(
+            setTimeout(() => {
+                changeState(false)
+            }, 750)
+        );
     }
 
     return state ? (

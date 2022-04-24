@@ -40,7 +40,10 @@ export function RegistroCentroForm() {
       evt.preventDefault()
       const provinciaConfirmada = confirmProvincia(provincia.current.getValue()[0].value, json_provincias)
       const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
-      const planValidated = planes.includes(suscripcion.current.value)
+      var planValidated = false;
+      if (planes.filter((sus) => sus.value===suscripcion.current.getValue()[0].value).length !== 0){
+        planValidated = true;
+      }
       
       let diasString
       stateDiasApertura.map((dia) => {
@@ -48,36 +51,55 @@ export function RegistroCentroForm() {
       })
       diasString = diasString.slice(10, diasString.length)
       console.log(diasString)
+
+      var money = 0;
+      var credits = 0;
+    switch (suscripcion.current.getValue()[0].value)
+    {
+        case "BASIC":
+            money = 25;
+            credits = 100;
+            break;
+        case "MEDIUM":
+            money = 45;
+            credits = 150;
+            break;
+        case "ADVANCED":
+            money = 65;
+            credits = 200;
+            break;
+        case "PREMIUM":
+            money = 100;
+            credits = 250;
+            break;
+        default:
+            break;
+    }
+
+    let imagenUrl = "";
+    if (imagen.current.value != null){
+        imagenUrl = imagen.current.value
+    } 
       
-      if (horasConfirmadas && provinciaConfirmada) {
+      if (horasConfirmadas && provinciaConfirmada && planValidated) {
         const bodyCentre = {
           "nombre": nombre.current.value,
-          "imagen": imagen.current.value,
+          "imagen": imagenUrl,
           "provincia": provincia.current.getValue()[0].value,
           "aperturaAM": aperturaam.current.value,
           "cierreAM": cierream.current.value,
           "aperturaPM": aperturapm.current.value,
           "cierrePM": cierrepm.current.value,
-          "suscripcion": suscripcion.current.value
+          "diasDisponible": diasString,
+          "suscripcion": suscripcion.current.getValue()[0].value,
+          "creditosRestantes": credits,
+          "ultimaSuscripcion": new Date(),
+          "pagado": true,
+          "valoracionMedia": 0,
+          "valoracionTotal": 0,
+          "numValoraciones": 0
         }
-        var money = 0;
-        switch (bodyCentre.suscripcion)
-        {
-            case "BASIC":
-                money = 15;
-                break;
-            case "MEDIUM":
-                money = 25;
-                break;
-            case "ADVANCED":
-                money = 40;
-                break;
-            case "PREMIUM":
-                money = 50;
-                break;
-            default:
-                break;
-        }
+        
         var paypalDiv = document.getElementById("paypalDiv");
         paypalDiv.innerHTML = '';
         var newDiv = document.createElement("div");
@@ -120,7 +142,7 @@ export function RegistroCentroForm() {
                 <label className='text-lg' htmlFor="nombre"> Nombre centro:</label>
                 <input className="border-black border-2  rounded-sm mb-4" name="nombre" type="text" ref={nombre} required />
                 <label className='text-lg' htmlFor="imagen">   Imagen:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} required />
+                <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} required/>
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
                 <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} required />
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
