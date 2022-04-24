@@ -89,35 +89,36 @@ public class Centro {
         
         @Column(name = "valoracionmedia")
 	@NotNull
-	private Boolean valoracionMedia;
+	private Double valoracionMedia;
 
 	@Column(name = "valoraciontotal")
 	@NotNull
-	private Boolean valoracionTotal;
+	private Integer valoracionTotal;
 
         @Column(name = "numvaloraciones")
 	@NotNull
-	private Boolean numValoraciones;
+	private Integer numValoraciones;
 
-	public Centro(Long id, @Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
-			@Size(max = 50) @NotBlank String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM,
-			LocalTime cierrePM, @NotNull Suscripcion suscripcion, @NotNull LocalDate ultimaSuscripcion,
-			@NotNull Integer creditosrestantes, @NotNull Boolean pagado, @NotEmpty String diasDisponible) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.imagen = imagen;
-		this.provincia = provincia;
-		this.aperturaAM = aperturaAM;
-		this.cierreAM = cierreAM;
-		this.aperturaPM = aperturaPM;
-		this.cierrePM = cierrePM;
-		this.suscripcion = suscripcion;
-		this.ultimaSuscripcion = ultimaSuscripcion;
-		this.creditosrestantes = creditosrestantes;
-		this.pagado = pagado;
-		this.diasDisponible = diasDisponible;
-	}
+    public Centro(Long id, String nombre, String imagen, String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM, LocalTime cierrePM, String diasDisponible, Suscripcion suscripcion, LocalDate ultimaSuscripcion, Integer creditosrestantes, Boolean pagado, Double valoracionMedia, Integer valoracionTotal, Integer numValoraciones) {
+        this.id = id;
+        this.nombre = nombre;
+        this.imagen = imagen;
+        this.provincia = provincia;
+        this.aperturaAM = aperturaAM;
+        this.cierreAM = cierreAM;
+        this.aperturaPM = aperturaPM;
+        this.cierrePM = cierrePM;
+        this.diasDisponible = diasDisponible;
+        this.suscripcion = suscripcion;
+        this.ultimaSuscripcion = ultimaSuscripcion;
+        this.creditosrestantes = creditosrestantes;
+        this.pagado = pagado;
+        this.valoracionMedia = valoracionMedia;
+        this.valoracionTotal = valoracionTotal;
+        this.numValoraciones = numValoraciones;
+    }
+
+	
 
 	public Boolean getPagado() {
 		return pagado;
@@ -225,29 +226,29 @@ public class Centro {
 		return diasDisponible;
 	}
 
-    public Boolean getValoracionMedia() {
-        return valoracionMedia;
-    }
+        public Double getValoracionMedia() {
+            return valoracionMedia;
+        }
 
-    public void setValoracionMedia(Boolean valoracionMedia) {
-        this.valoracionMedia = valoracionMedia;
-    }
+        public void setValoracionMedia(Double valoracionMedia) {
+            this.valoracionMedia = valoracionMedia;
+        }
 
-    public Boolean getValoracionTotal() {
-        return valoracionTotal;
-    }
+        public Integer getValoracionTotal() {
+            return valoracionTotal;
+        }
 
-    public void setValoracionTotal(Boolean valoracionTotal) {
-        this.valoracionTotal = valoracionTotal;
-    }
+        public void setValoracionTotal(Integer valoracionTotal) {
+            this.valoracionTotal = valoracionTotal;
+        }
 
-    public Boolean getNumValoraciones() {
-        return numValoraciones;
-    }
+        public Integer getNumValoraciones() {
+            return numValoraciones;
+        }
 
-    public void setNumValoraciones(Boolean numValoraciones) {
-        this.numValoraciones = numValoraciones;
-    }
+        public void setNumValoraciones(Integer numValoraciones) {
+            this.numValoraciones = numValoraciones;
+        }
 	
         
         
