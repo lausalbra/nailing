@@ -108,6 +108,27 @@ public class Centro {
 		this.pagado = pagado;
 		this.diasDisponible = diasDisponible;
 	}
+        public Centro(@Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
+			@Size(max = 50) @NotBlank String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM,
+			LocalTime cierrePM, @NotNull Suscripcion suscripcion, @NotNull LocalDate ultimaSuscripcion,
+			@NotNull Integer creditosrestantes, @NotNull Boolean pagado, @NotEmpty String diasDisponible) {
+		super();
+		this.nombre = nombre;
+		this.imagen = imagen;
+		this.provincia = provincia;
+		this.aperturaAM = aperturaAM;
+		this.cierreAM = cierreAM;
+		this.aperturaPM = aperturaPM;
+		this.cierrePM = cierrePM;
+		this.suscripcion = suscripcion;
+		this.ultimaSuscripcion = ultimaSuscripcion;
+		this.creditosrestantes = creditosrestantes;
+		this.pagado = pagado;
+		this.diasDisponible = diasDisponible;
+	}
+        
+        public Centro() {
+	}
 
 	public Boolean getPagado() {
 		return pagado;
@@ -132,12 +153,6 @@ public class Centro {
 	public void setCreditosrestantes(Integer creditosrestantes) {
 		this.creditosrestantes = creditosrestantes;
 	}
-
-	
-
-	public Centro() {
-	}
-
 	
 	public Long getId() {
 		return id;
