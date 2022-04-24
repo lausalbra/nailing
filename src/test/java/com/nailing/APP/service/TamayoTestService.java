@@ -141,4 +141,16 @@ public class TamayoTestService {
 		List<String> tamanyosPosibles = tamanyoSer.listPosibleTamanyo();
 		assertEquals(tamanyos, tamanyosPosibles);
 	}
+	@Test
+	public void removeTamanyobyCentroTest() {
+		forma = new Forma();
+		forma.setCentro(centroAnadido);
+		forma.setCoste(20.0);
+		forma.setNombre(NombreForma.STILETTO);
+		forma.setSiguienteFase(Fases.tamanyos);
+		forma.setTiempo(30);
+		Forma formaAnadida = formaSer.addForma(forma);
+		this.formaSer.removeFormabyCentro(centroAnadido.getId());
+		assertFalse(formaSer.findAll().contains(formaAnadida));
+	}
 }
