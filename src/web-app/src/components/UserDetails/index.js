@@ -42,14 +42,9 @@ export function UserDetails({ image, email, phone }) {
       }
         //Tiene que ir al catch porque devuelve 204 y lo pilla como error
       ).catch((error) => {
-        sessionStorage.setItem("userId", "")
-        sessionStorage.setItem("userName", "")
-        sessionStorage.setItem("userPassword", "")
-        sessionStorage.setItem("userEmail", "")
-        sessionStorage.setItem("userRole", "")
-        sessionStorage.setItem("userPhone", "")
+
+        sessionStorage.setItem("userEncriptado", "")
         sessionStorage.setItem("isLogged", false)
-        sessionStorage.setItem("userCenter", "")
 
         locationPush('/')
       }
