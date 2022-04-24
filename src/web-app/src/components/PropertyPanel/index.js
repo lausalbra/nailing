@@ -4,6 +4,8 @@ import "./PropertyPanel.css";
 import Paypal from '../Paypal/PayPal';
 import $ from 'jquery';
 
+
+
 class PropertyPanel extends Component {
 
     constructor(props) {
@@ -12,6 +14,11 @@ class PropertyPanel extends Component {
     }
 
     handleClick(e, self) {
+
+        //Obtengo usuario desencriptado
+        var cryptoJS = require("crypto-js");
+        const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
         //Obtiene el boton pulsado
         console.log("click en opción")
         var id = e.target.id;
@@ -224,7 +231,7 @@ class PropertyPanel extends Component {
                     method: "GET",
                     contentType: "application/json",
                     headers: {
-                        "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                        "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
                     },
                     url: encodeURI("https://nailingtest.herokuapp.com/cita/check/" + option.centro.id + "?fecha=" + dateSelector.value + " " + hourSelector.value + "&duracion=" + time.toString()),
                     success: function (data) {
@@ -259,7 +266,7 @@ class PropertyPanel extends Component {
             //Cuando cambie el valor del selector de minuto se rellenan los datos de llamada y se desbloquea el boton de reserva
             minuteSelector.onchange = function () {
                 postData = {
-                    usuario: sessionStorage.getItem("userId"),
+                    usuario: user.id,
                     centro: sessionStorage.getItem("centreId"),
                     precio: price.toString(),
                     tiempo: time.toString(),
@@ -278,7 +285,7 @@ class PropertyPanel extends Component {
                 newDiv.className = "w-full flex justify-center";
                 paybuttonDiv.appendChild(newDiv);
 
-                ReactDOM.render(<Paypal json={json} />, newDiv);
+                ReactDOM.render(<Paypal json={json} money={parseInt(JSON.parse(json).precio)} paymentType="Reserve" />, newDiv);
             };
 
             //Se añaden todos los elementos al div
@@ -298,7 +305,7 @@ class PropertyPanel extends Component {
                 method: "GET",
                 url: "https://nailingtest.herokuapp.com/" + url,
                 headers: {
-                    "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                    "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
                 },
                 success: function (data) {
                     console.log("Servicios recibidos");

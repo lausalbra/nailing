@@ -4,9 +4,14 @@ import fotoPerfil from '../../static/Foto-Perfil.jpg'
 import { Header } from "../../components/Header"
 
 export function Usuario() {
-    const name = sessionStorage.getItem("userName")
-    const email = sessionStorage.getItem("userEmail")
-    const phone = sessionStorage.getItem("userPhone")
+    var cryptoJS = require("crypto-js");
+
+    const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
+
+    const name = user.usuario
+    const email = user.email
+    const phone = user.telefono
     return (
         <>
             <Header />
