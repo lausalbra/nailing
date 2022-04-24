@@ -285,7 +285,7 @@ class PropertyPanel extends Component {
                 newDiv.className = "w-full flex justify-center";
                 paybuttonDiv.appendChild(newDiv);
 
-                ReactDOM.render(<Paypal json={json} />, newDiv);
+                ReactDOM.render(<Paypal json={json} money={parseInt(JSON.parse(json).precio)} paymentType="Reserve" />, newDiv);
             };
 
             //Se añaden todos los elementos al div
