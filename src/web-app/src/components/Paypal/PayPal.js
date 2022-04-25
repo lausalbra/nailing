@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import { postData } from '../../services/common/common'
-import $ from 'jquery'; 
+import $ from 'jquery';
 
-export default function Paypal({json, money, paymentType}) {
- 
+export default function Paypal({ json, money, paymentType }) {
+
   const paypal = useRef();
 
   useEffect(() => {
@@ -25,18 +25,18 @@ export default function Paypal({json, money, paymentType}) {
         },
         onApprove: async (_data, actions) => {
           const order = await actions.order.capture();
-          switch(paymentType){
+          switch (paymentType) {
             case "Reserve":
               $.ajax({
                 method: "POST",
                 contentType: "application/json",
                 headers: {
-                    "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                  "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
                 },
                 data: json,
                 url: "https://nailingtest.herokuapp.com/cita/add",
                 success: function (_data) {
-                  console.log("Se ha realizado la reserva correctamente",order);
+                  console.log("Se ha realizado la reserva correctamente", order);
                   window.location.href = '/miscitas';
                 },
               });
@@ -52,7 +52,7 @@ export default function Paypal({json, money, paymentType}) {
             default:
               break;
           }
-          
+
         },
         onError: (err) => {
           console.log(err);
@@ -66,5 +66,5 @@ export default function Paypal({json, money, paymentType}) {
       <div ref={paypal}></div>
     </div>
   );
- 
+
 }

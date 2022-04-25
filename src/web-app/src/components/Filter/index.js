@@ -39,9 +39,9 @@ class Filter extends React.Component {
                     borderRadius: 3,
                     colors: {
                       ...theme.colors,
-                      primary25: '#E9BEEE', //HOVER
-                      primary50: '#F39EEC', //CLICK
-                      primary: '#F39EEC',   //BORDE, SELECCIONADO
+                      primary25: '#d9ebff', //HOVER
+                      primary50: '#ffe2ef', //CLICK
+                      primary: '#bf9dac',   //BORDE, SELECCIONADO
                     },
                   })}
                   placeholder='Seleccione una provincia'/>

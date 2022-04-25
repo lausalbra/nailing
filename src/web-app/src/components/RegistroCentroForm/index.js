@@ -122,10 +122,12 @@ export function RegistroCentroForm() {
                 <label className='text-lg' htmlFor="imagen">   Imagen:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} required />
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
-                <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} required />
+                <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} required
+                theme={(theme) => ({...theme, borderRadius: 3, colors: {...theme.colors, primary25: '#d9ebff', primary50: '#ffe2ef', primary: '#bf9dac',},})}/>
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
                 <label className='text-lg' htmlFor="suscripcion">   Plan de suscripción:</label>
-                <Select className="border-black border-2 mb-4 rounded-sm" name="suscripcion" options={planes} ref={suscripcion} required/>
+                <Select className="border-black border-2 mb-4 rounded-sm" name="suscripcion" options={planes} ref={suscripcion} required
+                theme={(theme) => ({...theme, borderRadius: 3, colors: {...theme.colors, primary25: '#d9ebff', primary50: '#ffe2ef', primary: '#bf9dac',},})}/>
                 <label className='text-lg' htmlFor="name">Días de apertura:</label>
                 <Select className="p-3"
                     required
