@@ -138,7 +138,11 @@ public class CentroService {
 		        		centro.setCreditosrestantes(400);
 		        	}
         		}    
-        	}        	
+        	}
+                if(centro.getAperturaAM().isAfter(centro.getCierreAM()) || centro.getAperturaPM().isAfter(centro.getCierrePM()) 
+                        || centro.getAperturaAM().isAfter(centro.getAperturaPM()) || centro.getAperturaPM().isBefore(centro.getCierreAM())){
+                    throw new IllegalArgumentException();
+                }
 	        return centroRepository.save(centro);
         }else{
             throw new IllegalArgumentException();

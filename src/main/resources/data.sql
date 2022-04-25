@@ -12,6 +12,7 @@ ALTER SEQUENCE acabado_id_seq RESTART WITH 7;
 ALTER SEQUENCE centro_id_seq RESTART WITH 4;
 
 DELETE FROM cita;
+DELETE FROM valoracion;
 DELETE FROM usuario;
 DELETE FROM tipo;
 DELETE FROM base;
