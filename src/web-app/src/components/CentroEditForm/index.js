@@ -5,6 +5,7 @@ import { useLocation } from 'wouter'
 import Select from 'react-select';
 
 export function CentroEditForm({id}) {
+
   
   //Obtengo usuario desencriptado
   var cryptoJS = require("crypto-js");
@@ -21,24 +22,22 @@ export function CentroEditForm({id}) {
     }
   }
 
-    useEffect(() => {
-        xhr.open('get', url)
-        xhr.send()
-        xhr.onload = function () {
-          if (this.status === 200) {
-            try {
-              setObj(JSON.parse(this.responseText))
-              console.log('Petición Rest exitosa')
-            } catch (e) {
-              console.warn('Excepción capturada en la petición REST')
-              sessionStorage.setItem(e)
-              locationPush('/error')
-            }
-          } else {
-            console.warn('Error en la petición REST')
-            sessionStorage.setItem("La API Rest (" + url + ") ha devuelto el error " + this.status)
-            locationPush('/error')
-          }
+  if (sessionStorage.getItem("userRole") === "USER"){
+    locationPush('/error');
+  }
+
+  useEffect(() => {
+    xhr.open('get', url)
+    xhr.send()
+    xhr.onload = function () {
+      if (this.status === 200) {
+        try {
+          setObj(JSON.parse(this.responseText))
+          console.log('Petición Rest exitosa')
+        } catch (e) {
+          console.warn('Excepción capturada en la petición REST')
+          sessionStorage.setItem(e)
+          locationPush('/error')
         }
       } else {
         console.warn('Error en la petición REST')
@@ -46,105 +45,144 @@ export function CentroEditForm({id}) {
         locationPush('/error')
       }
     }
-  }, [])
- 
+  }, []);
 
-    const oldNombre=resObj.nombre
-    const oldImagen=resObj.imagen
-    const oldProvincia=resObj.provincia
-    const oldAperturaAM=resObj.aperturaAM
-    const oldCierreAM=resObj.cierreAM
-    const oldAperturaPM=resObj.aperturaPM
-    const oldCierrePM=resObj.cierrePM
+  const oldNombre=resObj.nombre
+  const oldImagen=resObj.imagen
+  const oldProvincia=resObj.provincia
+  const oldAperturaAM=resObj.aperturaAM
+  const oldCierreAM=resObj.cierreAM
+  const oldAperturaPM=resObj.aperturaPM
+  const oldCierrePM=resObj.cierrePM
     
 
-    const nombre = useRef()
-    const imagen = useRef()
-    const provincia = useRef()
-    const aperturaam = useRef()
-    const cierream = useRef()
-    const aperturapm = useRef()
-    const cierrepm = useRef()
-    const optionsDias = [
-      { value: "MONDAY", label: "Lunes" },
-      { value: "TUESDAY", label: "Martes" },
-      { value: "WEDNESDAY", label: "Miércoles" },
-      { value: "THURSDAY", label: "Jueves" },
-      { value: "FRIDAY", label: "Viernes" },
-      { value: "SATURDAY", label: "Sábado" },
-      { value: "SUNDAY", label: "Domingo" },
+  const nombre = useRef()
+  const imagen = useRef()
+  const provincia = useRef()
+  const aperturaam = useRef()
+  const cierream = useRef()
+  const aperturapm = useRef()
+  const cierrepm = useRef()
+  const optionsDias = [
+    { value: "MONDAY", label: "Lunes" },
+    { value: "TUESDAY", label: "Martes" },
+    { value: "WEDNESDAY", label: "Miércoles" },
+    { value: "THURSDAY", label: "Jueves" },
+    { value: "FRIDAY", label: "Viernes" },
+    { value: "SATURDAY", label: "Sábado" },
+    { value: "SUNDAY", label: "Domingo" },
   ]
 
-    const [stateProvincia, changeStateProvincia] = useState("")
-    const [stateHoras, changeStateHora] = useState("")
-    const [stateDiasApertura, changeStateDiasApertura] = useState(optionsDias)
+  const [stateProvincia, changeStateProvincia] = useState("")
+  const [stateHoras, changeStateHora] = useState("")
+  const [stateImagen, changeStateImagen] = useState("")
+  const [stateDiasApertura, changeStateDiasApertura] = useState(optionsDias)
 
-    async function handleSubmit(evt) {
-      evt.preventDefault()
+  async function handleSubmit(evt) {
+    evt.preventDefault()
 
-      let diasString
-      stateDiasApertura.map((dia) => {
-          return diasString += `,${dia.value}`
-      })
-      diasString = diasString.slice(10, diasString.length)
-      console.log(diasString)
+    let diasString
+    stateDiasApertura.map((dia) => {
+        return diasString += `,${dia.value}`
+    })
+    diasString = diasString.slice(10, diasString.length)
+    console.log(diasString)
 
-      const url2 = "https://nailingtest.herokuapp.com/centros/edit"
-      const body = {
-          "id": id,
-          "nombre": nombre.current.value==="" ? (oldNombre):(nombre.current.value),
-          "imagen": imagen.current.value==="" ? (oldImagen):(imagen.current.value),
-          "provincia": provincia.current.value==="" ? (oldProvincia):(provincia.current.getValue()[0].value),
-          "aperturaAM": aperturaam.current.value==="" ? (oldAperturaAM):(aperturaam.current.value),
-          "cierreAM": cierream.current.value==="" ? (oldCierreAM):(cierream.current.value),
-          "aperturaPM": aperturapm.current.value==="" ? (oldAperturaPM):(aperturapm.current.value),
-          "cierrePM": cierrepm.current.value==="" ? (oldCierrePM):(cierrepm.current.value),
-          "diasDisponible": diasString,
-          "suscripcion": resObj.suscripcion,
-          "creditosrestantes": resObj.creditosrestantes,
-          "ultimaSuscripcion": resObj.ultimaSuscripcion,
-          "pagado": resObj.pagado,
-          "valoracionMedia": resObj.valoracionMedia,
-          "valoracionTotal": resObj.valoracionTotal,
-          "numValoraciones": resObj.numValoraciones
-      }
-      const headers = {
-          "Content-Type": "application/json",
-          "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
-      }
-      const provinciaConfirmada = confirmProvincia(provincia.current.getValue()[0].value, json_provincias)
-      const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
-      if(horasConfirmadas && provinciaConfirmada){
-          await putData(url2, body, headers)
-              .then(async function (response) {
-                  await postData(url2, body, headers)
-                      .then(function (data) {
-                          locationPush('/cita');
-                          alert("Centro actualizado con éxito")
-                      }
-                      )
-              })
-              .catch((e) => {
-                  console.log(e)
-              })
-      }
-      
-
-      console.log(body)
+    const url2 = "https://nailingtest.herokuapp.com/centros/edit"
+    const body = {
+        "id": id,
+        "nombre": nombre.current.value==="" ? (oldNombre):(nombre.current.value),
+        "imagen": imagen.current.value==="" ? (oldImagen):(imagen.current.value),
+        "provincia": provincia.current.getValue()[0].value==="" ? (oldProvincia):(provincia.current.getValue()[0].value),
+        "aperturaAM": aperturaam.current.value==="" ? (oldAperturaAM):(aperturaam.current.value),
+        "cierreAM": cierream.current.value==="" ? (oldCierreAM):(cierream.current.value),
+        "aperturaPM": aperturapm.current.value==="" ? (oldAperturaPM):(aperturapm.current.value),
+        "cierrePM": cierrepm.current.value==="" ? (oldCierrePM):(cierrepm.current.value),
+        "diasDisponible": diasString,
+        "suscripcion": resObj.suscripcion,
+        "creditosrestantes": resObj.creditosrestantes,
+        "ultimaSuscripcion": resObj.ultimaSuscripcion,
+        "pagado": resObj.pagado,
+        "valoracionMedia": resObj.valoracionMedia,
+        "valoracionTotal": resObj.valoracionTotal,
+        "numValoraciones": resObj.numValoraciones
     }
-    return result
+    const headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
+    }
+    const provinciaConfirmada = confirmProvincia(provincia.current.getValue()[0].value, json_provincias)
+    const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
+    const horasConfirmadasIncongruencias = confirmHorasIncongruencias(aperturaam.current.value, cierream.current.value, aperturapm.current.value, cierrepm.current.value);
+    const imagenConfirmada = confirmImage(imagen.current.value)
+    if(horasConfirmadas && provinciaConfirmada && imagenConfirmada && horasConfirmadasIncongruencias){
+      await putData(url2, body, headers)
+      .then(async function (response) {
+        await postData(url2, body, headers)
+        .then(function (data) {
+          locationPush('/cita');
+          alert("Centro actualizado con éxito")
+        })
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+    }
+    
+
+  console.log(body)
+  }
+
+  function confirmProvincia(provincia2, provincias) {
+      var array = provincias.filter(x => x.label === provincia2)
+      const result = array.length!==0 || provincia2===""
+      if (!result) {
+          changeStateProvincia("Provincia no válida")
+      } else {
+          changeStateProvincia("")
+      }
+      return result
   }
 
   function confirmHoras(hora) {
     let regex = new RegExp(/[0-2]\d:[0-5]\d:[0-5]\d/)
-    const result = hora.match(regex) || hora == ""
+    const result = hora.match(regex) || hora===""
     if (!result) {
       changeStateHora("Formato de hora no válido")
     } else {
       changeStateHora("")
     }
-    return result
+    return result;
+  }
 
+  function confirmHorasIncongruencias(aperturaAM, cierreAM, aperturaPM, cierrePM) {
+    var aperturaAMDate = new Date('0000-01-01 ' + aperturaAM);
+    var cierreAMDate = new Date('0000-01-01 ' + cierreAM);
+    var aperturaPMDate = new Date('0000-01-01 ' + aperturaPM);
+    var cierrePMDate = new Date('0000-01-01 ' + cierrePM);
+    const result1 = aperturaAMDate < cierreAMDate && aperturaAMDate < aperturaPMDate && aperturaAMDate < cierrePMDate;
+    const result2 = cierreAMDate < aperturaPMDate && cierreAMDate < cierrePMDate;
+    const result3 = aperturaPMDate < cierrePMDate;
+    if (!result1) {
+        changeStateHora("La hora de apertura AM debe ser anterior a todas");
+    } else if (!result2){
+        changeStateHora("La hora de cierre AM debe ser anterior a las PM");
+    } else if (!result3){
+        changeStateHora("La hora de apertura PM debe ser anterior a la de cierre PM");
+    } else {
+        changeStateHora("")
+    }
+    return result1 && result2 && result3
+}
+    
+  function confirmImage(image) {
+    const result = image.includes("https://");
+    if (!result){
+        changeStateImagen("Formato de imagen invalido, debe ser una URL");
+    } else {
+        changeStateImagen("");
+    }
+    return result;
   }
 
   const handleChangeDiasApertura = (value) => {
@@ -159,8 +197,9 @@ export function CentroEditForm({id}) {
                 <input className="border-black border-2  rounded-sm mb-4" name="nombre" type="text" ref={nombre} placeholder={oldNombre}/>
                 <label className='text-lg' htmlFor="imagen">   Imagen:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} placeholder={oldImagen}/>
+                <p className="text-sm text-red-600" >{stateImagen}</p>
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
-                <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} required />
+                <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} isSearchable={false} required />
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
                 <label className='text-lg' htmlFor="name">Días de apertura:</label>
                 <Select className="p-3"
@@ -171,13 +210,13 @@ export function CentroEditForm({id}) {
                     onChange={handleChangeDiasApertura}
                 />
                 <label className='text-lg' htmlFor="aperturaam">   Hora de apertura horario de mañana:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaAM" type="text" ref={aperturaam} placeholder={oldAperturaAM}/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaAM" type="text" ref={aperturaam} placeholder={oldAperturaAM} required/>
                 <label className='text-lg' htmlFor="cierream">  Hora de cierre horario de mañana:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="cierreAM" type="text" ref={cierream} placeholder={oldCierreAM}/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="cierreAM" type="text" ref={cierream} placeholder={oldCierreAM} required/>
                 <label className='text-lg' htmlFor="aperturapm">   Hora de apertura horario de tarde:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaPM" type="text" ref={aperturapm} placeholder={oldAperturaPM}/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaPM" type="text" ref={aperturapm} placeholder={oldAperturaPM} required/>
                 <label className='text-lg' htmlFor="cierrepm">  Hora de cierre horario de tarde:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="cierrePM" type="text" ref={cierrepm} placeholder={oldCierrePM}/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="cierrePM" type="text" ref={cierrepm} placeholder={oldCierrePM} required/>
                 <p className="text-sm text-red-600" >{stateHoras}</p>
                 <p className="text-sm text-red-600" >{stateDiasApertura.length === 0 ? "Debe seleccionar al menos un día de apertura" : ""}</p>
                 <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />

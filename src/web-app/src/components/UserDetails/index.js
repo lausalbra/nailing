@@ -118,18 +118,25 @@ export function UserDetails({ image, email, phone }) {
         :
         <></>
       }
-      {restantesPositivo == false ?
-        <CardActions>
-          <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Pagar créditos atrasados</button>
-        </CardActions>
-        :
-        <></>
-      }{pagado == false && restantesPositivo == true ?
-        <CardActions>
-          <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Pagar suscripción</button>
-        </CardActions>
-        :
-        <></>
+      {centro !== "" ?
+      <CardActions>
+        <button onClick={() => locationPush('/centroedit/' + centro)} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Editar información de centro</button>
+      </CardActions>
+      :
+      <></>
+      }
+      {restantesPositivo===false ?
+      <CardActions>
+        <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Pagar créditos atrasados</button>
+      </CardActions>
+      :
+      <></>
+      }{pagado===false && restantesPositivo===true ?
+      <CardActions>
+        <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Pagar suscripción</button>
+      </CardActions>
+      :
+      <></>
       }
     </Card>
 
