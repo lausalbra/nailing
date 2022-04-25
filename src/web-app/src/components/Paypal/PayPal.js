@@ -6,6 +6,10 @@ export default function Paypal({ json, money, paymentType }) {
 
   const paypal = useRef();
 
+  //Obtengo usuario desencriptado
+  var cryptoJS = require("crypto-js");
+  const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
   useEffect(() => {
     window.paypal
       .Buttons({
@@ -31,7 +35,7 @@ export default function Paypal({ json, money, paymentType }) {
                 method: "POST",
                 contentType: "application/json",
                 headers: {
-                  "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                  "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
                 },
                 data: json,
                 url: "https://nailingtest.herokuapp.com/cita/add",
@@ -42,35 +46,32 @@ export default function Paypal({ json, money, paymentType }) {
               });
               break;
             case "NewCentre":
-              const urlCentre = "https://nailingtest.herokuapp.com/centros/add/" + sessionStorage.getItem("userId");
+              const urlCentre = "https://nailingtest.herokuapp.com/centros/add/" + user.id.toString();
               postData(urlCentre, json, {
                 "Content-Type": "application/json",
-                "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+                "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
               }).then(async function () {
                 const url = "https://nailingtest.herokuapp.com/login";
                 const body = {
-                  "user": sessionStorage.getItem("userName"),
-                  "password": sessionStorage.getItem("userPassword")
+                  "user": user.usuario,
+                  "password": user.contrasenya
                 }
                 const headers = {
                   "Content-Type": "application/json",
-                  "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
-              }
+                  "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
+                }
+                const contrasenya = user.contrasenya;
                 await postData(url, body, {
                   "Content-Type": "application/json",
                 }).then(async function (data) {
       
-                  const user = data
-    
-                  sessionStorage.setItem("userId", user.id)
-                  sessionStorage.setItem("userName", user.usuario)
-                  sessionStorage.setItem("userPassword", sessionStorage.getItem("userPassword"))
-                  sessionStorage.setItem("userPasswordCoded", user.password)
-                  sessionStorage.setItem("userEmail", user.email)
-                  sessionStorage.setItem("userPhone", user.telefono)
-                  sessionStorage.setItem("userRole", user.rol)
-                  sessionStorage.setItem("userCenter", user.rol === "OWNER" ? user.centro.id : "")
-                  sessionStorage.setItem("isLogged", true)
+                const user = data
+                user.contrasenya = contrasenya;
+
+                let result = cryptoJS.AES.encrypt(JSON.stringify(user), "NAILING");
+
+                sessionStorage.setItem("userEncriptado", result)
+                sessionStorage.setItem("isLogged", true)
     
                   //Hago la llamada con oauth
   
