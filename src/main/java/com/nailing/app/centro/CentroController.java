@@ -46,7 +46,7 @@ public class CentroController {
     private UsuarioService usuarioService;
 
     @Operation(summary = "Añade un Centro asociado a un Usuario")
-    @PreAuthorize("hasAuthority('"+ ADMIN +"')")
+    @PreAuthorize("hasAuthority('"+ USER +"')")
     @PostMapping("/add/{idUser}")
     public ResponseEntity<Centro> addCentro(@RequestBody Centro centro, @PathVariable int idUser){
         centroService.asociarCentroUsuario(usuarioService.findById((long) idUser).get(), centro);
@@ -78,7 +78,7 @@ public class CentroController {
     }
     
     @Operation(summary = "Edita un Centro")
-    @PreAuthorize("hasAuthority('"+ ADMIN +"')")
+    @PreAuthorize("hasAuthority('"+ ADMIN +"') or hasAuthority('"+ OWNER +"')")
     @PutMapping("/edit")
     public ResponseEntity<Centro> updateCentro(@RequestBody Centro centro){
         Centro c = null;
