@@ -58,6 +58,9 @@ public class TipoServiceTest {
 		centro.setCierreAM(LocalTime.of(14, 0));
 		centro.setAperturaPM(LocalTime.of(17, 0));
 		centro.setCierrePM(LocalTime.of(21, 0));
+		centro.setValoracionMedia(0.0);
+		centro.setValoracionTotal(0);
+		centro.setNumValoraciones(0);
 		centroAnadido = centroService.addCentro(centro);
 		
 		tipo = new Tipo();
