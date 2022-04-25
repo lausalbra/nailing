@@ -79,13 +79,12 @@ async function valorar(valoracion){
   const body = {
     "valoracionUsuario": valoracion,
     "centro": centro.id,
-    "usuario": sessionStorage.getItem("userId"),
+    "usuario": user.id,
   }
   const header = {
     "Content-Type": "application/json",
-    "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+    "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
   }
-  console.log(body)
   const url= "https://nailingtest.herokuapp.com/valoraciones/add/centro"
   await postData(url, body, header)
     .then(function () {
