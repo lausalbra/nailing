@@ -4,16 +4,32 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import SlidingPane from "../../components/SlidingPane/index.tsx";
 import PropertyPanel from "../../components/PropertyPanel/index.js";
-import { BasicRating } from "../Rating";
+import { Rating, Box } from "@mui/material";
+import { getData, postData } from '../../services/common/common'
 import $ from 'jquery';
 
 
-
-export function CenterDetails({ name, image, provincia, rating, aperturaAM, cierreAM, aperturaPM, cierrePM }) {
+export function CenterDetails({centro}) {
 
   //Obtengo usuario desencriptado
   var cryptoJS = require("crypto-js");
   const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
+  const [rating, setRating] = React.useState(centro.valoracionMedia);
+  const [ratingBoolean, setRatingBoolean] = React.useState(false);
+  
+  const name = centro.nombre
+  const image = centro.imagen
+  const provincia = centro.provincia
+  if(rating!=centro.valoracionMedia){
+    setRating(centro.valoracionMedia)
+    setRatingBoolean(true)
+
+  }
+  const aperturaAM = centro.aperturaAM
+  const cierreAM = centro.cierreAM
+  const aperturaPM = centro.aperturaPM
+  const cierrePM = centro.cierrePM
 
   const [state, setState] = useState({
     isPaneOpen: false,
@@ -59,16 +75,71 @@ export function CenterDetails({ name, image, provincia, rating, aperturaAM, cier
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.buttons]);
 
+async function valorar(valoracion){
+  const body = {
+    "valoracionUsuario": valoracion,
+    "centro": centro.id,
+    "usuario": sessionStorage.getItem("userId"),
+  }
+  const header = {
+    "Content-Type": "application/json",
+    "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+  }
+  console.log(body)
+  const url= "https://nailingtest.herokuapp.com/valoraciones/add/centro"
+  await postData(url, body, header)
+    .then(function () {
+      console.log("Valoración enviada correctamente "+valoracion);
+      setMensaje("Valoración enviada")
+      setEnviado(true)
+      centro.numValoraciones = centro.numValoraciones+1
+      centro.valoracionTotal = centro.valoracionTotal+valoracion
+      centro.valoracionMedia = centro.valoracionTotal/centro.numValoraciones
+      setRating(rating)
+    }
+    )
+}
+const [value, setValue] = React.useState(0);
+const [hover, setHover] = React.useState(-1);
+const [mensaje, setMensaje] = React.useState("");
+const [enviado, setEnviado] = React.useState(false);
+
   return (
     <><Card style={{ backgroundColor: 'rgb(248, 225, 228)' }} sx={{ minWidth: 275 }}>
       <CardContent>
         <div className="flex items-center">
           <img src={image} alt={name} className="object-cover rounded-md shadow-md max-w-full float-left bg-white" />
           <div className="ml-5 items-center">
-            <p><strong>Provincia:</strong> {provincia}</p>
-            <p><strong>Horario de mañana:</strong> {aperturaAM} - {cierreAM}</p>
-            <p><strong>Horario de tarde:</strong> {aperturaPM} - {cierrePM}</p>
-            {/* <p><BasicRating value={rating} readOnly /></p> */}
+              <p><strong>Provincia:</strong> {provincia}</p>
+              <p><strong>Horario de mañana:</strong> {aperturaAM} - {cierreAM}</p>
+              <p><strong>Horario de tarde:</strong> {aperturaPM} - {cierrePM}</p>
+              {ratingBoolean?
+                <><p><strong>Valoración:</strong> <Rating value={rating} precision={0.1} readOnly /> ({rating.toFixed(1)})</p></>
+                :
+                <></>
+              }
+              {enviado?
+                <>
+                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(event, newValue) => {
+                setValue(newValue);
+                valorar(newValue);
+                }} 
+                onChangeActive={(event, newHover) => {
+                  setHover(newHover);
+                }} readOnly/>({hover !== -1 ? hover : value})</p>
+                </>
+                :
+                <>
+                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(event, newValue) => {
+                setValue(newValue);
+                valorar(newValue);
+                }} 
+                onChangeActive={(event, newHover) => {
+                  setHover(newHover);
+                }}/>({hover !== -1 ? hover : value})</p>
+                </>
+              }
+              <p className="text-pink-400">{mensaje}</p>
           </div>
         </div>
       </CardContent>
