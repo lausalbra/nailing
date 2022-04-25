@@ -117,31 +117,12 @@ public class Centro {
         this.valoracionTotal = valoracionTotal;
         this.numValoraciones = numValoraciones;
     }
-
-	
-	public Centro(Long id, @Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
-			@Size(max = 50) @NotBlank String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM,
-			LocalTime cierrePM, @NotNull Suscripcion suscripcion, @NotNull LocalDate ultimaSuscripcion,
-			@NotNull Integer creditosrestantes, @NotNull Boolean pagado, @NotEmpty String diasDisponible) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.imagen = imagen;
-		this.provincia = provincia;
-		this.aperturaAM = aperturaAM;
-		this.cierreAM = cierreAM;
-		this.aperturaPM = aperturaPM;
-		this.cierrePM = cierrePM;
-		this.suscripcion = suscripcion;
-		this.ultimaSuscripcion = ultimaSuscripcion;
-		this.creditosrestantes = creditosrestantes;
-		this.pagado = pagado;
-		this.diasDisponible = diasDisponible;
-	}
+    
         public Centro(@Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
 			@Size(max = 50) @NotBlank String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM,
 			LocalTime cierrePM, @NotNull Suscripcion suscripcion, @NotNull LocalDate ultimaSuscripcion,
-			@NotNull Integer creditosrestantes, @NotNull Boolean pagado, @NotEmpty String diasDisponible) {
+			@NotNull Integer creditosrestantes, @NotNull Boolean pagado, @NotEmpty String diasDisponible,
+                        Double valoracionMedia, Integer valoracionTotal, Integer numValoraciones) {
 		super();
 		this.nombre = nombre;
 		this.imagen = imagen;
@@ -155,6 +136,9 @@ public class Centro {
 		this.creditosrestantes = creditosrestantes;
 		this.pagado = pagado;
 		this.diasDisponible = diasDisponible;
+                this.valoracionMedia = valoracionMedia;
+                this.valoracionTotal = valoracionTotal;
+                this.numValoraciones = numValoraciones;
 	}
         
         public Centro() {

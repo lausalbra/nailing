@@ -33,6 +33,16 @@ public class CitaServiceTests {
     private CitaService citaService;
     
     @Test
+    public void shouldFindById(){
+        assertEquals(citaService.findById(1L).getId(),1L);
+    }
+    
+    @Test
+    public void shouldFindByUsuario(){
+        assertNotNull(citaService.findByUsuario(1L));
+    }
+    
+    @Test
     public void ShouldAddCita(){
         Integer nc = 0;
         for (Iterator<Cita> it = citaService.findAll().iterator(); it.hasNext();) {
@@ -55,6 +65,8 @@ public class CitaServiceTests {
         cita.put("fecha", "2032-05-22 10:30");
         cita.put("disenyo", "1");
         
+        citaService.addCita(cita);
+        
         Integer ncn = 0;
         for (Iterator<Cita> it = citaService.findAll().iterator(); it.hasNext();) {
             it.next();
@@ -62,16 +74,6 @@ public class CitaServiceTests {
         }
         
         assertEquals(ncn,nc+1);   
-    }
-    
-    @Test
-    public void shouldFindById(){
-        assertEquals(citaService.findById(1L).getId(),1L);
-    }
-    
-    @Test
-    public void shouldFindByUsuario(){
-        assertNotNull(citaService.findByUsuario(1L));
     }
     
     @Test
@@ -91,7 +93,7 @@ public class CitaServiceTests {
             it.next();
             nc++;
         }
-        citaService.removeCita(1L);
+        citaService.removeCita(3L);
         
         Integer ncn = 0;
         for (Iterator<Cita> it = citaService.findAll().iterator(); it.hasNext();) {
@@ -103,9 +105,10 @@ public class CitaServiceTests {
     
     @Test
     public void shouldremoveCitaUsuario(){
-        citaService.removeCita(1L);
+        Integer nc = citaService.findByUsuario(1L).size();
+        citaService.removeCita(citaService.findByUsuario(1L).get(0).getId());
         
         Integer ncn = citaService.findByUsuario(1L).size();
-        assertEquals(ncn,0); 
+        assertEquals(ncn,nc-1); 
     }
 }

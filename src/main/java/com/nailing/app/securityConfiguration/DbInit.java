@@ -6,9 +6,15 @@ package com.nailing.app.securityConfiguration;
 
 import com.nailing.app.usuario.Authorities;
 import com.nailing.app.centro.CentroRepository;
+import com.nailing.app.cita.Cita;
+import com.nailing.app.cita.CitaRepository;
 import com.nailing.app.usuario.Usuario;
 import com.nailing.app.usuario.UsuarioRepository;
 import com.nailing.app.usuario.UsuarioService;
+import com.nailing.app.valoracion.Valoracion;
+import com.nailing.app.valoracion.ValoracionRepository;
+import java.time.LocalDateTime;
+import java.time.Month;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +39,10 @@ public class DbInit implements CommandLineRunner {
     private CentroRepository centroRep;
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private ValoracionRepository valRep;
+    @Autowired
+    private CitaRepository citaRep;
 
     public DbInit(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
@@ -54,6 +64,19 @@ public class DbInit implements CommandLineRunner {
 
         // Save to db
         this.usuarioRepository.saveAll(users);
+        
+        Valoracion val1 = new Valoracion(4, centroRep.findById((long)1).get(),this.usuarioRepository.findById((long)3).get());
+        Valoracion val2 = new Valoracion(3, centroRep.findById((long)2).get(),this.usuarioRepository.findById((long)4).get());
+        Valoracion val3 = new Valoracion(2, centroRep.findById((long)3).get(),this.usuarioRepository.findById((long)5).get());
+        List<Valoracion> vals = Arrays.asList(val1,val2,val3);
+        valRep.saveAll(vals);
+        
+        Cita cit1 = new Cita(41.0,LocalDateTime.of(2022, Month.SEPTEMBER, 24, 9, 0),LocalDateTime.of(2022, Month.SEPTEMBER, 24, 9, 30),null,null,null,null,null,null,null,this.usuarioRepository.findById((long)3).get(),centroRep.findById((long)1).get());
+        Cita cit2 = new Cita(41.0,LocalDateTime.of(2022, Month.SEPTEMBER, 24, 9, 35),LocalDateTime.of(2022, Month.SEPTEMBER, 24, 10, 5),null,null,null,null,null,null,null,this.usuarioRepository.findById((long)4).get(),centroRep.findById((long)1).get());
+        Cita cit3 = new Cita(41.0,LocalDateTime.of(2022, Month.SEPTEMBER, 24, 8, 30),LocalDateTime.of(2022, Month.SEPTEMBER, 24, 9, 0),null,null,null,null,null,null,null,this.usuarioRepository.findById((long)5).get(),centroRep.findById((long)2).get());
+        List<Cita> citas = Arrays.asList(cit1,cit2,cit3);
+        citaRep.saveAll(citas);
+        
     }
 
     //añadir-actualizar usuario
