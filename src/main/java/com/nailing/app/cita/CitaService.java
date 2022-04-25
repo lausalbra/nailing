@@ -220,10 +220,10 @@ public class CitaService {
 
 	}
 
-	public void removeUnya(Long id) {
-		Cita unya = findById(id);
-		if (unya != null) {
-			citaRepository.delete(unya);
+	public void removeCita(Long id) {
+		Cita cita = findById(id);
+		if (cita != null) {
+			citaRepository.delete(cita);
 		}
 	}
 
