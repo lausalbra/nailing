@@ -13,11 +13,23 @@ export const API_URL = 'https://nailingtest.herokuapp.com'
  */
 export function RequestManager(url, method, origin, destiny, locationPush, callback, post) {
 
+    //Obtengo usuario desencriptado
+    var cryptoJS = require("crypto-js");
+
+    let user = {}
+
+    if (sessionStorage.getItem("userEncriptado") !== null && sessionStorage.getItem("userEncriptado") !== "") {
+        console.log(sessionStorage.getItem("userEncriptado"))
+        user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+    } else {
+        user.rol = "empty"
+    }
+
     const xhr = new XMLHttpRequest()
     const isLogged = sessionStorage.getItem("isLogged")
     xhr.open(method, url)
     if (isLogged === 'true') {
-        xhr.setRequestHeader("Authorization", "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword")))
+        xhr.setRequestHeader("Authorization", "Basic " + btoa(user.usuario + ":" + user.contrasenya))
     }
     xhr.send(post)
     xhr.onload = function () {

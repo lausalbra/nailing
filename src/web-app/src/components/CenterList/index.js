@@ -2,13 +2,27 @@ import React, { useState, useEffect } from 'react'
 import { useLocation } from 'wouter'
 import { API_URL, RequestManager } from '../../components/RestUtils'
 import { Center } from '../../components/Center'
-import { Box} from '@mui/material'
+import { Box } from '@mui/material'
+
 
 //npm install @mui/icons-material --- npm install @mui/material
-export function CenterList ({ provincia }) {
+export function CenterList({ provincia }) {
+
+  //Obtengo usuario desencriptado
+  var cryptoJS = require("crypto-js");
+
+  let user = {}
+
+  if (sessionStorage.getItem("userEncriptado") !== null && sessionStorage.getItem("userEncriptado") !== "") {
+    console.log(sessionStorage.getItem("userEncriptado"))
+    user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+  } else {
+    user.rol = "empty"
+  }
+
   const [resObj, setObj] = useState([])
   const locationPush = useLocation()[1]
-  const isAdmin = sessionStorage.getItem("userRole") === 'ADMIN'
+  const isAdmin = user.rol === 'ADMIN'
   const url = API_URL + '/centros/list'
 
   useEffect(() => {
@@ -16,10 +30,10 @@ export function CenterList ({ provincia }) {
       setObj(centros)
     }
     RequestManager(url, 'GET', 'CenterList', null, locationPush, callback, null)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  function borrarCentro (centro) {
+  function borrarCentro(centro) {
     // eslint-disable-next-line no-restricted-globals
     const accepted = confirm('¿Está seguro de que quiere borrar el centro ' + centro.nombre + '?')
     if (accepted) {
@@ -37,7 +51,7 @@ export function CenterList ({ provincia }) {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%'}}>
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%' }}>
       {filtrado.map((center) => (
         <Center key={center.id}
           center={center}

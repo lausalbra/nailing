@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { Link, useLocation } from 'wouter'
 import { postData } from '../../services/common/common'
+var cryptoJS = require("crypto-js")
 
 export function LoginForm() {
 
@@ -10,7 +11,7 @@ export function LoginForm() {
     const [locationPath, locationPush] = useLocation()
     const headers = {
         "Content-Type": "application/json",
-        "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+        "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
     }
 
     useEffect(() => {
@@ -28,31 +29,32 @@ export function LoginForm() {
             "password": password.current.value
         }
 
+
+
         await postData(url, body, {
             "Content-Type": "application/json",
-        }).then(async function (data) {
-            const user = data
+        })
+            .then(async function (data) {
 
-            sessionStorage.setItem("userId", user.id)
-            sessionStorage.setItem("userName", user.usuario)
-            sessionStorage.setItem("userPassword", password.current.value)
-            sessionStorage.setItem("userPasswordCoded", user.password)
-            sessionStorage.setItem("userEmail", user.email)
-            sessionStorage.setItem("userPhone", user.telefono)
-            sessionStorage.setItem("userRole", user.rol)
-            sessionStorage.setItem("userCenter", user.rol === "OWNER" ? user.centro.id : "")
-            sessionStorage.setItem("isLogged", true)
+                const user = data
+                user.contrasenya = password.current.value
 
-            //Hago la llamada con oauth
+                let result = cryptoJS.AES.encrypt(JSON.stringify(user), "NAILING");
 
-            await postData(url, body, headers)
+                sessionStorage.setItem("userEncriptado", result)
+                sessionStorage.setItem("isLogged", true)
 
-            locationPush('/')
-        }).catch(
-            setTimeout(() => {
-                changeState(false)
-            }, 750)
-        );
+                //Hago la llamada con oauth
+
+                //await postData(url, body, headers)
+
+                locationPush('/')
+            }
+            ).catch(
+                setTimeout(() => {
+                    changeState(false)
+                }, 750)
+            );
     }
 
     return state ? (

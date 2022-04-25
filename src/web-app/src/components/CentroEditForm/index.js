@@ -5,16 +5,21 @@ import { useLocation } from 'wouter'
 import Select from 'react-select';
 
 export function CentroEditForm({id}) {
-    const url = "https://nailingtest.herokuapp.com/centros/show/"+id;
-    const xhr = new XMLHttpRequest()
-    const [resObj, setObj] = useState([])
-    const [locationPath, locationPush] = useLocation()
+  
+  //Obtengo usuario desencriptado
+  var cryptoJS = require("crypto-js");
+  const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+  
+  const url = "https://nailingtest.herokuapp.com/centros/show/"+id;
+  const xhr = new XMLHttpRequest()
+  const [resObj, setObj] = useState([])
+  const [locationPath, locationPush] = useLocation()
 
-    if (sessionStorage.getItem("userRole") === "OWNER"){
-      if(id !== sessionStorage.getItem("userCenter")){
-        locationPush('/error');
-      }
+  if (user.rol === "OWNER"){
+    if(id !== sessionStorage.getItem("userCenter")){
+      locationPush('/error');
     }
+  }
 
     useEffect(() => {
         xhr.open('get', url)
@@ -35,9 +40,14 @@ export function CentroEditForm({id}) {
             locationPush('/error')
           }
         }
-      }, [])
-
-    
+      } else {
+        console.warn('Error en la petición REST')
+        sessionStorage.setItem("La API Rest (" + url + ") ha devuelto el error " + this.status)
+        locationPush('/error')
+      }
+    }
+  }, [])
+ 
 
     const oldNombre=resObj.nombre
     const oldImagen=resObj.imagen
@@ -100,7 +110,7 @@ export function CentroEditForm({id}) {
       }
       const headers = {
           "Content-Type": "application/json",
-          "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+          "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
       }
       const provinciaConfirmada = confirmProvincia(provincia.current.getValue()[0].value, json_provincias)
       const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
@@ -122,29 +132,20 @@ export function CentroEditForm({id}) {
 
       console.log(body)
     }
+    return result
+  }
 
-    function confirmProvincia(provincia2, provincias) {
-        var array = provincias.filter(x => x.label === provincia2)
-        const result = array.length!=0 || provincia2==""
-        if (!result) {
-            changeStateProvincia("Provincia no válida")
-        } else {
-            changeStateProvincia("")
-        }
-        return result
-      }
-  
-    function confirmHoras(hora) {
-        let regex = new RegExp(/[0-2]\d:[0-5]\d:[0-5]\d/)
-        const result = hora.match(regex) || hora==""
-        if (!result) {
-          changeStateHora("Formato de hora no válido")
-        } else {
-          changeStateHora("")
-        }
-        return result
-  
+  function confirmHoras(hora) {
+    let regex = new RegExp(/[0-2]\d:[0-5]\d:[0-5]\d/)
+    const result = hora.match(regex) || hora == ""
+    if (!result) {
+      changeStateHora("Formato de hora no válido")
+    } else {
+      changeStateHora("")
     }
+    return result
+
+  }
 
   const handleChangeDiasApertura = (value) => {
     changeStateDiasApertura(value);
