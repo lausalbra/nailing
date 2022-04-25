@@ -4,10 +4,27 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import SlidingPane from "../../components/SlidingPane/index.tsx";
 import PropertyPanel from "../../components/PropertyPanel/index.js";
-import { BasicRating } from "../Rating";
+import { Rating, Box } from "@mui/material";
 import $ from 'jquery';
 
-export function CenterDetails({name, image, provincia, rating, aperturaAM, cierreAM, aperturaPM, cierrePM}) {
+export function CenterDetails({centro}) {
+
+  const [rating, setRating] = React.useState(centro.valoracionMedia);
+  const [ratingBoolean, setRatingBoolean] = React.useState(false);
+  
+  const name = centro.nombre
+  const image = centro.imagen
+  const provincia = centro.provincia
+  if(rating!=centro.valoracionMedia){
+    setRating(centro.valoracionMedia)
+    setRatingBoolean(true)
+
+  }
+  const aperturaAM = centro.aperturaAM
+  const cierreAM = centro.cierreAM
+  const aperturaPM = centro.aperturaPM
+  const cierrePM = centro.cierrePM
+  
 
   const [state, setState] = useState({
     isPaneOpen: false,
@@ -53,6 +70,42 @@ useEffect(() => {
 // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [state.buttons]);
 
+async function valorar(valoracion){
+  const usuario = {
+    "id": sessionStorage.getItem("userId"),
+    "usuario": sessionStorage.getItem("userName"),
+    "contrasenya": sessionStorage.getItem("userPassword"),
+    "email": sessionStorage.getItem("userEmail"),
+    "telefono": sessionStorage.getItem("userPhone"),
+    "rol": sessionStorage.getItem("userRole"),
+    "centro": sessionStorage.getItem("userCenter"),
+  }
+  const body = {
+    "id": 1,
+    "valoracionUsuario": valoracion,
+    "centro": centro,
+    "usuario": usuario,
+  }
+  const header = {
+    "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+  }
+  console.log(body)
+  $.ajax({
+    method: "POST",
+    headers: header,
+    url: "https://nailingtest.herokuapp.com/valoraciones/add/centro",
+    body: body,
+    success: function () {
+      console.log("Valoración enviada correctamente");
+      console.log(valoracion)
+      setMensaje("Valoración enviada")
+    }
+  });
+}
+const [value, setValue] = React.useState(0);
+const [hover, setHover] = React.useState(-1);
+const [mensaje, setMensaje] = React.useState("");
+
   return (
     <><Card style={{backgroundColor: 'rgb(248, 225, 228)'}} sx={{ minWidth: 275 }}>
     <CardContent>
@@ -62,7 +115,20 @@ useEffect(() => {
               <p><strong>Provincia:</strong> {provincia}</p>
               <p><strong>Horario de mañana:</strong> {aperturaAM} - {cierreAM}</p>
               <p><strong>Horario de tarde:</strong> {aperturaPM} - {cierrePM}</p>
-              {/* <p><BasicRating value={rating} readOnly /></p> */}
+              {ratingBoolean?
+                <><p><strong>Valoración:</strong> <Rating value={rating} precision={0.1} readOnly /> ({rating})</p></>
+                :
+                <></>
+              }
+              
+              <p><strong>Valorar:</strong> <Rating precision={1} value={value} onChange={(event, newValue) => {
+                setValue(newValue);
+                valorar(newValue);
+                }} 
+                onChangeActive={(event, newHover) => {
+                  setHover(newHover);
+                }}/>({hover !== -1 ? hover : value})</p>
+                <p className="text-pink-400">{mensaje}</p>
           </div>
       </div>
     </CardContent>
