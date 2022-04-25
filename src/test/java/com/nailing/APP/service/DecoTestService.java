@@ -232,12 +232,12 @@ public class DecoTestService {
         personalizaciones.add(NombreDecoracion.BURBUJAS.toString());
         List<String> coste = new ArrayList<>();
         coste.add("25");
-        List<String> centro = new ArrayList<>();
-        centro.add(centroAnadido.getId().toString());
+        List<String> centroList = new ArrayList<>();
+        centroList.add(centroAnadido.getId().toString());
         Map<String,List<String>> entrada = new HashMap<>();
         entrada.put("tiempo", tiempo);
         entrada.put("personalizaciones", personalizaciones);
-        entrada.put("centro", centro);
+        entrada.put("centro", centroList);
         entrada.put("coste", coste);
         List<Decoracion> list1 = decoSer.addDecoracionCentro(entrada);
         List<Decoracion> list2 = decoSer.findByCentro(centroAnadido.getId());
