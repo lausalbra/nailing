@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
-import { postData } from '../../services/common/common'
+import { postData, putData } from '../../services/common/common'
 import $ from 'jquery';
+import { useLocation } from 'wouter'
 
 export default function Paypal({ json, money, paymentType }) {
 
@@ -9,6 +10,11 @@ export default function Paypal({ json, money, paymentType }) {
   //Obtengo usuario desencriptado
   var cryptoJS = require("crypto-js");
   const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
+  const [locationPath, locationPush] = useLocation()
+
+  console.log(user)
+  console.log("JSON EN PAYPAL", json)
 
   useEffect(() => {
     window.paypal
@@ -80,6 +86,48 @@ export default function Paypal({ json, money, paymentType }) {
                   window.location.href = '/usuario';
                 });
               });
+              break;
+
+            case "BuyPackage":
+              const headers = {
+                "Content-Type": "application/json",
+                "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
+              }
+
+              const urlEditCentro = "https://nailingtest.herokuapp.com/centros/edit"
+              const res = await putData(urlEditCentro, json, headers)
+                .then(res => {
+
+                  alert("Se ha realizado su compra correctamente \n Es necesario restaurar la sesión para actualizar sus datos \n Disculpe las molestias \n Muchas gracias por confiar en Nailing")
+
+                  return res
+                }).catch(ex => {
+                  console.log(ex)
+                })
+
+
+              const urlLogout = "https://nailingtest.herokuapp.com/logout"
+
+              const body = {
+                "id": user.id,
+                "usuario": user.usuario,
+                "contrasenya": user.contrasenya,
+                "email": user.email,
+                "telefono": user.telefono,
+                "rol": user.rol
+              }
+
+
+              await postData(urlLogout, body, headers)
+                .then(function (_data) {
+                }
+                  //Tiene que ir al catch porque devuelve 204 y lo pilla como error
+                ).catch((_error) => {
+                  sessionStorage.setItem("userEncriptado", "")
+                  sessionStorage.setItem("isLogged", false)
+                  locationPush('/')
+                }
+                );
               break;
             default:
               break;

@@ -17,6 +17,7 @@ import { RegistroUsuario } from './views/RegistroUsuario'
 import { CentroEdit } from './views/CentroEdit'
 import { CentroAdd } from './views/CentroAdd'
 import { DemoServiciosCentro } from './views/DemoServiciosCentro'
+import { ComprarPaquete } from './views/ComprarPaquete'
 function App() {
   return (
     <div class= 'bg-auto'>
@@ -42,11 +43,12 @@ function App() {
           <Route path='/usuario/edit' component={EditarUsuario} />
           <Route path='/register' component={RegistroUsuario} />
           <Route path='/demoservicioscentro' component={DemoServiciosCentro} />
+                      <Route path='/comprarPaquete' component={ComprarPaquete} />
           <Route path='/' component={Landing} />
         </div>
 
+        </div>
       </div>
-    </div>
     </div>
   )
 }

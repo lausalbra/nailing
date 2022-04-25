@@ -133,7 +133,7 @@ export function UserDetails({ image, email, phone }) {
       <></>
       }{pagado===false && restantesPositivo===true ?
       <CardActions>
-        <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Pagar suscripción</button>
+        <button onClick={() => locationPush('/comprarPaquete')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Pagar suscripción</button>
       </CardActions>
       :
       <></>

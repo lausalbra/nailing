@@ -4,7 +4,7 @@ export function Card({ title, component }) {
 
         <>
             <div className="grid h-full place-items-center">
-                <h2 className="text-5xl m-10">{title}</h2>
+                <h2 className="text-5xl my-10 md:m-10">{title}</h2>
                 {component}
             </div>
         </>
