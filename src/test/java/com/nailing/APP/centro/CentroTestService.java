@@ -14,21 +14,18 @@ import com.nailing.app.AppApplication;
 import com.nailing.app.centro.Centro;
 import com.nailing.app.centro.Suscripcion;
 import com.nailing.app.usuario.UsuarioService;
-import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  *
  * @author jaime
  */
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = AppApplication.class)
-public class CentroServiceTests {
+public class CentroTestService {
     
     @Autowired
     private CentroService centroService;
@@ -43,13 +40,15 @@ public class CentroServiceTests {
     
     @Test
     public void shouldFindAll(){
-        assertEquals(centroService.findAll().size(),3);
+        assertEquals(centroService.findAll().size(),2);
     }
     
     @Test
     public void ShouldDeleteCentro(){
+        Integer nc = centroService.findAll().size();
         centroService.delete(3L);
-        assertEquals(centroService.findAll().size(),2);
+        Integer ncn = centroService.findAll().size();
+        assertEquals(ncn,nc-1);
     }
     
     @Test
