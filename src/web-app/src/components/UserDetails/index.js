@@ -77,9 +77,9 @@ export function UserDetails({ image, email, phone }) {
       }
     }
   }, [])
-  if (centro != "") {
-    restantesPositivo = resObj.creditosrestantes >= 0
-    pagado = resObj.pagado
+  if (centro !== null) {
+    restantesPositivo = centro.creditosrestantes >= 0
+    pagado = centro.pagado
   }
 
   return (
@@ -100,7 +100,7 @@ export function UserDetails({ image, email, phone }) {
       <CardActions>
         <button onClick={() => locationPush('/miscitas')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Mis reservas</button>
       </CardActions>
-      {centro === "" && !isAdmin ?
+      {centro === null && !isAdmin ?
       <CardActions>
       <button onClick={() => locationPush('/centroadd')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Añadir centro</button>
       </CardActions>
@@ -111,16 +111,16 @@ export function UserDetails({ image, email, phone }) {
       <CardActions>
         <button onClick={handleClick} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Cerrar Sesión</button>
       </CardActions>
-      {centro !== "" ?
+      {centro !== null ?
         <CardActions>
           <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Servicios de centro</button>
         </CardActions>
         :
         <></>
       }
-      {centro !== "" ?
+      {centro !== null ?
       <CardActions>
-        <button onClick={() => locationPush('/centroedit/' + centro)} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Editar información de centro</button>
+        <button onClick={() => locationPush('/centroedit/' + centro.id)} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Editar información de centro</button>
       </CardActions>
       :
       <></>

@@ -17,12 +17,12 @@ export function CentroEditForm({id}) {
   const [locationPath, locationPush] = useLocation()
 
   if (user.rol === "OWNER"){
-    if(id !== sessionStorage.getItem("userCenter")){
+    if(id !== user.centro.id.toString()){
       locationPush('/error');
     }
   }
 
-  if (sessionStorage.getItem("userRole") === "USER"){
+  if (user.rol === "USER"){
     locationPush('/error');
   }
 
