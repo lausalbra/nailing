@@ -16,6 +16,13 @@ export default function Paypal({ json, money, paymentType }) {
   console.log(user)
   console.log("JSON EN PAYPAL", json)
 
+  const urlEditCentro = "https://nailingtest.herokuapp.com/centros/edit"
+  const urlLogout = "https://nailingtest.herokuapp.com/logout"
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
+  }
+
   useEffect(() => {
     window.paypal
       .Buttons({
@@ -70,31 +77,27 @@ export default function Paypal({ json, money, paymentType }) {
                 await postData(url, body, {
                   "Content-Type": "application/json",
                 }).then(async function (data) {
-      
-                const user = data
-                user.contrasenya = contrasenya;
 
-                let result = cryptoJS.AES.encrypt(JSON.stringify(user), "NAILING");
+                  const user = data
+                  user.contrasenya = contrasenya;
 
-                sessionStorage.setItem("userEncriptado", result)
-                sessionStorage.setItem("isLogged", true)
-    
+                  let result = cryptoJS.AES.encrypt(JSON.stringify(user), "NAILING");
+
+                  sessionStorage.setItem("userEncriptado", result)
+                  sessionStorage.setItem("isLogged", true)
+
                   //Hago la llamada con oauth
-  
+
                   await postData(url, body, headers)
-  
+
                   window.location.href = '/usuario';
                 });
               });
               break;
 
             case "BuyPackage":
-              const headers = {
-                "Content-Type": "application/json",
-                "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
-              }
 
-              const urlEditCentro = "https://nailingtest.herokuapp.com/centros/edit"
+
               const res = await putData(urlEditCentro, json, headers)
                 .then(res => {
 
@@ -105,20 +108,45 @@ export default function Paypal({ json, money, paymentType }) {
                   console.log(ex)
                 })
 
-
-              const urlLogout = "https://nailingtest.herokuapp.com/logout"
-
-              const body = {
+              await postData(urlLogout, {
                 "id": user.id,
                 "usuario": user.usuario,
                 "contrasenya": user.contrasenya,
                 "email": user.email,
                 "telefono": user.telefono,
                 "rol": user.rol
-              }
+              }, headers)
+                .then(function (_data) {
+                }
+                  //Tiene que ir al catch porque devuelve 204 y lo pilla como error
+                ).catch((_error) => {
+                  sessionStorage.setItem("userEncriptado", "")
+                  sessionStorage.setItem("isLogged", false)
+                  locationPush('/')
+                }
+                );
+              break;
 
+            case "PagarCreditosAtrasados":
 
-              await postData(urlLogout, body, headers)
+              await putData(urlEditCentro, json, headers)
+                .then(res => {
+
+                  alert("Se ha realizado el pago correctamente \n Es necesario restaurar la sesión para actualizar sus datos \n Disculpe las molestias \n Muchas gracias por confiar en Nailing")
+
+                  return res
+                }).catch(ex => {
+                  console.log(ex)
+                })
+
+              await postData(urlLogout, {
+                "id": user.id,
+                "usuario": user.usuario,
+                "contrasenya": user.contrasenya,
+                "email": user.email,
+                "telefono": user.telefono,
+                "rol": user.rol
+              }, headers)
                 .then(function (_data) {
                 }
                   //Tiene que ir al catch porque devuelve 204 y lo pilla como error
