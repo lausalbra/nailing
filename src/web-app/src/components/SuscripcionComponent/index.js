@@ -83,69 +83,7 @@ export function SuscripciónComponent(props) {
         newDiv.className = "w-full flex justify-center";
         paypalDiv.appendChild(newDiv);
         ReactDOM.render(<Paypal json={centro} money={money} paymentType="BuyPackage" />, newDiv);
-
-
     }, [props])
-
-
-    //  ESTE BOTÓN FUNCIONA PERFE PARA COMPRAR
-
-    // async function handleBuy(evt) {
-
-    //     evt.preventDefault()
-
-    //     const headers = {
-    //         "Content-Type": "application/json",
-    //         "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
-    //     }
-
-
-    //     centro.creditosrestantes = stateSub.citas
-    //     centro.suscripcion = stateSub.tipo
-    //     centro.pagado = true
-
-    //     console.log("CENTRO MODIFICADO", centro)
-
-    //     changeCentro(centro)
-
-    //     const urlEditCentro = "https://nailingtest.herokuapp.com/centros/edit"
-    //     const res = await putData(urlEditCentro, centro, headers)
-    //         .then(res => {
-
-    //             alert("Se ha realizado su compra correctamente \n Es necesario restaurar la sesión para actualizar sus datos \n Disculpe las molestias \n Muchas gracias por confiar en Nailing")
-
-    //             return res
-    //         }).catch(ex => {
-    //             console.log(ex)
-    //         })
-
-
-
-    //     const url = "https://nailingtest.herokuapp.com/logout"
-
-    //     const body = {
-    //         "id": user.id,
-    //         "usuario": user.usuario,
-    //         "contrasenya": user.contrasenya,
-    //         "email": user.email,
-    //         "telefono": user.telefono,
-    //         "rol": user.rol
-    //     }
-
-    //     console.log(body)
-
-    //     await postData(url, body, headers)
-    //         .then(function (data) {
-    //         }
-    //             //Tiene que ir al catch porque devuelve 204 y lo pilla como error
-    //         ).catch((error) => {
-    //             sessionStorage.setItem("userEncriptado", "")
-    //             sessionStorage.setItem("isLogged", false)
-    //             locationPush('/')
-    //         }
-    //         );
-
-    // }
 
 
     return (

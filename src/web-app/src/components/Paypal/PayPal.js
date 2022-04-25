@@ -13,6 +13,7 @@ export default function Paypal({ json, money, paymentType }) {
 
   const [locationPath, locationPush] = useLocation()
 
+  console.log(user)
   console.log("JSON EN PAYPAL", json)
 
   useEffect(() => {
@@ -77,29 +78,28 @@ export default function Paypal({ json, money, paymentType }) {
                 })
 
 
-              // const url = "https://nailingtest.herokuapp.com/logout"
+              const urlLogout = "https://nailingtest.herokuapp.com/logout"
 
-              // const body = {
-              //   "id": user.id,
-              //   "usuario": user.usuario,
-              //   "contrasenya": user.contrasenya,
-              //   "email": user.email,
-              //   "telefono": user.telefono,
-              //   "rol": user.rol
-              // }
+              const body = {
+                "id": user.id,
+                "usuario": user.usuario,
+                "contrasenya": user.contrasenya,
+                "email": user.email,
+                "telefono": user.telefono,
+                "rol": user.rol
+              }
 
-              // console.log(body)
 
-              // await postData(url, body, headers)
-              //   .then(function (_data) {
-              //   }
-              //     //Tiene que ir al catch porque devuelve 204 y lo pilla como error
-              //   ).catch((_error) => {
-              //     sessionStorage.setItem("userEncriptado", "")
-              //     sessionStorage.setItem("isLogged", false)
-              //     locationPush('/')
-              //   }
-              //   );
+              await postData(urlLogout, body, headers)
+                .then(function (_data) {
+                }
+                  //Tiene que ir al catch porque devuelve 204 y lo pilla como error
+                ).catch((_error) => {
+                  sessionStorage.setItem("userEncriptado", "")
+                  sessionStorage.setItem("isLogged", false)
+                  locationPush('/')
+                }
+                );
               break;
             default:
               break;
