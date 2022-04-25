@@ -1,4 +1,4 @@
-package com.nailing.APP.service;
+package com.nailing.APP.tamanyo;
 
 import static org.junit.jupiter.api.Assertions.*;
 
