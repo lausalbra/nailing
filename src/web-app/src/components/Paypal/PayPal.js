@@ -52,12 +52,40 @@ export default function Paypal({ json, money, paymentType }) {
               });
               break;
             case "NewCentre":
-              const urlCentre = "https://nailingtest.herokuapp.com/centros/add/" + user;
+              const urlCentre = "https://nailingtest.herokuapp.com/centros/add/" + user.id.toString();
               postData(urlCentre, json, {
                 "Content-Type": "application/json",
                 "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
+              }).then(async function () {
+                const url = "https://nailingtest.herokuapp.com/login";
+                const body = {
+                  "user": user.usuario,
+                  "password": user.contrasenya
+                }
+                const headers = {
+                  "Content-Type": "application/json",
+                  "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
+                }
+                const contrasenya = user.contrasenya;
+                await postData(url, body, {
+                  "Content-Type": "application/json",
+                }).then(async function (data) {
+      
+                const user = data
+                user.contrasenya = contrasenya;
+
+                let result = cryptoJS.AES.encrypt(JSON.stringify(user), "NAILING");
+
+                sessionStorage.setItem("userEncriptado", result)
+                sessionStorage.setItem("isLogged", true)
+    
+                  //Hago la llamada con oauth
+  
+                  await postData(url, body, headers)
+  
+                  window.location.href = '/usuario';
+                });
               });
-              window.location.href = '/usuario';
               break;
 
             case "BuyPackage":

@@ -49,12 +49,12 @@ export function SuscripciónComponent(props) {
                 break
             case "avanzado":
                 changeStateSub({
-                    "tipo": "ADVANCE",
+                    "tipo": "ADVANCED",
                     "label": "Suscripción Avanzada",
                     "citas": 200,
                     "precio": 65
                 })
-                centro.suscripcion = "ADVANCE"
+                centro.suscripcion = "ADVANCED"
                 centro.creditosrestantes = 200
                 money = 65
                 break

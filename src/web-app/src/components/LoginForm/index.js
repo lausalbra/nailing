@@ -55,9 +55,6 @@ export function LoginForm() {
                     changeState(false)
                 }, 750)
             );
-
-
-
     }
 
     return state ? (
