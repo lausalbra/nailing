@@ -59,6 +59,9 @@ public class BaseTestService {
 		centro.setCierreAM(LocalTime.of(14, 0));
 		centro.setAperturaPM(LocalTime.of(17, 0));
 		centro.setCierrePM(LocalTime.of(21, 0));
+                centro.setValoracionMedia(2.);
+                centro.setValoracionTotal(2);
+                centro.setNumValoraciones(1);
 		centroCreado = centroService.addCentro(centro);
 	}   
         
@@ -108,23 +111,6 @@ public class BaseTestService {
 		assertEquals(baseBuscada.getId(), baseAnyadida.getId());
 	}
         
-        
-        @Test
-	public void notFindByIdTest() {
-		base = new Base();
-		base.setCentro(centroCreado);
-		base.setCoste(15.0);
-		base.setNombre(NombreBase.GEL);
-		base.setSiguienteFase(Fases.formas);
-		base.setTiempo(30);
-		Base baseAnyadida = baseService.addBase(base);
-		assertThrows(NoSuchElementException.class, new Executable() {
-            
-            public void execute() throws Throwable {
-            	baseService.findById(baseAnyadida.getId()+1);
-            }
-        });    
-        }
         
         @Test
 	public void findAllTest() {

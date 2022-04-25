@@ -58,6 +58,9 @@ public class AcabadoTestService {
 		centro.setCierreAM(LocalTime.of(14, 0));
 		centro.setAperturaPM(LocalTime.of(16, 0));
 		centro.setCierrePM(LocalTime.of(20, 0));
+                centro.setValoracionMedia(2.);
+                centro.setValoracionTotal(2);
+                centro.setNumValoraciones(1);
 		centroCreado = centroService.addCentro(centro);
 	}    
     	@Test
@@ -75,22 +78,6 @@ public class AcabadoTestService {
 		assertEquals(acabado.getSiguienteFase(), acabadoAnyadido.getSiguienteFase());
 		assertEquals(acabado.getTiempo(), acabadoAnyadido.getTiempo());
 	}
-        
-        @Test
-	public void addAcabadoNullTest() {
-		acabado = new Acabado();
-		acabado.setCentro(centroCreado);
-		acabado.setCoste(10.0);
-		acabado.setTiempo(null);
-		acabado.setNombre(NombreAcabado.BRILLO);
-		acabado.setSiguienteFase(Fases.fin);
-		assertThrows(ConstraintViolationException.class, new Executable() {
-            
-            public void execute() throws Throwable {
-                acabadoService.addAcabado(acabado);
-            }
-        });
-    }
         
         @Test
 	public void findByIdTest() {
