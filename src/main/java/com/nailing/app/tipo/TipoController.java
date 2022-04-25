@@ -6,6 +6,7 @@ package com.nailing.app.tipo;
 
 import static com.nailing.app.usuario.AuthoritiesConstants.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +91,7 @@ public class TipoController {
             List<Tipo> tipos = tipoService.addTipoCentro(tipids);
             return new ResponseEntity<>(tipos, HttpStatus.CREATED);
         }catch(IllegalArgumentException e){
-            List<Tipo> tipos = tipoService.addTipoCentro(tipids);
+            List<Tipo> tipos = new ArrayList<>();
             return new ResponseEntity<>(tipos, HttpStatus.BAD_REQUEST);
         }
     }
