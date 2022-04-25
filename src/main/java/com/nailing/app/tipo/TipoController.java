@@ -86,7 +86,7 @@ public class TipoController {
     @Operation(summary = "Añade un Tipo a un Centro")
     @PreAuthorize("hasAuthority('"+ OWNER +"')")
     @PostMapping("/add/centro")
-    public ResponseEntity<List<Tipo>> addTamanyoCentro(@RequestBody Map<String,List<String>> tipids){
+    public ResponseEntity<List<Tipo>> addTipoCentro(@RequestBody Map<String,List<String>> tipids){
         try{
             List<Tipo> tipos = tipoService.addTipoCentro(tipids);
             return new ResponseEntity<>(tipos, HttpStatus.CREATED);

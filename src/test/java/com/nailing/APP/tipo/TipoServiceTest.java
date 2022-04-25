@@ -84,11 +84,11 @@ public class TipoServiceTest {
 	@Test
 	public void addTipoNegativeTest() {
 		Tipo tipoError = new Tipo();
-		tipo.setCentro(centroAnadido);
-		tipo.setNombre(NombreTipo.ESCULPIDA);
-		tipo.setCoste(-100.);
-		tipo.setSiguienteFase(Fases.bases);
-		tipo.setTiempo(10);
+		tipoError.setCentro(centroAnadido);
+		tipoError.setNombre(NombreTipo.ESCULPIDA);
+		tipoError.setCoste(-100.);
+		tipoError.setSiguienteFase(Fases.bases);
+		tipoError.setTiempo(10);
 		assertThrows(ConstraintViolationException.class, () -> {
 			tipoService.addTipo(tipoError);
 		});
