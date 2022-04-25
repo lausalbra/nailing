@@ -6,7 +6,8 @@ export function CreditosAtrasados() {
     return (
         <>
             <Header />
-            <CreditosAtrasadosComponent />
+
+            <Card component={<CreditosAtrasadosComponent />} />
         </>
     )
 }

@@ -18,6 +18,7 @@ import { CentroEdit } from './views/CentroEdit'
 import { CentroAdd } from './views/CentroAdd'
 import { DemoServiciosCentro } from './views/DemoServiciosCentro'
 import { CreditosAtrasados } from './views/CreditosAtrasados'
+import { ComprarPaquete } from './views/ComprarPaquete'
 function App() {
   return (
     <div class='bg-auto'>

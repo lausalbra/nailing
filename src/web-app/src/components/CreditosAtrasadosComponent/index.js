@@ -1,12 +1,30 @@
 import { useEffect } from "react"
 import Paypal from "../Paypal/PayPal"
+import ReactDOM from 'react-dom'
 
 export function CreditosAtrasadosComponent() {
-    const citasExtra = 5
 
-    const postbody = JSON.stringify({
-        "citasExtra": 5,
-        "coste": 5 * 0.5
+    //Obtengo usuario desencriptado
+    var cryptoJS = require("crypto-js");
+    const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
+    useEffect(() => {
+
+        let centro = user.centro
+
+        let money = -(centro.creditosrestantes * 0.5)
+
+        centro.creditosrestantes = 0
+        centro.pagado = true
+
+        var paypalDiv = document.getElementById("paypalDiv");
+        paypalDiv.innerHTML = '';
+        var newDiv = document.createElement("div");
+        newDiv.className = "w-full flex justify-center";
+        paypalDiv.appendChild(newDiv);
+
+
+        ReactDOM.render(<Paypal json={centro} money={money} paymentType="PagarCreditosAtrasados" />, newDiv);
     })
 
     return (
@@ -14,12 +32,12 @@ export function CreditosAtrasadosComponent() {
             <div className="text-center m-7">
                 <h1 className="text-4xl font-bold p-2"> Creditos Atrasados</h1>
                 <h2 className="text-2xl italic p-2"> Por favor, abone el importe antes de solicitar una nueva suscripción </h2>
-                <div className="grid grid-rows-1 grid-cols-2 items-center border-4 border-pink-300 m-0 p-0">
+                <div className="grid lg:grid-rows-1 lg:grid-cols-2 grid-rows-2 grid-cols-1 items-center border-4 border-pink-300 m-0 p-0">
                     <div>
-                        <p><strong>Citas extra realizadas: </strong>{citasExtra}</p>
-                        <p><strong>Precio total a pagar: </strong>{citasExtra * 0.5} €</p>
+                        <p><strong>Citas extra realizadas: </strong>{-(user.centro.creditosrestantes)}</p>
+                        <p><strong>Precio total a pagar: </strong>{-(user.centro.creditosrestantes * 0.5)} €</p>
                     </div>
-                    <div className="max-w-xs p-2">{Paypal(postbody)}</div>
+                    <div id="paypalDiv"></div>
                 </div>
 
             </div>
