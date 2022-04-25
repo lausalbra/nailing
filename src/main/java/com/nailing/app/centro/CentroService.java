@@ -27,6 +27,8 @@ import com.nailing.app.tipo.TipoService;
 import com.nailing.app.usuario.Authorities;
 import com.nailing.app.usuario.Usuario;
 import com.nailing.app.usuario.UsuarioService;
+import com.nailing.app.valoracion.Valoracion;
+import com.nailing.app.valoracion.ValoracionService;
 
 /**
  *
@@ -55,9 +57,15 @@ public class CentroService {
     @Autowired
     private UsuarioService usuarioService;
     @Autowired
+    private ValoracionService valoracionService;
+    @Autowired
     public DbInit encoder;
     public Optional<Centro> findById(Long id){
         return centroRepository.findById(id);
+    }
+    
+    public Centro save(Centro centro){
+        return centroRepository.save(centro);
     }
     
     public List<Centro> findAll(){
@@ -87,6 +95,11 @@ public class CentroService {
         	for(Usuario u : usuarioService.findAll()) {
         		if (u.getCentro() == centro.get()) {
         			u.setCentro(null);
+        		}
+         	}
+                for(Valoracion v : valoracionService.findAll()) {
+        		if (v.getCentro().equals(centro.get())) {
+        			valoracionService.delete(v);
         		}
          	}
             centroRepository.delete(centro.get());
@@ -125,7 +138,11 @@ public class CentroService {
 		        		centro.setCreditosrestantes(400);
 		        	}
         		}    
-        	}        	
+        	}
+                if(centro.getAperturaAM().isAfter(centro.getCierreAM()) || centro.getAperturaPM().isAfter(centro.getCierrePM()) 
+                        || centro.getAperturaAM().isAfter(centro.getAperturaPM()) || centro.getAperturaPM().isBefore(centro.getCierreAM())){
+                    throw new IllegalArgumentException();
+                }
 	        return centroRepository.save(centro);
         }else{
             throw new IllegalArgumentException();
@@ -183,7 +200,7 @@ public class CentroService {
    
    public Centro updateCentroImage(long idCentro, String uri) {
 	   Optional<Centro> centro = findById(idCentro);
-	   if(centro.isEmpty())
+	   if(centro.get()==null)
 		   return null;
 	   else 
 	   {
