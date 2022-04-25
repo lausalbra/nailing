@@ -1,6 +1,8 @@
 package com.nailing.APP.service;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -28,13 +31,14 @@ import com.nailing.app.tamanyo.NombreTamanyo;
 import com.nailing.app.tamanyo.Tamanyo;
 import com.nailing.app.tamanyo.TamanyoService;
 
+import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = AppApplication.class)
-public class DisenyoTestService {
+public class DisenyoServiceTest {
     @Autowired
     private DisenyoService disSer;
     @Autowired
@@ -65,6 +69,9 @@ public class DisenyoTestService {
 		centro.setCierreAM(LocalTime.of(14, 0));
 		centro.setAperturaPM(LocalTime.of(17, 0));
 		centro.setCierrePM(LocalTime.of(21, 0));
+        centro.setValoracionMedia(2.);
+        centro.setValoracionTotal(2);
+        centro.setNumValoraciones(1);
 		centroAnadido = centroSer.addCentro(centro);
     }
 
@@ -85,6 +92,17 @@ public class DisenyoTestService {
     }
 
     @Test
+    public void shouldNotInsertDisenyo(){
+        disenyo = new Disenyo();
+        disenyo.setCentro(centroAnadido);
+        disenyo.setCoste(-20.);
+        disenyo.setTiempo(-15);
+        disenyo.setSiguienteFase(null);
+        disenyo.setNombre(null);
+        assertThrows(ConstraintViolationException.class, () -> disSer.addDisenyo(disenyo));
+    }
+
+    @Test
     public void shouldFindDisenyoById(){
         disenyo = new Disenyo();
         disenyo.setCentro(centroAnadido);
@@ -102,6 +120,11 @@ public class DisenyoTestService {
     }
 
     @Test
+    public void shouldNotFindDisenyoById(){
+        assertThrows(NoSuchElementException.class, () -> disSer.findById(9999999999999999L));
+    }
+
+    @Test
     public void shouldListAllDisenyos(){
         disenyo = new Disenyo();
         disenyo.setCentro(centroAnadido);
@@ -112,6 +135,7 @@ public class DisenyoTestService {
         Disenyo disAnidada = disSer.addDisenyo(disenyo);
         List<Disenyo> listaDis = StreamSupport.stream(disSer.findAll().spliterator(), false).collect(Collectors.toList());
         assertTrue(listaDis.contains(disAnidada));
+        assertTrue(listaDis.size()>1);
     }
     
     @Test
@@ -128,6 +152,11 @@ public class DisenyoTestService {
         disSer.removeDisenyo(id);
         List<Disenyo> listaDis2 = StreamSupport.stream(disSer.findAll().spliterator(), false).collect(Collectors.toList());
         assertNotEquals(listaDis1, listaDis2);
+    }
+
+    @Test
+    public void shouldNotDeleteDisenyo(){
+        assertThrows(NoSuchElementException.class, () -> disSer.removeDisenyo(9999999999999999L));
     }
 
     @Test
@@ -162,6 +191,19 @@ public class DisenyoTestService {
         disSer.addDisenyo(disenyo);
         List<Disenyo> listDisCentros = disSer.findByCentro(centroAnadido.getId());
         assertTrue(listDisCentros.contains(disenyo));
+    }
+
+    @Test
+    public void shouldNotListByCentro(){
+        disenyo = new Disenyo();
+        disenyo.setCentro(centroAnadido);
+        disenyo.setCoste(20.);
+        disenyo.setTiempo(15);
+        disenyo.setSiguienteFase(Fases.decoraciones);
+        disenyo.setNombre(NombreDisenyo.LISAS);
+        disSer.addDisenyo(disenyo);
+        List<Disenyo> listDisCentros = disSer.findByCentro(1L);
+        assertFalse(listDisCentros.contains(disenyo));
     }
 
     @Test
@@ -205,7 +247,27 @@ public class DisenyoTestService {
     }
 
     @Test
-    public void shouldAddDecoByCentro(){
+    public void shouldNotListByCentroAndBase(){
+        base = new Base();
+        base.setCentro(centroAnadido);
+        base.setCoste(20.);
+        base.setNombre(NombreBase.ACRYGEL);
+        base.setSiguienteFase(Fases.formas);
+        base.setTiempo(15);
+        Base baseAnidada = baseService.addBase(base);
+        disenyo = new Disenyo();
+        disenyo.setCentro(centroAnadido);
+        disenyo.setCoste(20.);
+        disenyo.setTiempo(15);
+        disenyo.setSiguienteFase(Fases.decoraciones);
+        disenyo.setNombre(NombreDisenyo.LISAS);
+        disSer.addDisenyo(disenyo);
+        List<Disenyo> listDisTamCentro = disSer.findDisenyosByCentroBase(baseAnidada.getId(), centroAnadido.getId());
+        assertFalse(listDisTamCentro.contains(disenyo));
+    }
+
+    @Test
+    public void shouldAddDisByCentro(){
         List<String> tiempo = new ArrayList<>();
         tiempo.add("20");
         List<String> personalizaciones = new ArrayList<>();
@@ -222,5 +284,23 @@ public class DisenyoTestService {
         List<Disenyo> list1 = disSer.addDisenyoCentro(entrada);
         List<Disenyo> list2 = disSer.findByCentro(centroAnadido.getId());
         assertTrue(list2.contains(list1.get(0)));
+    }
+
+    @Test
+    public void shouldNotAddDisByCentro(){
+        List<String> tiempo = new ArrayList<>();
+        tiempo.add("-20");
+        List<String> personalizaciones = new ArrayList<>();
+        personalizaciones.add("");
+        List<String> coste = new ArrayList<>();
+        coste.add("-25");
+        List<String> centroList = new ArrayList<>();
+        centroList.add(null);
+        Map<String,List<String>> entrada = new HashMap<>();
+        entrada.put("tiempo", tiempo);
+        entrada.put("personalizaciones", personalizaciones);
+        entrada.put("centro", centroList);
+        entrada.put("coste", coste);
+        assertThrows(IllegalArgumentException.class, () -> disSer.addDisenyoCentro(entrada));
     }
 }

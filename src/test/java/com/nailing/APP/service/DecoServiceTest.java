@@ -4,21 +4,19 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import javax.validation.ConstraintViolationException;
 
 import com.nailing.app.AppApplication;
 import com.nailing.app.centro.Centro;
@@ -38,7 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = AppApplication.class)
-public class DecoTestService {
+public class DecoServiceTest {
 
     @Autowired
 	private DecoracionService decoSer;
@@ -51,8 +49,8 @@ public class DecoTestService {
 	private Centro centro;
 	private Centro centroAnadido;
 	@BeforeEach
-	public void setUp() {
-		centro = new Centro();
+    public void setUp(){
+        centro = new Centro();
 		centro.setId((long)6000);
 		centro.setNombre("PaquitoElUnyas");
 		centro.setPagado(true);
@@ -66,8 +64,11 @@ public class DecoTestService {
 		centro.setCierreAM(LocalTime.of(14, 0));
 		centro.setAperturaPM(LocalTime.of(17, 0));
 		centro.setCierrePM(LocalTime.of(21, 0));
+        centro.setValoracionMedia(2.);
+        centro.setValoracionTotal(2);
+        centro.setNumValoraciones(1);
 		centroAnadido = centroSer.addCentro(centro);
-	}
+    }
 
     @Test
     public void shouldInsertDecoracion(){
@@ -83,6 +84,17 @@ public class DecoTestService {
         assertEquals(decoracion.getNombre(), decoAnidada.getNombre());
         assertEquals(decoracion.getSiguienteFase(), decoAnidada.getSiguienteFase());
         assertEquals(decoracion.getTiempo(), decoAnidada.getTiempo());
+    }
+
+    @Test
+    public void shouldNotInsertDecoracion(){
+        decoracion = new Decoracion();
+        decoracion.setCentro(centroAnadido);
+        decoracion.setCoste(-20.0);
+        decoracion.setNombre(null);
+        decoracion.setSiguienteFase(null);
+        decoracion.setTiempo(-23);
+        assertThrows(ConstraintViolationException.class, () -> decoSer.addDecoracion(decoracion));
     }
     
     @Test
@@ -103,6 +115,11 @@ public class DecoTestService {
     }
 
     @Test
+    public void shouldNotFindDecoracionById(){
+        assertThrows(NoSuchElementException.class, () -> decoSer.findById(9999999999999999L));
+    }
+
+    @Test
     public void shouldListAllDecoraciones(){
         decoracion = new Decoracion();
         decoracion.setCentro(centroAnadido);
@@ -113,6 +130,7 @@ public class DecoTestService {
         Decoracion decoAnidada = decoSer.addDecoracion(decoracion);
         List<Decoracion> listaDecos = StreamSupport.stream(decoSer.findAll().spliterator(), false).collect(Collectors.toList());
         assertTrue(listaDecos.contains(decoAnidada));
+        assertTrue(listaDecos.size()>1);
     }
 
     @Test
@@ -130,6 +148,11 @@ public class DecoTestService {
         List<Decoracion> listaDecos2 = StreamSupport.stream(decoSer.findAll().spliterator(), false).collect(Collectors.toList());
         assertNotEquals(listaDecos1, listaDecos2);
 
+    }
+
+    @Test
+    public void shouldNotDeleteDecoraciones(){
+        assertThrows(NoSuchElementException.class, () -> decoSer.removeDecoracion(9999999999999999L));
     }
 
     @Test
@@ -164,6 +187,19 @@ public class DecoTestService {
         decoSer.addDecoracion(decoracion);
         List<Decoracion> listDecoCentros = decoSer.findByCentro(centroAnadido.getId());
         assertTrue(listDecoCentros.contains(decoracion));
+    }
+
+    @Test
+    public void shouldNotListByCentro(){
+        decoracion = new Decoracion();
+        decoracion.setCentro(centroAnadido);
+        decoracion.setCoste(20.0);
+        decoracion.setNombre(NombreDecoracion.NO_DECORACION);
+        decoracion.setSiguienteFase(Fases.tipos);
+        decoracion.setTiempo(30);
+        decoSer.addDecoracion(decoracion);
+        List<Decoracion> listDecoCentros = decoSer.findByCentro(1L);
+        assertFalse(listDecoCentros.contains(decoracion));
     }
 
     @Test
@@ -242,5 +278,22 @@ public class DecoTestService {
         List<Decoracion> list1 = decoSer.addDecoracionCentro(entrada);
         List<Decoracion> list2 = decoSer.findByCentro(centroAnadido.getId());
         assertTrue(list2.contains(list1.get(0)));
+    }
+    @Test
+    public void shouldNotAddDecoByCentro(){
+        List<String> tiempo = new ArrayList<>();
+        tiempo.add("");
+        List<String> personalizaciones = new ArrayList<>();
+        personalizaciones.add(NombreDecoracion.BURBUJAS.toString());
+        List<String> coste = new ArrayList<>();
+        coste.add("-25");
+        List<String> centroList = new ArrayList<>();
+        centroList.add(null);
+        Map<String,List<String>> entrada = new HashMap<>();
+        entrada.put("tiempo", tiempo);
+        entrada.put("personalizaciones", personalizaciones);
+        entrada.put("centro", centroList);
+        entrada.put("coste", coste);
+        assertThrows(IllegalArgumentException.class, () -> decoSer.addDecoracionCentro(entrada));
     }
 }
