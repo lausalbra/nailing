@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import SlidingPane from "../../components/SlidingPane/index.tsx";
 import PropertyPanel from "../../components/PropertyPanel/index.js";
 import { Rating, Box } from "@mui/material";
+import { getData, postData } from '../../services/common/common'
 import $ from 'jquery';
 
 export function CenterDetails({centro}) {
@@ -71,40 +72,33 @@ useEffect(() => {
 }, [state.buttons]);
 
 async function valorar(valoracion){
-  const usuario = {
-    "id": sessionStorage.getItem("userId"),
-    "usuario": sessionStorage.getItem("userName"),
-    "contrasenya": sessionStorage.getItem("userPassword"),
-    "email": sessionStorage.getItem("userEmail"),
-    "telefono": sessionStorage.getItem("userPhone"),
-    "rol": sessionStorage.getItem("userRole"),
-    "centro": sessionStorage.getItem("userCenter"),
-  }
   const body = {
-    "id": 1,
     "valoracionUsuario": valoracion,
-    "centro": centro,
-    "usuario": usuario,
+    "centro": centro.id,
+    "usuario": sessionStorage.getItem("userId"),
   }
   const header = {
+    "Content-Type": "application/json",
     "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
   }
   console.log(body)
-  $.ajax({
-    method: "POST",
-    headers: header,
-    url: "https://nailingtest.herokuapp.com/valoraciones/add/centro",
-    body: body,
-    success: function () {
-      console.log("Valoración enviada correctamente");
-      console.log(valoracion)
+  const url= "https://nailingtest.herokuapp.com/valoraciones/add/centro"
+  await postData(url, body, header)
+    .then(function () {
+      console.log("Valoración enviada correctamente "+valoracion);
       setMensaje("Valoración enviada")
+      setEnviado(true)
+      centro.numValoraciones = centro.numValoraciones+1
+      centro.valoracionTotal = centro.valoracionTotal+valoracion
+      centro.valoracionMedia = centro.valoracionTotal/centro.numValoraciones
+      setRating(rating)
     }
-  });
+    )
 }
 const [value, setValue] = React.useState(0);
 const [hover, setHover] = React.useState(-1);
 const [mensaje, setMensaje] = React.useState("");
+const [enviado, setEnviado] = React.useState(false);
 
   return (
     <><Card style={{backgroundColor: 'rgb(248, 225, 228)'}} sx={{ minWidth: 275 }}>
@@ -116,19 +110,34 @@ const [mensaje, setMensaje] = React.useState("");
               <p><strong>Horario de mañana:</strong> {aperturaAM} - {cierreAM}</p>
               <p><strong>Horario de tarde:</strong> {aperturaPM} - {cierrePM}</p>
               {ratingBoolean?
-                <><p><strong>Valoración:</strong> <Rating value={rating} precision={0.1} readOnly /> ({rating})</p></>
+                <><p><strong>Valoración:</strong> <Rating value={rating} precision={0.1} readOnly /> ({rating.toFixed(1)})</p></>
                 :
                 <></>
               }
-              
-              <p><strong>Valorar:</strong> <Rating precision={1} value={value} onChange={(event, newValue) => {
+              {enviado?
+                <>
+                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(event, newValue) => {
+                setValue(newValue);
+                valorar(newValue);
+                }} 
+                onChangeActive={(event, newHover) => {
+                  setHover(newHover);
+                }} readOnly/>({hover !== -1 ? hover : value})</p>
+                </>
+                :
+                <>
+                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(event, newValue) => {
                 setValue(newValue);
                 valorar(newValue);
                 }} 
                 onChangeActive={(event, newHover) => {
                   setHover(newHover);
                 }}/>({hover !== -1 ? hover : value})</p>
-                <p className="text-pink-400">{mensaje}</p>
+                </>
+              }
+              <p className="text-pink-400">{mensaje}</p>
+              
+              
           </div>
       </div>
     </CardContent>
