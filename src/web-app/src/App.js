@@ -19,6 +19,8 @@ import { CentroAdd } from './views/CentroAdd'
 import { DemoServiciosCentro } from './views/DemoServiciosCentro'
 import { CreditosAtrasados } from './views/CreditosAtrasados'
 import { ComprarPaquete } from './views/ComprarPaquete'
+import { LogOut } from './views/LogOut'
+
 function App() {
   return (
     <div class='bg-auto'>
@@ -46,6 +48,7 @@ function App() {
             <Route path='/creditosAtrasados' component={CreditosAtrasados} />
             <Route path='/comprarPaquete' component={ComprarPaquete} />
             <Route path='/terminoscondiciones' component={TerminosCondiciones} />
+            <Route path='/logOut' component={LogOut} />
             <Route path='/' component={Landing} />
           </div>
 

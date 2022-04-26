@@ -9,7 +9,23 @@ export default function Paypal({ json, money, paymentType }) {
 
   //Obtengo usuario desencriptado
   var cryptoJS = require("crypto-js");
-  const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
+  let user
+
+  try {
+    user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+  } catch (error) {
+    user = {
+      contrasenya: null,
+      email: null,
+      id: null,
+      rol: null,
+      telefono: null,
+      usuario: null,
+      centro: null
+    }
+  }
+
 
   const [locationPath, locationPush] = useLocation()
   console.log(locationPath);
@@ -101,33 +117,14 @@ export default function Paypal({ json, money, paymentType }) {
 
               const res = await putData(urlEditCentro, json, headers)
                 .then(res2 => {
-
-                  alert("Se ha realizado su compra correctamente \n Es necesario restaurar la sesión para actualizar sus datos \n Disculpe las molestias \n Muchas gracias por confiar en Nailing")
-
                   return res2
                 }).catch(ex => {
                   console.log(ex)
                 })
-                console.log(res)
+              console.log(res)
 
-              await postData(urlLogout, {
-                "id": user.id,
-                "usuario": user.usuario,
-                "contrasenya": user.contrasenya,
-                "email": user.email,
-                "telefono": user.telefono,
-                "rol": user.rol
-              }, headers)
-                .then(function (__data) {
-                  console.log("bien")
-                }
-                  //Tiene que ir al catch porque devuelve 204 y lo pilla como error
-                ).catch((_error) => {
-                  sessionStorage.setItem("userEncriptado", "")
-                  sessionStorage.setItem("isLogged", false)
-                  locationPush('/')
-                }
-                );
+              locationPush("/logout")
+
               break;
 
             case "PagarCreditosAtrasados":
@@ -135,31 +132,13 @@ export default function Paypal({ json, money, paymentType }) {
               await putData(urlEditCentro, json, headers)
                 .then(res2 => {
 
-                  alert("Se ha realizado el pago correctamente \n Es necesario restaurar la sesión para actualizar sus datos \n Disculpe las molestias \n Muchas gracias por confiar en Nailing")
-
                   return res2
                 }).catch(ex => {
                   console.log(ex)
                 })
 
-              await postData(urlLogout, {
-                "id": user.id,
-                "usuario": user.usuario,
-                "contrasenya": user.contrasenya,
-                "email": user.email,
-                "telefono": user.telefono,
-                "rol": user.rol
-              }, headers)
-                .then(function (__data) {
-                  console.log("bien")
-                }
-                  //Tiene que ir al catch porque devuelve 204 y lo pilla como error
-                ).catch((_error) => {
-                  sessionStorage.setItem("userEncriptado", "")
-                  sessionStorage.setItem("isLogged", false)
-                  locationPush('/')
-                }
-                );
+              locationPush("/logout")
+
               break;
             default:
               break;
