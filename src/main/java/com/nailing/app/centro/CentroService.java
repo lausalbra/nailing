@@ -95,7 +95,7 @@ public class CentroService {
         	for(Usuario u : usuarioService.findAll()) {
         		if (centro.get().equals(u.getCentro())) {
         			u.setCentro(null);
-                                usuarioService.save(u);
+                    usuarioService.save(u);
         		}
          	}
                 for(Valoracion v : valoracionService.findAll()) {
@@ -201,7 +201,7 @@ public class CentroService {
    
    public Centro updateCentroImage(long idCentro, String uri) {
 	   Optional<Centro> centro = findById(idCentro);
-	   if(centro.get()==null)
+	   if(!centro.isPresent())
 		   return null;
 	   else 
 	   {
