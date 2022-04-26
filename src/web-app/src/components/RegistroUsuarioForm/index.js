@@ -27,8 +27,9 @@ export function RegistroUsuarioForm() {
         }
 
         const isConfirmed = confirmPassword(password.current.value, passwordConfirm.current.value)
+        const telefonoConfirmed = confirmTelefono(telefono.current.value)
 
-        if (isConfirmed) {
+        if (isConfirmed && telefonoConfirmed) {
             await postData(url, body, header)
                 .then((response) => {
 
@@ -61,7 +62,17 @@ export function RegistroUsuarioForm() {
             changeState("")
         }
         return result
+    }
 
+    function confirmTelefono(_telefono) {
+        let regex = new RegExp(/\d{9}$/)
+        const result = _telefono.match(regex)
+        if (!result) {
+            changeState("El telefono no tiene el formato correcto, 9 números enteros")
+        } else {
+            changeState("")
+        }
+        return result
     }
 
     /*
@@ -87,7 +98,7 @@ export function RegistroUsuarioForm() {
                 <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" ref={telefono} pattern="[0-9]{9}" required />
                 <p className="text-sm text-red-600" >{state}</p>
                 <p className="text-sm " >Al registrarte aceptas nuestros <a className="underline" href="/terminoscondiciones">Terminos y Condiciones</a></p>
-                <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
+                <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" placeholder="123456789" />
             </form>
         </>
     )
