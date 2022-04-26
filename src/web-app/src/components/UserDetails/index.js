@@ -90,6 +90,14 @@ export function UserDetails({ image, email, phone }) {
           <div className="ml-5 items-center">
             <p><strong>Email:</strong> {email}</p>
             <p><strong>Teléfono:</strong> {phone}</p>
+            {user.rol === "OWNER"?
+            <>
+            <p><strong>Créditos Restantes:</strong> {user.centro.creditosrestantes}</p>
+            <p><strong>Última fecha de pago:</strong> {user.centro.ultimaSuscripcion}</p>
+            </>
+            :
+            <></>
+            }
             <div className='text-xl text-left hover:underline'>
               <Link className="text-xl text-pink-400" to='/usuario/edit'>Editar mis datos</Link>
             </div>
