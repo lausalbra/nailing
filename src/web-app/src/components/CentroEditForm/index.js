@@ -48,7 +48,7 @@ export function CentroEditForm({id}) {
         locationPush('/error')
       }
     }
-  }, );
+  }, []);
 
   const oldNombre=resObj.nombre
   const oldImagen=resObj.imagen

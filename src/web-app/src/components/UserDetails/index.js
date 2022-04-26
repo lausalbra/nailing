@@ -83,7 +83,7 @@ export function UserDetails({ image, email, phone }) {
         locationPush('/error')
       }
     }
-  }, )
+  }, [])
 
   return (
     <Card style={{ backgroundColor: 'rgb(248, 225, 228)' }} sx={{ minWidth: 275 }}>

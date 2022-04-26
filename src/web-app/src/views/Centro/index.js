@@ -31,7 +31,7 @@ export function Centro({ params }) {
             locationPush('/error')
           }
         }
-      }, )
+      }, []);
     
     if (resObj !==null) sessionStorage.setItem("DiasDisponibles", resObj.diasDisponible)
     return (
