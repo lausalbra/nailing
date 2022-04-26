@@ -315,7 +315,7 @@ class PropertyPanel extends Component {
                     let newPropertyPanelContainer = document.createElement("div");
                     //Configuración del panel
                     var nextName = option.siguienteFase.charAt(0).toUpperCase() + option.siguienteFase.slice(1);
-                    nextName = nextName.replace("ny", "ñ");
+                    nextName = nextName.replaceAll("ny", "ñ");
                     newPropertyPanelContainer.id = nextName + "Container";
                     newPropertyPanelContainer.className = "propertyContainer";
                     //Se añade y se abre el panel
@@ -351,8 +351,8 @@ class PropertyPanel extends Component {
                         {this.state.buttons.map((element, i) => {
                             console.log(element.nombre);
                             var id = element.id
-                            var nameToShow = element.nombre.replace("_", " ");
-                            nameToShow = nameToShow.replace("ny", "ñ");
+                            var nameToShow = element.nombre.replaceAll("_", " ");
+                            nameToShow = nameToShow.replaceAll("ny", "ñ");
                             return (
                                 <>
                                     <div class="flex flex-wrap justify-center w-min" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + element.nombre + " h-responsiveButtonHeight max-w-xs max-h-28 m-1 bg-cover font-bold rounded-full p-2 border-2 w-56"}></button><p class="text-center w-fit max-w-md">{nameToShow}</p></div>
