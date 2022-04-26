@@ -16,6 +16,7 @@ import com.nailing.app.centro.Suscripcion;
 import com.nailing.app.usuario.UsuarioService;
 import java.time.LocalTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,7 +42,10 @@ public class CentroTestService {
     
     @Test
     public void shouldFindAll(){
-        assertEquals(centroService.findAll().size(),3);
+        Centro centro = new Centro("Nails by Claudia","https://i.ibb.co/qkFKLsm/F253-E9-DA-6780-4-A9-D-9-EAB-804784-BBEE21.jpg","Málaga",LocalTime.of(8, 30),LocalTime.of(14, 0),LocalTime.of(17, 0),LocalTime.of(21, 0),Suscripcion.BASIC,LocalDate.now(),150,true,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",0.,0,0);
+        centroService.addCentro(centro);
+        assertTrue(centroService.findAll().size()>1);
+        assertTrue(centroService.findAll().contains(centro));
     }
     
     @Test
