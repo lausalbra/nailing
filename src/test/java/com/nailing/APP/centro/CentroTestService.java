@@ -41,7 +41,7 @@ public class CentroTestService {
     
     @Test
     public void shouldFindAll(){
-        assertEquals(centroService.findAll().size(),2);
+        assertEquals(centroService.findAll().size(),3);
     }
     
     @Test
@@ -54,9 +54,11 @@ public class CentroTestService {
     
     @Test
     public void ShouldAddCentro(){
+        Integer nc = centroService.findAll().size();
         Centro centro = new Centro("Nails by Claudia","https://i.ibb.co/qkFKLsm/F253-E9-DA-6780-4-A9-D-9-EAB-804784-BBEE21.jpg","Málaga",LocalTime.of(8, 30),LocalTime.of(14, 0),LocalTime.of(17, 0),LocalTime.of(21, 0),Suscripcion.BASIC,LocalDate.now(),150,true,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",0.,0,0);
         centroService.addCentro(centro);
-        assertEquals(centroService.findAll().size(),3);
+        Integer ncn = centroService.findAll().size();
+        assertEquals(ncn,nc+1);
     }
     
     @Test
