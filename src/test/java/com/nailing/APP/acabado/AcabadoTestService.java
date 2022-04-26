@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.nailing.APP.service;
+package com.nailing.APP.acabado;
 
 import com.nailing.app.AppApplication;
 import com.nailing.app.acabado.Acabado;
@@ -17,7 +17,6 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.StreamSupport;
-import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
