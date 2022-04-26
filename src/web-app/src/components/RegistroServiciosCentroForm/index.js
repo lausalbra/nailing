@@ -72,7 +72,7 @@ export function RegistroServiciosCentroForm({ updater }) {
 
         await getData(url + suffix, headers)
             .then((res) => {
-                const options = res.map(op => { return { "value": op, "label": op } })
+                const options = res.map(op => { return { "value": op, "label": op.replaceAll("_"," ") } })
                 setAvailableOptions(options)
                 setSelectedOptions(options)
             }).catch((ex) => {
