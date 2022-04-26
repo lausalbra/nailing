@@ -1,4 +1,4 @@
-package com.nailing.APP.service;
+package com.nailing.APP.decoracion;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
