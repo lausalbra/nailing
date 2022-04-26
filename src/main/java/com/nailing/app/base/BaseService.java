@@ -145,11 +145,11 @@ public class BaseService {
                         break;
                     case "SEMIPERMANENTE":
                         base.setNombre(NombreBase.SEMIPERMANENTE);
-                        base.setSiguienteFase(Fases.disenyos);
+                        base.setSiguienteFase(Fases.disenyosNaturales);
                         break;
                     case "SEMIPERMANENTE_REFUERZO":
                         base.setNombre(NombreBase.SEMIPERMANENTE_REFUERZO);
-                        base.setSiguienteFase(Fases.disenyos);
+                        base.setSiguienteFase(Fases.disenyosNaturales);
                         break;
                     case "JAPONESA":
                         base.setNombre(NombreBase.JAPONESA);
