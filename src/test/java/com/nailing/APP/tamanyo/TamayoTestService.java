@@ -1,4 +1,4 @@
-package com.nailing.APP.service;
+package com.nailing.APP.tamanyo;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,6 +59,9 @@ public class TamayoTestService {
 		centro.setCierreAM(LocalTime.of(14, 0));
 		centro.setAperturaPM(LocalTime.of(17, 0));
 		centro.setCierrePM(LocalTime.of(21, 0));
+		centro.setValoracionMedia(0.0);
+		centro.setValoracionTotal(0);
+		centro.setNumValoraciones(0);
 		centroAnadido = centroSer.addCentro(centro);
 	}
 	//Se comprueba que los datos seteados previamente con los datos de la forma una vez añadida a la base de datos

@@ -93,12 +93,13 @@ public class CentroService {
         	tamSer.removeTamanyobyCentro(id);
         	tipoSer.removeTiposbyCentro(id);
         	for(Usuario u : usuarioService.findAll()) {
-        		if (u.getCentro() == centro.get()) {
+        		if (centro.get().equals(u.getCentro())) {
         			u.setCentro(null);
+                                usuarioService.save(u);
         		}
          	}
                 for(Valoracion v : valoracionService.findAll()) {
-        		if (v.getCentro().equals(centro.get())) {
+        		if (centro.get().equals(v.getCentro())) {
         			valoracionService.delete(v);
         		}
          	}
