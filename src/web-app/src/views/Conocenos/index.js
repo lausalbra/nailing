@@ -18,7 +18,7 @@ export function Conocenos() {
         <>
             <Header />
             <h1 className='p-5 text-2xl underline'><i>Equipo Back-End</i></h1>
-            <div className='grid grid-rows-1 grid-cols-6 items-center'>
+            <div className='grid grid-rows-1 lg:grid-cols-6 items-center grid-cols-1 text-center place-items-center'>
                 <CardWorker photo={candela} name="Candelaria" role="Analista Programadora" mail="candelajordano @gmail.com" />
                 <CardWorker photo={jaime} name="Jaime" role="BackEnd Manager Programador" mail="j23rl07@gmail.com" />
                 <CardWorker photo={jacobo} name="Jacobo" role="Programador" mail="jacobo.estudiante16 @gmail.com" />
@@ -28,7 +28,7 @@ export function Conocenos() {
             </div>
 
             <h1 className='p-5 text-2xl underline'><i>Equipo Front-End</i></h1>
-            <div className='grid grid-rows-1 grid-cols-6'>
+            <div className='grid grid-rows-1 lg:grid-cols-6 text-center place-items-center'>
 
                 <CardWorker photo={dani} name="Daniel" role="Programador" mail="danielcaroolmedo2 @gmail.com" />
                 <CardWorker photo={gonza} name="Antonio" role="Secretario Programador" mail="antoniogg696 @gmail.com" />
@@ -38,6 +38,7 @@ export function Conocenos() {
                 <CardWorker photo={guille} name="Guillermo" role="Programador" mail="guillelrosado @gmail.com" />
 
             </div>
+            <h1 className='p-5 text-2xl underline'><a href="/terminoscondiciones">Términos y Condiciones</a></h1>
         </>
 
     )

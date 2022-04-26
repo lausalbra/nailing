@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from "react"
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -9,24 +10,28 @@ import { postData } from '../../services/common/common';
 export function UserDetails({ image, email, phone }) {
   const [locationPath, locationPush] = useLocation()
 
+  //Obtengo usuario desencriptado
+  var cryptoJS = require("crypto-js");
+  const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
   async function handleClick() {
 
     const url = "https://nailingtest.herokuapp.com/logout"
 
     const body = {
-      "id": sessionStorage.getItem("userId"),
-      "usuario": sessionStorage.getItem("userName"),
-      "contrasenya": sessionStorage.getItem("userPassword"),
-      "email": sessionStorage.getItem("userEmail"),
-      "telefono": sessionStorage.getItem("userPhone"),
-      "rol": sessionStorage.getItem("userRole")
+      "id": user.id,
+      "usuario": user.usuario,
+      "contrasenya": user.contrasenya,
+      "email": user.email,
+      "telefono": user.telefono,
+      "rol": user.rol
     }
 
     console.log(body)
 
     const headers = {
       "Content-Type": "application/json",
-      "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+      "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
     }
 
 
@@ -37,21 +42,45 @@ export function UserDetails({ image, email, phone }) {
       }
         //Tiene que ir al catch porque devuelve 204 y lo pilla como error
       ).catch((error) => {
-        sessionStorage.setItem("userId", "")
-        sessionStorage.setItem("userName", "")
-        sessionStorage.setItem("userPassword", "")
-        sessionStorage.setItem("userEmail", "")
-        sessionStorage.setItem("userRole", "")
-        sessionStorage.setItem("userPhone", "")
+
+        sessionStorage.setItem("userEncriptado", "")
         sessionStorage.setItem("isLogged", false)
-        sessionStorage.setItem("userCenter", "")
 
         locationPush('/')
       }
       );
   }
-  const centro = sessionStorage.getItem("userCenter")
-  const isAdmin = sessionStorage.getItem("userRole") === 'ADMIN'
+  const centro = user.centro
+  const isAdmin = user.rol === 'ADMIN'
+  let pagado = null
+  let restantesPositivo = null
+  const [resObj, setObj] = useState([])
+  const url = "https://nailingtest.herokuapp.com/centros/show/" + centro;
+  const xhr = new XMLHttpRequest()
+  useEffect(() => {
+    xhr.open('get', url)
+    xhr.send()
+    xhr.onload = function () {
+      if (this.status === 200) {
+        try {
+          setObj(JSON.parse(this.responseText))
+          console.log('Petición Rest exitosa')
+        } catch (e) {
+          console.warn('Excepción capturada en la petición REST')
+          sessionStorage.setItem(e)
+          locationPush('/error')
+        }
+      } else {
+        console.warn('Error en la petición REST')
+        sessionStorage.setItem("La API Rest (" + url + ") ha devuelto el error " + this.status)
+        locationPush('/error')
+      }
+    }
+  }, [])
+  if (centro !== null) {
+    restantesPositivo = centro.creditosrestantes >= 0
+    pagado = centro.pagado
+  }
 
   return (
     <Card style={{ backgroundColor: 'rgb(248, 225, 228)' }} sx={{ minWidth: 275 }}>
@@ -71,21 +100,40 @@ export function UserDetails({ image, email, phone }) {
       <CardActions>
         <button onClick={() => locationPush('/miscitas')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Mis reservas</button>
       </CardActions>
+      {centro === null && !isAdmin ?
       <CardActions>
-      {isAdmin ?
-                <>
-                  <button onClick={() => locationPush('/centroadd')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Añadir centro</button>
-                </>
-                :    
-                <></>
-            }  
+      <button onClick={() => locationPush('/centroadd')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Añadir centro</button>
       </CardActions>
+      :
+      <></>
+      }
+      
       <CardActions>
         <button onClick={handleClick} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Cerrar Sesión</button>
       </CardActions>
-      {centro !== "" ?
+      {centro !== null ?
+        <CardActions>
+          <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Servicios de centro</button>
+        </CardActions>
+        :
+        <></>
+      }
+      {centro !== null ?
       <CardActions>
-        <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Servicios de centro</button>
+        <button onClick={() => locationPush('/centroedit/' + centro.id)} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Editar información de centro</button>
+      </CardActions>
+      :
+      <></>
+      }
+      {restantesPositivo===false ?
+      <CardActions>
+        <button onClick={() => locationPush('/servicios')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Pagar créditos atrasados</button>
+      </CardActions>
+      :
+      <></>
+      }{pagado===false && restantesPositivo===true ?
+      <CardActions>
+        <button onClick={() => locationPush('/comprarPaquete')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Pagar suscripción</button>
       </CardActions>
       :
       <></>
