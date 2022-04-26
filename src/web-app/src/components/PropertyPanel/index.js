@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import ReactDOM from 'react-dom'
 import "./PropertyPanel.css";
 import Paypal from '../Paypal/PayPal';
@@ -13,8 +13,48 @@ class PropertyPanel extends Component {
         this.state = { name: props.name, buttons: props.buttons };
     }
 
-    handleClick(e, self) {
+    checkDate(date){
+        var dateDate = new Date(date + ":00");
+        var nowDate = new Date();
+        const result1 = dateDate.getDate() > nowDate.getDate() && dateDate.getMonth() === nowDate.getMonth() && dateDate.getYear() === nowDate.getYear();
+        const result2 = dateDate.getMonth() > nowDate.getMonth() && dateDate.getYear() === nowDate.getYear();
+        const result3 = dateDate.getYear() > nowDate.getYear();
+        return result1 || result2 || result3;
+    }
 
+    checkDay(date){
+        var dateDate = new Date(date + ":00");
+        var day = dateDate.getDay();
+        switch(day){
+            case 0:
+                if (!sessionStorage.getItem("DiasDisponibles").includes("SUNDAY")) return false;
+                break;
+            case 1:
+                if (!sessionStorage.getItem("DiasDisponibles").includes("MONDAY")) return false;
+                break;
+            case 2:
+                if (!sessionStorage.getItem("DiasDisponibles").includes("TUESDAY")) return false;
+                break;
+            case 3:
+                if (!sessionStorage.getItem("DiasDisponibles").includes("WEDNESDAY")) return false;
+                break;
+            case 4:
+                if (!sessionStorage.getItem("DiasDisponibles").includes("THURSDAY")) return false;
+                break;
+            case 5:
+                if (!sessionStorage.getItem("DiasDisponibles").includes("FRIDAY")) return false;
+                break;
+            case 6:
+                if (!sessionStorage.getItem("DiasDisponibles").includes("SATURDAY")) return false;
+                break;
+            default:
+                break;             
+        }
+        return true;
+    }
+
+    handleClick(e, self) {
+        const _this = this;
         //Obtengo usuario desencriptado
         var cryptoJS = require("crypto-js");
         const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
@@ -281,11 +321,21 @@ class PropertyPanel extends Component {
                 };
                 var json = JSON.stringify(postData);
                 paybuttonDiv.innerHTML = '';
-                var newDiv = document.createElement("div");
-                newDiv.className = "w-full flex justify-center";
-                paybuttonDiv.appendChild(newDiv);
+                if (!_this.checkDate(postData.fecha) && !_this.checkDay(postData.fecha)) {
+                    var stateError = document.createElement("p");
+                    stateError.className= "text-sm text-red-600";
+                    stateError.innerHTML= "El dia seleccionado no es valido";
+                    hourSelector.selectedIndex = 0;
+                    minuteSelector.selectedIndex = 0;
+                    minuteSelector.disable=true;
+                    paybuttonDiv.append(stateError);
+                }else{
+                    var newDiv = document.createElement("div");
+                    newDiv.className = "w-full flex justify-center";
+                    paybuttonDiv.appendChild(newDiv);
 
-                ReactDOM.render(<Paypal json={json} money={parseInt(JSON.parse(json).precio)} paymentType="Reserve" />, newDiv);
+                    ReactDOM.render(<Paypal json={json} money={parseInt(JSON.parse(json).precio)} paymentType="Reserve" />, newDiv);
+                }
             };
 
             //Se añaden todos los elementos al div
@@ -327,7 +377,6 @@ class PropertyPanel extends Component {
         }
 
     }
-
 
     render() {
         const self = this;
