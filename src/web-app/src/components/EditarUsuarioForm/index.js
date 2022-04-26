@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { putData, postData } from "../../services/common/common"
+import { putData } from "../../services/common/common"
 import { useLocation } from "wouter"
 
 
@@ -17,7 +17,7 @@ export function EditarUsuarioForm() {
 
     const [state, changeState] = useState("")
     const [locationPath, locationPush] = useLocation()
-
+    console.log(locationPath);
 
     async function handleSubmit(evt) {
         evt.preventDefault()
@@ -42,7 +42,7 @@ export function EditarUsuarioForm() {
             }
 
             await putData(url, body, headers)
-                .then(async function (response) {
+                .then(async function (_response) {
                     sessionStorage.setItem("userId", "")
                     sessionStorage.setItem("userName", "")
                     sessionStorage.setItem("userPassword", "")

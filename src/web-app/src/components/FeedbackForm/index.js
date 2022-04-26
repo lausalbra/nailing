@@ -8,6 +8,7 @@ init("SSSEYnY7yNub2grYD");
 
 export function FeedbackForm() {
     const [locationPath, locationPush] = useLocation()
+    console.log(locationPath);
 
     const options = [
         { value: "no", label: "No" },

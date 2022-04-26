@@ -13,7 +13,7 @@ export function ServiciosList() {
     const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
 
 
-    const centerId = user.centro
+    const centerId = user.centro.id.toString()
 
     const [listTipos, setTipos] = useState([])
     const [updaterTipos, updateTipos] = useState(0)

@@ -30,10 +30,10 @@ export function Conocenos() {
             <h1 className='p-5 text-2xl underline'><i>Equipo Front-End</i></h1>
             <div className='grid grid-rows-1 lg:grid-cols-6 text-center place-items-center'>
 
-                <CardWorker photo={dani} name="Daniel" role="Programador" mail="danielcaroolmedo2 @gmail.com" />
+                <CardWorker photo={dani} name="Daniel" role="FrontEnd Manager Programador" mail="danielcaroolmedo2 @gmail.com" />
                 <CardWorker photo={gonza} name="Antonio" role="Secretario Programador" mail="antoniogg696 @gmail.com" />
                 <CardWorker photo={laura} name="Laura" role="Project Manager Programadora" mail="laurasalgadobravo @gmail.com" />
-                <CardWorker photo={javi} name="Javier" role="FrontEnd Manager Programador" mail="ajaviermorenogonzalez @gmail.com" />
+                <CardWorker photo={javi} name="Javier" role="Programador" mail="ajaviermorenogonzalez @gmail.com" />
                 <CardWorker photo={vicen} name="Vicente" role="Programador" mail="visorvaz@gmail.com" />
                 <CardWorker photo={guille} name="Guillermo" role="Programador" mail="guillelrosado @gmail.com" />
 

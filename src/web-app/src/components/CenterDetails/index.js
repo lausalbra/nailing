@@ -4,8 +4,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import SlidingPane from "../../components/SlidingPane/index.tsx";
 import PropertyPanel from "../../components/PropertyPanel/index.js";
-import { Rating, Box } from "@mui/material";
-import { getData, postData } from '../../services/common/common'
+import { Rating, } from "@mui/material";
+import { postData } from '../../services/common/common'
 import $ from 'jquery';
 
 
@@ -13,7 +13,10 @@ export function CenterDetails({centro}) {
 
   //Obtengo usuario desencriptado
   var cryptoJS = require("crypto-js");
-  const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+  var user = null;
+  if (sessionStorage.getItem("userEncriptado") !== null && sessionStorage.getItem("userEncriptado") !== ""){
+    user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+  }
 
   const [rating, setRating] = React.useState(centro.valoracionMedia);
   const [ratingBoolean, setRatingBoolean] = React.useState(false);
@@ -21,7 +24,7 @@ export function CenterDetails({centro}) {
   const name = centro.nombre
   const image = centro.imagen
   const provincia = centro.provincia
-  if(rating!=centro.valoracionMedia){
+  if(rating!==centro.valoracionMedia){
     setRating(centro.valoracionMedia)
     setRatingBoolean(true)
 
@@ -42,7 +45,7 @@ export function CenterDetails({centro}) {
 
   useEffect(() => {
     if (state.id !== "" && state.buttons.length === 0) {
-      if (user.usuario == null) {
+      if (user === null) {
         alert("Debe estar logeado")
         setState({ isPaneOpen: false, id: '', name: name, buttons: [] })
       }
@@ -117,23 +120,23 @@ const [enviado, setEnviado] = React.useState(false);
                 :
                 <></>
               }
-              {enviado?
+              {enviado || user===null ?
                 <>
-                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(event, newValue) => {
+                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(_event, newValue) => {
                 setValue(newValue);
                 valorar(newValue);
                 }} 
-                onChangeActive={(event, newHover) => {
+                onChangeActive={(_event, newHover) => {
                   setHover(newHover);
                 }} readOnly/>({hover !== -1 ? hover : value})</p>
                 </>
                 :
                 <>
-                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(event, newValue) => {
+                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(_event, newValue) => {
                 setValue(newValue);
                 valorar(newValue);
                 }} 
-                onChangeActive={(event, newHover) => {
+                onChangeActive={(_event, newHover) => {
                   setHover(newHover);
                 }}/>({hover !== -1 ? hover : value})</p>
                 </>

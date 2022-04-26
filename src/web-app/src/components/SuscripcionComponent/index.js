@@ -1,24 +1,34 @@
 import { useEffect, useState } from "react";
 import Paypal from "../Paypal/PayPal"
-import { putData, postData } from '../../services/common/common'
-import { useLocation } from 'wouter'
 import ReactDOM from 'react-dom'
 
 export function SuscripciónComponent(props) {
 
-    const [locationPath, locationPush] = useLocation()
-
 
     //Obtengo usuario desencriptado
     var cryptoJS = require("crypto-js");
-    const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
+    let user
+
+    try {
+        user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+    } catch (error) {
+        user = {
+            contrasenya: null,
+            email: null,
+            id: null,
+            rol: null,
+            telefono: null,
+            usuario: null,
+            centro: null
+        }
+    }
 
     let centro = user.centro
 
     console.log("CENTRO DEL USUARIO", centro)
 
     const [stateSub, changeStateSub] = useState("")
-    // const [stateCentro, changeCentro] = useState(centro)
 
     let money
 
@@ -76,6 +86,8 @@ export function SuscripciónComponent(props) {
         console.log("CENTRO MODIFICADO", centro)
 
         // changeCentro(centro)
+
+        centro.pagado = true
 
         var paypalDiv = document.getElementById("paypalDiv");
         paypalDiv.innerHTML = '';

@@ -5,8 +5,12 @@ import { useLocation } from 'wouter'
 import Select from 'react-select';
 
 export function CentroEditForm({id}) {
+  const [locationPath, locationPush] = useLocation()
+  console.log(locationPath);
+  if (sessionStorage.getItem("userEncriptado") === null || sessionStorage.getItem("userEncriptado") === ""){
+    locationPush('/error');
+  }
 
-  
   //Obtengo usuario desencriptado
   var cryptoJS = require("crypto-js");
   const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
@@ -14,7 +18,6 @@ export function CentroEditForm({id}) {
   const url = "https://nailingtest.herokuapp.com/centros/show/"+id;
   const xhr = new XMLHttpRequest()
   const [resObj, setObj] = useState([])
-  const [locationPath, locationPush] = useLocation()
 
   if (user.rol === "OWNER"){
     if(id !== user.centro.id.toString()){
@@ -83,7 +86,8 @@ export function CentroEditForm({id}) {
 
     let diasString
     stateDiasApertura.map((dia) => {
-        return diasString += `,${dia.value}`
+        diasString += `,${dia.value}`;
+        return diasString
     })
     diasString = diasString.slice(10, diasString.length)
     console.log(diasString)
@@ -117,9 +121,9 @@ export function CentroEditForm({id}) {
     const imagenConfirmada = confirmImage(imagen.current.value)
     if(horasConfirmadas && provinciaConfirmada && imagenConfirmada && horasConfirmadasIncongruencias){
       await putData(url2, body, headers)
-      .then(async function (response) {
+      .then(async function (_response) {
         await postData(url2, body, headers)
-        .then(function (data) {
+        .then(function (_data) {
           locationPush('/cita');
           alert("Centro actualizado con éxito")
         })

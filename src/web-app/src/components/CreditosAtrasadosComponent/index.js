@@ -1,12 +1,23 @@
 import { useEffect } from "react"
 import Paypal from "../Paypal/PayPal"
 import ReactDOM from 'react-dom'
+import { useLocation } from 'wouter'
 
 export function CreditosAtrasadosComponent() {
+
+    const [locationPath, locationPush] = useLocation()
+    console.log(locationPath);
+    if (sessionStorage.getItem("userEncriptado") === null || sessionStorage.getItem("userEncriptado") === "") {
+        locationPush('/error');
+    }
 
     //Obtengo usuario desencriptado
     var cryptoJS = require("crypto-js");
     const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
+    if (user.rol === "USER" || user.rol === "ADMIN") {
+        locationPush('/error');
+    }
 
     useEffect(() => {
 
@@ -15,7 +26,6 @@ export function CreditosAtrasadosComponent() {
         let money = -(centro.creditosrestantes * 0.5)
 
         centro.creditosrestantes = 0
-        centro.pagado = true
 
         var paypalDiv = document.getElementById("paypalDiv");
         paypalDiv.innerHTML = '';

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import ReactDOM from 'react-dom'
 import "./PropertyPanel.css";
 import Paypal from '../Paypal/PayPal';
@@ -13,8 +13,48 @@ class PropertyPanel extends Component {
         this.state = { name: props.name, buttons: props.buttons };
     }
 
-    handleClick(e, self) {
+    checkDate(date){
+        var dateDate = new Date(date + ":00");
+        var nowDate = new Date();
+        const result1 = dateDate.getDate() > nowDate.getDate() && dateDate.getMonth() === nowDate.getMonth() && dateDate.getYear() === nowDate.getYear();
+        const result2 = dateDate.getMonth() > nowDate.getMonth() && dateDate.getYear() === nowDate.getYear();
+        const result3 = dateDate.getYear() > nowDate.getYear();
+        return result1 || result2 || result3;
+    }
 
+    checkDay(date){
+        var dateDate = new Date(date + ":00");
+        var day = dateDate.getDay();
+        switch(day){
+            case 0:
+                if (!sessionStorage.getItem("DiasDisponibles").includes("SUNDAY")) return false;
+                break;
+            case 1:
+                if (!sessionStorage.getItem("DiasDisponibles").includes("MONDAY")) return false;
+                break;
+            case 2:
+                if (!sessionStorage.getItem("DiasDisponibles").includes("TUESDAY")) return false;
+                break;
+            case 3:
+                if (!sessionStorage.getItem("DiasDisponibles").includes("WEDNESDAY")) return false;
+                break;
+            case 4:
+                if (!sessionStorage.getItem("DiasDisponibles").includes("THURSDAY")) return false;
+                break;
+            case 5:
+                if (!sessionStorage.getItem("DiasDisponibles").includes("FRIDAY")) return false;
+                break;
+            case 6:
+                if (!sessionStorage.getItem("DiasDisponibles").includes("SATURDAY")) return false;
+                break;
+            default:
+                break;             
+        }
+        return true;
+    }
+
+    handleClick(e, self) {
+        const _this = this;
         //Obtengo usuario desencriptado
         var cryptoJS = require("crypto-js");
         const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
@@ -281,11 +321,21 @@ class PropertyPanel extends Component {
                 };
                 var json = JSON.stringify(postData);
                 paybuttonDiv.innerHTML = '';
-                var newDiv = document.createElement("div");
-                newDiv.className = "w-full flex justify-center";
-                paybuttonDiv.appendChild(newDiv);
+                if (!_this.checkDate(postData.fecha) && !_this.checkDay(postData.fecha)) {
+                    var stateError = document.createElement("p");
+                    stateError.className= "text-sm text-red-600";
+                    stateError.innerHTML= "El dia seleccionado no es valido";
+                    hourSelector.selectedIndex = 0;
+                    minuteSelector.selectedIndex = 0;
+                    minuteSelector.disable=true;
+                    paybuttonDiv.append(stateError);
+                }else{
+                    var newDiv = document.createElement("div");
+                    newDiv.className = "w-full flex justify-center";
+                    paybuttonDiv.appendChild(newDiv);
 
-                ReactDOM.render(<Paypal json={json} money={parseInt(JSON.parse(json).precio)} paymentType="Reserve" />, newDiv);
+                    ReactDOM.render(<Paypal json={json} money={parseInt(JSON.parse(json).precio)} paymentType="Reserve" />, newDiv);
+                }
             };
 
             //Se añaden todos los elementos al div
@@ -315,7 +365,7 @@ class PropertyPanel extends Component {
                     let newPropertyPanelContainer = document.createElement("div");
                     //Configuración del panel
                     var nextName = option.siguienteFase.charAt(0).toUpperCase() + option.siguienteFase.slice(1);
-                    nextName = nextName.replace("ny", "ñ");
+                    nextName = nextName.replaceAll("ny", "ñ");
                     newPropertyPanelContainer.id = nextName + "Container";
                     newPropertyPanelContainer.className = "propertyContainer";
                     //Se añade y se abre el panel
@@ -327,7 +377,6 @@ class PropertyPanel extends Component {
         }
 
     }
-
 
     render() {
         const self = this;
@@ -346,13 +395,13 @@ class PropertyPanel extends Component {
                             </svg>
                         </div>
                     </header>
-                    <div class="bg-NATURAL bg-ESCULPIDA bg-DUAL_SYSTEM bg-GEL bg-ACRILICO bg-ACRYGEL bg-SEMIPERMANENTE bg-SEMIPERMANENTE_REFUERZO bg-JAPONESA bg-SQUARE bg-ROUND bg-SQUOVAL bg-ALMOND bg-STILETTO bg-BALLERINA bg-XXS bg-XS bg-S bg-M bg-L bg-XL bg-XXL bg-RELLENO bg-FRANCESA_REVERSA bg-BABY_BOOMER bg-DEGRADADO_COLOR bg-ENCAPSULADO bg-LISAS bg-DIBUJO bg-DISNEY_COLOR bg-DISNEY_BOCETO bg-TRANSFER_FOIL bg-PIEDRAS bg-PIERCING bg-PEGATINAS bg-STANPING bg-PAN_DE_ANGEL bg-EFECTO_HUEVO bg-EFECTO_PIEDRA bg-FRANCESA bg-BURBUJAS bg-SUGAR bg-EFECTO_RELIEVE bg-ESPEJO bg-HOLOGRAFICO bg-MARMOL bg-MATE bg-BRILLO"></div>
+                    <div class="bg-NATURAL bg-ESCULPIDA bg-DUAL_SYSTEM bg-GEL bg-ACRILICO bg-ACRYGEL bg-SEMIPERMANENTE bg-SEMIPERMANENTE_REFUERZO bg-JAPONESA bg-SQUARE bg-ROUND bg-SQUOVAL bg-ALMOND bg-STILETTO bg-BALLERINA bg-XXS bg-XS bg-S bg-M bg-L bg-XL bg-XXL bg-RELLENO bg-FRANCESA_REVERSA bg-BABY_BOOMER bg-DEGRADADO_COLOR bg-ENCAPSULADO bg-LISAS bg-DIBUJO bg-DISNEY_COLOR bg-DISNEY_BOCETO bg-TRANSFER_FOIL bg-PIEDRAS bg-PIERCING bg-PEGATINAS bg-STANPING bg-PAN_DE_ANGEL bg-EFECTO_HUEVO bg-EFECTO_PIEDRA bg-FRANCESA bg-BURBUJAS bg-SUGAR bg-EFECTO_RELIEVE bg-ESPEJO bg-HOLOGRAFICO bg-MARMOL bg-NO_DECORACION bg-MATE bg-BRILLO"></div>
                     <div class="tab-content flex justify-center flex-wrap">
-                        {this.state.buttons.map((element, i) => {
+                        {this.state.buttons.map((element, _i) => {
                             console.log(element.nombre);
                             var id = element.id
-                            var nameToShow = element.nombre.replace("_", " ");
-                            nameToShow = nameToShow.replace("ny", "ñ");
+                            var nameToShow = element.nombre.replaceAll("_", " ");
+                            nameToShow = nameToShow.replaceAll("ny", "ñ");
                             return (
                                 <>
                                     <div class="flex flex-wrap justify-center w-min" ><button id={id} onClick={(e) => this.handleClick(e, self)} class={"bg-" + element.nombre + " h-responsiveButtonHeight max-w-xs max-h-28 m-1 bg-cover font-bold rounded-full p-2 border-2 w-56"}></button><p class="text-center w-fit max-w-md">{nameToShow}</p></div>
