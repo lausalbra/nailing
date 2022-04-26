@@ -92,7 +92,6 @@ public class DecoracionService {
         decoraciones.add(NombreDecoracion.PEGATINAS.toString());
         decoraciones.add(NombreDecoracion.STANPING.toString());
         decoraciones.add(NombreDecoracion.PAN_DE_ANGEL.toString());
-        decoraciones.add(NombreDecoracion.EFECTO_HUEVO.toString());
         decoraciones.add(NombreDecoracion.EFECTO_PIEDRA.toString());
         decoraciones.add(NombreDecoracion.EFECTO_RELIEVE.toString());
         decoraciones.add(NombreDecoracion.FRANCESA.toString());
@@ -161,9 +160,6 @@ public class DecoracionService {
                         break;
                     case "PAN_DE_ANGEL":
                         decoracion.setNombre(NombreDecoracion.PAN_DE_ANGEL);
-                        break;
-                    case "EFECTO_HUEVO":
-                        decoracion.setNombre(NombreDecoracion.EFECTO_HUEVO);
                         break;
                     case "EFECTO_PIEDRA":
                         decoracion.setNombre(NombreDecoracion.EFECTO_PIEDRA);
