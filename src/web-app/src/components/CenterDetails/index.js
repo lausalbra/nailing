@@ -13,7 +13,10 @@ export function CenterDetails({centro}) {
 
   //Obtengo usuario desencriptado
   var cryptoJS = require("crypto-js");
-  const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+  var user = null;
+  if (sessionStorage.getItem("userEncriptado") !== null){
+    user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+  }
 
   const [rating, setRating] = React.useState(centro.valoracionMedia);
   const [ratingBoolean, setRatingBoolean] = React.useState(false);
@@ -21,7 +24,7 @@ export function CenterDetails({centro}) {
   const name = centro.nombre
   const image = centro.imagen
   const provincia = centro.provincia
-  if(rating!=centro.valoracionMedia){
+  if(rating!==centro.valoracionMedia){
     setRating(centro.valoracionMedia)
     setRatingBoolean(true)
 
@@ -42,7 +45,7 @@ export function CenterDetails({centro}) {
 
   useEffect(() => {
     if (state.id !== "" && state.buttons.length === 0) {
-      if (user.usuario == null) {
+      if (user === null) {
         alert("Debe estar logeado")
         setState({ isPaneOpen: false, id: '', name: name, buttons: [] })
       }
@@ -117,7 +120,7 @@ const [enviado, setEnviado] = React.useState(false);
                 :
                 <></>
               }
-              {enviado?
+              {enviado || user===null ?
                 <>
                 <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(event, newValue) => {
                 setValue(newValue);
