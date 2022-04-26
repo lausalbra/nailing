@@ -9,7 +9,7 @@ ALTER SEQUENCE tamanyo_id_seq RESTART WITH 25;
 ALTER SEQUENCE disenyo_id_seq RESTART WITH 16;
 ALTER SEQUENCE decoracion_id_seq RESTART WITH 55;
 ALTER SEQUENCE acabado_id_seq RESTART WITH 7;
-ALTER SEQUENCE centro_id_seq RESTART WITH 5;
+ALTER SEQUENCE centro_id_seq RESTART WITH 7;
 ALTER SEQUENCE valoracion_id_seq RESTART WITH 1;
 
 DELETE FROM cita;
@@ -29,6 +29,8 @@ INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, dias_dis
 INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, dias_disponible, imagen, nombre, provincia, suscripcion, ultimasuscripcion, creditosRestantes, pagado, valoracionmedia, valoraciontotal, numvaloraciones) VALUES (2, '08:30:00','13:00:00','16:00:00','20:30:00', 'MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY', 'https://i.ibb.co/WP2MvVS/867-F548-A-5074-4-C98-AE6-D-F48083-CEE8-E9.jpg', 'Más guapa que la novia', 'Sevilla',2, NOW(),300, true,5.0,5,1);
 INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, dias_disponible, imagen, nombre, provincia, suscripcion, ultimasuscripcion, creditosRestantes, pagado, valoracionmedia, valoraciontotal, numvaloraciones) VALUES (3, '09:30:00','13:00:00','16:00:00','21:30:00', 'MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY', 'https://i.ibb.co/wdhjNNf/8-DF66-CD3-3-E2-D-4-C37-B96-A-247-E3-D5-B221-B.png', 'Nails by Verónica', 'Cádiz',3, NOW(),-10,true,5.0,5,1);
 INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, dias_disponible, imagen, nombre, provincia, suscripcion, ultimasuscripcion, creditosRestantes, pagado, valoracionmedia, valoraciontotal, numvaloraciones) VALUES (4, '09:30:00','13:00:00','16:00:00','21:30:00', 'MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY', 'https://i.ibb.co/wdhjNNf/8-DF66-CD3-3-E2-D-4-C37-B96-A-247-E3-D5-B221-B.png', 'Nails by Jéssica', 'Cádiz',3, NOW(),0,true,5.0,5,1);
+INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, dias_disponible, imagen, nombre, provincia, suscripcion, ultimasuscripcion, creditosRestantes, pagado, valoracionmedia, valoraciontotal, numvaloraciones) VALUES (5, '09:30:00','13:00:00','16:00:00','21:30:00', 'MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY', 'https://i.ibb.co/wdhjNNf/8-DF66-CD3-3-E2-D-4-C37-B96-A-247-E3-D5-B221-B.png', 'Manicuras Paqui', 'Cádiz',3, NOW(),-10,true,5.0,5,1);
+INSERT INTO centro (id, apertura_am, cierre_am, apertura_pm, cierre_pm, dias_disponible, imagen, nombre, provincia, suscripcion, ultimasuscripcion, creditosRestantes, pagado, valoracionmedia, valoraciontotal, numvaloraciones) VALUES (6, '09:30:00','13:00:00','16:00:00','21:30:00', 'MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY', 'https://i.ibb.co/wdhjNNf/8-DF66-CD3-3-E2-D-4-C37-B96-A-247-E3-D5-B221-B.png', 'Manicuras de cuadro', 'Cádiz',3, NOW(),0,true,5.0,5,1);
 
 ----------------------------------------------TIPOS----------------------------------------------
 --CENTRO 1--

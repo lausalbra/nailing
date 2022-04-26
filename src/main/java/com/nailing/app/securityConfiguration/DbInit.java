@@ -61,7 +61,9 @@ public class DbInit implements CommandLineRunner {
         Usuario usuario4 = new Usuario("usuario4",passwordEncoder.encode("usuario4"),"email4@email.com","555565589",Authorities.OWNER,centroRep.findById((long)2).get());
         Usuario usuario5 = new Usuario("usuario5",passwordEncoder.encode("usuario5"),"email5@email.com","655565589",Authorities.OWNER,centroRep.findById((long)3).get());
         Usuario usuario6 = new Usuario("usuario6",passwordEncoder.encode("usuario6"),"email5@email.com","655565589",Authorities.OWNER,centroRep.findById((long)4).get());
-        List<Usuario> users = Arrays.asList(usuario1,usuario2,usuario3,usuario4,usuario5,usuario6);
+        Usuario usuario7 = new Usuario("usuario7",passwordEncoder.encode("usuario7"),"email5@email.com","655565589",Authorities.OWNER,centroRep.findById((long)5).get());
+        Usuario usuario8 = new Usuario("usuario8",passwordEncoder.encode("usuario8"),"email5@email.com","655565589",Authorities.OWNER,centroRep.findById((long)6).get());
+        List<Usuario> users = Arrays.asList(usuario1,usuario2,usuario3,usuario4,usuario5,usuario6,usuario7,usuario8);
 
         // Save to db
         this.usuarioRepository.saveAll(users);
