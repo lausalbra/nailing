@@ -45,9 +45,9 @@ export function CenterList({ provincia }) {
 
   let filtrado = []
   if (!provincia || provincia === 'ninguna') {
-    filtrado = resObj
+    filtrado = resObj.filter(c => c.pagado)
   } else {
-    filtrado = resObj.filter(c => c.provincia === provincia)
+    filtrado = resObj.filter(c => c.provincia === provincia && c.pagado)
   }
 
   return (

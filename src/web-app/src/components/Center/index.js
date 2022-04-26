@@ -9,7 +9,7 @@ export function Center ({ center, isAdmin, detailsFunc, editFunc, deleteFunc }) 
             sx={{ width: '88%', flexDirection: 'row', mx:'1%', my:2, display: 'inline-flex', alignItems: 'center', justifyContent: 'space-around', border:2, borderRadius: 2, borderColor: '#e0b4c7' }}>
             <CardContent sx={{ flexGrow: 1, width: '49%', p:'1%'}}>
                 <div className="flex items-center">
-                    <img src={center.imagen} alt={center.nombre} className="object-cover mx-auto rounded-[20%] shadow-md w-[100%] md:w-[80%] lg:w-[60%] float-left bg-white" />
+                    <img src={center.imagen} alt={center.nombre} style={{objectFit: "contain", height: "10rem", background: 'linear-gradient(145deg, rgba(255,226,239,1) 5%, rgba(235,190,210,1) 100%)'}} className="object-cover mx-auto rounded-[20%] shadow-md w-[100%] md:w-[80%] lg:w-[60%] float-left bg-white" />
                 </div>
             </CardContent>
             <Box disableSpacing sx={{flexDirection: 'column', display: 'inline-flex', width: '49%'}}>

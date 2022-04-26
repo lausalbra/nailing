@@ -88,7 +88,8 @@ export function UserDetails({ image, email, phone }) {
     <Card style={{ backgroundColor: 'rgb(248, 225, 228)' }} sx={{ minWidth: 275 }}>
       <CardContent>
         <div className="md:flex">
-          <img src={image} alt="img" className="rounded-md shadow-md w-full md:h-full md:w-1/4 float-left bg-white mb-2" />
+          
+          <img src={image} alt="img" style={{"max-width": "100px", "max-height": "100px", "margin-right": "5px"}} className="rounded-md shadow-md w-full md:h-full md:w-1/4 float-left bg-white mb-2" />
           <div className="ml-5 items-center">
             <p><strong>Email:</strong> {email}</p>
             <p><strong>Teléfono:</strong> {phone}</p>
