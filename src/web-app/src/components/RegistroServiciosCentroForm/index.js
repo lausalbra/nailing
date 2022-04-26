@@ -127,7 +127,7 @@ export function RegistroServiciosCentroForm({ updater }) {
                 "tiempo": [tiempo.current.value],
                 "coste": [precio.current.value],
                 //TODO Comprobar este concretamente no se si es user.centro o user.center y está back caido para comprobarlo
-                "centro": [user.centro]
+                "centro": [user.centro.id.toString()]
             }
 
             console.log(body)
