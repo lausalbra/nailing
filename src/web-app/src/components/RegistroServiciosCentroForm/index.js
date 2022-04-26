@@ -1,7 +1,13 @@
 import { useRef, useState } from "react";
 import Select from 'react-select';
 import { postData, getData } from "../../services/common/common";
+
+
 export function RegistroServiciosCentroForm({ updater }) {
+
+    //Obtengo usuario desencriptado
+    var cryptoJS = require("crypto-js");
+    const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
 
     //Al añadir personalizaciones de tamaño: updater['tamanyos']()
 
@@ -29,7 +35,7 @@ export function RegistroServiciosCentroForm({ updater }) {
     // Auxiliares para la llamada
     const headers = {
         "Content-Type": "application/json",
-        "Authorization": "Basic " + btoa(sessionStorage.getItem("userName") + ":" + sessionStorage.getItem("userPassword"))
+        "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
     }
 
     const url = "https://nailingtest.herokuapp.com/"
@@ -66,7 +72,7 @@ export function RegistroServiciosCentroForm({ updater }) {
 
         await getData(url + suffix, headers)
             .then((res) => {
-                const options = res.map(op => { return { "value": op, "label": op } })
+                const options = res.map(op => { return { "value": op, "label": op.replaceAll("_", " ") } })
                 setAvailableOptions(options)
                 setSelectedOptions(options)
             }).catch((ex) => {
@@ -120,7 +126,8 @@ export function RegistroServiciosCentroForm({ updater }) {
                 "personalizaciones": arrayOptions,
                 "tiempo": [tiempo.current.value],
                 "coste": [precio.current.value],
-                "centro": [sessionStorage.getItem("userCenter")]
+                //TODO Comprobar este concretamente no se si es user.centro o user.center y está back caido para comprobarlo
+                "centro": [user.centro.id.toString()]
             }
 
             console.log(body)
@@ -158,11 +165,11 @@ export function RegistroServiciosCentroForm({ updater }) {
                 <div className="grid grid-rows grid-cols-2 items-center">
                     <div>
                         <label className='text-lg p-3' htmlFor="precio">Precio:</label>
-                        <input className="border-black border-2  rounded-sm mb-4 w-1/2 text-right" name="precio" type="number" min={0} id="precio" ref={precio} required /> €
+                        <input className="border-black border-2  rounded-sm mb-4 w-1/2 text-right" name="precio" type="number" min={1} id="precio" ref={precio} required /> €
                     </div>
                     <div>
                         <label className='text-lg p-3' htmlFor="tiempo">Tiempo:</label>
-                        <input className="border-black border-2  rounded-sm mb-4 w-1/2 text-right" name="tiempo" type="number" min={0} id="tiempo" ref={tiempo} required /> min
+                        <input className="border-black border-2  rounded-sm mb-4 w-1/2 text-right" name="tiempo" type="number" min={1} id="tiempo" ref={tiempo} required /> min
                     </div>
                 </div>
                 <div >

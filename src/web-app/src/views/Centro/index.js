@@ -11,6 +11,7 @@ export function Centro({ params }) {
     const xhr = new XMLHttpRequest()
     const [resObj, setObj] = useState([])
     const [locationPath, locationPush] = useLocation()
+    console.log(locationPath);
     useEffect(() => {
         xhr.open('get', url)
         xhr.send()
@@ -30,13 +31,14 @@ export function Centro({ params }) {
             locationPush('/error')
           }
         }
-      }, [])
-
+      }, []);
+    
+    if (resObj !==null) sessionStorage.setItem("DiasDisponibles", resObj.diasDisponible)
     return (
         <>
             <Header />
             <Nombre name={resObj.nombre} ></Nombre>
-            <CenterDetails name={resObj.nombre} image={resObj.imagen} provincia={resObj.provincia} aperturaAM={resObj.aperturaAM} cierreAM={resObj.cierreAM} aperturaPM={resObj.aperturaPM} cierrePM={resObj.cierrePM} rating={'3'}  ></CenterDetails>
+            <CenterDetails centro={resObj}  ></CenterDetails>
 
         </>
     )
