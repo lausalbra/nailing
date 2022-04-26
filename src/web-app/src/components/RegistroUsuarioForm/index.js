@@ -11,6 +11,7 @@ export function RegistroUsuarioForm() {
 
     const [state, changeState] = useState("")
     const [locationPath, locationPush] = useLocation()
+    console.log(locationPath);
     async function handleSubmit(evt) {
         evt.preventDefault()
 

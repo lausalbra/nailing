@@ -1,13 +1,12 @@
 import Select from 'react-select';
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { SuscripciónComponent } from '../SuscripcionComponent';
-import { getData } from '../../services/common/common'
 import { useLocation } from 'wouter'
 
 export function ComprarPaqueteComponent() {
 
     const [locationPath, locationPush] = useLocation()
-
+    console.log(locationPath);
     if (sessionStorage.getItem("userEncriptado") === null || sessionStorage.getItem("userEncriptado") === ""){
         locationPush('/error');
     }

@@ -6,7 +6,7 @@ import Select from 'react-select';
 
 export function CentroEditForm({id}) {
   const [locationPath, locationPush] = useLocation()
-
+  console.log(locationPath);
   if (sessionStorage.getItem("userEncriptado") === null || sessionStorage.getItem("userEncriptado") === ""){
     locationPush('/error');
   }
@@ -48,7 +48,7 @@ export function CentroEditForm({id}) {
         locationPush('/error')
       }
     }
-  }, []);
+  }, );
 
   const oldNombre=resObj.nombre
   const oldImagen=resObj.imagen
@@ -86,7 +86,8 @@ export function CentroEditForm({id}) {
 
     let diasString
     stateDiasApertura.map((dia) => {
-        return diasString += `,${dia.value}`
+        diasString += `,${dia.value}`;
+        return diasString
     })
     diasString = diasString.slice(10, diasString.length)
     console.log(diasString)
@@ -120,9 +121,9 @@ export function CentroEditForm({id}) {
     const imagenConfirmada = confirmImage(imagen.current.value)
     if(horasConfirmadas && provinciaConfirmada && imagenConfirmada && horasConfirmadasIncongruencias){
       await putData(url2, body, headers)
-      .then(async function (response) {
+      .then(async function (_response) {
         await postData(url2, body, headers)
-        .then(function (data) {
+        .then(function (_data) {
           locationPush('/cita');
           alert("Centro actualizado con éxito")
         })

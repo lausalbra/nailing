@@ -51,7 +51,8 @@ export function RegistroCentroForm() {
         
         let diasString
         stateDiasApertura.map((dia) => {
-            return diasString += `,${dia.value}`
+            diasString += `,${dia.value}`;
+            return diasString
         })
         diasString = diasString.slice(10, diasString.length)
         console.log(diasString)

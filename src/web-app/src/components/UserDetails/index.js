@@ -9,6 +9,7 @@ import { postData } from '../../services/common/common';
 
 export function UserDetails({ image, email, phone }) {
   const [locationPath, locationPush] = useLocation()
+  console.log(locationPath);
 
   //Obtengo usuario desencriptado
   var cryptoJS = require("crypto-js");
@@ -16,7 +17,7 @@ export function UserDetails({ image, email, phone }) {
 
   async function handleClick() {
 
-    const url = "https://nailingtest.herokuapp.com/logout"
+    const url2 = "https://nailingtest.herokuapp.com/logout"
 
     const body = {
       "id": user.id,
@@ -35,13 +36,13 @@ export function UserDetails({ image, email, phone }) {
     }
 
 
-    await postData(url, body, headers)
-      .then(function (data) {
-
+    await postData(url2, body, headers)
+      .then(function (_data) {
+        console.log("bien")
 
       }
         //Tiene que ir al catch porque devuelve 204 y lo pilla como error
-      ).catch((error) => {
+      ).catch((_error) => {
 
         sessionStorage.setItem("userEncriptado", "")
         sessionStorage.setItem("isLogged", false)
@@ -55,7 +56,8 @@ export function UserDetails({ image, email, phone }) {
   let pagado = null
   let restantesPositivo = null
   const [resObj, setObj] = useState([])
-  const url = "https://nailingtest.herokuapp.com/centros/show/" + centro;
+  console.log(resObj);
+  const url = "https://nailingtest.herokuapp.com/centros/show/" + centro.id.toString();
   const xhr = new XMLHttpRequest()
   useEffect(() => {
     xhr.open('get', url)
@@ -76,7 +78,7 @@ export function UserDetails({ image, email, phone }) {
         locationPush('/error')
       }
     }
-  }, [])
+  }, )
   if (centro !== null) {
     restantesPositivo = centro.creditosrestantes >= 0
     pagado = centro.pagado

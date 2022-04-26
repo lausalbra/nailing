@@ -4,8 +4,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import SlidingPane from "../../components/SlidingPane/index.tsx";
 import PropertyPanel from "../../components/PropertyPanel/index.js";
-import { Rating, Box } from "@mui/material";
-import { getData, postData } from '../../services/common/common'
+import { Rating, } from "@mui/material";
+import { postData } from '../../services/common/common'
 import $ from 'jquery';
 
 
@@ -122,21 +122,21 @@ const [enviado, setEnviado] = React.useState(false);
               }
               {enviado || user===null ?
                 <>
-                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(event, newValue) => {
+                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(_event, newValue) => {
                 setValue(newValue);
                 valorar(newValue);
                 }} 
-                onChangeActive={(event, newHover) => {
+                onChangeActive={(_event, newHover) => {
                   setHover(newHover);
                 }} readOnly/>({hover !== -1 ? hover : value})</p>
                 </>
                 :
                 <>
-                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(event, newValue) => {
+                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(_event, newValue) => {
                 setValue(newValue);
                 valorar(newValue);
                 }} 
-                onChangeActive={(event, newHover) => {
+                onChangeActive={(_event, newHover) => {
                   setHover(newHover);
                 }}/>({hover !== -1 ? hover : value})</p>
                 </>

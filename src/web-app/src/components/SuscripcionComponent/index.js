@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 import Paypal from "../Paypal/PayPal"
-import { putData, postData } from '../../services/common/common'
-import { useLocation } from 'wouter'
 import ReactDOM from 'react-dom'
 
 export function SuscripciónComponent(props) {
 
-    const [locationPath, locationPush] = useLocation()
 
 
     //Obtengo usuario desencriptado
@@ -18,7 +15,6 @@ export function SuscripciónComponent(props) {
     console.log("CENTRO DEL USUARIO", centro)
 
     const [stateSub, changeStateSub] = useState("")
-    // const [stateCentro, changeCentro] = useState(centro)
 
     let money
 

@@ -6,7 +6,7 @@ import { useLocation } from 'wouter'
 export function CreditosAtrasadosComponent() {
 
     const [locationPath, locationPush] = useLocation()
-
+    console.log(locationPath);
     if (sessionStorage.getItem("userEncriptado") === null || sessionStorage.getItem("userEncriptado") ===  ""){
         locationPush('/error');
     }

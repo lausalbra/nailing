@@ -9,10 +9,7 @@ export function LoginForm() {
     const password = useRef()
     const [state, changeState] = useState(true)
     const [locationPath, locationPush] = useLocation()
-    const headers = {
-        "Content-Type": "application/json",
-        "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
-    }
+    console.log(locationPath);
 
     useEffect(() => {
         if (sessionStorage.getItem("isLogged") === 'true') {
@@ -36,10 +33,10 @@ export function LoginForm() {
         })
             .then(async function (data) {
 
-                const user = data
-                user.contrasenya = password.current.value
+                const newuser = data
+                newuser.contrasenya = password.current.value
 
-                let result = cryptoJS.AES.encrypt(JSON.stringify(user), "NAILING");
+                let result = cryptoJS.AES.encrypt(JSON.stringify(newuser), "NAILING");
 
                 sessionStorage.setItem("userEncriptado", result)
                 sessionStorage.setItem("isLogged", true)
