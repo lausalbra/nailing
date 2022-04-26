@@ -74,7 +74,7 @@ public class UsuarioServiceTest {
 	@Test
 	public void findByIdNegativeTest() {
 		Optional<Usuario> usuarioObtenido = usuarioService.findById(100L);
-		assertTrue(usuarioObtenido.isEmpty());
+		assertFalse(usuarioObtenido.isPresent());
 	}
 	
 	@Test
