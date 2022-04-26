@@ -65,6 +65,7 @@ module.exports = {
         'ESPEJO': "url('./static/ESPEJO.PNG')",
         'HOLOGRAFICO': "url('./static/HOLOGRAFICO.PNG')",
         'MARMOL': "url('./static/MARMOL.PNG')",
+        'NO_DECORACION': "url('./static/NO_DECORACION.PNG')",
         'MATE': "url('./static/MATE.PNG')",
         'BRILLO': "url('./static/BRILLO.PNG')",
       },
