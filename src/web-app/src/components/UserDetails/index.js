@@ -97,9 +97,13 @@ export function UserDetails({ image, email, phone }) {
           </div>
         </div>
       </CardContent>
+      {user.rol === "USER"?
       <CardActions>
         <button onClick={() => locationPush('/miscitas')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Mis reservas</button>
       </CardActions>
+      :
+      <></>
+      }
       {centro === null && !isAdmin ?
       <CardActions>
       <button onClick={() => locationPush('/centroadd')} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Añadir centro</button>
