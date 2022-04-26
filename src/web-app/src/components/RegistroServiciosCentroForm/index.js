@@ -3,12 +3,11 @@ import Select from 'react-select';
 import { postData, getData } from "../../services/common/common";
 
 
-export function RegistroServiciosCentroForm({ updater }) {
+export function RegistroServiciosCentroForm({ updater, listTipos, listBases, listDisenos, listFormas, listTamanos, listDecoraciones, listAcabados}) {
 
     //Obtengo usuario desencriptado
     var cryptoJS = require("crypto-js");
     const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
-
     //Al añadir personalizaciones de tamaño: updater['tamanyos']()
 
     // Fases a seleccionar
