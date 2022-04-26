@@ -57,8 +57,13 @@ export function UserDetails({ image, email, phone }) {
   let restantesPositivo = null
   const [resObj, setObj] = useState([])
   console.log(resObj);
-  const url = "https://nailingtest.herokuapp.com/centros/show/" + centro.id.toString();
   const xhr = new XMLHttpRequest()
+  var url = "https://nailingtest.herokuapp.com/centros/show/"
+  if (centro !== null && centro !== ""){
+    url += centro.id.toString();
+    restantesPositivo = centro.creditosrestantes >= 0
+    pagado = centro.pagado
+  }
   useEffect(() => {
     xhr.open('get', url)
     xhr.send()
@@ -79,14 +84,10 @@ export function UserDetails({ image, email, phone }) {
       }
     }
   }, )
-  if (centro !== null) {
-    restantesPositivo = centro.creditosrestantes >= 0
-    pagado = centro.pagado
-  }
 
   return (
     <Card style={{ backgroundColor: 'rgb(248, 225, 228)' }} sx={{ minWidth: 275 }}>
-      <CardContent>
+      <CardContent style={{marginBottom: "20px"}}>
         <div className="md:flex">
           
           <img src={image} alt="img" style={{"max-width": "100px", "max-height": "100px", "margin-right": "5px"}} className="rounded-md shadow-md w-full md:h-full md:w-1/4 float-left bg-white mb-2" />
@@ -133,7 +134,7 @@ export function UserDetails({ image, email, phone }) {
         :
         <></>
       }
-      {centro !== null ?
+      {centro !== null && centro !== "" ?
       <CardActions>
         <button onClick={() => locationPush('/centroedit/' + centro.id)} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Editar información de centro</button>
       </CardActions>
