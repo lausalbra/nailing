@@ -2,8 +2,23 @@ import Select from 'react-select';
 import { useEffect, useState } from "react";
 import { SuscripciónComponent } from '../SuscripcionComponent';
 import { getData } from '../../services/common/common'
+import { useLocation } from 'wouter'
 
 export function ComprarPaqueteComponent() {
+
+    const [locationPath, locationPush] = useLocation()
+
+    if (sessionStorage.getItem("userEncriptado") === null || sessionStorage.getItem("userEncriptado") === ""){
+        locationPush('/error');
+    }
+
+    //Obtengo usuario desencriptado
+    var cryptoJS = require("crypto-js");
+    const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
+
+    if (user.rol === "USER" || user.rol === "ADMIN"){
+        locationPush('/error');
+    }
 
     const options = [
         { value: "basico", label: "Suscripción Básica" },

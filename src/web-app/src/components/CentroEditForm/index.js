@@ -5,8 +5,12 @@ import { useLocation } from 'wouter'
 import Select from 'react-select';
 
 export function CentroEditForm({id}) {
+  const [locationPath, locationPush] = useLocation()
 
-  
+  if (sessionStorage.getItem("userEncriptado") === null || sessionStorage.getItem("userEncriptado") === ""){
+    locationPush('/error');
+  }
+
   //Obtengo usuario desencriptado
   var cryptoJS = require("crypto-js");
   const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
@@ -14,7 +18,6 @@ export function CentroEditForm({id}) {
   const url = "https://nailingtest.herokuapp.com/centros/show/"+id;
   const xhr = new XMLHttpRequest()
   const [resObj, setObj] = useState([])
-  const [locationPath, locationPush] = useLocation()
 
   if (user.rol === "OWNER"){
     if(id !== user.centro.id.toString()){

@@ -14,7 +14,7 @@ export function CenterDetails({centro}) {
   //Obtengo usuario desencriptado
   var cryptoJS = require("crypto-js");
   var user = null;
-  if (sessionStorage.getItem("userEncriptado") !== null){
+  if (sessionStorage.getItem("userEncriptado") !== null && sessionStorage.getItem("userEncriptado") !== ""){
     user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
   }
 
