@@ -26,7 +26,7 @@ export function Cita() {
                 headers: {
                     "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
                 },
-                url: "https://nailingtest.herokuapp.com/tipos/centro/" + state.id.toString(),
+                url: "https://nailing-sprint3.herokuapp.com/tipos/centro/" + state.id.toString(),
                 success: function (data) {
                     console.log("Servicios recibidos");
                     console.log(data);

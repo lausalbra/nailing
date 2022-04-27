@@ -1,4 +1,4 @@
-export const API_URL = 'https://nailingtest.herokuapp.com'
+export const API_URL = 'https://nailing-sprint3.herokuapp.com'
 
 
 /**

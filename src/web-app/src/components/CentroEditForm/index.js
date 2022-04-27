@@ -15,7 +15,7 @@ export function CentroEditForm({id}) {
   var cryptoJS = require("crypto-js");
   const user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
   
-  const url = "https://nailingtest.herokuapp.com/centros/show/"+id;
+  const url = "https://nailing-sprint3.herokuapp.com/centros/show/"+id;
   const xhr = new XMLHttpRequest()
   const [resObj, setObj] = useState([])
 
@@ -92,7 +92,7 @@ export function CentroEditForm({id}) {
     diasString = diasString.slice(10, diasString.length)
     console.log(diasString)
 
-    const url2 = "https://nailingtest.herokuapp.com/centros/edit"
+    const url2 = "https://nailing-sprint3.herokuapp.com/centros/edit"
     const body = {
         "id": id,
         "nombre": nombre.current.value==="" ? (oldNombre):(nombre.current.value),

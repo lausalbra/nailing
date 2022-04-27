@@ -5,7 +5,7 @@ import { useLocation } from 'wouter'
 
 export function LogOut() {
 
-    const urlLogout = "https://nailingtest.herokuapp.com/logout"
+    const urlLogout = "https://nailing-sprint3.herokuapp.com/logout"
 
 
     const [locationPath, locationPush] = useLocation()
