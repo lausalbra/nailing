@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import SlidingPane from "../../components/SlidingPane/index.tsx";
 import PropertyPanel from "../../components/PropertyPanel/index.js";
 import { Rating, } from "@mui/material";
-import { postData } from '../../services/common/common'
+import { getData, postData, putData } from '../../services/common/common'
 import $ from 'jquery';
 
 
@@ -17,14 +17,14 @@ export function CenterDetails({centro}) {
   if (sessionStorage.getItem("userEncriptado") !== null && sessionStorage.getItem("userEncriptado") !== ""){
     user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
   }
-
+  
   const [rating, setRating] = React.useState(centro.valoracionMedia);
   const [ratingBoolean, setRatingBoolean] = React.useState(false);
   
   const name = centro.nombre
   const image = centro.imagen
   const provincia = centro.provincia
-  if(rating!==centro.valoracionMedia){
+  if(rating!=centro.valoracionMedia){
     setRating(centro.valoracionMedia)
     setRatingBoolean(true)
 
@@ -45,7 +45,7 @@ export function CenterDetails({centro}) {
 
   useEffect(() => {
     if (state.id !== "" && state.buttons.length === 0) {
-      if (user === null) {
+      if (user.usuario == null) {
         alert("Debe estar logeado")
         setState({ isPaneOpen: false, id: '', name: name, buttons: [] })
       }
@@ -90,21 +90,76 @@ async function valorar(valoracion){
   }
   const url= "https://nailingtest.herokuapp.com/valoraciones/add/centro"
   await postData(url, body, header)
-    .then(function () {
+    .then(function (data) {
       console.log("Valoración enviada correctamente "+valoracion);
       setMensaje("Valoración enviada")
-      setEnviado(true)
       centro.numValoraciones = centro.numValoraciones+1
       centro.valoracionTotal = centro.valoracionTotal+valoracion
+      centro.valoracionMedia = centro.valoracionTotal/centro.numValoraciones
+      setRating(rating)
+      setHaValorado(true)
+      setValoracionAntigua(data)
+    }
+    )
+}
+
+const [haValorado, setHaValorado] = React.useState(false);
+const [primera, setPrimera] = React.useState(true);
+const [valoracionesList, setValoracionesList] = React.useState(null);
+const [valoracionAntigua, setValoracionAntigua] = React.useState(null);
+if(user!=null && !haValorado && primera){
+  $.ajax({
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
+    },
+    url: "https://nailingtest.herokuapp.com/valoraciones/list",
+    success: function (data) {
+      console.log("Servicios recibidos");
+      setValoracionesList(data);
+      for(const i in valoracionesList){
+        if(valoracionesList[i]["usuario"]["id"]==user.id && valoracionesList[i]["centro"]["id"]==centro.id){
+          console.log("ha entrado xd")
+          console.log(valoracionesList[i]);
+          setValoracionAntigua(valoracionesList[i]);
+          setHaValorado(true);
+          setValue(valoracionesList[i]["valoracionUsuario"]);
+        }
+      }
+      setPrimera(false)
+    }
+  });
+}
+
+async function editarValoracion(valoracion, antigua){
+  const body = {
+    "id": antigua.id,
+    "valoracionUsuario": valoracion,
+    "centro": antigua.centro,
+    "usuario": antigua.usuario,
+  }
+  const header = {
+    "Content-Type": "application/json",
+    "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
+  }
+  const url= "https://nailingtest.herokuapp.com/valoraciones/edit"
+  await putData(url, body, header)
+    .then(function () {
+      console.log("Valoración editada correctamente "+valoracion);
+      setMensaje("Valoración editada")
+      centro.valoracionTotal = centro.valoracionTotal + valoracion - antigua.valoracionUsuario
       centro.valoracionMedia = centro.valoracionTotal/centro.numValoraciones
       setRating(rating)
     }
     )
 }
+
 const [value, setValue] = React.useState(0);
 const [hover, setHover] = React.useState(-1);
 const [mensaje, setMensaje] = React.useState("");
-const [enviado, setEnviado] = React.useState(false);
+
+
 
   return (
     <><Card className="ml-3 mr-3" style={{backgroundColor: 'rgb(248, 225, 228)'}} sx={{ minWidth: 275 }}>
@@ -120,26 +175,31 @@ const [enviado, setEnviado] = React.useState(false);
                 :
                 <></>
               }
-              {enviado || user===null ?
+              {user===null && !haValorado ?
                 <>
-                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(_event, newValue) => {
-                setValue(newValue);
-                valorar(newValue);
-                }} 
-                onChangeActive={(_event, newHover) => {
-                  setHover(newHover);
-                }} readOnly/>({hover !== -1 ? hover : value})</p>
                 </>
-                :
+                : !haValorado ?
                 <>
-                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(_event, newValue) => {
+                <p><strong>Valorar:</strong> <Rating  precision={1} value={value} onChange={(event, newValue) => {
                 setValue(newValue);
                 valorar(newValue);
                 }} 
-                onChangeActive={(_event, newHover) => {
+                onChangeActive={(event, newHover) => {
                   setHover(newHover);
                 }}/>({hover !== -1 ? hover : value})</p>
                 </>
+                : haValorado ?
+                <>
+                <p><strong>Editar valoración:</strong> <Rating  precision={1} value={value} onChange={(_event, newValue) => {
+                setValue(newValue);
+                editarValoracion(newValue, valoracionAntigua);
+                }} 
+                onChangeActive={(event, newHover) => {
+                  setHover(newHover);
+                }}/>({hover !== -1 ? hover : value})</p>
+                </>
+                :
+                <></>
               }
               <p className="text-pink-400">{mensaje}</p>
           </div>
