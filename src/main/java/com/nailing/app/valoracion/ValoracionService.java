@@ -59,6 +59,17 @@ public class ValoracionService {
     }
     
     public Valoracion updateValoracion(Valoracion valoracion){
+        Integer valoracionNueva = null;
+        Integer valoracionAntigua = null;
+        Centro centro = null;
+        Valoracion vantigua = valoracionRepository.findById(valoracion.getId()).get();
+        centro = vantigua.getCentro();
+        valoracionNueva = valoracion.getValoracionUsuario();
+        valoracionAntigua = vantigua.getValoracionUsuario();
+        centro.setValoracionTotal(centro.getValoracionTotal() - valoracionAntigua + valoracionNueva);
+        Double media = Double.valueOf(centro.getValoracionTotal()) / centro.getNumValoraciones();
+        centro.setValoracionMedia(media);
+        centroRepository.save(centro);
         return valoracionRepository.save(valoracion);
     }
     
