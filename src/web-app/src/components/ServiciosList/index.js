@@ -118,7 +118,15 @@ export function ServiciosList() {
             <ServiciosBox title="TAMAÑOS" pers={getForms(listTamanos, 'tamanyos')} />
             <ServiciosBox title="DECORACIONES" pers={getForms(listDecoraciones, 'decoraciones')} />
             <ServiciosBox title="ACABADOS" pers={getForms(listAcabados, 'acabados')} />
-            <RegistroServiciosCentroForm updater={updater} />
+            <RegistroServiciosCentroForm updater={updater}
+                listTipos={listTipos}
+                listBases={listBases}
+                listDisenos={listDisenos}
+                listFormas={listFormas}
+                listTamanos={listTamanos}
+                listDecoraciones={listDecoraciones}
+                listAcabados={listAcabados} />
+
         </>
     )
 
