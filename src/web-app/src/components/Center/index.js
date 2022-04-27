@@ -16,13 +16,13 @@ export function Center ({ center, isAdmin, detailsFunc, editFunc, deleteFunc }) 
                 </CardContent>
                 <Box disableSpacing sx={{flexDirection: 'column', display: 'inline-flex', width: '49%'}}>
                     <p className="m-1 text-lg text-center"><strong>{center.nombre}</strong></p>
-                    <button id="1" className="border-2 border-[#e0b4c7] bg-[#ffe2ef] text-lg text-black w-auto py-3 m-3 rounded-md text-1xl font-medium hover:bg-[#d9ebff] hover:border-[#abc2db] transition duration-300"
+                    <button id="1" className="border-2 border-[#e0b4c7] bg-[#ffe2ef] text-lg text-black w-auto py-3 m-3 rounded-md text-1xl font-medium hover:bg-purple-300 hover:border-purple-300 transition duration-300"
                         onClick={detailsFunc}>Más detalles</button>
                 {isAdmin ?
                     <>
-                    <button id="2" className="border-2 border-[#e0b4c7] bg-[#ffe2ef] text-lg text-black w-auto py-3 m-3 rounded-md text-1xl font-medium hover:bg-[#d9ebff] hover:border-[#abc2db] transition duration-300"
+                    <button id="2" className="border-2 border-[#e0b4c7] bg-[#ffe2ef] text-lg text-black w-auto py-3 m-3 rounded-md text-1xl font-medium hover:bg-purple-300 hover:border-purple-300 transition duration-300"
                         onClick={editFunc}>Editar centro</button>
-                    <button id="3" className="border-2 border-[#e0b4c7] bg-[#ffe2ef] text-lg text-black w-auto py-3 m-3 rounded-md text-1xl font-medium hover:bg-[#d9ebff] hover:border-[#abc2db] transition duration-300"
+                    <button id="3" className="border-2 border-[#e0b4c7] bg-[#ffe2ef] text-lg text-black w-auto py-3 m-3 rounded-md text-1xl font-medium hover:bg-purple-300 hover:border-purple-300 transition duration-300"
                         onClick={deleteFunc}>Borrar centro</button>
                     </>
                     :    
@@ -43,13 +43,13 @@ export function Center ({ center, isAdmin, detailsFunc, editFunc, deleteFunc }) 
                 </CardContent>
                 <Box disableSpacing sx={{flexDirection: 'column', display: 'inline-flex', width: '49%'}}>
                     <p className="m-1 text-lg text-center"><strong>{center.nombre}</strong></p>
-                    <button id="1" className="border-2 border-[#e0b4c7] bg-[#ffe2ef] text-lg text-black w-auto py-3 m-3 rounded-md text-1xl font-medium hover:bg-[#d9ebff] hover:border-[#abc2db] transition duration-300"
+                    <button id="1" className="border-2 border-[#e0b4c7] bg-[#ffe2ef] text-lg text-black w-auto py-3 m-3 rounded-md text-1xl font-medium hover:bg-purple-300 hover:border-purple-300 transition duration-300"
                         onClick={detailsFunc}>Más detalles</button>
                 {isAdmin ?
                     <>
-                    <button id="2" className="border-2 border-[#e0b4c7] bg-[#ffe2ef] text-lg text-black w-auto py-3 m-3 rounded-md text-1xl font-medium hover:bg-[#d9ebff] hover:border-[#abc2db] transition duration-300"
+                    <button id="2" className="border-2 border-[#e0b4c7] bg-[#ffe2ef] text-lg text-black w-auto py-3 m-3 rounded-md text-1xl font-medium hover:bg-purple-300 hover:border-purple-300 transition duration-300"
                         onClick={editFunc}>Editar centro</button>
-                    <button id="3" className="border-2 border-[#e0b4c7] bg-[#ffe2ef] text-lg text-black w-auto py-3 m-3 rounded-md text-1xl font-medium hover:bg-[#d9ebff] hover:border-[#abc2db] transition duration-300"
+                    <button id="3" className="border-2 border-[#e0b4c7] bg-[#ffe2ef] text-lg text-black w-auto py-3 m-3 rounded-md text-1xl font-medium hover:bg-purple-300 hover:border-purple-300 transition duration-300"
                         onClick={deleteFunc}>Borrar centro</button>
                     </>
                     :    
