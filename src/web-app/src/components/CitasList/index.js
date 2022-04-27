@@ -34,13 +34,12 @@ export function CitasList() {
 
   return (listCitas.length === 0 ?
     <>
-      <h3 className="text-center m-3 text-3xl">¡Vaya! Parece que no ha reservado ninguna cita.</h3>
-      <div className="text-center m-2"><button
-        onClick={() => locationPush('/cita')}>
-        <p className="text-2xl hover:text-red-400">
-          Realizar una reserva</p></button>
+      <h3 className="text-center m-3 text-2xl">¡Vaya! Parece que no ha reservado ninguna cita.</h3>
+      <div className="text-center m-2">
+        <button onClick={() => locationPush('/cita')} class="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Realizar una reserva</button>
+   
       </div>
-    </>
+       </>
     :
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '111.1%' }}>
       {console.log()}

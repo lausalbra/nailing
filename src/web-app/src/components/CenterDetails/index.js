@@ -49,6 +49,10 @@ export function CenterDetails({centro}) {
         alert("Debe estar logeado")
         setState({ isPaneOpen: false, id: '', name: name, buttons: [] })
       }
+      else if (user.rol === "OWNER"){
+        alert("Acceda como usuario normal, su cuenta es de dueño de centro")
+        setState({ isPaneOpen: false, id: '', name: name, buttons: [] })
+      }
       else {
         console.log("Llamada a tipos")
         $.ajax({
