@@ -54,8 +54,7 @@ public class ValoracionController {
             Valoracion val= valoracionService.addValoracion(valoracion);
             return new ResponseEntity<>(val, HttpStatus.CREATED);
         }catch(IllegalArgumentException e){
-			Valoracion val = valoracionService.addValoracion(valoracion);
-            return new ResponseEntity<>(val, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
     
@@ -68,8 +67,7 @@ public class ValoracionController {
             Valoracion val= valoracionService.updateValoracion(valoracion);
             return new ResponseEntity<>(val, HttpStatus.OK);
         }catch(IllegalArgumentException e){
-            Valoracion val = valoracionService.updateValoracion(valoracion);
-            return new ResponseEntity<>(val, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(valoracion, HttpStatus.BAD_REQUEST);
         }
        
     }
