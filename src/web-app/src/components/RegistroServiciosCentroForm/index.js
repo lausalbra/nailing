@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { postData, getData } from "../../services/common/common";
 
 
-export function RegistroServiciosCentroForm({ updater, listTipos, listBases, listDisenos, listFormas, listTamanos, listDecoraciones, listAcabados}) {
+export function RegistroServiciosCentroForm({ updater, listTipos, listBases, listDisenos, listFormas, listTamanos, listDecoraciones, listAcabados }) {
 
     //Obtengo usuario desencriptado
     var cryptoJS = require("crypto-js");
@@ -30,6 +30,7 @@ export function RegistroServiciosCentroForm({ updater, listTipos, listBases, lis
     const [selectedOptions, setSelectedOptions] = useState();
     const [availableOptions, setAvailableOptions] = useState()
     const [formState, setFormState] = useState(true)
+    const [optionsEmpty, changeOptionsEmpty] = useState(false)
 
     // Auxiliares para la llamada
     const headers = {
@@ -43,35 +44,67 @@ export function RegistroServiciosCentroForm({ updater, listTipos, listBases, lis
     async function onDropDownChangeType(value) {
         setSelectedType(value)
 
+        let escogidos
+
         switch (value.value) {
             case "tipos":
                 suffix = "tipos/all"
+                escogidos = listTipos
                 break
             case "bases":
                 suffix = "bases/all"
+                escogidos = listBases
                 break
             case "formas":
                 suffix = "formas/all"
+                escogidos = listFormas
                 break
             case "tamanyos":
                 suffix = "tamanyos/all"
+                escogidos = listTamanos
                 break
             case "disenyos":
                 suffix = "disenyos/all"
+                escogidos = listDisenos
                 break
             case "decoraciones":
                 suffix = "decoraciones/all"
+                escogidos = listDecoraciones
                 break
             case "acabados":
                 suffix = "acabados/all"
+                escogidos = listAcabados
                 break
             default:
                 break
         }
 
+        escogidos = escogidos.map(x => { return x.nombre })
+
+        let opcionesVacias = 0
+
         await getData(url + suffix, headers)
             .then((res) => {
-                const options = res.map(op => { return { "value": op, "label": op.replaceAll("_", " ") } })
+
+                console.log("ESCOGIDOS", escogidos)
+
+                let options = res.map(op => {
+
+                    console.log("OP", op)
+
+                    if (!escogidos.includes(op)) {
+                        return { "value": op, "label": op.replaceAll("_", " ") }
+
+                    } else {
+                        opcionesVacias++
+                    }
+                })
+
+                options.length === opcionesVacias ? changeOptionsEmpty(true) : changeOptionsEmpty(false)
+
+                console.log("OPTIONS", options)
+                console.log("OPTIONS TYPE", typeof options)
+
                 setAvailableOptions(options)
                 setSelectedOptions(options)
             }).catch((ex) => {
@@ -86,8 +119,6 @@ export function RegistroServiciosCentroForm({ updater, listTipos, listBases, lis
 
     const handleSubmit = async (evt) => {
         evt.preventDefault()
-
-        console.log(selectedType, selectedOptions)
 
         if (selectedType === undefined || selectedOptions === undefined || selectedOptions.length === 0) {
             setFormState(false)
@@ -120,21 +151,28 @@ export function RegistroServiciosCentroForm({ updater, listTipos, listBases, lis
             }
 
             const arrayOptions = []
-            selectedOptions.map(op => { return arrayOptions.push(op.value) })
+            selectedOptions.map(op => {
+
+                if (typeof op !== 'undefined') {
+                    return arrayOptions.push(op.value)
+                }
+
+            })
             const body = {
                 "personalizaciones": arrayOptions,
                 "tiempo": [tiempo.current.value],
                 "coste": [precio.current.value],
-                //TODO Comprobar este concretamente no se si es user.centro o user.center y está back caido para comprobarlo
                 "centro": [user.centro.id.toString()]
             }
 
-            console.log(body)
 
             await postData(url + suffix, body, headers)
                 .then((res) => {
-                    console.log(res)
                     alert(`${selectedType.label} añadido con éxito`)
+                    precio.current.value = ""
+                    tiempo.current.value = ""
+                    setSelectedType("")
+                    setSelectedOptions("")
                     updater[selectedType.value]()
                 }).catch((ex) => {
                     console.log(ex)
@@ -176,6 +214,8 @@ export function RegistroServiciosCentroForm({ updater, listTipos, listBases, lis
                 </div>
 
                 {formState ? <p></p> : <p className="text-sm text-red-500 text-center">¡Debes escoger al menos una opción!</p>}
+                {console.log(optionsEmpty)}
+                {optionsEmpty ? <p className="text-sm text-red-500 text-center">Ya están escogidas todas las opciones</p> : <p></p>}
 
             </form>
 
