@@ -22,10 +22,10 @@ public class ValoracionService {
     @Autowired
     private ValoracionRepository valoracionRepository;
     
-   @Autowired
+    @Autowired
     private CentroRepository centroRepository;
    
-     @Autowired
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
     public Valoracion findById(Long id){
