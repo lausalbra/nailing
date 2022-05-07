@@ -58,6 +58,8 @@ public class DecoServiceTest {
 		centro.setUltimaSuscripcion(LocalDate.now());
 		centro.setSuscripcion(Suscripcion.BASIC);
 		centro.setProvincia("Sevilla");
+                centro.setLocalidad("Sevilla");
+                centro.setDireccion("direccion");
 		centro.setDiasDisponible("MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY");
 		centro.setImagen("urlimagen");
 		centro.setAperturaAM(LocalTime.of(8, 30));
