@@ -54,6 +54,16 @@ public class Centro {
 	@Size(max = 50)
 	@NotBlank
 	private String provincia;
+        
+        @Column(name = "localidad")
+	@Size(max = 50)
+	@NotBlank
+	private String localidad;
+        
+        @Column(name = "direccion")
+	@Size(max = 50)
+	@NotBlank
+	private String direccion;
 
 	@Column(name="apertura_am")
 	private LocalTime aperturaAM;
@@ -99,11 +109,13 @@ public class Centro {
 	@NotNull
 	private Integer numValoraciones;
 
-    public Centro(Long id, String nombre, String imagen, String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM, LocalTime cierrePM, String diasDisponible, Suscripcion suscripcion, LocalDate ultimaSuscripcion, Integer creditosrestantes, Boolean pagado, Double valoracionMedia, Integer valoracionTotal, Integer numValoraciones) {
+    public Centro(Long id, String nombre, String imagen, String provincia, @NotBlank String localidad,@NotBlank String direccion,LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM, LocalTime cierrePM, String diasDisponible, Suscripcion suscripcion, LocalDate ultimaSuscripcion, Integer creditosrestantes, Boolean pagado, Double valoracionMedia, Integer valoracionTotal, Integer numValoraciones) {
         this.id = id;
         this.nombre = nombre;
         this.imagen = imagen;
         this.provincia = provincia;
+        this.localidad = localidad;
+        this.direccion = direccion;
         this.aperturaAM = aperturaAM;
         this.cierreAM = cierreAM;
         this.aperturaPM = aperturaPM;
@@ -119,7 +131,7 @@ public class Centro {
     }
     
         public Centro(@Size(max = 1000) @NotBlank String nombre, @Size(max = 1000) @NotBlank String imagen,
-			@Size(max = 50) @NotBlank String provincia, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM,
+			@Size(max = 50) @NotBlank String provincia,@NotBlank String localidad,@NotBlank String direccion, LocalTime aperturaAM, LocalTime cierreAM, LocalTime aperturaPM,
 			LocalTime cierrePM, @NotNull Suscripcion suscripcion, @NotNull LocalDate ultimaSuscripcion,
 			@NotNull Integer creditosrestantes, @NotNull Boolean pagado, @NotEmpty String diasDisponible,
                         Double valoracionMedia, Integer valoracionTotal, Integer numValoraciones) {
@@ -127,6 +139,8 @@ public class Centro {
 		this.nombre = nombre;
 		this.imagen = imagen;
 		this.provincia = provincia;
+                this.localidad = localidad;
+                this.direccion = direccion;
 		this.aperturaAM = aperturaAM;
 		this.cierreAM = cierreAM;
 		this.aperturaPM = aperturaPM;
@@ -143,6 +157,22 @@ public class Centro {
         
         public Centro() {
 	}
+
+    public String getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
 	public Boolean getPagado() {
 		return pagado;
@@ -283,32 +313,102 @@ public class Centro {
 	public void setDiasDisponible(String diasDisponible) {
 		this.diasDisponible = diasDisponible;
 	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(aperturaAM, aperturaPM, cierreAM, cierrePM, diasDisponible, id, imagen, nombre, provincia, valoracionMedia, valoracionTotal, numValoraciones);
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Centro other = (Centro) obj;
-		return Objects.equals(aperturaAM, other.aperturaAM) && Objects.equals(aperturaPM, other.aperturaPM)
-				&& Objects.equals(cierreAM, other.cierreAM) && Objects.equals(cierrePM, other.cierrePM)
-				&& Objects.equals(id, other.id) && Objects.equals(imagen, other.imagen)
-				&& Objects.equals(nombre, other.nombre) && Objects.equals(provincia, other.provincia)
-				&& Objects.equals(diasDisponible, other.diasDisponible)&& Objects.equals(valoracionMedia, other.valoracionMedia)
-                                && Objects.equals(valoracionTotal, other.valoracionTotal)&& Objects.equals(numValoraciones, other.numValoraciones);
-	}
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.nombre);
+        hash = 97 * hash + Objects.hashCode(this.imagen);
+        hash = 97 * hash + Objects.hashCode(this.provincia);
+        hash = 97 * hash + Objects.hashCode(this.localidad);
+        hash = 97 * hash + Objects.hashCode(this.direccion);
+        hash = 97 * hash + Objects.hashCode(this.aperturaAM);
+        hash = 97 * hash + Objects.hashCode(this.cierreAM);
+        hash = 97 * hash + Objects.hashCode(this.aperturaPM);
+        hash = 97 * hash + Objects.hashCode(this.cierrePM);
+        hash = 97 * hash + Objects.hashCode(this.diasDisponible);
+        hash = 97 * hash + Objects.hashCode(this.suscripcion);
+        hash = 97 * hash + Objects.hashCode(this.ultimaSuscripcion);
+        hash = 97 * hash + Objects.hashCode(this.creditosrestantes);
+        hash = 97 * hash + Objects.hashCode(this.pagado);
+        hash = 97 * hash + Objects.hashCode(this.valoracionMedia);
+        hash = 97 * hash + Objects.hashCode(this.valoracionTotal);
+        hash = 97 * hash + Objects.hashCode(this.numValoraciones);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Centro other = (Centro) obj;
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.imagen, other.imagen)) {
+            return false;
+        }
+        if (!Objects.equals(this.provincia, other.provincia)) {
+            return false;
+        }
+        if (!Objects.equals(this.localidad, other.localidad)) {
+            return false;
+        }
+        if (!Objects.equals(this.direccion, other.direccion)) {
+            return false;
+        }
+        if (!Objects.equals(this.diasDisponible, other.diasDisponible)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.aperturaAM, other.aperturaAM)) {
+            return false;
+        }
+        if (!Objects.equals(this.cierreAM, other.cierreAM)) {
+            return false;
+        }
+        if (!Objects.equals(this.aperturaPM, other.aperturaPM)) {
+            return false;
+        }
+        if (!Objects.equals(this.cierrePM, other.cierrePM)) {
+            return false;
+        }
+        if (this.suscripcion != other.suscripcion) {
+            return false;
+        }
+        if (!Objects.equals(this.ultimaSuscripcion, other.ultimaSuscripcion)) {
+            return false;
+        }
+        if (!Objects.equals(this.creditosrestantes, other.creditosrestantes)) {
+            return false;
+        }
+        if (!Objects.equals(this.pagado, other.pagado)) {
+            return false;
+        }
+        if (!Objects.equals(this.valoracionMedia, other.valoracionMedia)) {
+            return false;
+        }
+        if (!Objects.equals(this.valoracionTotal, other.valoracionTotal)) {
+            return false;
+        }
+        return Objects.equals(this.numValoraciones, other.numValoraciones);
+    }
 
     @Override
     public String toString() {
-        return "Centro [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", provincia=" + provincia + ", aperturaAM=" + aperturaAM + ", cierreAM=" + cierreAM + ", aperturaPM=" + aperturaPM + ", cierrePM=" + cierrePM + ", diasDisponible=" + diasDisponible + ", suscripcion=" + suscripcion + ", ultimaSuscripcion=" + ultimaSuscripcion + ", creditosrestantes=" + creditosrestantes + ", pagado=" + pagado + ", valoracionMedia=" + valoracionMedia + ", valoracionTotal=" + valoracionTotal + ", numValoraciones=" + numValoraciones + "]";
+        return "Centro{" + "id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", provincia=" + provincia + ", localidad=" + localidad + ", direccion=" + direccion + ", aperturaAM=" + aperturaAM + ", cierreAM=" + cierreAM + ", aperturaPM=" + aperturaPM + ", cierrePM=" + cierrePM + ", diasDisponible=" + diasDisponible + ", suscripcion=" + suscripcion + ", ultimaSuscripcion=" + ultimaSuscripcion + ", creditosrestantes=" + creditosrestantes + ", pagado=" + pagado + ", valoracionMedia=" + valoracionMedia + ", valoracionTotal=" + valoracionTotal + ", numValoraciones=" + numValoraciones + '}';
     }
+	
+	
 
 }
