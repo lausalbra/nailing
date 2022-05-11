@@ -10,6 +10,8 @@ export function RegistroCentroForm() {
     const nombre = useRef()
     const imagen = useRef()
     const provincia = useRef()
+    const localidad = useRef()
+    const direccion = useRef()
     const aperturaam = useRef()
     const cierream = useRef()
     const aperturapm = useRef()
@@ -91,6 +93,8 @@ export function RegistroCentroForm() {
             "nombre": nombre.current.value,
             "imagen": imagenUrl,
             "provincia": provincia.current.getValue()[0].value,
+            "localidad": localidad.current.value,
+            "direccion": direccion.current.value,
             "aperturaAM": aperturaam.current.value,
             "cierreAM": cierream.current.value,
             "aperturaPM": aperturapm.current.value,
@@ -182,6 +186,10 @@ export function RegistroCentroForm() {
                 <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} isSearchable={false} required
                 theme={(theme) => ({...theme, borderRadius: 3, colors: {...theme.colors, primary25: '#d9ebff', primary50: '#ffe2ef', primary: '#bf9dac',},})}/>
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
+                <label className='text-lg' htmlFor="localidad"> Localidad:</label>
+                <input className="border-black border-2  rounded-sm mb-4" name="localidad" type="text" ref={localidad} required />
+                <label className='text-lg' htmlFor="direccion"> Dirección:</label>
+                <input className="border-black border-2  rounded-sm mb-4" name="direccion" type="text" ref={direccion} required />
                 <label className='text-lg' htmlFor="suscripcion">   Plan de suscripción:</label>
                 <Select className="border-black border-2 mb-4 rounded-sm" name="suscripcion" options={planes} ref={suscripcion} isSearchable={false}required
                 theme={(theme) => ({...theme, borderRadius: 3, colors: {...theme.colors, primary25: '#d9ebff', primary50: '#ffe2ef', primary: '#bf9dac',},})}/>

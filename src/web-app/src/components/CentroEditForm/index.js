@@ -53,6 +53,8 @@ export function CentroEditForm({id}) {
   const oldNombre=resObj.nombre
   const oldImagen=resObj.imagen
   const oldProvincia=resObj.provincia
+  const oldLocalidad = resObj.localidad;
+  const oldDireccion = resObj.direccion;
   const oldAperturaAM=resObj.aperturaAM
   const oldCierreAM=resObj.cierreAM
   const oldAperturaPM=resObj.aperturaPM
@@ -62,6 +64,8 @@ export function CentroEditForm({id}) {
   const nombre = useRef()
   const imagen = useRef()
   const provincia = useRef()
+  const localidad = useRef()
+  const direccion = useRef()
   const aperturaam = useRef()
   const cierream = useRef()
   const aperturapm = useRef()
@@ -98,6 +102,8 @@ export function CentroEditForm({id}) {
         "nombre": nombre.current.value==="" ? (oldNombre):(nombre.current.value),
         "imagen": imagen.current.value==="" ? (oldImagen):(imagen.current.value),
         "provincia": provincia.current.getValue()[0].value==="" ? (oldProvincia):(provincia.current.getValue()[0].value),
+        "localidad": localidad.current.value==="" ? (oldLocalidad):(localidad.current.value),
+        "direccion": direccion.current.value==="" ? (oldDireccion):(direccion.current.value),
         "aperturaAM": aperturaam.current.value==="" ? (oldAperturaAM):(aperturaam.current.value),
         "cierreAM": cierream.current.value==="" ? (oldCierreAM):(cierream.current.value),
         "aperturaPM": aperturapm.current.value==="" ? (oldAperturaPM):(aperturapm.current.value),
@@ -204,6 +210,10 @@ export function CentroEditForm({id}) {
                 <p className="text-sm text-red-600" >{stateImagen}</p>
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
                 <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} isSearchable={false} required />
+                <label className='text-lg' htmlFor="localidad"> Localidad:</label>
+                <input className="border-black border-2  rounded-sm mb-4" name="localidad" type="text" ref={localidad} required />
+                <label className='text-lg' htmlFor="direccion"> Dirección:</label>
+                <input className="border-black border-2  rounded-sm mb-4" name="direccion" type="text" ref={direccion} required />
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
                 <label className='text-lg' htmlFor="name">Días de apertura:</label>
                 <Select className="p-3"
