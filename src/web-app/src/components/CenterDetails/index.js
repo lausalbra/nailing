@@ -66,9 +66,10 @@ export function CenterDetails({centro}) {
           success: function (data) {
             console.log("Servicios recibidos");
             console.log(data);
+            if (data.length === 0) window.alert("El centro no ha añadido tipos de uña. Por favor, indique al centro que debe añadir más servicios de la categoría Tipo");
+            else setState({ id: state.id, name: state.name, isPaneOpen: false, buttons: data });
             //El data que llegue debe tener 1 atributo, buttons: objeto boton con sus propiedades y carac siguiente
             //FORMATO JSON: {"tipo": [{"id": 1, "nombre" : "Relleno", "coste": 1, "tiempo": 3, "siguienteFase": Material, "centro":...}, ...] }
-            setState({ id: state.id, name: state.name, isPaneOpen: false, buttons: data });
           }
         });
       }

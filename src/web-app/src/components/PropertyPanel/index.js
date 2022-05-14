@@ -362,16 +362,20 @@ class PropertyPanel extends Component {
                     //El data que llegue debe tener 1 atributo, buttons: objeto boton con sus propiedades y carac siguiente
                     //FORMATO JSON: {"options": [{"id": 1, "name" : "Relleno", "cost": 1, "time": 3, "next": Material}, ...] }
                     //Se crea el panel donde van a ir las opciones
-                    let newPropertyPanelContainer = document.createElement("div");
-                    //Configuración del panel
                     var nextName = option.siguienteFase.charAt(0).toUpperCase() + option.siguienteFase.slice(1);
                     nextName = nextName.replaceAll("ny", "ñ");
-                    newPropertyPanelContainer.id = nextName + "Container";
-                    newPropertyPanelContainer.className = "propertyContainer";
-                    //Se añade y se abre el panel
-                    mainPanel.append(newPropertyPanelContainer);
-                    ReactDOM.render(<><PropertyPanel name={nextName} buttons={data} /></>, newPropertyPanelContainer);
-                    newPropertyPanelContainer.firstChild.firstChild.firstChild.checked = true;
+                    if (data.length === 0) window.alert("Esta opción carece de los servicios siguientes necesarios. Por favor, indique al centro que debe añadir más servicios de la categoría " + nextName)
+                    else
+                    {
+                        let newPropertyPanelContainer = document.createElement("div");
+                        //Configuración del panel
+                        newPropertyPanelContainer.id = nextName + "Container";
+                        newPropertyPanelContainer.className = "propertyContainer";
+                        //Se añade y se abre el panel
+                        mainPanel.append(newPropertyPanelContainer);
+                        ReactDOM.render(<><PropertyPanel name={nextName} buttons={data} /></>, newPropertyPanelContainer);
+                        newPropertyPanelContainer.firstChild.firstChild.firstChild.checked = true;
+                    }
                 }
             });
         }
