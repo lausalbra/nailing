@@ -111,6 +111,10 @@ export function ServiciosList() {
 
     return (
         <>
+            <p>Nota Importante del equipo Nailing: Se recomienda encarecidamente añadir al menos un servicio de cada tipo.</p>
+            <p>Para poder personalizar y concertar la cita, la aplicación debe tener una serie de servicios mínimos.</p>
+            <p>Le recomendamos comprobar que es posible realizar una reserva en su centro con los servicios que ha seleccionado</p>
+            <p>Para cualquier consulta adicional sobre los servicios mínimos puede ponerse en contacto con nuestro soporte en: nailing.app@gmail.com</p>
             <ServiciosBox title="TIPOS" pers={getForms(listTipos, 'tipos')} />
             <ServiciosBox title="BASES" pers={getForms(listBases, 'bases')} />
             <ServiciosBox title="DISEÑOS" pers={getForms(listDisenos, 'disenyos')} />
