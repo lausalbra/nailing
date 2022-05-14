@@ -14,6 +14,7 @@ import { ServiciosCentro } from './views/ServiciosCentro'
 import { Centro } from './views/Centro'
 import { EditarUsuario } from './views/EditarUsuario'
 import { RegistroUsuario } from './views/RegistroUsuario'
+import { CentroCitas } from './views/CentroCitas'
 import { CentroEdit } from './views/CentroEdit'
 import { CentroAdd } from './views/CentroAdd'
 import { DemoServiciosCentro } from './views/DemoServiciosCentro'
@@ -32,6 +33,7 @@ function App() {
             <Route path='/login' component={Login} />
             <Route path='/usuario' component={Usuario} />
             <Route path='/centrodetalle/:id' component={Centro} />
+            <Route path='/centrocitas/:id' component={CentroCitas} />
             <Route path='/centroedit/:id' component={CentroEdit} />
             <Route path='/centroadd' component={CentroAdd} />
             <Route path='/centro' component={BookingsList} />
