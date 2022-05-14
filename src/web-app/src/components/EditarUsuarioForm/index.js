@@ -9,28 +9,30 @@ export function EditarUsuarioForm() {
     var cryptoJS = require("crypto-js");
     const userDecrypt = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
 
-    const user = useRef()
-    const password = useRef()
-    const email = useRef()
-    const telefono = useRef()
-    const passwordConfirm = useRef()
-
     const [state, changeState] = useState("")
     const [locationPath, locationPush] = useLocation()
+
     console.log(locationPath);
+
+    const [userState, changeUserState] = useState(userDecrypt.usuario)
+    const [passwordState, changePasswordState] = useState(userDecrypt.contrasenya)
+    const [passwordConfirmState, changePasswordConfirmState] = useState(userDecrypt.contrasenya)
+    const [telefonoState, changeTelefonoState] = useState(userDecrypt.telefono)
+    const [emailState, changeEmailState] = useState(userDecrypt.email)
+
 
     async function handleSubmit(evt) {
         evt.preventDefault()
-        const isConfirmed = confirmPassword(password.current.value, passwordConfirm.current.value)
+        const isConfirmed = confirmPassword(passwordState, passwordConfirmState)
 
         if (isConfirmed) {
 
             const body = {
                 'id': userDecrypt.id,
-                'usuario': user.current.value,
-                'contrasenya': password.current.value,
-                'email': email.current.value,
-                'telefono': telefono.current.value,
+                'usuario': userState,
+                'contrasenya': passwordState,
+                'email': emailState,
+                'telefono': telefonoState,
                 'rol': 'USER',
                 'centro': null
             }
@@ -82,15 +84,15 @@ export function EditarUsuarioForm() {
         <>
             <form className='grid border-2 border-pink-300 p-5 rounded-md' onSubmit={handleSubmit} >
                 <label className='text-lg' htmlFor="user"> Nombre de Usuario:</label>
-                <input className="border-black border-2  rounded-sm mb-4" name="user" type="text" ref={user} required maxLength="100" placeholder={userDecrypt.usuario} />
+                <input className="border-black border-2  rounded-sm mb-4" name="user" type="text" required maxLength="100" value={userState} onChange={ev => { changeUserState(ev.target.value) }} />
                 <label className='text-lg' htmlFor="password"> Nueva Contraseña:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="password" type="password" ref={password} required minLength="8" maxLength="100" />
+                <input className="border-black border-2 mb-4 rounded-sm" name="password" type="password" required minLength="8" maxLength="100" value={passwordState} onChange={ev => { changePasswordState(ev.target.value) }} />
                 <label className='text-lg' htmlFor="passwordConfirm">  Confirmar Nueva Contraseña:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="passwordConfirm" type="password" ref={passwordConfirm} required minLength="8" maxLength="100" />
+                <input className="border-black border-2 mb-4 rounded-sm" name="passwordConfirm" type="password" required minLength="8" maxLength="100" value={passwordConfirmState} onChange={ev => { changePasswordConfirmState(ev.target.value) }} />
                 <label className='text-lg' htmlFor="email">   Email:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="email" type="email" ref={email} required placeholder={userDecrypt.email} />
+                <input className="border-black border-2 mb-4 rounded-sm" name="email" type="email" required value={emailState} onChange={ev => { changeEmailState(ev.target.value) }} />
                 <label className='text-lg' htmlFor="telefono">  Telefono:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" ref={telefono} pattern="[0-9]{9}" placeholder={userDecrypt.telefono} />
+                <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" pattern="[0-9]{9}" value={telefonoState} onChange={ev => { changeTelefonoState(ev.target.value) }} />
                 <p className="text-sm text-red-600" >{state}</p>
                 <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" placeholder="Enviar" />
             </form>
