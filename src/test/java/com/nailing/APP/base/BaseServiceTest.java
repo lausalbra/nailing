@@ -45,24 +45,26 @@ public class BaseServiceTest {
 	@BeforeEach
 	public void setUp() {
 		centro = new Centro();
-		centro.setId((long)8000);
-		centro.setNombre("UnyasMariCarmen");
+		centro.setId((long)7000);
+		centro.setNombre("UnyasLoli");
 		centro.setPagado(true);
 		centro.setCreditosrestantes(150);
 		centro.setUltimaSuscripcion(LocalDate.now());
 		centro.setSuscripcion(Suscripcion.BASIC);
 		centro.setProvincia("Sevilla");
+                centro.setLocalidad("Sevilla");
+                centro.setDireccion("direccion");
 		centro.setDiasDisponible("MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY");
 		centro.setImagen("urlimagen");
-		centro.setAperturaAM(LocalTime.of(9, 30));
+		centro.setAperturaAM(LocalTime.of(10, 0));
 		centro.setCierreAM(LocalTime.of(14, 0));
-		centro.setAperturaPM(LocalTime.of(17, 0));
-		centro.setCierrePM(LocalTime.of(21, 0));
+		centro.setAperturaPM(LocalTime.of(16, 0));
+		centro.setCierrePM(LocalTime.of(20, 0));
                 centro.setValoracionMedia(2.);
                 centro.setValoracionTotal(2);
                 centro.setNumValoraciones(1);
 		centroCreado = centroService.addCentro(centro);
-	}   
+	}
         
         @Test
 	public void addBaseTest() {

@@ -52,6 +52,8 @@ public class TipoServiceTest {
 		centro.setUltimaSuscripcion(LocalDate.now());
 		centro.setSuscripcion(Suscripcion.BASIC);
 		centro.setProvincia("Sevilla");
+                centro.setLocalidad("Sevilla");
+                centro.setDireccion("direccion");
 		centro.setDiasDisponible("MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY");
 		centro.setImagen("https://i.imgur.com/vPk5Wv2.jpeg");
 		centro.setAperturaAM(LocalTime.of(8, 30));
