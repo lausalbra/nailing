@@ -186,11 +186,11 @@ export function CentroEditForm({id}) {
     const result2 = cierreAMDate < aperturaPMDate && cierreAMDate < cierrePMDate;
     const result3 = aperturaPMDate < cierrePMDate;
     if (!result1) {
-        changeStateHora("La hora de apertura AM debe ser anterior a todas");
+        changeStateHora("La hora de apertura de por la mañana debe ser anterior a todas las demás");
     } else if (!result2){
-        changeStateHora("La hora de cierre AM debe ser anterior a las PM");
+        changeStateHora("La hora de cierre de por la mañana debe ser anterior a las horas de la tarde");
     } else if (!result3){
-        changeStateHora("La hora de apertura PM debe ser anterior a la de cierre PM");
+        changeStateHora("La hora de apertura de tarde debe ser anterior a la de cierre de tarde");
     } else {
         changeStateHora("")
     }
