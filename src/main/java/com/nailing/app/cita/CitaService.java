@@ -209,7 +209,7 @@ public class CitaService {
 	}
         
         public List<Cita> findByCentro(Long centroId, Long userId) {
-            if(usuarioService.findById(userId).get().getCentro().equals(centroService.findById(centroId).get())){
+            if(!usuarioService.findById(userId).get().getCentro().equals(centroService.findById(centroId).get())){
                 throw new IllegalArgumentException("usuario: " + usuarioService.findById(userId).get() + ", centro: " + centroService.findById(centroId).get());
             }else{
                 return citaRepository.findCitasByCentro(centroId);
