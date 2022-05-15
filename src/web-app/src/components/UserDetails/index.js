@@ -92,6 +92,7 @@ export function UserDetails({ image, email, phone }) {
           <div className="ml-5 items-center">
             <p><strong>Email:</strong> {email}</p>
             <p><strong>Teléfono:</strong> {phone}</p>
+            <p><strong>Rol:</strong> {user.rol}</p>
             {user.rol === "OWNER"?
             <>
             <p><strong>Créditos Restantes:</strong> {user.centro.creditosrestantes}</p>
