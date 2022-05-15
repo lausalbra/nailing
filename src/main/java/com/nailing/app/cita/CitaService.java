@@ -207,6 +207,10 @@ public class CitaService {
 	public List<Cita> findByUsuario(Long id) {
 		return citaRepository.findByUsuario(id);
 	}
+        
+        public List<Cita> findByCentro(Long id) {
+		return citaRepository.findCitasByCentro(id);
+	}
 
 	public Iterable<Cita> findAll() {
 		return citaRepository.findAll();

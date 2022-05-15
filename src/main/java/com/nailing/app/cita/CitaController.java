@@ -107,4 +107,12 @@ public class CitaController {
 		List<String> huecos = citaService.findDisponibles(fecha, duracion, centroId);
 		return new ResponseEntity<>(huecos, HttpStatus.OK);
 	}
+        
+        @Operation(summary = "Muesta las Citas asociadas a un Centro")
+	@PreAuthorize("hasAuthority('"+ ADMIN +"') or hasAuthority('"+ OWNER +"')")
+	@GetMapping("/centro/{centroId}")
+	public ResponseEntity<List<Cita>> citaByCentro(@PathVariable Long centroId) {
+		List<Cita> citas = citaService.findByCentro(centroId);
+		return new ResponseEntity<>(citas, HttpStatus.OK);
+	}
 }
