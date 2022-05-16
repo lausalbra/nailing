@@ -129,9 +129,14 @@ export function UserDetails({ image, email, phone }) {
         <></>
       }
       {centro !== null && centro !== "" ?
-      <CardActions>
-        <button onClick={() => locationPush('/centroedit/' + centro.id)} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Editar información de centro</button>
-      </CardActions>
+      <>
+        <CardActions>
+          <button onClick={() => locationPush('/centrocitas/' + centro.id)} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Reservas del centro</button>
+        </CardActions>
+        <CardActions>
+          <button onClick={() => locationPush('/centroedit/' + centro.id)} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Editar información de centro</button>
+        </CardActions>
+      </>
       :
       <></>
       }
