@@ -11,10 +11,12 @@ import com.nailing.app.cita.Cita;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -111,4 +113,38 @@ public class CitaServiceTest {
         Integer ncn = citaService.findByUsuario(1L).size();
         assertEquals(ncn,nc-1); 
     }
+    
+    @Test
+    public void findByCentroUsuarioTest(){
+        Integer citas = citaService.findByCentro(1L,3L).size();
+        
+        Map<String,String> cita = new HashMap<>();
+        cita.put("usuario", "3");
+        cita.put("centro", "1");
+        cita.put("precio", "50.2");
+        cita.put("tiempo", "25");
+        cita.put("tipo", "1");
+        cita.put("base", "1");
+        cita.put("forma", "1");
+        cita.put("tamanyo", "1");
+        cita.put("disenyo", "1");
+        cita.put("decoracion", "1");
+        cita.put("acabado", "1");
+        cita.put("fecha", "2032-05-22 10:30");
+        cita.put("disenyo", "1");
+        
+        citaService.addCita(cita);
+        
+        Integer citas1 = citaService.findByCentro(1L,3L).size();
+        
+        assertTrue(citas1==citas+1);
+    }
+    
+    @Test
+    public void findDisponiblesTest(){
+            List<String> disponibles = citaService.findDisponibles("2022-12-12 12",30,3L);
+            assertTrue(disponibles!=null);
+            assertTrue(!disponibles.isEmpty());
+    }
+    
 }
