@@ -17,9 +17,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -27,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author jaime
  */
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = AppApplication.class)
 public class CitaServiceTest {
     
@@ -142,7 +139,7 @@ public class CitaServiceTest {
     
     @Test
     public void findDisponiblesTest(){
-            List<String> disponibles = citaService.findDisponibles("2022-12-12 12",30,3L);
+            List<String> disponibles = citaService.findDisponibles("2022-12-12 12",30,4L);
             assertTrue(disponibles!=null);
             assertTrue(!disponibles.isEmpty());
     }
