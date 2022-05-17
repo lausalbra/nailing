@@ -33,7 +33,7 @@ export function EditarUsuarioForm() {
                 'contrasenya': passwordState,
                 'email': emailState,
                 'telefono': telefonoState,
-                'rol': 'USER',
+                'rol': userDecrypt.rol,
                 'centro': null
             }
 
