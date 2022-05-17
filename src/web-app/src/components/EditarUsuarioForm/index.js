@@ -37,7 +37,7 @@ export function EditarUsuarioForm() {
                 'centro': null
             }
 
-            const url = "https://nailingtest.herokuapp.com/usuarios/edit"
+            const url = "https://nailing-sprint4.herokuapp.com/usuarios/edit"
             const headers = {
                 "Content-Type": "application/json",
                 "Authorization": "Basic " + btoa(userDecrypt.usuario + ":" + userDecrypt.contrasenya)
