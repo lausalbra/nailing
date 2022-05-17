@@ -62,7 +62,7 @@ export function CenterDetails({centro}) {
           headers: {
             "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
           },
-          url: "https://nailing-sprint4.herokuapp.com/tipos/centro/" + state.id.toString(),
+          url: "https://nailingtest.herokuapp.com/tipos/centro/" + state.id.toString(),
           success: function (data) {
             console.log("Servicios recibidos");
             console.log(data);
@@ -95,7 +95,7 @@ async function valorar(valoracion){
     "Content-Type": "application/json",
     "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
   }
-  const url= "https://nailing-sprint4.herokuapp.com/valoraciones/add/centro"
+  const url= "https://nailingtest.herokuapp.com/valoraciones/add/centro"
   await postData(url, body, header)
     .then(function (data) {
       console.log("Valoración enviada correctamente "+valoracion);
@@ -121,7 +121,7 @@ if(user!=null && !haValorado && primera){
       "Content-Type": "application/json",
       "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
     },
-    url: "https://nailing-sprint4.herokuapp.com/valoraciones/list",
+    url: "https://nailingtest.herokuapp.com/valoraciones/list",
     success: function (data) {
       console.log("Servicios recibidos");
       setValoracionesList(data);
@@ -150,7 +150,7 @@ async function editarValoracion(valoracion, antigua){
     "Content-Type": "application/json",
     "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
   }
-  const url= "https://nailing-sprint4.herokuapp.com/valoraciones/edit"
+  const url= "https://nailingtest.herokuapp.com/valoraciones/edit"
   await putData(url, body, header)
     .then(function () {
       console.log("Valoración editada correctamente "+valoracion);

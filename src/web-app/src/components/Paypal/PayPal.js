@@ -33,8 +33,8 @@ export default function Paypal({ json, money, paymentType }) {
   console.log(user)
   console.log("JSON EN PAYPAL", json)
 
-  const urlEditCentro = "https://nailing-sprint4.herokuapp.com/centros/edit"
-  const urlLogout = "https://nailing-sprint4.herokuapp.com/logout"
+  const urlEditCentro = "https://nailingtest.herokuapp.com/centros/edit"
+  const urlLogout = "https://nailingtest.herokuapp.com/logout"
   const headers = {
     "Content-Type": "application/json",
     "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
@@ -68,7 +68,7 @@ export default function Paypal({ json, money, paymentType }) {
                   "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
                 },
                 data: json,
-                url: "https://nailing-sprint4.herokuapp.com/cita/add",
+                url: "https://nailingtest.herokuapp.com/cita/add",
                 success: function (__data) {
                   console.log("Se ha realizado la reserva correctamente", order);
                   window.location.href = '/miscitas';
@@ -76,12 +76,12 @@ export default function Paypal({ json, money, paymentType }) {
               });
               break;
             case "NewCentre":
-              const urlCentre = "https://nailing-sprint4.herokuapp.com/centros/add/" + user.id.toString();
+              const urlCentre = "https://nailingtest.herokuapp.com/centros/add/" + user.id.toString();
               postData(urlCentre, json, {
                 "Content-Type": "application/json",
                 "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
               }).then(async function () {
-                const url = "https://nailing-sprint4.herokuapp.com/login";
+                const url = "https://nailingtest.herokuapp.com/login";
                 const body = {
                   "user": user.usuario,
                   "password": user.contrasenya
