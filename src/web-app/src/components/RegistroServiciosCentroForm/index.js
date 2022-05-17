@@ -38,7 +38,7 @@ export function RegistroServiciosCentroForm({ updater, listTipos, listBases, lis
         "Authorization": "Basic " + btoa(user.usuario + ":" + user.contrasenya)
     }
 
-    const url = "https://nailingtest.herokuapp.com/"
+    const url = "https://nailing-sprint4.herokuapp.com/"
     let suffix = ""
 
     async function onDropDownChangeType(value) {

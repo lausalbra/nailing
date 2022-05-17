@@ -15,7 +15,7 @@ export function RegistroUsuarioForm() {
     async function handleSubmit(evt) {
         evt.preventDefault()
 
-        const url = "https://nailingtest.herokuapp.com/signUp"
+        const url = "https://nailing-sprint4.herokuapp.com/signUp"
         const header = {
             "Content-Type": "application/json"
         }
