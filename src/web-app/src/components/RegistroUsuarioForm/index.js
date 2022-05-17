@@ -96,10 +96,10 @@ export function RegistroUsuarioForm() {
                 <label className='text-lg' htmlFor="email">   Email:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="email" type="email" ref={email} required />
                 <label className='text-lg' htmlFor="telefono">  Telefono:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" ref={telefono} pattern="[0-9]{9}" required />
+                <input className="border-black border-2 mb-4 rounded-sm" title=" Un teléfono se compone de 9 cifras (Ejemplo 123456789)" name="telefono" type="tel" ref={telefono} placeholder="123456789" pattern="[0-9]{9}" required />
                 <p className="text-sm text-red-600" >{state}</p>
                 <p className="text-sm " >Al registrarte aceptas nuestros <a className="underline" href="/terminoscondiciones">Terminos y Condiciones</a></p>
-                <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" placeholder="123456789" />
+                <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
             </form>
         </>
     )
