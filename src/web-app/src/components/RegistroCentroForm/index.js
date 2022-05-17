@@ -10,6 +10,8 @@ export function RegistroCentroForm() {
     const nombre = useRef()
     const imagen = useRef()
     const provincia = useRef()
+    const localidad = useRef()
+    const direccion = useRef()
     const aperturaam = useRef()
     const cierream = useRef()
     const aperturapm = useRef()
@@ -21,11 +23,11 @@ export function RegistroCentroForm() {
     const [stateImagen, changeStateImagen] = useState("")
 
     const planes = [{ label: 'Básico', value: 'BASIC' },
-      { label: 'Intermedio', value: 'MEDIUM' },
-      { label: 'Avanzado', value: 'ADVANCED' },
-      { label: 'Premium', value: 'PREMIUM' }
+    { label: 'Intermedio', value: 'MEDIUM' },
+    { label: 'Avanzado', value: 'ADVANCED' },
+    { label: 'Premium', value: 'PREMIUM' }
     ]
-    
+
     const optionsDias = [
         { value: "MONDAY", label: "Lunes" },
         { value: "TUESDAY", label: "Martes" },
@@ -37,6 +39,7 @@ export function RegistroCentroForm() {
     ]
 
     const [stateDiasApertura, changeStateDiasApertura] = useState(optionsDias)
+    const [stateSuscripcion, changeStateSuscripcion] = useState({})
 
     async function handleSubmit(evt) {
         evt.preventDefault()
@@ -45,10 +48,10 @@ export function RegistroCentroForm() {
         const horasConfirmadasIncongruencias = confirmHorasIncongruencias(aperturaam.current.value, cierream.current.value, aperturapm.current.value, cierrepm.current.value);
         const imagenConfirmada = confirmImage(imagen.current.value)
         var planValidated = false;
-        if (planes.filter((sus) => sus.value===suscripcion.current.getValue()[0].value).length !== 0){
+        if (planes.filter((sus) => sus.value === suscripcion.current.getValue()[0].value).length !== 0) {
             planValidated = true;
         }
-        
+
         let diasString
         stateDiasApertura.map((dia) => {
             diasString += `,${dia.value}`;
@@ -59,8 +62,7 @@ export function RegistroCentroForm() {
 
         var money = 0;
         var credits = 0;
-        switch (suscripcion.current.getValue()[0].value)
-        {
+        switch (suscripcion.current.getValue()[0].value) {
             case "BASIC":
                 money = 25;
                 credits = 100;
@@ -82,29 +84,31 @@ export function RegistroCentroForm() {
         }
 
         let imagenUrl = "";
-        if (imagen.current.value != null){
+        if (imagen.current.value != null) {
             imagenUrl = imagen.current.value
-        } 
-      
+        }
+
         if (horasConfirmadas && provinciaConfirmada && planValidated && imagenConfirmada && horasConfirmadasIncongruencias) {
             const bodyCentre = {
-            "nombre": nombre.current.value,
-            "imagen": imagenUrl,
-            "provincia": provincia.current.getValue()[0].value,
-            "aperturaAM": aperturaam.current.value,
-            "cierreAM": cierream.current.value,
-            "aperturaPM": aperturapm.current.value,
-            "cierrePM": cierrepm.current.value,
-            "diasDisponible": diasString,
-            "suscripcion": suscripcion.current.getValue()[0].value,
-            "creditosrestantes": credits,
-            "ultimaSuscripcion": new Date(),
-            "pagado": true,
-            "valoracionMedia": 0,
-            "valoracionTotal": 0,
-            "numValoraciones": 0
+                "nombre": nombre.current.value,
+                "imagen": imagenUrl,
+                "provincia": provincia.current.getValue()[0].value,
+                "localidad": localidad.current.value,
+                "direccion": direccion.current.value,
+                "aperturaAM": aperturaam.current.value,
+                "cierreAM": cierream.current.value,
+                "aperturaPM": aperturapm.current.value,
+                "cierrePM": cierrepm.current.value,
+                "diasDisponible": diasString,
+                "suscripcion": suscripcion.current.getValue()[0].value,
+                "creditosrestantes": credits,
+                "ultimaSuscripcion": new Date(),
+                "pagado": true,
+                "valoracionMedia": 0,
+                "valoracionTotal": 0,
+                "numValoraciones": 0
             }
-        
+
             var paypalDiv = document.getElementById("paypalDiv");
             paypalDiv.innerHTML = '';
             var newDiv = document.createElement("div");
@@ -146,9 +150,9 @@ export function RegistroCentroForm() {
         const result3 = aperturaPMDate < cierrePMDate;
         if (!result1) {
             changeStateHora("La hora de apertura AM debe ser anterior a todas");
-        } else if (!result2){
+        } else if (!result2) {
             changeStateHora("La hora de cierre AM debe ser anterior a las PM");
-        } else if (!result3){
+        } else if (!result3) {
             changeStateHora("La hora de apertura PM debe ser anterior a la de cierre PM");
         } else {
             changeStateHora("")
@@ -158,7 +162,7 @@ export function RegistroCentroForm() {
 
     function confirmImage(image) {
         const result = image.includes("https://");
-        if (!result){
+        if (!result) {
             changeStateImagen("Formato de imagen invalido, debe ser una URL");
         } else {
             changeStateImagen("");
@@ -170,21 +174,58 @@ export function RegistroCentroForm() {
         changeStateDiasApertura(value)
         console.log(value)
     }
+
+    const handleChangeSuscripcion = (value) => {
+        console.log(value)
+
+        let money;
+        let credits;
+        switch (value.value) {
+            case "BASIC":
+                money = 25;
+                credits = 100;
+                break;
+            case "MEDIUM":
+                money = 45;
+                credits = 150;
+                break;
+            case "ADVANCED":
+                money = 65;
+                credits = 200;
+                break;
+            case "PREMIUM":
+                money = 100;
+                credits = 250;
+                break;
+            default:
+                break;
+        }
+
+        changeStateSuscripcion({ "money": money, "credits": credits })
+
+    }
+
     return (
         <>
             <form className='grid border-2 border-pink-300 p-5 rounded-md' onSubmit={handleSubmit} >
                 <label className='text-lg' htmlFor="nombre"> Nombre centro:</label>
                 <input className="border-black border-2  rounded-sm mb-4" name="nombre" type="text" ref={nombre} required />
                 <label className='text-lg' htmlFor="imagen">   Imagen:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" placeholder="https://i.imgur.com/vPk5Wv2.jpeg" ref={imagen} required/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" placeholder="https://i.imgur.com/vPk5Wv2.jpeg" ref={imagen} required />
                 <p className="text-sm text-red-600" >{stateImagen}</p>
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
                 <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} isSearchable={false} required
-                theme={(theme) => ({...theme, borderRadius: 3, colors: {...theme.colors, primary25: '#d9ebff', primary50: '#ffe2ef', primary: '#bf9dac',},})}/>
+                    theme={(theme) => ({ ...theme, borderRadius: 3, colors: { ...theme.colors, primary25: '#d9ebff', primary50: '#ffe2ef', primary: '#bf9dac', }, })} />
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
+                <label className='text-lg' htmlFor="localidad"> Localidad:</label>
+                <input className="border-black border-2  rounded-sm mb-4" name="localidad" type="text" ref={localidad} required />
+                <label className='text-lg' htmlFor="direccion"> Dirección:</label>
+                <input className="border-black border-2  rounded-sm mb-4" name="direccion" type="text" ref={direccion} required />
                 <label className='text-lg' htmlFor="suscripcion">   Plan de suscripción:</label>
-                <Select className="border-black border-2 mb-4 rounded-sm" name="suscripcion" options={planes} ref={suscripcion} isSearchable={false}required
-                theme={(theme) => ({...theme, borderRadius: 3, colors: {...theme.colors, primary25: '#d9ebff', primary50: '#ffe2ef', primary: '#bf9dac',},})}/>
+                <Select className="border-black border-2 mb-4 rounded-sm" name="suscripcion" onChange={handleChangeSuscripcion} options={planes} ref={suscripcion} isSearchable={false} required
+                    theme={(theme) => ({ ...theme, borderRadius: 3, colors: { ...theme.colors, primary25: '#d9ebff', primary50: '#ffe2ef', primary: '#bf9dac', }, })} />
+                {console.log(Object.entries(stateSuscripcion).length === 0)}
+                <p className="text-sm text-red-600" >{Object.entries(stateSuscripcion).length === 0 ? "" : stateSuscripcion.credits + " créditos - " + stateSuscripcion.money + "€"}</p>
                 <label className='text-lg' htmlFor="name">Días de apertura:</label>
                 <Select className="p-3"
                     required
@@ -195,13 +236,13 @@ export function RegistroCentroForm() {
                     onChange={handleChangeDiasApertura}
                 />
                 <label className='text-lg' htmlFor="aperturaam">   Hora de apertura horario de mañana:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaam" type="text" ref={aperturaam} placeholder="00:00:00" required/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaam" type="text" ref={aperturaam} placeholder="00:00:00" required />
                 <label className='text-lg' htmlFor="cierream">  Hora de cierre horario de mañana:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="cierream" type="text" ref={cierream} placeholder="00:00:00" required/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="cierream" type="text" ref={cierream} placeholder="00:00:00" required />
                 <label className='text-lg' htmlFor="aperturapm">   Hora de apertura horario de tarde:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="aperturapm" type="text" ref={aperturapm} placeholder="00:00:00" required/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="aperturapm" type="text" ref={aperturapm} placeholder="00:00:00" required />
                 <label className='text-lg' htmlFor="cierrepm">  Hora de cierre horario de tarde:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="cierrepm" type="text" ref={cierrepm} placeholder="00:00:00" required/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="cierrepm" type="text" ref={cierrepm} placeholder="00:00:00" required />
                 <p className="text-sm text-red-600" >{stateHoras}</p>
                 <p className="text-sm text-red-600" >{stateDiasApertura.length === 0 ? "Debe seleccionar al menos un día de apertura" : ""}</p>
                 <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Comprobar formulario" />

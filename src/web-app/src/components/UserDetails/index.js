@@ -89,8 +89,6 @@ export function UserDetails({ image, email, phone }) {
     <Card style={{ backgroundColor: 'rgb(248, 225, 228)' }} sx={{ minWidth: 275 }}>
       <CardContent style={{marginBottom: "20px"}}>
         <div className="md:flex">
-          
-          <img src={image} alt="img" style={{"max-width": "100px", "max-height": "100px", "margin-right": "5px"}} className="rounded-md shadow-md w-full md:h-full md:w-1/4 float-left bg-white mb-2" />
           <div className="ml-5 items-center">
             <p><strong>Email:</strong> {email}</p>
             <p><strong>Teléfono:</strong> {phone}</p>
@@ -131,9 +129,14 @@ export function UserDetails({ image, email, phone }) {
         <></>
       }
       {centro !== null && centro !== "" ?
-      <CardActions>
-        <button onClick={() => locationPush('/centroedit/' + centro.id)} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Editar información de centro</button>
-      </CardActions>
+      <>
+        <CardActions>
+          <button onClick={() => locationPush('/centrocitas/' + centro.id)} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Reservas del centro</button>
+        </CardActions>
+        <CardActions>
+          <button onClick={() => locationPush('/centroedit/' + centro.id)} className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300">Editar información de centro</button>
+        </CardActions>
+      </>
       :
       <></>
       }

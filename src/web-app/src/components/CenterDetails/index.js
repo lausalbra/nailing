@@ -24,6 +24,8 @@ export function CenterDetails({centro}) {
   const name = centro.nombre
   const image = centro.imagen
   const provincia = centro.provincia
+  const localidad = centro.localidad;
+  const direccion = centro.direccion;
   if(rating!=centro.valoracionMedia){
     setRating(centro.valoracionMedia)
     setRatingBoolean(true)
@@ -64,9 +66,10 @@ export function CenterDetails({centro}) {
           success: function (data) {
             console.log("Servicios recibidos");
             console.log(data);
+            if (data.length === 0) window.alert("El centro no ha añadido tipos de uña. Por favor, indique al centro que debe añadir más servicios de la categoría Tipo");
+            else setState({ id: state.id, name: state.name, isPaneOpen: false, buttons: data });
             //El data que llegue debe tener 1 atributo, buttons: objeto boton con sus propiedades y carac siguiente
             //FORMATO JSON: {"tipo": [{"id": 1, "nombre" : "Relleno", "coste": 1, "tiempo": 3, "siguienteFase": Material, "centro":...}, ...] }
-            setState({ id: state.id, name: state.name, isPaneOpen: false, buttons: data });
           }
         });
       }
@@ -172,6 +175,8 @@ const [mensaje, setMensaje] = React.useState("");
       <img src={image} alt={name} className="object-cover rounded-md shadow-md w-full md:h-full md:w-1/4 float-left bg-white mb-2" />
           <div className="ml-5 items-center">
               <p><strong>Provincia:</strong> {provincia}</p>
+              <p><strong>Localidad:</strong> {localidad}</p>
+              <p><strong>Dirección:</strong> {direccion}</p>
               <p><strong>Horario de mañana:</strong> {aperturaAM} - {cierreAM}</p>
               <p><strong>Horario de tarde:</strong> {aperturaPM} - {cierrePM}</p>
               {ratingBoolean?

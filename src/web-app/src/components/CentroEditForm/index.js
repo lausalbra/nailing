@@ -53,15 +53,19 @@ export function CentroEditForm({id}) {
   const oldNombre=resObj.nombre
   const oldImagen=resObj.imagen
   const oldProvincia=resObj.provincia
+  const oldLocalidad = resObj.localidad;
+  const oldDireccion = resObj.direccion;
   const oldAperturaAM=resObj.aperturaAM
   const oldCierreAM=resObj.cierreAM
   const oldAperturaPM=resObj.aperturaPM
   const oldCierrePM=resObj.cierrePM
-    
+  const oldDias=resObj.diasDisponible
 
   const nombre = useRef()
   const imagen = useRef()
   const provincia = useRef()
+  const localidad = useRef()
+  const direccion = useRef()
   const aperturaam = useRef()
   const cierream = useRef()
   const aperturapm = useRef()
@@ -75,6 +79,13 @@ export function CentroEditForm({id}) {
     { value: "SATURDAY", label: "Sábado" },
     { value: "SUNDAY", label: "Domingo" },
   ]
+
+  const [oldOptionsDias, changeStateOldOptionsDias] = useState("")
+  const [opcionesHechas, changeStateOpcionesHechas] = useState(false)
+  if(oldDias!=null && !opcionesHechas){
+    changeStateOldOptionsDias(optionsDias.filter(d => oldDias.includes(d.value)))
+    changeStateOpcionesHechas(true)
+  }
 
   const [stateProvincia, changeStateProvincia] = useState("")
   const [stateHoras, changeStateHora] = useState("")
@@ -92,16 +103,23 @@ export function CentroEditForm({id}) {
     diasString = diasString.slice(10, diasString.length)
     console.log(diasString)
 
-    const url2 = "https://nailing-sprint3.herokuapp.com/centros/edit"
+    try{
+      console.log(provincia.current.getValue[0].value)
+    }catch{
+      changeStateProvincia("Inserta una provincia")
+    }
+    const url2 = "https://nailingtest.herokuapp.com/centros/edit"
     const body = {
         "id": id,
-        "nombre": nombre.current.value==="" ? (oldNombre):(nombre.current.value),
-        "imagen": imagen.current.value==="" ? (oldImagen):(imagen.current.value),
-        "provincia": provincia.current.getValue()[0].value==="" ? (oldProvincia):(provincia.current.getValue()[0].value),
-        "aperturaAM": aperturaam.current.value==="" ? (oldAperturaAM):(aperturaam.current.value),
-        "cierreAM": cierream.current.value==="" ? (oldCierreAM):(cierream.current.value),
-        "aperturaPM": aperturapm.current.value==="" ? (oldAperturaPM):(aperturapm.current.value),
-        "cierrePM": cierrepm.current.value==="" ? (oldCierrePM):(cierrepm.current.value),
+        "nombre": nombre.current.value,
+        "imagen": imagen.current.value,
+        "provincia": provincia.current.getValue()[0].value,
+        "localidad": localidad.current.value,
+        "direccion": direccion.current.value,
+        "aperturaAM": aperturaam.current.value,
+        "cierreAM": cierream.current.value,
+        "aperturaPM": aperturapm.current.value,
+        "cierrePM": cierrepm.current.value,
         "diasDisponible": diasString,
         "suscripcion": resObj.suscripcion,
         "creditosrestantes": resObj.creditosrestantes,
@@ -168,11 +186,11 @@ export function CentroEditForm({id}) {
     const result2 = cierreAMDate < aperturaPMDate && cierreAMDate < cierrePMDate;
     const result3 = aperturaPMDate < cierrePMDate;
     if (!result1) {
-        changeStateHora("La hora de apertura AM debe ser anterior a todas");
+        changeStateHora("La hora de apertura de por la mañana debe ser anterior a todas las demás");
     } else if (!result2){
-        changeStateHora("La hora de cierre AM debe ser anterior a las PM");
+        changeStateHora("La hora de cierre de por la mañana debe ser anterior a las horas de la tarde");
     } else if (!result3){
-        changeStateHora("La hora de apertura PM debe ser anterior a la de cierre PM");
+        changeStateHora("La hora de apertura de tarde debe ser anterior a la de cierre de tarde");
     } else {
         changeStateHora("")
     }
@@ -191,6 +209,7 @@ export function CentroEditForm({id}) {
 
   const handleChangeDiasApertura = (value) => {
     changeStateDiasApertura(value);
+    changeStateOldOptionsDias(value);
     console.log(value);
   }
 
@@ -198,29 +217,33 @@ export function CentroEditForm({id}) {
         <>
             <form className='grid border-2 border-pink-300 p-5 rounded-md' onSubmit={handleSubmit} >
                 <label className='text-lg' htmlFor="nombre"> Nombre:</label>
-                <input className="border-black border-2  rounded-sm mb-4" name="nombre" type="text" ref={nombre} placeholder={oldNombre}/>
+                <input className="border-black border-2  rounded-sm mb-4" name="nombre" type="text" ref={nombre} defaultValue={oldNombre} required/>
                 <label className='text-lg' htmlFor="imagen">   Imagen:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} placeholder={oldImagen}/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} defaultValue={oldImagen}/>
                 <p className="text-sm text-red-600" >{stateImagen}</p>
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
-                <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} isSearchable={false} required />
+                <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} isSearchable={false} />
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
+                <label className='text-lg' htmlFor="localidad"> Localidad:</label>
+                <input className="border-black border-2  rounded-sm mb-4" name="localidad" type="text" ref={localidad} defaultValue={oldLocalidad} />
+                <label className='text-lg' htmlFor="direccion"> Dirección:</label>
+                <input className="border-black border-2  rounded-sm mb-4" name="direccion" type="text" ref={direccion} defaultValue={oldDireccion} />
                 <label className='text-lg' htmlFor="name">Días de apertura:</label>
-                <Select className="p-3"
+                <Select className="border-black border-2 mb-4 rounded-sm"
                     required
                     isMulti
-                    value={stateDiasApertura}
+                    value={oldOptionsDias}
                     options={optionsDias}
                     onChange={handleChangeDiasApertura}
                 />
                 <label className='text-lg' htmlFor="aperturaam">   Hora de apertura horario de mañana:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaAM" type="text" ref={aperturaam} placeholder={oldAperturaAM} required/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaAM" type="text" ref={aperturaam} defaultValue={oldAperturaAM} required/>
                 <label className='text-lg' htmlFor="cierream">  Hora de cierre horario de mañana:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="cierreAM" type="text" ref={cierream} placeholder={oldCierreAM} required/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="cierreAM" type="text" ref={cierream} defaultValue={oldCierreAM} required/>
                 <label className='text-lg' htmlFor="aperturapm">   Hora de apertura horario de tarde:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaPM" type="text" ref={aperturapm} placeholder={oldAperturaPM} required/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="aperturaPM" type="text" ref={aperturapm} defaultValue={oldAperturaPM} required/>
                 <label className='text-lg' htmlFor="cierrepm">  Hora de cierre horario de tarde:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="cierrePM" type="text" ref={cierrepm} placeholder={oldCierrePM} required/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="cierrePM" type="text" ref={cierrepm} defaultValue={oldCierrePM} required/>
                 <p className="text-sm text-red-600" >{stateHoras}</p>
                 <p className="text-sm text-red-600" >{stateDiasApertura.length === 0 ? "Debe seleccionar al menos un día de apertura" : ""}</p>
                 <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" value="Enviar" />
