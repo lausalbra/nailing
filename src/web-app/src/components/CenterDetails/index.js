@@ -18,6 +18,8 @@ export function CenterDetails({centro}) {
     user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
   }
   
+  if (centro.pagado !== undefined) if (!centro.pagado) window.location.replace("/centro");
+
   const [rating, setRating] = React.useState(centro.valoracionMedia);
   const [ratingBoolean, setRatingBoolean] = React.useState(false);
   
@@ -47,7 +49,11 @@ export function CenterDetails({centro}) {
 
   useEffect(() => {
     if (state.id !== "" && state.buttons.length === 0) {
-      if (user.usuario == null) {
+      if (user == null) {
+        alert("Debe estar logeado")
+        setState({ isPaneOpen: false, id: '', name: name, buttons: [] })
+      }
+      else if (user.usuario == null) {
         alert("Debe estar logeado")
         setState({ isPaneOpen: false, id: '', name: name, buttons: [] })
       }
