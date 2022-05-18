@@ -65,6 +65,14 @@ public class Base {
 		this.centro = centro;
 	}
 
+    public Base(NombreBase nombre, Integer tiempo, Double coste, Fases siguienteFase, Centro centro) {
+        this.nombre = nombre;
+        this.tiempo = tiempo;
+        this.coste = coste;
+        this.siguienteFase = siguienteFase;
+        this.centro = centro;
+    }
+
     public Base(Integer tiempo, Double coste, Centro centro) {
         this.tiempo = tiempo;
         this.coste = coste;
