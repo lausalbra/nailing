@@ -1,3 +1,7 @@
 export const data = {
     'introduccion': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut purus scelerisque, pharetra ex sed, suscipit justo. Sed in scelerisque magna. Quisque facilisis risus sem. Aenean pharetra faucibus nisi, a cursus libero sollicitudin nec. Donec sit amet sodales sapien. Vestibulum a malesuada lacus. Nunc vel turpis vitae nunc efficitur semper sed vel mi. Donec tempus erat enim, sed efficitur dui dictum non. Morbi congue augue in orci faucibus, eget semper arcu blandit. Duis orci nunc, fringilla ut augue et, interdum feugiat urna. Mauris sed justo tristique dolor sagittis finibus ac eu sapien. Suspendisse elementum dictum sapien vel dictum.'
+    , 'presentacion': 'Gracias por visitar Nailing . Aquí vas a poder reservar citas de forma autónoma de una manera sencilla e intuitiva conociendo en todo momento del proceso el coste y duración de la reserva. \n ' +
+        ' ¿Qué ofrecemos? \n Personalización total de la manicura:  Poder seleccionar hasta el más mínimo detalle con antelación cómodamente desde tu casa. '
+        + '\n Optimización del tiempo: Evita la molesta pérdida de tiempo que se pierde explicando que quieres y cómo lo quieres ¡ Simplemente llega y ponte guap@! '
+
 }
