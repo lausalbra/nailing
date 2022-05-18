@@ -61,4 +61,5 @@ export function Center ({ center, isAdmin, detailsFunc, editFunc, deleteFunc }) 
             </Box>
         )
     }
+
 }

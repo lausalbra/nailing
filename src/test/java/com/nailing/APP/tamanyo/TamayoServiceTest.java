@@ -15,6 +15,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.nailing.app.AppApplication;
@@ -22,6 +24,9 @@ import com.nailing.app.centro.Centro;
 import com.nailing.app.centro.CentroService;
 import com.nailing.app.centro.Suscripcion;
 import com.nailing.app.components.Fases;
+import com.nailing.app.forma.Forma;
+import com.nailing.app.forma.FormaService;
+import com.nailing.app.forma.NombreForma;
 import com.nailing.app.tamanyo.NombreTamanyo;
 import com.nailing.app.tamanyo.Tamanyo;
 import com.nailing.app.tamanyo.TamanyoService;
@@ -33,8 +38,11 @@ public class TamayoServiceTest {
 	@Autowired
 	private TamanyoService tamanyoSer;
 	@Autowired
+	private FormaService formaService;
+	@Autowired
 	private CentroService centroSer;
 	private Tamanyo tamanyo;
+	private Forma forma;
 	private Centro centro;
 	private Centro centroAnadido;
 	@BeforeEach
@@ -47,6 +55,8 @@ public class TamayoServiceTest {
 		centro.setUltimaSuscripcion(LocalDate.now());
 		centro.setSuscripcion(Suscripcion.BASIC);
 		centro.setProvincia("Sevilla");
+                centro.setLocalidad("Sevilla");
+                centro.setDireccion("direccion");
 		centro.setDiasDisponible("MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY");
 		centro.setImagen("urlimagen");
 		centro.setAperturaAM(LocalTime.of(8, 30));
@@ -185,8 +195,9 @@ public class TamayoServiceTest {
 		assertFalse(tamanyoSer.findAll().contains(tamanyoAnadido));
 	}
 	//Se comprueba que la falta de datos provoca una excepcion a la hora de añadir una forma a un centro
-	@Test
-	public void addFormaCentroTest() {
+	@ParameterizedTest
+	@CsvSource(value = {"XXS","XS","S","M","L","XL","XXL","RELLENO"})
+	public void addTamanyoCentroTest(String perso) {
 		Map<String, List<String>> datos = new HashMap<String, List<String>>();
 		String centroKey = "centro";
 		List<String> centroValue = new ArrayList<String>();
@@ -199,26 +210,28 @@ public class TamayoServiceTest {
 		duracionValue.add("5");
 		String persoKey = "personalizaciones";
 		List<String> persoValue = new ArrayList<String>();
-		persoValue.add("XXS");
+		persoValue.add(perso);
 		datos.put(centroKey, centroValue); datos.put(costeKey, costeValue);datos.put(duracionKey, duracionValue); datos.put(persoKey, persoValue);
 		List<Tamanyo> formasAnadidas = tamanyoSer.addTamanyoCentro(datos);
 		assertEquals(centroSer.findById(centroAnadido.getId()).get(), formasAnadidas.get(0).getCentro());
 	}
 	//Se comprueba que la falta de datos provoca una excepcion a la hora de añadir una forma a un centro
-	@Test
-	public void addFormaCentroNullTest() {
+	@ParameterizedTest
+	@CsvSource(value = {",10,10,M","1,10,10,","1,,10,M","1,10,,M"})
+	public void addTamanyoCentroNullTest(String centroV, String costeV, String durV, String persoV) {
 		Map<String, List<String>> datos = new HashMap<String, List<String>>();
 		String centroKey = "centro";
-		List<String> centroValue = null;
+		List<String> centroValue = new ArrayList<String>();
+		centroValue.add(centroV);
 		String costeKey = "coste";
 		List<String> costeValue = new ArrayList<String>();
-		costeValue.add("50");
+		costeValue.add(costeV);
 		String duracionKey = "tiempo";
 		List<String> duracionValue = new ArrayList<String>();
-		duracionValue.add("5");
+		duracionValue.add(durV);
 		String persoKey = "personalizaciones";
 		List<String> persoValue = new ArrayList<String>();
-		persoValue.add("XXS");
+		persoValue.add(persoV);
 		datos.put(centroKey, centroValue); datos.put(costeKey, costeValue);datos.put(duracionKey, duracionValue); datos.put(persoKey, persoValue); 
 		assertThrows(IllegalArgumentException.class, new Executable() {
             
@@ -227,6 +240,29 @@ public class TamayoServiceTest {
             }
         });
 	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"ALMOND","STILETTO","SQUOVAL"})
+	public void shouldListByCentroAndForma(String nombreForma){
+		tamanyo = new Tamanyo();
+		tamanyo.setCentro(centroAnadido);
+		tamanyo.setCoste(20.0);
+		tamanyo.setNombre(NombreTamanyo.RELLENO);
+		tamanyo.setSiguienteFase(Fases.disenyos);
+		tamanyo.setTiempo(30);
+		tamanyoSer.addTamanyo(tamanyo);
+		forma = new Forma();
+		forma.setCentro(centroAnadido);
+		forma.setCoste(20.0);
+		forma.setNombre(NombreForma.valueOf(nombreForma));
+		forma.setSiguienteFase(Fases.disenyos);
+		forma.setTiempo(30);
+		Forma formaAnanido = formaService.addForma(forma);
+		List<Tamanyo> listTamanyoForCentro = tamanyoSer.findTamanyosByCentroForma(formaAnanido.getId(),centroAnadido.getId());
+		assertTrue(listTamanyoForCentro.contains(tamanyo));
+	}
+
+
 	@AfterEach
 	public void deleteData() {
 		centroSer.delete(centroAnadido.getId());

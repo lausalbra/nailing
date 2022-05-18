@@ -12,9 +12,14 @@ import com.nailing.app.centro.Centro;
 import com.nailing.app.centro.CentroService;
 import com.nailing.app.centro.Suscripcion;
 import com.nailing.app.components.Fases;
+import com.nailing.app.tipo.Tipo;
+import com.nailing.app.tipo.TipoService;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.StreamSupport;
 import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
@@ -35,6 +40,8 @@ public class BaseServiceTest {
     
         @Autowired
 	private BaseService baseService;
+        @Autowired
+	private TipoService tipoService;
 	@Autowired
 	private CentroService centroService;
 	private Base base;
@@ -45,24 +52,25 @@ public class BaseServiceTest {
 	@BeforeEach
 	public void setUp() {
 		centro = new Centro();
-		centro.setId((long)8000);
-		centro.setNombre("UnyasMariCarmen");
+		centro.setNombre("UnyasLoli");
 		centro.setPagado(true);
 		centro.setCreditosrestantes(150);
 		centro.setUltimaSuscripcion(LocalDate.now());
 		centro.setSuscripcion(Suscripcion.BASIC);
 		centro.setProvincia("Sevilla");
+                centro.setLocalidad("Sevilla");
+                centro.setDireccion("direccion");
 		centro.setDiasDisponible("MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY");
 		centro.setImagen("urlimagen");
-		centro.setAperturaAM(LocalTime.of(9, 30));
+		centro.setAperturaAM(LocalTime.of(10, 0));
 		centro.setCierreAM(LocalTime.of(14, 0));
-		centro.setAperturaPM(LocalTime.of(17, 0));
-		centro.setCierrePM(LocalTime.of(21, 0));
+		centro.setAperturaPM(LocalTime.of(16, 0));
+		centro.setCierrePM(LocalTime.of(20, 0));
                 centro.setValoracionMedia(2.);
                 centro.setValoracionTotal(2);
                 centro.setNumValoraciones(1);
 		centroCreado = centroService.addCentro(centro);
-	}   
+	}
         
         @Test
 	public void addBaseTest() {
@@ -164,6 +172,69 @@ public class BaseServiceTest {
 		List<Base> bases = baseService.findByCentro(centroCreado.getId());
 		assertEquals(baseAnyadida.getId(), bases.get(0).getId());
 	}
+        
+        @Test
+        public void findBasesByCentroTipoTest(){
+            Map<String,List<String>> tipos = new HashMap<>();
+            List<String> lista1 = new ArrayList<>();
+            lista1.add(centroCreado.getId().toString());
+            tipos.put("centro", lista1);
+            List<String> lista2 = new ArrayList<>();
+            lista2.add("1");
+            tipos.put("coste", lista2);
+            List<String> lista3 = new ArrayList<>();
+            lista3.add("1");
+            tipos.put("tiempo", lista3);
+            List<String> lista4 = new ArrayList<>();
+            lista4.add("NATURAL");
+            lista4.add("ESCULPIDA");
+            tipos.put("personalizaciones", lista4);
+            tipoService.addTipoCentro(tipos);
+            base = new Base();
+            base.setCentro(centroCreado);
+            base.setCoste(15.0);
+            base.setNombre(NombreBase.GEL);
+            base.setSiguienteFase(Fases.formas);
+            base.setTiempo(30);
+            baseService.addBase(base);
+            Base base1 = new Base();
+            base1.setCentro(centroCreado);
+            base1.setCoste(15.0);
+            base1.setNombre(NombreBase.JAPONESA);
+            base1.setSiguienteFase(Fases.formas);
+            base1.setTiempo(30);
+            baseService.addBase(base1);
+            List<Tipo> tiposC = tipoService.findByCentro(centroCreado.getId());
+            List<Base> bases = baseService.findBasesByCentroTipo(tiposC.get(0).getId(),centroCreado.getId());
+            List<Base> bases1 = baseService.findBasesByCentroTipo(tiposC.get(1).getId(),centroCreado.getId());
+            assertTrue(bases != null);
+            assertTrue(bases1 != null);
+        }
+        
+        @Test
+        public void addBaseCentroTest(){
+            Map<String,List<String>> bases = new HashMap<>();
+            List<String> lista1 = new ArrayList<>();
+            lista1.add(centroCreado.getId().toString());
+            bases.put("centro", lista1);
+            List<String> lista2 = new ArrayList<>();
+            lista2.add("1");
+            bases.put("coste", lista2);
+            List<String> lista3 = new ArrayList<>();
+            lista3.add("1");
+            bases.put("tiempo", lista3);
+            List<String> lista4 = new ArrayList<>();
+            lista4.add("DUAL_SYSTEM");
+            lista4.add("GEL");
+            lista4.add("ACRILICO");
+            lista4.add("ACRYGEL");
+            lista4.add("SEMIPERMANENTE");
+            lista4.add("SEMIPERMANENTE_REFUERZO");
+            lista4.add("JAPONESA");
+            bases.put("personalizaciones", lista4);
+            List<Base> basesL = baseService.addBaseCentro(bases);
+            assertTrue(basesL.size()==7);
+        }
         
         
         @AfterEach
