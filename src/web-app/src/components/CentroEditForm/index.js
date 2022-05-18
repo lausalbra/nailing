@@ -219,15 +219,15 @@ export function CentroEditForm({id}) {
                 <label className='text-lg' htmlFor="nombre"> Nombre:</label>
                 <input className="border-black border-2  rounded-sm mb-4" name="nombre" type="text" ref={nombre} defaultValue={oldNombre} required/>
                 <label className='text-lg' htmlFor="imagen">   Imagen:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} defaultValue={oldImagen}/>
+                <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} defaultValue={oldImagen} required/>
                 <p className="text-sm text-red-600" >{stateImagen}</p>
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
                 <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} isSearchable={false} />
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
                 <label className='text-lg' htmlFor="localidad"> Localidad:</label>
-                <input className="border-black border-2  rounded-sm mb-4" name="localidad" type="text" ref={localidad} defaultValue={oldLocalidad} />
+                <input className="border-black border-2  rounded-sm mb-4" name="localidad" type="text" ref={localidad} defaultValue={oldLocalidad} required/>
                 <label className='text-lg' htmlFor="direccion"> Dirección:</label>
-                <input className="border-black border-2  rounded-sm mb-4" name="direccion" type="text" ref={direccion} defaultValue={oldDireccion} />
+                <input className="border-black border-2  rounded-sm mb-4" name="direccion" type="text" ref={direccion} defaultValue={oldDireccion} required/>
                 <label className='text-lg' htmlFor="name">Días de apertura:</label>
                 <Select className="border-black border-2 mb-4 rounded-sm"
                     required
