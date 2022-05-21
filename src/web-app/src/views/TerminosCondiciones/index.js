@@ -68,6 +68,8 @@ export function TerminosCondiciones() {
                 <p className='p-5 text-sm '>El Titular se reserva el derecho a modificar la presente Política de 
                 Privacidad para adaptarla a novedades legislativas o jurisprudenciales, así como a prácticas de la 
                 industria.<br></br> Estas políticas estarán vigentes hasta que sean modificadas por otras debidamente publicadas.</p>
+                <h2 className='p-3 text-xl underline'><i>Política de cancelación</i></h2>
+                <p className='p-5 text-sm '>Las citas realizadas podrán cancelarse hasta 24 horas antes de la misma. Para recibir el dinero de su cita, por favor contacte con nosotros en nailing.app@gmail.com</p>
             </div>
 
         </>
