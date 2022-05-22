@@ -77,7 +77,8 @@ public class DbInit implements CommandLineRunner {
         Cita cit1 = new Cita(41.0,LocalDateTime.of(2022, Month.SEPTEMBER, 24, 9, 0),LocalDateTime.of(2022, Month.SEPTEMBER, 24, 9, 30),null,null,null,null,null,null,null,this.usuarioRepository.findById((long)3).get(),centroRep.findById((long)1).get());
         Cita cit2 = new Cita(41.0,LocalDateTime.of(2022, Month.SEPTEMBER, 24, 9, 35),LocalDateTime.of(2022, Month.SEPTEMBER, 24, 10, 5),null,null,null,null,null,null,null,this.usuarioRepository.findById((long)4).get(),centroRep.findById((long)1).get());
         Cita cit3 = new Cita(41.0,LocalDateTime.of(2022, Month.SEPTEMBER, 24, 8, 30),LocalDateTime.of(2022, Month.SEPTEMBER, 24, 9, 0),null,null,null,null,null,null,null,this.usuarioRepository.findById((long)5).get(),centroRep.findById((long)2).get());
-        List<Cita> citas = Arrays.asList(cit1,cit2,cit3);
+        Cita cit4 = new Cita(41.0,LocalDateTime.of(2022, Month.JANUARY, 24, 8, 30),LocalDateTime.of(2022, Month.JANUARY, 24, 9, 0),null,null,null,null,null,null,null,this.usuarioRepository.findById((long)1).get(),centroRep.findById((long)1).get());
+        List<Cita> citas = Arrays.asList(cit1,cit2,cit3,cit4);
         citaRep.saveAll(citas);
         
     }
