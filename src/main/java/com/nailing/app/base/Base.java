@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 import com.nailing.app.centro.Centro;
@@ -37,7 +36,7 @@ public class Base {
 	@Column(name = "tiempo")
 	private Integer tiempo;
 
-	@PositiveOrZero
+	@Positive
 	@NotNull
 	@Column(name = "coste")
 	private Double coste;
@@ -55,7 +54,7 @@ public class Base {
 	}
 
 	public Base(Long id, @Size(max = 50) @NotBlank NombreBase nombre, @Positive @NotNull Integer tiempo,
-			@PositiveOrZero @NotNull Double coste, @NotBlank Fases fases, Centro centro) {
+			@Positive @NotNull Double coste, @NotBlank Fases fases, Centro centro) {
 		super();
 		this.id = id;
 		this.nombre = nombre;

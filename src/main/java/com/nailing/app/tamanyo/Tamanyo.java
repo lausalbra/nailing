@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
 
 import com.nailing.app.centro.Centro;
 import com.nailing.app.components.Fases;
@@ -35,7 +34,7 @@ public class Tamanyo {
 	@Column(name = "tiempo")
 	private Integer tiempo;
 
-	@PositiveOrZero
+	@Positive
 	@NotNull
 	@Column(name = "coste")
 	private Double coste;
@@ -53,7 +52,7 @@ public class Tamanyo {
 	}
 
 	public Tamanyo(Long id, @NotNull NombreTamanyo nombre, @Positive @NotNull Integer tiempo,
-			@PositiveOrZero @NotNull Double coste, @NotNull Fases siguienteFase, Centro centro) {
+			@Positive @NotNull Double coste, @NotNull Fases siguienteFase, Centro centro) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
