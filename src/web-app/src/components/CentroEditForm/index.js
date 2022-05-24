@@ -61,6 +61,8 @@ export function CentroEditForm({id}) {
   const oldCierrePM=resObj.cierrePM
   const oldDias=resObj.diasDisponible
 
+  const provinciaOldOption = json_provincias.filter(prov => prov.value === oldProvincia)[0];
+
   const nombre = useRef()
   const imagen = useRef()
   const provincia = useRef()
@@ -222,7 +224,7 @@ export function CentroEditForm({id}) {
                 <input className="border-black border-2 mb-4 rounded-sm" name="imagen" type="text" ref={imagen} defaultValue={oldImagen} required/>
                 <p className="text-sm text-red-600" >{stateImagen}</p>
                 <label className='text-lg' htmlFor="provincia">   Provincia:</label>
-                <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" options={json_provincias} ref={provincia} isSearchable={false} />
+                <Select className="border-black border-2 mb-4 rounded-sm" name="provincia" value={provinciaOldOption} options={json_provincias} ref={provincia} isSearchable={false} />
                 <p className="text-sm text-red-600" >{stateProvincia}</p>
                 <label className='text-lg' htmlFor="localidad"> Localidad:</label>
                 <input className="border-black border-2  rounded-sm mb-4" name="localidad" type="text" ref={localidad} defaultValue={oldLocalidad} required/>
