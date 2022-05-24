@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 import com.nailing.app.centro.Centro;
@@ -36,7 +37,7 @@ public class Base {
 	@Column(name = "tiempo")
 	private Integer tiempo;
 
-	@Positive
+	@PositiveOrZero
 	@NotNull
 	@Column(name = "coste")
 	private Double coste;

@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 /**
  *
  * @author CANDELA
@@ -40,7 +41,7 @@ public class Disenyo {
     @Column(name = "tiempo")
     private Integer tiempo;
     
-    @Positive
+    @PositiveOrZero
     @NotNull
     @Column(name = "coste")
     private Double coste;
