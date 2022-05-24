@@ -18,6 +18,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
@@ -41,7 +43,7 @@ public class Acabado {
     private Integer tiempo;
     
     @Column(name = "coste")
-    @Positive
+    @PositiveOrZero
     private Double coste;
     
     @Column(name = "siguiente_fase")
