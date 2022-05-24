@@ -53,7 +53,7 @@ public class Tamanyo {
 	}
 
 	public Tamanyo(Long id, @NotNull NombreTamanyo nombre, @Positive @NotNull Integer tiempo,
-			@Positive @NotNull Double coste, @NotNull Fases siguienteFase, Centro centro) {
+			@PositiveOrZero @NotNull Double coste, @NotNull Fases siguienteFase, Centro centro) {
 		super();
 		this.id = id;
 		this.nombre = nombre;

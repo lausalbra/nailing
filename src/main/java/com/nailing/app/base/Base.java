@@ -55,7 +55,7 @@ public class Base {
 	}
 
 	public Base(Long id, @Size(max = 50) @NotBlank NombreBase nombre, @Positive @NotNull Integer tiempo,
-			@Positive @NotNull Double coste, @NotBlank Fases fases, Centro centro) {
+			@PositiveOrZero @NotNull Double coste, @NotBlank Fases fases, Centro centro) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
