@@ -104,7 +104,7 @@ export function RegistroServiciosCentroForm({ updater, listTipos, listBases, lis
 
                 console.log("OPTIONS", options)
                 console.log("OPTIONS TYPE", typeof options)
-
+                options = options.filter(option => option !== undefined);
                 setAvailableOptions(options)
                 setSelectedOptions(options)
             }).catch((ex) => {
