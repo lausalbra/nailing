@@ -90,6 +90,7 @@ export function CentroEditForm({id}) {
   }
 
   const [stateProvincia, changeStateProvincia] = useState("")
+  const [stateDireccion, changeStateDireccion] = useState("")
   const [stateHoras, changeStateHora] = useState("")
   const [stateImagen, changeStateImagen] = useState("")
   const [stateDiasApertura, changeStateDiasApertura] = useState(optionsDias)
@@ -139,7 +140,8 @@ export function CentroEditForm({id}) {
     const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
     const horasConfirmadasIncongruencias = confirmHorasIncongruencias(aperturaam.current.value, cierream.current.value, aperturapm.current.value, cierrepm.current.value);
     const imagenConfirmada = confirmImage(imagen.current.value)
-    if(horasConfirmadas && provinciaConfirmada && imagenConfirmada && horasConfirmadasIncongruencias){
+    const direccionConfirmada = confirmDireccion(direccion.current.value);
+    if(horasConfirmadas && provinciaConfirmada && imagenConfirmada && horasConfirmadasIncongruencias && direccionConfirmada){
       await putData(url2, body, headers)
       .then(async function (_response) {
         await postData(url2, body, headers)
@@ -197,6 +199,16 @@ export function CentroEditForm({id}) {
         changeStateHora("")
     }
     return result1 && result2 && result3
+  }
+
+  function confirmDireccion(direccionTest) {
+    const result = direccionTest.substring(0,2) === "C/"
+    if (!result) {
+        changeStateDireccion("La dirección debe empezar por C/")
+    } else {
+        changeStateDireccion("")
+    }
+    return result
 }
     
   function confirmImage(image) {
@@ -229,7 +241,8 @@ export function CentroEditForm({id}) {
                 <label className='text-lg' htmlFor="localidad"> Localidad:</label>
                 <input className="border-black border-2  rounded-sm mb-4" name="localidad" type="text" ref={localidad} defaultValue={oldLocalidad} required/>
                 <label className='text-lg' htmlFor="direccion"> Dirección:</label>
-                <input className="border-black border-2  rounded-sm mb-4" name="direccion" type="text" ref={direccion} defaultValue={oldDireccion} required/>
+                <input className="border-black border-2  rounded-sm mb-4" name="direccion" type="text" ref={direccion} placeholder="C/" defaultValue={oldDireccion} required/>
+                <p className="text-sm text-red-600" >{stateDireccion}</p>
                 <label className='text-lg' htmlFor="name">Días de apertura:</label>
                 <Select className="border-black border-2 mb-4 rounded-sm"
                     required
