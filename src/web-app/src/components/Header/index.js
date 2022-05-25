@@ -8,16 +8,32 @@ export function Header() {
   var user = null;
   if (sessionStorage.getItem("userEncriptado") != null && sessionStorage.getItem("userEncriptado") !== '') user = JSON.parse(cryptoJS.AES.decrypt(sessionStorage.getItem("userEncriptado"), "NAILING").toString(cryptoJS.enc.Utf8))
  
+  
+
   const [isNavOpen, setIsNavOpen] = useState(false); // initiate isNavOpen state with false
   const [locationPath, locationPush] = useLocation()
 
   function navLogged(isBurger, rol, location) {
+    var rolName = null;
+    switch (rol) {
+      case "USER":
+        rolName = "Cliente";
+        break;
+      case "OWNER":
+        rolName = "Dueño";
+        break;
+      case "ADMIN":
+        rolName = "Administrador";
+        break;
+      default:
+        break;
+    }
     return isBurger === true ? (
       <>
         <Link className='hover:text-red-400' to='/conocenos'>Conócenos</Link>
         <Link className='hover:text-red-400' to='/feedback'>Feedback</Link>
         <Link className='hover:text-red-400' to='/cita'>Pide Cita</Link>
-        <><Link className='hover:text-red-400' to='/usuario'>Mi perfil ({rol})</Link></>
+        <><Link className='hover:text-red-400' to='/usuario'>Mi perfil ({rolName})</Link></>
       </>
 
     ) :
@@ -26,7 +42,7 @@ export function Header() {
         <Link className='hover:text-red-400' to='/feedback'>Feedback</Link>
         <Link className=' w-64 h-24 ml-4' to='/' />
         <Link className='hover:text-red-400' to='/cita'>Pide Cita</Link>
-        <><Link className='hover:text-red-400' to='/usuario'>Mi perfil ({rol})</Link></>
+        <><Link className='hover:text-red-400' to='/usuario'>Mi perfil ({rolName})</Link></>
         
       </>
   }
