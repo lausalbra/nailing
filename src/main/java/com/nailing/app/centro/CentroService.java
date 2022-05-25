@@ -95,6 +95,7 @@ public class CentroService {
         	for(Usuario u : usuarioService.findAll()) {
         		if (centro.get().equals(u.getCentro())) {
         			u.setCentro(null);
+                                u.setRol(Authorities.USER);
                     usuarioService.save(u);
         		}
          	}
