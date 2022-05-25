@@ -20,7 +20,7 @@ export function LoginForm() {
     async function handleSubmit(evt) {
         evt.preventDefault()
 
-        const url = "https://nailingtest.herokuapp.com/login"
+        const url = "https://nailing-sprint5.herokuapp.com/login"
         const body = {
             "user": user.current.value,
             "password": password.current.value
