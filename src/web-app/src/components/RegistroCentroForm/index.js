@@ -48,7 +48,6 @@ export function RegistroCentroForm() {
         const horasConfirmadas = confirmHoras(aperturaam.current.value) && confirmHoras(cierream.current.value) && confirmHoras(aperturapm.current.value) && confirmHoras(cierrepm.current.value)
         const horasConfirmadasIncongruencias = confirmHorasIncongruencias(aperturaam.current.value, cierream.current.value, aperturapm.current.value, cierrepm.current.value);
         const imagenConfirmada = confirmImage(imagen.current.value)
-        const direccionConfirmada = confirmDireccion(direccion.current.value);
         var planValidated = false;
         if (planes.filter((sus) => sus.value === suscripcion.current.getValue()[0].value).length !== 0) {
             planValidated = true;
@@ -90,7 +89,7 @@ export function RegistroCentroForm() {
             imagenUrl = imagen.current.value
         }
 
-        if (horasConfirmadas && provinciaConfirmada && planValidated && imagenConfirmada && horasConfirmadasIncongruencias && direccionConfirmada) {
+        if (horasConfirmadas && provinciaConfirmada && planValidated && imagenConfirmada && horasConfirmadasIncongruencias) {
             const bodyCentre = {
                 "nombre": nombre.current.value,
                 "imagen": imagenUrl,
@@ -127,16 +126,6 @@ export function RegistroCentroForm() {
             changeStateProvincia("Provincia no válida")
         } else {
             changeStateProvincia("")
-        }
-        return result
-    }
-
-    function confirmDireccion(direccionTest) {
-        const result = direccionTest.substring(0,2) === "C/"
-        if (!result) {
-            changeStateDireccion("La dirección debe empezar por C/")
-        } else {
-            changeStateDireccion("")
         }
         return result
     }
@@ -232,8 +221,7 @@ export function RegistroCentroForm() {
                 <label className='text-lg' htmlFor="localidad"> Localidad:</label>
                 <input className="border-black border-2  rounded-sm mb-4" name="localidad" type="text" ref={localidad} required />
                 <label className='text-lg' htmlFor="direccion"> Dirección:</label>
-                <input className="border-black border-2  rounded-sm mb-4" name="direccion" type="text" placeholder="C/" ref={direccion} required />
-                <p className="text-sm text-red-600" >{stateDireccion}</p>
+                <input className="border-black border-2  rounded-sm mb-4" name="direccion" type="text" ref={direccion} required />
                 <label className='text-lg' htmlFor="suscripcion">   Plan de suscripción:</label>
                 <Select className="border-black border-2 mb-4 rounded-sm" name="suscripcion" onChange={handleChangeSuscripcion} options={planes} ref={suscripcion} isSearchable={false} required
                     theme={(theme) => ({ ...theme, borderRadius: 3, colors: { ...theme.colors, primary25: '#d9ebff', primary50: '#ffe2ef', primary: '#bf9dac', }, })} />
