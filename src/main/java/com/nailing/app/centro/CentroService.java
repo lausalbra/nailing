@@ -95,6 +95,7 @@ public class CentroService {
         	for(Usuario u : usuarioService.findAll()) {
         		if (centro.get().equals(u.getCentro())) {
         			u.setCentro(null);
+                                u.setRol(Authorities.USER);
                     usuarioService.save(u);
         		}
          	}
@@ -126,16 +127,16 @@ public class CentroService {
         	if(Boolean.TRUE.equals(!centroTieneCambios(centro)) && Boolean.TRUE.equals(centro.getPagado())) {
 				centro.setUltimaSuscripcion(LocalDate.now());
 				if(centro.getSuscripcion() == Suscripcion.BASIC){
-					centro.setCreditosrestantes(150);
+					centro.setCreditosrestantes(100);
 				}
 				else if(centro.getSuscripcion() == Suscripcion.MEDIUM){
-					centro.setCreditosrestantes(200);
+					centro.setCreditosrestantes(150);
 				}
 				else if(centro.getSuscripcion() == Suscripcion.ADVANCED){
-					centro.setCreditosrestantes(300);
+					centro.setCreditosrestantes(200);
 				}
 				else if(centro.getSuscripcion() == Suscripcion.PREMIUM){
-					centro.setCreditosrestantes(400);
+					centro.setCreditosrestantes(250);
 				} 
         	}
                 if(centro.getAperturaAM().isAfter(centro.getCierreAM()) || centro.getAperturaPM().isAfter(centro.getCierrePM()) 
