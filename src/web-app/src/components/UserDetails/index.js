@@ -17,7 +17,7 @@ export function UserDetails({ image, email, phone }) {
 
   async function handleClick() {
 
-    const url2 = "https://nailingtest.herokuapp.com/logout"
+    const url2 = "https://nailing-sprint6.herokuapp.com/logout"
 
     const body = {
       "id": user.id,
@@ -58,7 +58,7 @@ export function UserDetails({ image, email, phone }) {
   const [resObj, setObj] = useState([])
   console.log(resObj);
   const xhr = new XMLHttpRequest()
-  var url = "https://nailingtest.herokuapp.com/centros/show/"
+  var url = "https://nailing-sprint6.herokuapp.com/centros/show/"
   if (centro !== null && centro !== ""){
     url += centro.id.toString();
     restantesPositivo = centro.creditosrestantes >= 0
