@@ -16,6 +16,7 @@ export function CitasList() {
 
   useEffect(() => {
     function callback(citas) {
+      citas = citas.filter(cita => Date.parse(cita.horaInicio) - Date.now() >= 0);
       setCitas(citas)
     }
     RequestManager(url_get, 'GET', 'CitasList (get)', null, locationPush, callback, null)
@@ -24,11 +25,17 @@ export function CitasList() {
 
   function cancelarCita(cita) {
     // eslint-disable-next-line no-restricted-globals
-    const accepted = confirm('¿Está seguro de que quiere cancelar su cita en ' + cita.centro.nombre + '?')
-    if (accepted) {
-      const url_del = API_URL + '/cita/user/' + userId + '/delete/' + cita.id
-      locationPush('/delete')
-      RequestManager(url_del, 'DELETE', 'CitasList (delete)', '/miscitas', locationPush, null, null)
+    var diff = Date.parse(cita.horaInicio) - Date.now();
+    if (diff <= 86400000) {
+      window.alert("Esta cita es en 24 horas o menos. Ya no se puede cancelar");
+    }
+    else {
+      const accepted = window.confirm('¿Está seguro de que quiere cancelar su cita en ' + cita.centro.nombre + '?')
+      if (accepted) {
+        const url_del = API_URL + '/cita/user/' + userId + '/delete/' + cita.id
+        locationPush('/delete')
+        RequestManager(url_del, 'DELETE', 'CitasList (delete)', '/miscitas', locationPush, null, null)
+      }
     }
   }
 
@@ -51,4 +58,11 @@ export function CitasList() {
       ))}
     </Box>
   )
+}
+
+function diff_hours(dt2, dt1) 
+{
+  var diff =(dt2.getTime() - dt1.getTime()) / 1000;
+  diff /= (60 * 60);
+  return Math.abs(Math.round(diff));
 }

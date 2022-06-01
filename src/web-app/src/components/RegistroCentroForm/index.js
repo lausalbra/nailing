@@ -19,6 +19,7 @@ export function RegistroCentroForm() {
     const suscripcion = useRef()
 
     const [stateProvincia, changeStateProvincia] = useState("")
+    const [stateDireccion, changeStateDireccion] = useState("")
     const [stateHoras, changeStateHora] = useState("")
     const [stateImagen, changeStateImagen] = useState("")
 
