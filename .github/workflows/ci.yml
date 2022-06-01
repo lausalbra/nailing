@@ -1,0 +1,48 @@
+name: Nailing application
+
+on:
+  pull_request:
+    branches: [develop]
+
+jobs:
+  build_backend:
+    name: Build Backend
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14.2
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: nailing
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Java JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: "11"
+        distribution: "temurin"
+    - name: Build with Maven
+      run: |
+          mvn --batch-mode --update-snapshots verify
+          
+  build-frontend:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/web-app
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - name: Install frontend dependencies
+        run: npm install

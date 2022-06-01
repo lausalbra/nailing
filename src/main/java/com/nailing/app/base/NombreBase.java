@@ -1,0 +1,5 @@
+package com.nailing.app.base;
+
+public enum NombreBase {
+	DUAL_SYSTEM, GEL, ACRILICO, ACRYGEL, SEMIPERMANENTE, SEMIPERMANENTE_REFUERZO, JAPONESA
+}
