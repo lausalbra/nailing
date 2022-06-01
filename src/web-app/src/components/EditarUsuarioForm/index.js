@@ -92,9 +92,9 @@ export function EditarUsuarioForm() {
                 <label className='text-lg' htmlFor="email">   Email:</label>
                 <input className="border-black border-2 mb-4 rounded-sm" name="email" type="email" required value={emailState} onChange={ev => { changeEmailState(ev.target.value) }} />
                 <label className='text-lg' htmlFor="telefono">  Telefono:</label>
-                <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" pattern="[0-9]{9}" title=" Un teléfono se compone de 9 cifras (Ejemplo 123456789)" value={telefonoState} onChange={ev => { changeTelefonoState(ev.target.value) }} />
+                <input className="border-black border-2 mb-4 rounded-sm" name="telefono" type="tel" pattern="[0-9]{9}" title=" Un teléfono se compone de 9 cifras (Ejemplo 123456789)" value={telefonoState} onChange={ev => { changeTelefonoState(ev.target.value) }} required/>
                 <p className="text-sm text-red-600" >{state}</p>
-                <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" placeholder="Enviar" />
+                <input className="border-black border-2 mb-4 cursor-pointer hover:bg-pink-200 hover:border-pink-200 duration-300 rounded-3xl" type="submit" placeholder="Enviar"/>
             </form>
         </>
     )

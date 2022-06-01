@@ -16,6 +16,7 @@ export function CitaCentroList() {
 
   useEffect(() => {
     function callback(citas) {
+      citas = citas.filter(cita => Date.parse(cita.horaInicio) - Date.now() >= 0);
       setCitas(citas)
     }
     RequestManager(url_get, 'GET', 'CitasCentroList (get)', null, locationPush, callback, null)

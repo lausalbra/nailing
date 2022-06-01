@@ -21,7 +21,7 @@ export function Cita ({ cita, deleteFunc }) {
                 <p className="m-2 text-lg text-center"><strong>{cita.centro.nombre}</strong></p>
                 <p className="m-2 text-lg text-center">{dateParse(cita.horaInicio)}</p>
                 <p className="m-2 text-lg text-center">Precio: {cita.coste} €</p>
-                <button id="1" className="border-2 border-purple-300 bg-pink-200 text-black w-96 py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300"
+                <button id="1" className="border-2 border-purple-300 bg-pink-200 text-black w-auto py-3 rounded-md text-1xl font-medium hover:bg-purple-300 transition duration-300"
                     onClick={deleteFunc}>Cancelar cita</button>
             </Box>
         </Box>

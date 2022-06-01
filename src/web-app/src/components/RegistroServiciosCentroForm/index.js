@@ -104,7 +104,7 @@ export function RegistroServiciosCentroForm({ updater, listTipos, listBases, lis
 
                 console.log("OPTIONS", options)
                 console.log("OPTIONS TYPE", typeof options)
-
+                options = options.filter(option => option !== undefined);
                 setAvailableOptions(options)
                 setSelectedOptions(options)
             }).catch((ex) => {
@@ -202,7 +202,7 @@ export function RegistroServiciosCentroForm({ updater, listTipos, listBases, lis
                 <div className="grid grid-rows grid-cols-2 items-center">
                     <div>
                         <label className='text-lg p-3' htmlFor="precio">Precio:</label>
-                        <input className="border-black border-2  rounded-sm mb-4 w-1/2 text-right" name="precio" type="number" min={1} id="precio" ref={precio} required /> €
+                        <input className="border-black border-2  rounded-sm mb-4 w-1/2 text-right" name="precio" type="number" min={0.01} step=".01" id="precio" ref={precio} required /> €
                     </div>
                     <div>
                         <label className='text-lg p-3' htmlFor="tiempo">Tiempo:</label>

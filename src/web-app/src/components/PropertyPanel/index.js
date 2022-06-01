@@ -306,7 +306,7 @@ class PropertyPanel extends Component {
             //Cuando cambie el valor del selector de minuto se rellenan los datos de llamada y se desbloquea el boton de reserva
             minuteSelector.onchange = function () {
                 postData = {
-                    usuario: user.id,
+                    usuario: user.id.toString(),
                     centro: sessionStorage.getItem("centreId"),
                     precio: price.toString(),
                     tiempo: time.toString(),

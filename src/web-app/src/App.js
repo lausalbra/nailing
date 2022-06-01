@@ -23,6 +23,9 @@ import { ComprarPaquete } from './views/ComprarPaquete'
 import { LogOut } from './views/LogOut'
 
 function App() {
+
+  document.title = "Nailing: Personaliza tu manicura";
+
   return (
     <div class='bg-auto'>
       <div className='overflow-scroll'>
